@@ -24,8 +24,12 @@ namespace ZaynBot
 
         public async Task RodarOBotAsync()
         {
+            // Infelizmente no linux muda as barrinha
+#if DEBUG
             string projetoRaiz = Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) + "config.json";
-
+#else
+            string projetoRaiz = Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../")) + "config.json";
+#endif
             _config = Config.LoadFromFile(projetoRaiz);
             if (_config == null)
             {
@@ -35,7 +39,7 @@ namespace ZaynBot
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            
+
             DiscordConfiguration cfg = new DiscordConfiguration
             {
 #if DEBUG
