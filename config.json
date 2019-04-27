@@ -1,0 +1,6 @@
+{
+  "clientToken": "Client Token do Bot",
+  "clientId": "Client ID do Bot",
+  "clientSecret": "Client Secret do Bot",
+  "dbMongoFolder": "Pasta do banco de dados do Mongo, coloque um / no final!" 
+}
