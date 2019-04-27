@@ -1,7 +1,9 @@
 Faça uma copia desse arquivo e coloque o nome de config.json, remove essa linha para não dar erro, e coloque as informações necessarias abaixo.
 {
-  "clientToken": "Client Token do Bot",
-  "clientId": "Client ID do Bot",
-  "clientSecret": "Client Secret do Bot",
-  "prefix": "Prefix"
+  "clientTokenTeste": "Token do seu bot para testar",
+  "clientToken": "Token do bot para hospedar",
+  "clientId": "Client Id do seu bot",
+  "clientSecret": "Client Secret do seu bot",
+  "prefix": "Prefix para o bot ao hospedar",
+  "prefixTeste": "Prefix para testar o bot"
 }

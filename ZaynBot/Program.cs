@@ -66,9 +66,9 @@ namespace ZaynBot
             {
 
 #if DEBUG
-                StringPrefix = _config.Prefix,
-#else
                 StringPrefix = _config.PrefixTeste,
+#else
+                StringPrefix = _config.Prefix,
 #endif
                 CaseSensitive = false,
 

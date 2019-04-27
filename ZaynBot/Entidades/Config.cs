@@ -49,7 +49,7 @@ namespace ZaynBot.Entidades
         /// <summary>
         /// Carrega a config de um arquivo JSON.
         /// </summary>
-        /// <param name="path">Path to your config file.</param>
+        /// <param name="path">Caminho para o arquivo config.</param>
         /// <returns></returns>
         public static Config LoadFromFile(string path)
         {
@@ -69,7 +69,7 @@ namespace ZaynBot.Entidades
         /// <summary>
         /// Salva as config para um arquivo JSON.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">Caminho para o arquivo config.</param>
         public void SaveToFile(string path)
         {
             using (var sw = new StreamWriter(path))
