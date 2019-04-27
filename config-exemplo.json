@@ -1,0 +1,7 @@
+Faça uma copia desse arquivo e coloque o nome de config.json, remove essa linha para não dar erro, e coloque as informações necessarias abaixo.
+{
+  "clientToken": "Client Token do Bot",
+  "clientId": "Client ID do Bot",
+  "clientSecret": "Casdsad do Bot",
+  "dbMongoFolder": "Pasta do banco de dados do Mongo, coloque um / no final!"
+}
