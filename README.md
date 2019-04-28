@@ -1,3 +1,9 @@
+<p align="center"><a href="https://discordbots.org/bot/459873132975620134" >
+  <img src="https://discordbots.org/api/widget/459873132975620134.svg" alt="ZaynRPG" />
+</a><br>
+  <a href="https://discordbots.org/bot/459873132975620134" >
+  <img src="https://discordbots.org/api/widget/status/459873132975620134.svg" alt="ZaynRPG" />
+</a></p>
 Olá, eu me chamo Zayn e sou apenas um simples bot brasileiro para o Discord com várias funções jamais vistas!
 
 Eu tenho várias funções para entretenimento (como comandos engraçados e memes), funções sociais (sistema de perfil com XP e reputação ainda em desenvolvimento) e como foco principal ser o melhor bot brasileiro de RPG do discord!
