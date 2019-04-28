@@ -1,22 +1,20 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Exceptions;
-using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using System;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot.Comandos;
 using ZaynBot.Entidades;
+using ZaynBot.Funções;
 
 namespace ZaynBot
 {
     class Program
     {
         public DiscordClient Client { get; set; }
-        public CommandsNextModule Comandos { get; set; }
+        private ModuloComandos _todosOsComandos;
         private Config _config;
 
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
@@ -81,10 +79,8 @@ namespace ZaynBot
                 EnableMentionPrefix = true,
                 IgnoreExtraArguments = true,
             };
-            Comandos = Client.UseCommandsNext(ccfg);
-            Comandos.CommandExecuted += Commands_CommandExecuted;
-            Comandos.CommandErrored += Commands_CommandErrored;
-
+            _todosOsComandos = new ModuloComandos(ccfg, Client);
+            
 
             // Console.WriteLine($"{BancoDeDados.CarregarTodos()} usuarios salvos na HD.");
             //DoWorkAsyncInfiniteLoop();
@@ -95,16 +91,7 @@ namespace ZaynBot
 
         private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
         {
-            if (e.Guild.Id == 508615273515843584)
-            {
-                DiscordChannel f = e.Guild.GetChannel(551469878268395530);
-                await f.SendMessageAsync($"Bem-vindo {e.Member.Mention} ao anime'sworld, leia as regras antes de qualquer coisa.");
-            }
-            if (e.Guild.Id == 420044060720627712)
-            {
-                DiscordChannel f = e.Guild.GetChannel(423347465912320000);
-                await f.SendMessageAsync($"Bem-vindo {e.Member.Mention} ao Dragon and Zayn's RPG!");
-            }
+            await UsuarioNovoEntrouGuilda.EventoBemVindoAsync(e);
         }
 
         //private async Task DoWorkAsyncInfiniteLoop()
@@ -203,39 +190,6 @@ namespace ZaynBot
             e.Client.DebugLogger.LogMessage(LogLevel.Error, "ERRO", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
 
             return Task.CompletedTask;
-        }
-
-        private Task Commands_CommandExecuted(CommandExecutionEventArgs e)
-        {
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{e.Context.User.Username} executou com sucesso '{e.Command.QualifiedName}'", DateTime.Now);
-            return Task.CompletedTask;
-        }
-
-        private async Task Commands_CommandErrored(CommandErrorEventArgs e)
-        {
-            var ctx = e.Context;
-            if (e.Exception is ChecksFailedException ex)
-            {
-                if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
-                {
-                    return;
-                }
-                else
-                {
-                    await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + my.GetRemainingCooldown(ctx).Seconds + " segundos.");
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"Autor: {ctx.Message.Author} deve esperar {my.GetRemainingCooldown(ctx).Seconds} segundos para usar {ctx.Message.Content}", DateTime.Now);
-                    return;
-                }
-
-            }
-            if (e.Exception is ArgumentException ax)
-            {
-                //await ctx.RespondAsync($"{ctx.Member.Mention}, você está esquecendo de algum parâmetro? Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
-                await ctx.RespondAsync($"{ctx.Member.Mention}, um erro aconteceu.");
-            }
-
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Username} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
-            return;
         }
     }
 }

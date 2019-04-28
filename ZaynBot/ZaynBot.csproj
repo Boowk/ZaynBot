@@ -14,4 +14,13 @@
     <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Comandos\Administração\" />
+    <Folder Include="Comandos\Memes\" />
+    <Folder Include="Comandos\Rpg\" />
+    <Folder Include="Entidades\Rpg\" />
+    <Folder Include="BancoDeDados\" />
+    <Folder Include="Eventos\" />
+  </ItemGroup>
+
 </Project>

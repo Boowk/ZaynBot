@@ -1,0 +1,65 @@
+﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext.Exceptions;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using ZaynBot.Comandos.Informações;
+
+namespace ZaynBot.Comandos
+{
+    public class ModuloComandos
+    {
+        public CommandsNextModule Comandos { get; }
+
+        public ModuloComandos(CommandsNextConfiguration ccfg, DiscordClient client)
+        {
+            Comandos = client.UseCommandsNext(ccfg);
+            Comandos.CommandExecuted += ComandoExecutado;
+            Comandos.CommandErrored += ComandoAconteceuErro;
+            Comandos.SetHelpFormatter<AjudaFormatador>();
+            RegistrarComandos();
+        }
+
+        public void RegistrarComandos()
+        {
+            Comandos.RegisterCommands<ComandosTestes>();
+            Comandos.RegisterCommands<Ajuda>();
+            Comandos.RegisterCommands<ComandosInfo>();
+        }
+
+        private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
+        {
+            var ctx = e.Context;
+            if (e.Exception is ChecksFailedException ex)
+            {
+                if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
+                {
+                    return;
+                }
+                else
+                {
+                    await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + my.GetRemainingCooldown(ctx).Seconds + " segundos.");
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"Autor: {ctx.Message.Author} deve esperar {my.GetRemainingCooldown(ctx).Seconds} segundos para usar {ctx.Message.Content}", DateTime.Now);
+                    return;
+                }
+
+            }
+            if (e.Exception is ArgumentException ax)
+            {
+                //await ctx.RespondAsync($"{ctx.Member.Mention}, você está esquecendo de algum parâmetro? Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
+                await ctx.RespondAsync($"{ctx.Member.Mention}, um erro aconteceu.");
+            }
+
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Username} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
+            return;
+        }
+
+        private Task ComandoExecutado(CommandExecutionEventArgs e)
+        {
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{e.Context.User.Username} executou com sucesso '{e.Command.QualifiedName}'", DateTime.Now);
+            return Task.CompletedTask;
+        }
+    }
+}
