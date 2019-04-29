@@ -16,7 +16,7 @@ namespace ZaynBot.Eventos
             if (DateTime.UtcNow >= user.DataMensagemEnviada)
             {
                 user.DataMensagemEnviada = DateTime.UtcNow.AddMinutes(3);
-                bool evoluiu = user.AdicionarExp(30);
+                bool evoluiu = user.AdicionarExp(20);
 
                 IMongoClient client = new MongoClient("mongodb://localhost");
                 IMongoDatabase database = client.GetDatabase("zaynbot");

@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
@@ -40,11 +41,18 @@ namespace ZaynBot.Comandos
             dep = d;
         }
 
-        [Command("teste")]
+        [Command("purgeAuto")]
         [RequireOwner]
-        public async Task Jogando(CommandContext ctx, [RemainingText] string mensagem)
+        public async Task Jogando(CommandContext ctx)
         {
-            await ctx.RespondAsync($"{dep.Id}, {dep.Nome}");
+            List<DiscordMessage> messageList = (await ctx.Channel.GetMessagesAsync(100)).ToList();
+            foreach (DiscordMessage msg in messageList)
+            {
+                if (msg.Author.Id == 530577683265093632)
+                {
+                    await msg.DeleteAsync();    
+                }
+            }
         }
 
         [Command("nivel")]

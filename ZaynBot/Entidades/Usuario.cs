@@ -53,7 +53,7 @@ namespace ZaynBot.Entidades
         {
             Nivel += 1;
             ExperienciaAtual = 0;
-            ExperienciaProximoNivel += 20;
+            ExperienciaProximoNivel += 30;
         }
     }
 }
