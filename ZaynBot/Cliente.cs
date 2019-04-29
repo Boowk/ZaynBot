@@ -1,4 +1,6 @@
 ﻿using DSharpPlus;
+using DSharpPlus.CommandsNext.Exceptions;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using System;
@@ -105,6 +107,7 @@ namespace ZaynBot
         private async Task Client_MessageCreated(MessageCreateEventArgs e)
         {
             if (e.Message.Author.IsBot) return;
+            if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
             user.Copiar(Banco.ConsultarUsuario(e.Author.Id));
             await MensagemNovaEnviada.XpUsuario(e, user);
             //Console.WriteLine($"[{DateTime.Now}] [{e.Guild.Name}] [{e.Message.Author}] {e.Message.Content}");
@@ -127,8 +130,7 @@ namespace ZaynBot
 
         private Task Client_ClientError(ClientErrorEventArgs e)
         {
-            e.Client.DebugLogger.LogMessage(LogLevel.Error, "ERRO", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
-
+            e.Client.DebugLogger.LogMessage(LogLevel.Error, "", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
             return Task.CompletedTask;
         }
     }

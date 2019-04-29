@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext.Exceptions;
+using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -34,6 +35,7 @@ namespace ZaynBot.Comandos
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
             var ctx = e.Context;
+            if (e.Exception is UnauthorizedException) return;
             if (e.Exception is ChecksFailedException ex)
             {
                 if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
