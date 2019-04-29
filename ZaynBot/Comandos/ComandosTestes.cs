@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ZaynBot.Entidades;
 
 namespace ZaynBot.Comandos
 {
@@ -31,6 +32,26 @@ namespace ZaynBot.Comandos
             await ctx.RespondAsync(DiscordEmoji.FromGuildEmote(ctx.Client, 550295427883466793).ToString());
 
             await ctx.RespondAsync($"{emojiOutroCanal.ToString()}, {emoji}, {emoji3}, {emoji4},, {emoji6}");
+        }
+
+        Usuario dep;
+        public ComandosTestes(Usuario d)
+        {
+            dep = d;
+        }
+
+        [Command("teste")]
+        [RequireOwner]
+        public async Task Jogando(CommandContext ctx, [RemainingText] string mensagem)
+        {
+            await ctx.RespondAsync($"{dep.Id}, {dep.Nome}");
+        }
+
+        [Command("nivel")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
+        public async Task Nivel(CommandContext ctx)
+        {
+            await ctx.RespondAsync($"{ctx.User.Mention}, o seu nível atual é {dep.Nivel}! Você ganha exp escrevendo no chat!");
         }
     }
 }

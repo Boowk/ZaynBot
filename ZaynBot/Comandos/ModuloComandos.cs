@@ -5,6 +5,7 @@ using DSharpPlus.CommandsNext.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot.Comandos.Administração;
 using ZaynBot.Comandos.Informações;
 
 namespace ZaynBot.Comandos
@@ -27,6 +28,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosInfo>();
+            Comandos.RegisterCommands<ComandosAdm>();
         }
 
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)

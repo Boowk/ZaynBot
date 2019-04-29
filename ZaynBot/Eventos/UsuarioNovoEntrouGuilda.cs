@@ -2,7 +2,7 @@
 using DSharpPlus.EventArgs;
 using System.Threading.Tasks;
 
-namespace ZaynBot.Funções
+namespace ZaynBot.Eventos
 {
    public static class UsuarioNovoEntrouGuilda
     {

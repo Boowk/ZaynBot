@@ -15,12 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Comandos\Administração\" />
     <Folder Include="Comandos\Memes\" />
     <Folder Include="Comandos\Rpg\" />
     <Folder Include="Entidades\Rpg\" />
     <Folder Include="BancoDeDados\" />
-    <Folder Include="Eventos\" />
   </ItemGroup>
 
 </Project>
