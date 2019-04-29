@@ -48,7 +48,7 @@ namespace ZaynBot.Comandos
             List<DiscordMessage> messageList = (await ctx.Channel.GetMessagesAsync(100)).ToList();
             foreach (DiscordMessage msg in messageList)
             {
-                if (msg.Author.Id == 530577683265093632)
+                if (msg.Author.Id == 459873132975620134)
                 {
                     await msg.DeleteAsync();    
                 }
