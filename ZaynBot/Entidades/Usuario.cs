@@ -25,17 +25,13 @@ namespace ZaynBot.Entidades
 
         public bool AdicionarExp(int exp)
         {
-            //         70      =   50 + 20
             double expResultante = ExperienciaAtual + exp;
-            // 70 >=  50     
             if (expResultante >= ExperienciaProximoNivel)
             {
                 do
                 {
-                    //             20  =         70 - 20
                     double quantosPrecisaProxNivel = expResultante - ExperienciaProximoNivel;
                     Evoluir();
-
                     expResultante = quantosPrecisaProxNivel;
                 } while (expResultante >= ExperienciaProximoNivel);
                 ExperienciaAtual += expResultante;
