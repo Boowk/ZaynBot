@@ -1,12 +1,7 @@
-﻿using DSharpPlus;
-using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
-using DSharpPlus.Exceptions;
+﻿using DSharpPlus.EventArgs;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
 
