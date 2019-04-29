@@ -34,8 +34,8 @@ namespace ZaynBot.Comandos
 
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
-            var ctx = e.Context;
-            if (e.Exception is UnauthorizedException) return;
+            CommandContext ctx = e.Context;
+
             if (e.Exception is ChecksFailedException ex)
             {
                 if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
@@ -52,10 +52,23 @@ namespace ZaynBot.Comandos
             }
             if (e.Exception is ArgumentException ax)
             {
-                //await ctx.RespondAsync($"{ctx.Member.Mention}, você está esquecendo de algum parâmetro? Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
-                await ctx.RespondAsync($"{ctx.Member.Mention}, um erro aconteceu.");
+                await ctx.RespondAsync($"{ctx.Member.Mention}, você está esquecendo de algum parâmetro? Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
             }
-
+            if (e.Exception is UnauthorizedException)
+            {
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"Sem permissão para falar no canal {ctx.Channel.Name}.", DateTime.Now);
+                return;
+            }
+            if (e.Exception is InvalidOperationException || e.Exception is CommandNotFoundException)
+            {
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
+                return;
+            }
+            //if(e.Exception is AggregateException)
+            //{
+            //    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
+            //    return;
+            //}
             e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Username} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
             return;
         }

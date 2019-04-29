@@ -11,7 +11,7 @@ namespace ZaynBot.Entidades
         public ulong Id { get; set; }
         public string Nome { get; set; }
         public int Nivel { get; set; } = 0;
-        public double ExperienciaProximoNivel { get; set; } = 10;
+        public double ExperienciaProximoNivel { get; set; } = 100;
         public double ExperienciaAtual { get; set; } = 0;
         public DateTime DataMensagemEnviada { get; set; }
         public DateTime DataContaCriada { get; set; } = DateTime.Now;
@@ -27,7 +27,7 @@ namespace ZaynBot.Entidades
             DataContaCriada = usuario.DataContaCriada;
         }
 
-        public bool AdicionarExp(double exp)
+        public bool AdicionarExp(int exp)
         {
             //         70      =   50 + 20
             double expResultante = ExperienciaAtual + exp;
@@ -53,7 +53,7 @@ namespace ZaynBot.Entidades
         {
             Nivel += 1;
             ExperienciaAtual = 0;
-            ExperienciaProximoNivel += 30;
+            ExperienciaProximoNivel += 25;
         }
     }
 }

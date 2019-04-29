@@ -41,7 +41,7 @@ namespace ZaynBot.Comandos
             dep = d;
         }
 
-        [Command("purgeAuto")]
+        [Command("purgeBot")]
         [RequireOwner]
         public async Task Jogando(CommandContext ctx)
         {

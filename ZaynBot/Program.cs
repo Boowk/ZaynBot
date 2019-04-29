@@ -68,8 +68,7 @@ namespace ZaynBot
 #else
                 StringPrefix = _config.Prefix,
 #endif                                                              
-                CaseSensitive = false,
-                EnableDms = true,
+                CaseSensitive = false,    
                 Dependencies = dep,
                 EnableDefaultHelp = false,
                 EnableMentionPrefix = true,

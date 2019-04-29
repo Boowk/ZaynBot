@@ -1,7 +1,7 @@
 ﻿using DSharpPlus;
-using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using System;
 using System.Threading.Tasks;
@@ -109,14 +109,23 @@ namespace ZaynBot
             if (e.Message.Author.IsBot) return;
             if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
             user.Copiar(Banco.ConsultarUsuario(e.Author.Id));
-            await MensagemNovaEnviada.XpUsuario(e, user);
-            //Console.WriteLine($"[{DateTime.Now}] [{e.Guild.Name}] [{e.Message.Author}] {e.Message.Content}");
-            // await Task.CompletedTask;
+            try
+            {
+                await MensagemNovaEnviada.XpUsuario(e, user);
+            }
+            catch (Exception ex)
+            {
+                if (ex is UnauthorizedException || ex is AggregateException)
+                {
+                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"Sem permissão para falar no canal {e.Channel.Name}.", DateTime.Now);
+                }
+            }
+            await Task.CompletedTask;
         }
 
         private Task Client_Ready(ReadyEventArgs e)
         {
-            e.Client.DebugLogger.LogMessage(LogLevel.Info, "RPG", "Cliente está pronto para processar eventos.", DateTime.Now);
+            e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", "Cliente está pronto para processar eventos.", DateTime.Now);
 
             return Task.CompletedTask;
 
@@ -124,7 +133,7 @@ namespace ZaynBot
 
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
-            e.Client.DebugLogger.LogMessage(LogLevel.Info, "RPG", $"Guilda disponível: {e.Guild.Name}", DateTime.Now);
+            e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"Guilda disponível: {e.Guild.Name}", DateTime.Now);
             return Task.CompletedTask;
         }
 

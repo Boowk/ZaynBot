@@ -1,4 +1,7 @@
-﻿using DSharpPlus.EventArgs;
+﻿using DSharpPlus;
+using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
+using DSharpPlus.Exceptions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -15,8 +18,9 @@ namespace ZaynBot.Eventos
         {
             if (DateTime.UtcNow >= user.DataMensagemEnviada)
             {
-                user.DataMensagemEnviada = DateTime.UtcNow.AddMinutes(3);
-                bool evoluiu = user.AdicionarExp(20);
+                user.DataMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
+                Random random = new Random();
+                bool evoluiu = user.AdicionarExp(random.Next(5, 26));
 
                 IMongoClient client = new MongoClient("mongodb://localhost");
                 IMongoDatabase database = client.GetDatabase("zaynbot");
