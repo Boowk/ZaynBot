@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="Comandos\Memes\" />
-    <Folder Include="Comandos\Rpg\" />
     <Folder Include="Entidades\Rpg\" />
     <Folder Include="BancoDeDados\" />
   </ItemGroup>

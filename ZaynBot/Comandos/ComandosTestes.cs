@@ -53,13 +53,6 @@ namespace ZaynBot.Comandos
             }
         }
 
-        [Command("nivel")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
-        public async Task Nivel(CommandContext ctx)
-        {
-            await ctx.RespondAsync($"{ctx.User.Mention}, o seu nível atual é {dep.Nivel}! Você ganha exp escrevendo no chat!");
-        }
-
         [Command("fff")]
         [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task fff(CommandContext ctx)

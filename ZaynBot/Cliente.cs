@@ -108,7 +108,7 @@ namespace ZaynBot
         {
             if (e.Message.Author.IsBot) return;
             if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
-            user.Copiar(Banco.ConsultarUsuario(e.Author.Id));
+            user.Copiar(Banco.ConsultarUsuario(e.Author));
             try
             {
                 await MensagemNovaEnviada.XpUsuario(e, user);
