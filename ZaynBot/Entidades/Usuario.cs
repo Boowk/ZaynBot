@@ -22,7 +22,7 @@ namespace ZaynBot.Entidades
 
 
         public void Copiar(Usuario usuario)
-        {
+        {                  
             Id = usuario.Id;
             Nome = usuario.Nome;
             Nivel = usuario.Nivel;
@@ -31,6 +31,8 @@ namespace ZaynBot.Entidades
             DataMensagemEnviada = usuario.DataMensagemEnviada;
             DataContaCriada = usuario.DataContaCriada;
             DataRespeitosReset = usuario.DataRespeitosReset;
+            Respeitos = usuario.Respeitos;
+            RespeitosDisponiveis = usuario.RespeitosDisponiveis;   
         }
 
         public bool AdicionarExp(int exp)

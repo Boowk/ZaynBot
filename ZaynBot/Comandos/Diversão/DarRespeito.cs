@@ -30,10 +30,10 @@ namespace ZaynBot.Comandos.Diversão
             }
             if (membro.IsBot == true)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você não pode respeitar um bot!! >:(");
+                await ctx.RespondAsync($"{ctx.User.Mention}, só usuarios amiguinho!! :) ");
                 return;
             }
-            if(membro == ctx.User)
+            if (membro == ctx.User)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não se auto respeitar !! >:( MENINO MAU!");
                 return;
@@ -49,7 +49,7 @@ namespace ZaynBot.Comandos.Diversão
                 await ctx.RespondAsync($"{membro.Mention} recebeu respeito de {ctx.User.Mention}! :+1:");
                 return;
             }
-            await ctx.RespondAsync($"{ctx.User.Mention}, você não tem mais respeitos para dar!");
+            await ctx.RespondAsync($"{ctx.User.Mention}, você não tem mais respeitos para dar! :( volte outro dia!");
 
         }
     }
