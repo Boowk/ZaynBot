@@ -1,4 +1,5 @@
-﻿using DSharpPlus.EventArgs;
+﻿using DSharpPlus;
+using DSharpPlus.EventArgs;
 using MongoDB.Driver;
 using System;
 using System.Linq.Expressions;
@@ -18,7 +19,7 @@ namespace ZaynBot.Eventos
                 Random random = new Random();
                 bool evoluiu = user.AdicionarExp(random.Next(5, 26));
                 Banco.AlterarUsuario(user);
-
+                e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"Autor: {e.Author.Username} evoluiu para o nível {user.Nivel}.", DateTime.Now);
                 if (evoluiu == true) await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}! O seu corpo evoluiu para o nível {user.Nivel}! Regeneração de vida e mana melhoradas!");
             }
             await Task.CompletedTask;
