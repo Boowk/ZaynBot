@@ -25,7 +25,7 @@ namespace ZaynBot.Eventos
 
                 Usuario userSalvar = colUsers.Find(filter).FirstOrDefault();
                 colUsers.ReplaceOne(filter, user);
-                if (evoluiu == true) await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}, você evoluiu para o nível {user.Nivel}! Vida e Mana Aumentadas!");
+                if (evoluiu == true) await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}, agora que você chegou no nível {user.Nivel}, vai precisar de mais {user.ExperienciaProximoNivel} EXP para o próximo nível! Vida e Mana Aumentadas!");
             }
             await Task.CompletedTask;
         }
