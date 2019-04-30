@@ -9,8 +9,17 @@ namespace ZaynBot.Entidades
         public int Nivel { get; set; } = 0;
         public double ExperienciaProximoNivel { get; set; } = 100;
         public double ExperienciaAtual { get; set; } = 0;
-        public DateTime DataMensagemEnviada { get; set; }
+        public int Respeitos { get; set; } = 0;
+        public int RespeitosDisponiveis { get; set; } = 0;
         public DateTime DataContaCriada { get; set; } = DateTime.Now;
+        public DateTime DataRespeitosReset { get; set; }
+        public DateTime DataMensagemEnviada { get; set; }
+
+        public Usuario()
+        {
+            //DataRespeitosReset = DataContaCriada.AddDays(14);
+        }
+
 
         public void Copiar(Usuario usuario)
         {
@@ -21,6 +30,7 @@ namespace ZaynBot.Entidades
             ExperienciaAtual = usuario.ExperienciaAtual;
             DataMensagemEnviada = usuario.DataMensagemEnviada;
             DataContaCriada = usuario.DataContaCriada;
+            DataRespeitosReset = usuario.DataRespeitosReset;
         }
 
         public bool AdicionarExp(int exp)

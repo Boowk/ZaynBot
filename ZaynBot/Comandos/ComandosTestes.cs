@@ -54,7 +54,7 @@ namespace ZaynBot.Comandos
         }
 
         [Command("fff")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
+        [RequireOwner]
         public async Task fff(CommandContext ctx)
         {
             await ctx.RespondAsync(string.Format(new Eventos.MensagensEventoBemVindo().Sortear(), ctx.User.Mention));

@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Comandos.Administração;
+using ZaynBot.Comandos.Diversão;
 using ZaynBot.Comandos.Informações;
 using ZaynBot.Comandos.Rpg;
 
@@ -31,7 +32,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosInfo>();
             Comandos.RegisterCommands<ComandosAdm>();
-
+            Comandos.RegisterCommands<DarRespeito>();
 
             #region ComandosRPG
             Comandos.RegisterCommands<Perfil>();

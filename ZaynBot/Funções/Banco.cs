@@ -31,5 +31,16 @@ namespace ZaynBot.Funções
             colUsers.InsertOne(user);
             return user;
         }
+
+        public static void AlterarUsuario(Usuario usuario)
+        {
+            IMongoClient client = new MongoClient("mongodb://localhost");
+            IMongoDatabase database = client.GetDatabase("zaynbot");
+            IMongoCollection<Usuario> colUsers = database.GetCollection<Usuario>("usuarios");
+
+            Expression<Func<Usuario, bool>> filter = x => x.Id.Equals(usuario.Id);
+
+            colUsers.ReplaceOne(filter, usuario);
+        }
     }
 }
