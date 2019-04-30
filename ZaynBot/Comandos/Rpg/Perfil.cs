@@ -21,16 +21,21 @@ namespace ZaynBot.Comandos.Rpg
         [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task VerPerfil(CommandContext ctx)
         {
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-            embed.WithColor(DiscordColor.Yellow);
-            embed.WithTitle($"**{ctx.User.Username}**");
-            //embed.WithDescription($"");                 
-            embed.AddField($":regional_indicator_l: Nível [138s]", $"{_userDep.Nivel} [EXP: {_userDep.ExperienciaAtual}/{_userDep.ExperienciaProximoNivel}]", true);
-            embed.WithThumbnailUrl(ctx.User.AvatarUrl);
-            embed.WithTimestamp(DateTime.Now);
-            embed.WithFooter("Perfil", ctx.User.AvatarUrl);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+            {
+                Author = new DiscordEmbedBuilder.EmbedAuthor()
+                {
+                    Name = ctx.User.Username,
+                    IconUrl = ctx.User.AvatarUrl
+                },
+                Title = "Corpo",
+                Description = $"Nivel {_userDep.Nivel} [Exp {_userDep.ExperienciaAtual}/{_userDep.ExperienciaProximoNivel}]",
+                Color = DiscordColor.Green,
+                Timestamp = DateTime.Now,
+                ThumbnailUrl = ctx.User.AvatarUrl,
+            };         
 
-            await ctx.RespondAsync(ctx.User.Mention, embed: embed.Build());
+            await ctx.RespondAsync(embed: embed.Build());
         }
     }
 }
