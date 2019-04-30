@@ -30,7 +30,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosInfo>();
-            Comandos.RegisterCommands<ComandosAdm>();  
+            Comandos.RegisterCommands<ComandosAdm>();
 
             #region ComandosRPG
             Comandos.RegisterCommands<Perfil>();
@@ -50,7 +50,7 @@ namespace ZaynBot.Comandos
                 else
                 {
                     await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + my.GetRemainingCooldown(ctx).Seconds + " segundos.");
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"Autor: {ctx.Message.Author} deve esperar {my.GetRemainingCooldown(ctx).Seconds} segundos para usar {ctx.Message.Content}", DateTime.Now);
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author} deve esperar {my.GetRemainingCooldown(ctx).Seconds} segundos para usar {ctx.Message.Content}", DateTime.Now);
                     return;
                 }
 
