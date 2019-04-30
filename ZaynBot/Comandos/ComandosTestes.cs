@@ -48,7 +48,7 @@ namespace ZaynBot.Comandos
             {
                 if (msg.Author.Id == 459873132975620134)
                 {
-                    await msg.DeleteAsync();    
+                    await msg.DeleteAsync();
                 }
             }
         }
@@ -58,6 +58,13 @@ namespace ZaynBot.Comandos
         public async Task Nivel(CommandContext ctx)
         {
             await ctx.RespondAsync($"{ctx.User.Mention}, o seu nível atual é {dep.Nivel}! Você ganha exp escrevendo no chat!");
+        }
+
+        [Command("fff")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
+        public async Task fff(CommandContext ctx)
+        {
+            await ctx.RespondAsync(string.Format(new Eventos.MensagensEventoBemVindo().Sortear(), ctx.User.Mention));
         }
     }
 }
