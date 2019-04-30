@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,9 +19,18 @@ namespace ZaynBot.Comandos.Rpg
 
         [Command("perfil")]
         [Cooldown(1, 15, CooldownBucketType.User)]
-        public async Task Nivel(CommandContext ctx)
+        public async Task VerPerfil(CommandContext ctx)
         {
-            await ctx.RespondAsync($"{ctx.User.Mention}, o seu nível atual é {_userDep.Nivel}! Você ganha exp escrevendo no chat!");
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            embed.WithColor(DiscordColor.Yellow);
+            embed.WithTitle($"**{ctx.User.Username}**");
+            //embed.WithDescription($"");
+            embed.AddField(":regional_indicator_l: Nível", $"{_userDep.Nivel} [EXP: {_userDep.ExperienciaAtual}/{_userDep.ExperienciaProximoNivel}]", true);
+            embed.WithThumbnailUrl(ctx.User.AvatarUrl);
+            embed.WithTimestamp(DateTime.Now);
+            embed.WithFooter("Perfil", ctx.User.AvatarUrl);
+
+            await ctx.RespondAsync(ctx.User.Mention, embed: embed.Build());
         }
     }
 }

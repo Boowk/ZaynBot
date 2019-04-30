@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Comandos.Administração;
 using ZaynBot.Comandos.Informações;
+using ZaynBot.Comandos.Rpg;
 
 namespace ZaynBot.Comandos
 {
@@ -30,6 +31,11 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosInfo>();
             Comandos.RegisterCommands<ComandosAdm>();
+
+
+            #region ComandosRPG
+            Comandos.RegisterCommands<Perfil>();
+            #endregion
         }
 
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
