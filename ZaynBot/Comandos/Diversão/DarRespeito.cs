@@ -33,6 +33,11 @@ namespace ZaynBot.Comandos.Diversão
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não pode respeitar um bot!! >:(");
                 return;
             }
+            if(membro == ctx.User)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, você não se auto respeitar !! >:( MENINO MAU!");
+                return;
+            }
             if (_userDep.RespeitosDisponiveis != 0)
             {
 
