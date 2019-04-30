@@ -28,7 +28,7 @@ namespace ZaynBot.Comandos.Rpg
                     Name = ctx.User.Username,
                     IconUrl = ctx.User.AvatarUrl
                 },
-                Title = "Corpo",
+                Title = ":muscle: Corpo",
                 Description = $"Nivel {_userDep.Nivel} [Exp {_userDep.ExperienciaAtual}/{_userDep.ExperienciaProximoNivel}]",
                 Color = DiscordColor.Green,
                 Timestamp = DateTime.Now,
