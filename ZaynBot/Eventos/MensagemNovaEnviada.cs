@@ -17,9 +17,9 @@ namespace ZaynBot.Eventos
                 user.DataMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
                 Random random = new Random();
                 bool evoluiu = user.AdicionarExp(random.Next(5, 26));
-
                 Banco.AlterarUsuario(user);
-                if (evoluiu == true) await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}, agora que você chegou no nível {user.Nivel}, vai precisar de mais {user.ExperienciaProximoNivel} EXP para o próximo nível! Vida e Mana Aumentadas!");
+
+                if (evoluiu == true) await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}! O seu corpo evoluiu para o nível {user.Nivel}! Regeneração de vida e mana melhoradas!");
             }
             await Task.CompletedTask;
         }
