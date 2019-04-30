@@ -26,7 +26,6 @@ namespace ZaynBot.Comandos.Rpg
             embed.WithTitle($"**{ctx.User.Username}**");
             //embed.WithDescription($"");                 
             embed.AddField($":regional_indicator_l: Nível [138s]", $"{_userDep.Nivel} [EXP: {_userDep.ExperienciaAtual}/{_userDep.ExperienciaProximoNivel}]", true);
-            embed.AddField(":+1: Respeitos [24h]", $"{_userDep.Respeitos}", true);
             embed.WithThumbnailUrl(ctx.User.AvatarUrl);
             embed.WithTimestamp(DateTime.Now);
             embed.WithFooter("Perfil", ctx.User.AvatarUrl);
