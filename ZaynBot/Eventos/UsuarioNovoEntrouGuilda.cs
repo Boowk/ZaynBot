@@ -20,6 +20,7 @@ namespace ZaynBot.Eventos
             //    DiscordChannel f = e.Guild.GetChannel(423347465912320000);
             //    await f.SendMessageAsync($"Bem-vindo {e.Member.Mention} ao Dragon and Zayn's RPG!");
             //}
+            await Task.CompletedTask;
         }
     }
 

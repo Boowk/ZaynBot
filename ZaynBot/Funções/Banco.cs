@@ -18,14 +18,12 @@ namespace ZaynBot.Funções
 
             Usuario user = colUsers.Find(filter).FirstOrDefault();
             if (user != null)
-            {
-                user.Nome = usuario.Username;
+            {                                     
                 return user;
             }
             user = new Usuario
             {
-                Id = usuario.Id,
-                Nome = usuario.Username,
+                Id = usuario.Id,          
                 DataMensagemEnviada = DateTime.UtcNow
             };
             colUsers.InsertOne(user);
