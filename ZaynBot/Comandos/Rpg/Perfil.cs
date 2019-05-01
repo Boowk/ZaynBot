@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
+using ZaynBot.Funções;
 
 namespace ZaynBot.Comandos.Rpg
 {
@@ -19,23 +20,44 @@ namespace ZaynBot.Comandos.Rpg
 
         [Command("perfil")]
         [Cooldown(1, 15, CooldownBucketType.User)]
-        public async Task VerPerfil(CommandContext ctx)
+        public async Task VerPerfil(CommandContext ctx, DiscordMember membro = null)
         {
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+            if (membro == null)
+            {
+                await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, _userDep).Build());
+                return;
+            }
+            if (membro.IsBot)
+            {
+                if (membro.Id != 459873132975620134)
+                {
+                    await ctx.RespondAsync($"{ctx.User.Mention}, não gosto dos outros bots! Porquê você não pergunta sobre mim? :(");
+                    return;
+                }
+                await ctx.RespondAsync($"{ctx.User.Mention}, sou uma garotinha legal! e gosto bastante de você! Mesmo me abusando bastante com esses comandos.... estranhos...");
+                return;
+            }
+
+            Usuario usuarioRequisitado = Banco.ConsultarUsuario(membro);
+            await ctx.RespondAsync(embed: GerarPerfil(membro, usuarioRequisitado).Build());
+        }
+
+        private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, Usuario usuario)
+        {
+            return new DiscordEmbedBuilder()
             {
                 Author = new DiscordEmbedBuilder.EmbedAuthor()
                 {
-                    Name = ctx.User.Username,
-                    IconUrl = ctx.User.AvatarUrl
+                    Name = membro.Username,
+                    IconUrl = membro.AvatarUrl
                 },
                 Title = ":beginner: Regeneração",
-                Description = $"Nivel {_userDep.Nivel} [Exp {_userDep.ExperienciaAtual}/{_userDep.ExperienciaProximoNivel}]",
+                Description = $"Nivel {usuario.Nivel} [Exp {usuario.ExperienciaAtual}/{usuario.ExperienciaProximoNivel}]",
                 Color = DiscordColor.Green,
                 Timestamp = DateTime.Now,
-                ThumbnailUrl = ctx.User.AvatarUrl,
-            };         
-
-            await ctx.RespondAsync(embed: embed.Build());
+                ThumbnailUrl = membro.AvatarUrl,
+            };
         }
+
     }
 }
