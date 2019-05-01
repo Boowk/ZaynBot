@@ -23,8 +23,8 @@ namespace ZaynBot.Eventos
 
                 if (evoluiu == true)
                 {
-                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} evoluiu o corpo para o nível {user.Nivel}.", DateTime.Now);
-                    await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}! O seu corpo evoluiu para o nível {user.Nivel}! Regeneração de vida e mana melhoradas!");
+                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} evoluiu regen para o nível {user.Nivel}.", DateTime.Now);
+                    await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}! A regeneração de vida e mana foram evoluidas para o nível {user.Nivel}! :beginner:");
                 }
                 else
                 {
