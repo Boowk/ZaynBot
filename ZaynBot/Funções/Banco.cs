@@ -47,6 +47,7 @@ namespace ZaynBot.Funções
             IMongoClient client = new MongoClient(LocalBancoSalvo);
             IMongoDatabase database = client.GetDatabase(BancoDeDados);
             IMongoCollection<T> col = database.GetCollection<T>(colecao);
+
             return col.Find(filtro).FirstOrDefault();
         }
 

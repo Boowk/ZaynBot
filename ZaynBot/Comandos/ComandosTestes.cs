@@ -2,8 +2,12 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
+using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
 
@@ -53,11 +57,41 @@ namespace ZaynBot.Comandos
             }
         }
 
+
+
         [Command("fff")]
         [RequireOwner]
         public async Task Fff(CommandContext ctx)
         {
-            await Task.CompletedTask;
+
+            IMongoClient client = new MongoClient("mongodb://localhost");
+            IMongoDatabase database = client.GetDatabase("zaynbot");
+            IMongoCollection<Usuario> col = database.GetCollection<Usuario>("usuarios");
+            StringBuilder g = new StringBuilder();
+            StringBuilder gg = new StringBuilder();
+
+            List<ulong> ids = new List<ulong>();
+            List<int> niveis = new List<int>();
+            List<DiscordUser> usuarios = new List<DiscordUser>();
+
+            await col.Find(FilterDefinition<Usuario>.Empty).Limit(3).Sort("{Nivel: -1}")
+                .ForEachAsync(x =>
+            {
+                ids.Add(x.Id);
+                niveis.Add(x.Nivel);
+
+                g.Append($"{x.Nivel}, {x.Id}\n");
+            }).ConfigureAwait(false);
+            int index = 0;
+            foreach (var item in ids)
+            {
+                DiscordUser u = await ctx.Client.GetUserAsync(item);
+                gg.Append($"{u.Username}, Nivel: {niveis[index]}");
+                index++;
+            }
+
+
+            await ctx.RespondAsync(g.ToString() + "KKKKK\n"+ gg.ToString());
         }
     }
 }
