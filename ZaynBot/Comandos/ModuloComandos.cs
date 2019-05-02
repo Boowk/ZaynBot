@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Comandos.Administração;
 using ZaynBot.Comandos.Informações;
+using ZaynBot.Comandos.Rpg;
 
 namespace ZaynBot.Comandos
 {
@@ -30,9 +31,10 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosInfo>();
             Comandos.RegisterCommands<ComandosAdm>();
+            Comandos.RegisterCommands<Perfil>();
 
             #region ComandosRPG
-            Comandos.RegisterCommands<Perfil>();
+            Comandos.RegisterCommands<Personagem>();
             #endregion
         }
 
