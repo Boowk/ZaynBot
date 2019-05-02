@@ -1,5 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
+using MongoDB.Bson.Serialization.Attributes;
 using ZaynBot.Entidades.Rpg;
 
 namespace ZaynBot.Entidades
@@ -11,14 +11,13 @@ namespace ZaynBot.Entidades
         public int Nivel { get; set; } = 0;
         public double ExperienciaProximoNivel { get; set; } = 100;
         public double ExperienciaAtual { get; set; } = 0;
-        public DateTime DataContaCriada { get; set; } = DateTime.Now;
-        public DateTime DataMensagemEnviada { get; set; }
-        public Personagem Personagem { get; set; }
+        public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
+        public DateTime DataMensagemEnviada { get; set; } = DateTime.UtcNow;
+        public Personagem Personagem { get; set; } = new Personagem();
 
-        public Usuario()
+        public Usuario(ulong id)
         {
-            Personagem = new Personagem();
-            //DataRespeitosReset = DataContaCriada.AddDays(14);
+            Id = id;
         }
 
         public void Copiar(Usuario usuario)

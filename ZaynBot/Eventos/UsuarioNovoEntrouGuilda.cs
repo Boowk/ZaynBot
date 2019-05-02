@@ -19,7 +19,6 @@ namespace ZaynBot.Eventos
             {
                 DiscordChannel f = e.Guild.GetChannel(423347465912320000);
                 await f.SendMessageAsync(string.Format(MensagensEventoBemVindo.Sortear(), e.Member.Mention));
-
             }
             await Task.CompletedTask;
         }

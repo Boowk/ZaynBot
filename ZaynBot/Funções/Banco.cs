@@ -17,15 +17,8 @@ namespace ZaynBot.Funções
             Expression<Func<Usuario, bool>> filter = x => x.Id.Equals(usuario.Id);
 
             Usuario user = colUsers.Find(filter).FirstOrDefault();
-            if (user != null)
-            {
-                return user;
-            }
-            user = new Usuario
-            {
-                Id = usuario.Id,
-                DataMensagemEnviada = DateTime.UtcNow
-            };
+            if (user != null) return user;
+            user = new Usuario(usuario.Id);
             colUsers.InsertOne(user);
             return user;
         }
