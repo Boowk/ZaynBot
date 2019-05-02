@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ZaynBot.Entidades.Rpg
 {
+   
     public class Personagem
     {
         public string Raça { get; set; }

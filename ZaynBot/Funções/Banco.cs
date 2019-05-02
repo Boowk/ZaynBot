@@ -21,9 +21,17 @@ namespace ZaynBot.Funções
         {
             Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(discordUser.Id);
             Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
-            if (user != null) return user;
+            if (user != null)
+            {
+                if (user.Personagem == null)
+                {
+                    user.Personagem = new Entidades.Rpg.Personagem();
+                    AlterarUsuario(user);
+                }
+                return user;
+            }
             user = new Usuario(discordUser.Id);
-            //colUsers.InsertOne(user);
+            AdicionarItem(user, ColecaoUsuarios);
             return user;
         }
 
@@ -39,7 +47,6 @@ namespace ZaynBot.Funções
             IMongoClient client = new MongoClient(LocalBancoSalvo);
             IMongoDatabase database = client.GetDatabase(BancoDeDados);
             IMongoCollection<T> col = database.GetCollection<T>(colecao);
-
             return col.Find(filtro).FirstOrDefault();
         }
 

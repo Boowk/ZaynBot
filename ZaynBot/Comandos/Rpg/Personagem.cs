@@ -21,7 +21,7 @@ namespace ZaynBot.Comandos.Rpg
 
         [Command("personagem")]
         [Cooldown(1, 15, CooldownBucketType.User)]
-        public async Task PersonagemAb(CommandContext ctx, DiscordMember membro = null)
+        public async Task PersonagemAb(CommandContext ctx, DiscordUser membro = null)
         {
             if (membro == null)
             {
@@ -41,7 +41,7 @@ namespace ZaynBot.Comandos.Rpg
             await ctx.RespondAsync("Atenção - Futuramente será necessario a habilidade inspecionar.", embed: GerarPersonagem(membro, Banco.ConsultarUsuario(membro)).Build());
         }
 
-        private DiscordEmbedBuilder GerarPersonagem(DiscordMember membro, Usuario usuario)
+        private DiscordEmbedBuilder GerarPersonagem(DiscordUser membro, Usuario usuario)
         {
             ZaynBot.Entidades.Rpg.Personagem personagem = usuario.Personagem;
             return new DiscordEmbedBuilder()

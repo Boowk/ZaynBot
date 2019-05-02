@@ -26,7 +26,10 @@ namespace ZaynBot.Entidades
             Nivel = 0;
         }
 
-        public Usuario() { }
+        public Usuario()
+        {
+            
+        }
 
         public void Copiar(Usuario usuario)
         {
