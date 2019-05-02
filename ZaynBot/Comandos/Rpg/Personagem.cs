@@ -58,8 +58,8 @@ namespace ZaynBot.Comandos.Rpg
                 ThumbnailUrl = membro.AvatarUrl,
             }
             .AddField("⌈Raça⌋", $"{personagem.Raça}", true)
-            .AddField("⌈Vida⌋", $"{personagem.PontosDeVida}/{personagem.PontosDeVidaMaxima}", true)
-            .AddField("⌈Mana⌋", $"{personagem.PontosDeMana}/{personagem.PontosDeManaMaximo}", true)
+            .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida}/{personagem.PontosDeVidaMaxima}", true)
+            .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana}/{personagem.PontosDeManaMaximo}", true)
             .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico}", true)
             .AddField("⌈Defesa física⌋", $"{personagem.DefesaFisica}", true)
             .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico}", true)
@@ -67,7 +67,7 @@ namespace ZaynBot.Comandos.Rpg
             .AddField("⌈Velocidade⌋", $"{personagem.Velocidade}", true)
             .AddField("⌈Sorte⌋", $"{personagem.Sorte}", true)
             .AddField("⌈Equipamento⌋", $"Em contrução", true)
-            .AddField("⌈Habiliade⌋", $"Em contrução", true)
+            .AddField("⌈Habiliades⌋", $"Em contrução", true)
             .AddField("⌈Títulos adquiridos⌋", $"Em contrução", true)
             .AddField("⌈Empregos disponíveis⌋", $"Em contrução", true)
             .AddField("⌈Bêncãos⌋", $"Nenhuma", true);
