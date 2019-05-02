@@ -55,9 +55,9 @@ namespace ZaynBot.Comandos
 
         [Command("fff")]
         [RequireOwner]
-        public async Task fff(CommandContext ctx)
+        public async Task Fff(CommandContext ctx)
         {
-            await ctx.RespondAsync(string.Format(new Eventos.MensagensEventoBemVindo().Sortear(), ctx.User.Mention));
+            await Task.CompletedTask;
         }
     }
 }
