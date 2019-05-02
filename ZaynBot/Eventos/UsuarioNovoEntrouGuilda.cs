@@ -15,11 +15,12 @@ namespace ZaynBot.Eventos
             //    DiscordChannel f = e.Guild.GetChannel(551469878268395530);
             //    await f.SendMessageAsync(string.Format(new MensagensEventoBemVindo().Sortear(), e.Member.Mention) + $"\nNão se esqueça de ler as regras!");
             //}
-            //if (e.Guild.Id == 420044060720627712)
-            //{
-            //    DiscordChannel f = e.Guild.GetChannel(423347465912320000);
-            //    await f.SendMessageAsync($"Bem-vindo {e.Member.Mention} ao Dragon and Zayn's RPG!");
-            //}
+            if (e.Guild.Id == 420044060720627712)
+            {
+                DiscordChannel f = e.Guild.GetChannel(423347465912320000);
+                await f.SendMessageAsync(string.Format(new MensagensEventoBemVindo().Sortear(), e.Member.Mention));
+
+            }
             await Task.CompletedTask;
         }
     }
