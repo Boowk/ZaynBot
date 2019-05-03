@@ -16,6 +16,7 @@ namespace ZaynBot.Comandos
     public class ComandosTestes
     {
         [Command("testeEmoji")]
+        [Hidden]
         [RequireOwner]
         public async Task TesteEmoji(CommandContext ctx)
         {
@@ -44,6 +45,7 @@ namespace ZaynBot.Comandos
         }
 
         [Command("purgeBot")]
+        [Hidden]
         [RequireOwner]
         public async Task Jogando(CommandContext ctx)
         {
@@ -60,6 +62,7 @@ namespace ZaynBot.Comandos
 
 
         [Command("fff")]
+        [Hidden]
         [RequireOwner]
         public async Task Fff(CommandContext ctx)
         {

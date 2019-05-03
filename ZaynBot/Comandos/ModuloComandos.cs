@@ -27,6 +27,7 @@ namespace ZaynBot.Comandos
 
         public void RegistrarComandos()
         {
+            Comandos.SetHelpFormatter<AjudaFormatador>();
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosInfo>();
