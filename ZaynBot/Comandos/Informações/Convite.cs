@@ -12,7 +12,6 @@ namespace ZaynBot.Comandos.Informações
     {
         [Command("convite")]
         [Description("Envia uma serie de link sobre o bot.")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task ConviteAb(CommandContext ctx)
         {
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

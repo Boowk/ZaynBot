@@ -16,8 +16,7 @@ namespace ZaynBot.Comandos.Informações
             _userDep = userDep;
         }
 
-        [Command("perfil")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
+        [Command("perfil")]                         
         public async Task VerPerfil(CommandContext ctx, DiscordMember membro = null)
         {
             if (membro == null)

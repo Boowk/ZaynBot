@@ -9,12 +9,10 @@ namespace ZaynBot.Comandos.Informações
 {
     [Group("info")]
     [Description("Comandos informativos.")]
-    [Cooldown(1, 10, CooldownBucketType.User)]
     public class ComandosInfo
     {
         [Command("ping")]
         [Description("Exibe o tempo de resposta do bot ao servidor do discord.")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task ComandoPing(CommandContext ctx)
         {
             await Ping.PingAb(ctx);
@@ -22,7 +20,6 @@ namespace ZaynBot.Comandos.Informações
 
         [Group("ranque")]
         [Description("Comandos comparativos.")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
         public class GrupoRanque
         {
             [Command("nivel")]

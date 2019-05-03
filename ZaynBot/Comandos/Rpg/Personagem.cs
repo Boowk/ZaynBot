@@ -19,8 +19,7 @@ namespace ZaynBot.Comandos.Rpg
         }
 
 
-        [Command("personagem")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
+        [Command("personagem")]                    
         public async Task PersonagemAb(CommandContext ctx, DiscordUser membro = null)
         {
             if (membro == null)
