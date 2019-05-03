@@ -10,6 +10,27 @@ Eu tenho várias funções para entretenimento (como comandos engraçados e meme
 
 Um dos motivos que me fizeram me tornar o que eu sou hoje é a falta de bots brasileiros para o Discord, já que muitos servidores brasileiros no Discord usam bots "de baixa qualidade" em português ou usam bots que falam (na verdade escrevem) em inglês... e convenhamos, nenhuma dessas opções parece agradável para os usuários... e por isto que eu prometo mudar isto!
 
+## Planos
+
+* [ ] Sistema de Economia
+  * [ ] Dar moeda
+* [ ] O básico
+    * [X] Cooldown -  Tempo de espera para os comandos
+    * [X] Comandos encurtado
+    * [x] Comando de ajuda padrão
+      * [ ] Comando de ajuda personalizado
+* [ ] Batalha
+  * [X] Coletar dados do usuario
+  * [X] Trabalhos?
+    * [ ] Nomes? (Plebeu, Mago, Arqueiro, etc?)
+  * [X] Perfil
+  * [X] Nível
+  * [ ] Desafiar outras pessoas
+* [ ] Comando de comprar
+* [X] Perfil
+  * [X] Nivel
+* [ ] Sistema de Pet
+
 ## 🤔 Como adiciono ela ao meu servidor?
 
 Se você quiser usar a Zaynrina no seu servidor, você pode adicionar ela clicando [aqui](https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=469887175&scope=bot).
