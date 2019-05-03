@@ -34,16 +34,8 @@ namespace ZaynBot.Comandos.Informações
                 int index = 0;
                 foreach (var item in ids)
                 {
-                    try
-                    {
-                        DiscordMember m = await ctx.Guild.GetMemberAsync(item);
-                        gg.Append($"{m.Mention} - Nivel: {niveis[index]}\n");
-                    }
-                    catch
-                    {
-                        DiscordUser u = await ctx.Client.GetUserAsync(item);
-                        gg.Append($"{u.Username} - Nivel: {niveis[index]}\n");
-                    }
+                    DiscordUser u = await ctx.Client.GetUserAsync(item);
+                    gg.Append($"{u.Username} - Nivel: {niveis[index]}\n");
                     index++;
                 }
                 await ctx.RespondAsync(gg.ToString());
