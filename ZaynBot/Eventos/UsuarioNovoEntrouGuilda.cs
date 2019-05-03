@@ -32,8 +32,11 @@ namespace ZaynBot.Eventos
             {
                 "Batatinha quando nasce espalha rama pelo chão, {0} chegou na área para trazer animação!",
                 "{0} acabou de entrar. Finjam que estão ocupados!",
-                "Estávamos esperando por você, {0}.",
-                "{0} está aqui, conforme a profecia."
+                "{0} ouviu o zunzunzum sobre a festa de ontem?"   ,
+                "Estavamos esperando {0} ( ͡° ͜ʖ ͡°)",
+                "Bem vindo {0}! Deixe as suas armas na porta.",
+                "{0} acabou de chegar. Parece OP - nerfa por favor."  ,
+                "Muhahaha! {0} chegou ativando minha armadilha!!"
             };
             Random r = new Random();
             return Mensagens[r.Next(0, Mensagens.Count)];
