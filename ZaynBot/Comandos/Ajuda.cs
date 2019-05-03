@@ -12,7 +12,7 @@ namespace ZaynBot.Comandos
         [Command("ajuda")]
         [Aliases("h", "?")]
         [Description("Exibe os comandos, a descrição do comando, suas abreviações e argumentos.")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
+        [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task HelpAsync(CommandContext ctx, [Description("Nome do comando")]params string[] comando)
         {
             await ctx.CommandsNext.DefaultHelpAsync(ctx, comando);
