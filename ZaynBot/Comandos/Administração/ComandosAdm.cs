@@ -15,6 +15,7 @@ namespace ZaynBot.Comandos.Administração
         public async Task ComandoBotJogando(CommandContext ctx, [RemainingText] string texto = "")
         {
             await Cliente.Client.UpdateStatusAsync(new DiscordGame(texto));
+            await ctx.RespondAsync("Status jogando alterado com sucesso!");
         }
     }
 }
