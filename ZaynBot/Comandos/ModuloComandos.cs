@@ -37,6 +37,7 @@ namespace ZaynBot.Comandos
 
             #region ComandosRPG
             Comandos.RegisterCommands<Personagem>();
+            Comandos.RegisterCommands<GuildaComando>();
             #endregion
         }
 

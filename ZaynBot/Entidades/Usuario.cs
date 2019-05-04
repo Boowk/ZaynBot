@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using ZaynBot.Entidades.Rpg;
 
@@ -14,6 +16,9 @@ namespace ZaynBot.Entidades
         public DateTime DataContaCriada { get; set; }
         public DateTime DataMensagemEnviada { get; set; }
         public Personagem Personagem { get; set; }
+        public List<Convite> ConvitesGuildas { get; set; }
+
+        public ObjectId IdGuilda { get; set; }
 
         public Usuario(ulong id)
         {
@@ -24,11 +29,12 @@ namespace ZaynBot.Entidades
             ExperienciaAtual = 0;
             ExperienciaProximoNivel = 100;
             Nivel = 0;
+            ConvitesGuildas = new List<Convite>();
         }
 
         public Usuario()
         {
-            
+
         }
 
         public void Copiar(Usuario usuario)
@@ -40,6 +46,8 @@ namespace ZaynBot.Entidades
             DataMensagemEnviada = usuario.DataMensagemEnviada;
             DataContaCriada = usuario.DataContaCriada;
             Personagem = usuario.Personagem;
+            ConvitesGuildas = usuario.ConvitesGuildas;
+            IdGuilda = usuario.IdGuilda;
         }
 
         public bool AdicionarExp(int exp)

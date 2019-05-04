@@ -16,7 +16,7 @@ namespace ZaynBot.Comandos.Informações
             _userDep = userDep;
         }
 
-        [Command("perfil")]                         
+        [Command("perfil")]
         public async Task VerPerfil(CommandContext ctx, DiscordMember membro = null)
         {
             if (membro == null)
@@ -41,6 +41,12 @@ namespace ZaynBot.Comandos.Informações
 
         private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, Usuario usuario)
         {
+            string guildaNome = "Nenhuma";
+            if (usuario.IdGuilda.ToString() != "000000000000000000000000")
+            {
+                guildaNome = Banco.ConsultarGuilda(usuario.IdGuilda).Nome;
+            }
+
             return new DiscordEmbedBuilder()
             {
                 Author = new DiscordEmbedBuilder.EmbedAuthor()
@@ -53,7 +59,7 @@ namespace ZaynBot.Comandos.Informações
                 Color = DiscordColor.Green,
                 Timestamp = DateTime.Now,
                 ThumbnailUrl = membro.AvatarUrl,
-            };
+            }.AddField("Guilda", $"{guildaNome}");
         }
 
     }

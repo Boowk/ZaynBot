@@ -1,8 +1,10 @@
 ﻿using DSharpPlus.Entities;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Linq.Expressions;
 using ZaynBot.Entidades;
+using ZaynBot.Entidades.Rpg;
 
 namespace ZaynBot.Funções
 {
@@ -11,6 +13,8 @@ namespace ZaynBot.Funções
         private const string LocalBancoSalvo = "mongodb://localhost";
         private const string BancoDeDados = "zaynbot";
         private const string ColecaoUsuarios = "usuarios";
+        private const string ColecaoGuildas = "guildas";
+        private const string ColecaoServidores = "servidores";
 
         /// <summary>
         /// Consulta por um usuario no banco de dados.
@@ -26,7 +30,12 @@ namespace ZaynBot.Funções
                 if (user.Personagem == null)
                 {
                     user.Personagem = new Entidades.Rpg.Personagem();
+
                     AlterarUsuario(user);
+                }
+                if (user.ConvitesGuildas == null)
+                {
+                    user.ConvitesGuildas = new System.Collections.Generic.List<Convite>();
                 }
                 return user;
             }
@@ -34,6 +43,80 @@ namespace ZaynBot.Funções
             AdicionarItem(user, ColecaoUsuarios);
             return user;
         }
+
+        /// <summary>
+        /// Altera um usuario no banco de dados.
+        /// </summary>
+        /// <param name="usuario"></param>
+        public static void AlterarUsuario(Usuario usuario)
+        {
+            Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
+
+            AlterarItem(filtro, usuario, ColecaoUsuarios);
+        }
+
+        /// <summary>
+        /// Consulta por uma guilda no banco de dados.
+        /// </summary>
+        /// <param name="idGuilda"></param>
+        /// <returns>Guilda</returns>
+        public static Guilda ConsultarGuilda(ObjectId idGuilda)
+        {
+            Expression<Func<Guilda, bool>> filtro = x => x.Id.Equals(idGuilda);
+            Guilda guilda = ConsultarItem(filtro, ColecaoGuildas);
+            if (guilda != null)
+            {
+                return guilda;
+            }
+            return null;
+        }
+
+        public static ObjectId ConsultarGuildaCriador(ulong dono)
+        {
+            Expression<Func<Guilda, bool>> filtro = x => x.IdDono.Equals(dono);
+            Guilda guilda = ConsultarItem(filtro, ColecaoGuildas);
+
+            return guilda.Id;
+        }
+
+        /// <summary>
+        /// Consulta por uma guilda no banco de dados.
+        /// </summary>
+        /// <param name="idGuilda"></param>
+        /// <returns>Guilda</returns>
+        public static bool CriarGuilda(Guilda guilda)
+        {
+            Expression<Func<Guilda, bool>> filtro = x => x.Nome.Equals(guilda.Nome);
+            Guilda guildaAchou = ConsultarItem(filtro, ColecaoGuildas);
+            if (guildaAchou != null)
+            {
+                return false;
+            }
+
+            guildaAchou = new Guilda()
+            {
+                Convites = new System.Collections.Generic.List<Convite>(),
+                Nome = guilda.Nome,
+                IdDono = guilda.IdDono,
+                Membros = new System.Collections.Generic.List<Usuario>(),
+                Descricao = "Sem descrição",
+                Id = new ObjectId(),
+            };
+            AdicionarItem(guildaAchou, ColecaoGuildas);
+            return true;
+        }
+
+        /// <summary>
+        /// Altera uma guilda no banco de dados.
+        /// </summary>
+        /// <param name="idGuilda"></param>
+        public static void AlterarGuilda(Guilda guilda)
+        {
+            Expression<Func<Guilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
+
+            AlterarItem(filtro, guilda, ColecaoGuildas);
+        }
+
 
         /// <summary>
         /// Consulta por um item no banco de dados
@@ -80,17 +163,6 @@ namespace ZaynBot.Funções
             IMongoCollection<T> col = database.GetCollection<T>(colecao);
 
             col.ReplaceOne(filtro, item);
-        }
-
-        /// <summary>
-        /// Altera um usuario no banco de dados.
-        /// </summary>
-        /// <param name="usuario"></param>
-        public static void AlterarUsuario(Usuario usuario)
-        {
-            Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
-
-            AlterarItem(filtro, usuario, ColecaoUsuarios);
         }
     }
 }
