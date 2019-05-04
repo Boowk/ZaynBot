@@ -36,7 +36,7 @@ namespace ZaynBot.Comandos.Rpg
             await ctx.TriggerTypingAsync();
 
             await ctx.RespondAsync("Comando em construção");
-            return
+            return;
 
             if (nome == null)
             {
