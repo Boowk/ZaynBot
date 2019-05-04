@@ -21,10 +21,10 @@ namespace ZaynBot.Comandos.Administração
         [Command("foryou")]
         [RequireOwner]
         [Hidden]
-        public async Task foryou(CommandContext ctx, DiscordGuild f, DiscordChannel g, [RemainingText] string texto)
+        public async Task foryou(CommandContext ctx, DiscordGuild f, ulong g, [RemainingText] string texto)
         {
             DiscordGuild ff = await Cliente.Client.GetGuildAsync(f.Id);
-            DiscordChannel gg = ff.GetChannel(g.Id);
+            DiscordChannel gg = ff.GetChannel(g);
             await gg.SendMessageAsync(texto);
         }
     }
