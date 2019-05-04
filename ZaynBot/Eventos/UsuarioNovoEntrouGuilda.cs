@@ -36,7 +36,8 @@ namespace ZaynBot.Eventos
                 "Estavamos esperando você {0} ( ͡° ͜ʖ ͡°)",
                 "Bem vindo {0}! Deixe as suas armas na porta.",
                 "{0} acabou de chegar. Parece OP - nerfa por favor."  ,
-                "Muhahaha! {0} chegou ativando minha armadilha!!"
+                "Muhahaha! {0} chegou ativando minha armadilha!!",
+                "Com calma e jeito, se faz amizade com qualquer sujeito, bem vindo {0}"
             };
             Random r = new Random();
             return Mensagens[r.Next(0, Mensagens.Count)];
