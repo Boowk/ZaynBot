@@ -98,7 +98,7 @@ namespace ZaynBot.Funções
                 Convites = new System.Collections.Generic.List<Convite>(),
                 Nome = guilda.Nome,
                 IdDono = guilda.IdDono,
-                Membros = new System.Collections.Generic.List<Usuario>(),
+                Membros = new System.Collections.Generic.List<ulong>(),
                 Descricao = "Sem descrição",
                 Id = new ObjectId(),
             };

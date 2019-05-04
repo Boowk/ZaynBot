@@ -13,7 +13,7 @@ namespace ZaynBot.Entidades.Rpg
         public ulong IdDono { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public List<Usuario> Membros { get; set; }
+        public List<ulong> Membros { get; set; }
         public List<Convite> Convites { get; set; }
     }
 

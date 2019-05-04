@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
 using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
@@ -124,6 +125,60 @@ namespace ZaynBot.Comandos.Rpg
             _userDep.ConvitesGuildas.Clear();
             Banco.AlterarUsuario(_userDep);
             await ctx.RespondAsync($"{ctx.User.Mention}, a guilda {nome} foi criada!");
+        }
+
+        [Command("aceitar")]
+        [Description("Mostra os convites para aceitar")]
+        public async Task GuildaAceitar(CommandContext ctx)
+        {
+            if (_userDep.ConvitesGuildas.Count == 0)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, você não tem convites pendentes.");
+                return;
+            }
+            StringBuilder nomeGuildas = new StringBuilder();
+            int index = 0;
+            foreach (var item in _userDep.ConvitesGuildas)
+            {
+                nomeGuildas.Append(index + " - " + Banco.ConsultarGuilda(item.IdGuilda).Nome + " - Data do convite: " + item.DataConvidado + "\n");
+            }
+            await ctx.RespondAsync($"{ctx.User.Mention}, qual guilda você deseja entrar? (escreva o número do começo)\n{nomeGuildas.ToString()}");
+
+            var Interactivity = ctx.Client.GetInteractivityModule();
+            var m = await Interactivity.WaitForMessageAsync(
+                x => x.Channel.Id == ctx.Channel.Id
+                && x.Author.Id == ctx.User.Id, TimeSpan.FromSeconds(30));
+
+            if (m == null)
+            {
+                return;
+            }
+            int escolha = 0;
+            try { escolha = Convert.ToInt32(m.Message.Content); } catch { await ctx.RespondAsync($"{ctx.User.Mention}, você precisa digitar um número inteiro!"); return; }
+
+            if (escolha < 0 || escolha > 5)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, convite inexistente!");
+            }
+            Convite vaiEntrar;
+            try
+            {
+                vaiEntrar = _userDep.ConvitesGuildas[escolha];
+            }
+            catch
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, não tem convite nesse slot!");
+                return;
+            }
+            _userDep.IdGuilda = vaiEntrar.IdGuilda;
+            _userDep.ConvitesGuildas.Clear();
+            Banco.AlterarUsuario(_userDep);
+            Guilda guilda = Banco.ConsultarGuilda(vaiEntrar.IdGuilda);
+            guilda.Membros.Add(_userDep.Id);
+            guilda.Convites.RemoveAll(x => x.IdUsuario == _userDep.Id);
+            Banco.AlterarGuilda(guilda);
+
+            await ctx.RespondAsync($"{ctx.User.Mention} acaba de entrar na guilda {guilda.Nome}!!");
         }
     }
 }
