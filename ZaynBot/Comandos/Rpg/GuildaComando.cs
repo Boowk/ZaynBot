@@ -25,6 +25,37 @@ namespace ZaynBot.Comandos.Rpg
             _userDep = userDep;
         }
 
+        public async Task ExecuteGroupAsync(CommandContext ctx)
+        {
+
+        }
+
+        [Command("info")]
+        [Description("Exibe a informação da sua guilda")]
+        public async Task GuildaInfo(CommandContext ctx, [Description("Outra guilda")]string nome = null)
+        {
+            await ctx.TriggerTypingAsync();
+
+            await ctx.RespondAsync("Comando em construção");
+            return
+
+            if (nome == null)
+            {
+                if (_userDep.IdGuilda.ToString() == "000000000000000000000000")
+                {
+                    await ctx.RespondAsync($"{ctx.User.Mention}, você precisa de uma guilda antes de tentar ver alguma informação.");
+                    return;
+                };
+
+                Guilda guilda = Banco.ConsultarGuilda(_userDep.IdGuilda);
+
+
+            }
+
+
+
+        }
+
         [Command("convidar")]
         [Description("Convida um usuario para a sua guilda")]
         public async Task GuildaConvidar(CommandContext ctx, [Description("Membro do servidor")]DiscordMember membro = null)
