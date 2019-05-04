@@ -24,8 +24,8 @@ namespace ZaynBot.Comandos.Administração
         public async Task foryou(CommandContext ctx, DiscordGuild f, DiscordChannel g, [RemainingText] string texto)
         {
             DiscordGuild ff = await Cliente.Client.GetGuildAsync(f.Id);
-            DiscordChannel gg = f.GetChannel(g.Id);
-            await g.SendMessageAsync(texto);
+            DiscordChannel gg = ff.GetChannel(g.Id);
+            await gg.SendMessageAsync(texto);
         }
     }
 }
