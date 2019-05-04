@@ -1,11 +1,8 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace ZaynBot.Entidades.Rpg
 {
-   
+
     public class Personagem
     {
         public string Raça { get; set; }

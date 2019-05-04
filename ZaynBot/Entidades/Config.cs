@@ -1,9 +1,5 @@
-﻿using DSharpPlus.Entities;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
 using System.IO;
-using System.Text;
 
 namespace ZaynBot.Entidades
 {
