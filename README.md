@@ -11,25 +11,81 @@ Eu tenho várias funções para entretenimento (como comandos engraçados e meme
 Um dos motivos que me fizeram me tornar o que eu sou hoje é a falta de bots brasileiros para o Discord, já que muitos servidores brasileiros no Discord usam bots "de baixa qualidade" em português ou usam bots que falam (na verdade escrevem) em inglês... e convenhamos, nenhuma dessas opções parece agradável para os usuários... e por isto que eu prometo mudar isto!
 
 ## Planos
-
-* [ ] Sistema de Economia
-  * [ ] Dar moeda
 * [ ] O básico
-    * [X] Cooldown -  Tempo de espera para os comandos
-    * [X] Comandos encurtado
-    * [x] Comando de ajuda padrão
-      * [ ] Comando de ajuda personalizado
-* [ ] Batalha
-  * [X] Coletar dados do usuario
-  * [X] Trabalhos?
-    * [ ] Nomes? (Plebeu, Mago, Arqueiro, etc?)
-  * [X] Perfil
-  * [X] Nível
-  * [ ] Desafiar outras pessoas
-* [ ] Comando de comprar
-* [X] Perfil
-  * [X] Nivel
-* [ ] Sistema de Pet
+  * [x] Cooldown - Tempo de espera para usar comandos
+  * [x] Comandos encurtados
+  * [x] Comando de ajuda (básico)
+    * [ ] Personalizado
+  * [ ] Enviar mensagem
+    * [ ] Embed (Não está todos assim)
+    * ~~[x] Privado~~ (acho que isso transforma o bot chato)
+    * [ ] Formato normal (Personalizado)
+    * [ ] Formato imagem (Personalizado)
+* [ ] Administração
+  * [ ] Kick direto
+  * [ ] Ban direto
+  * [ ] Aviso a membro
+    * [ ] Dar aviso
+    * [ ] Spam
+    * [ ] Link de Convite
+  * [ ] Advertencia a membro
+    * [ ] Dar advertencia 
+    * [ ] Spam
+    * [ ] Link de Convite
+  * [ ] Ganha x Advertencia após x Avisos
+  * [ ] Ganha mute após x Advertencia
+  * [ ] Ganha kick após x Advertencia
+  * [ ] Ganha ban após x Advertencia
+  * [ ] Ganha cargo após x Advertencia
+  * [ ] Apagar x mensagens
+    * [ ] De usuario
+    * [ ] Do canal
+  * [ ] Enviar mensagem em canal especifico
+  * [ ] Canal de logs de advertencia, avisos, ban, kick
+* [ ] RPG
+  * [x] Nível de participação (Mensagens no chat, influencia no rpg)
+    * [ ] De Servidor
+    * [x] De RPG
+  * [ ] Trabalhos
+    * [ ] Nomes? (Plebeu, Mago, Arqueiro, etc?) - Tem alguns
+    * [ ] Passivas
+    * [ ] Habilidades
+    * [ ] Atributos
+    * [ ] XP
+  * [ ] Perfil (Mostra o perfil)
+    * [ ] Proezas
+    * [x] Nivel no RPG 
+    * [ ] Nivel no Servidor
+    * [x] Guilda
+    * [x] Foto do discord
+  * [ ] Personagem (Mostra o personagem)
+    * [x] Atributos
+    * ~~[ ] Nome~~ (Realmente é necessario?)
+    * [ ] Habilidades
+    * [ ] Empregos disponíveis
+    * [x] Emprego atual
+    * [ ] TItulos adquiridos
+    * [x] Titulo em uso
+    * [ ] Equipamentos
+    * [ ] Inventario (Ou outro comando)
+    * [ ] Peso atual e max
+  * [ ] Rank
+    * [x] Nivel de RPG
+    * [ ] Nivel de servidor
+    * [ ] De riqueza
+  * [ ] Jogador vs Jogador
+    * [ ] Como funcionara?
+  * [ ] Jogador vs Mobs
+    * [ ] Como funcionara?
+  * [ ] Dialogos
+    * [ ] Como funcionara?
+  * [ ] Escravos
+    * [ ] Como funcionara?
+  * [ ] Pets
+    * [ ] Como funcionara?
+  * [ ] Labirintos
+    * [ ] Como funcionara?
+  * [ ] Eventos (Mais para frente)
 
 ## 🤔 Como adiciono ela ao meu servidor?
 
