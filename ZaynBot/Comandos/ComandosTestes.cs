@@ -2,7 +2,9 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,41 +60,58 @@ namespace ZaynBot.Comandos
         }
 
 
+        [Command("testep")]
+        [Hidden]
+        [RequireOwner]
+        public async Task Fggff(CommandContext ctx)
+        {
+            var ie = ctx.Client.GetInteractivityModule();
+            List<Page> h = new List<Page>();
+            h.Add(new Page() { Content = "Pag 1" });
+            h.Add(new Page() { Content = "Pag 2" });
+            h.Add(new Page() { Content = "Pag 3" });
 
-        [Command("fff")]
+            await ie.SendPaginatedMessage(ctx.Channel, ctx.User, h, timeoutoverride: TimeSpan.FromSeconds(20));
+        }
+
+
+        [Command("testef")]
         [Hidden]
         [RequireOwner]
         public async Task Fff(CommandContext ctx)
         {
 
-            IMongoClient client = new MongoClient("mongodb://localhost");
-            IMongoDatabase database = client.GetDatabase("zaynbot");
-            IMongoCollection<Usuario> col = database.GetCollection<Usuario>("usuarios");
-            StringBuilder g = new StringBuilder();
-            StringBuilder gg = new StringBuilder();
-
-            List<ulong> ids = new List<ulong>();
-            List<int> niveis = new List<int>();
-            List<DiscordUser> usuarios = new List<DiscordUser>();
-
-            await col.Find(FilterDefinition<Usuario>.Empty).Limit(3).Sort("{Nivel: -1}")
-                .ForEachAsync(x =>
-            {
-                ids.Add(x.Id);
-                niveis.Add(x.Nivel);
-
-                g.Append($"{x.Nivel}, {x.Id}\n");
-            }).ConfigureAwait(false);
-            int index = 0;
-            foreach (var item in ids)
-            {
-                DiscordUser u = await ctx.Client.GetUserAsync(item);
-                gg.Append($"{u.Username}, Nivel: {niveis[index]}");
-                index++;
-            }
+            //var ie = ctx.Client.GetInteractivityModule();
+            //var pgs = ie.GeneratePagesInEmbeds("SADPJADSODSAJIODSJIOAJIOD ASOIJD OAISJD OIASJD OIJDS OIADJOSAJID OAISJD OISJD OIASJD OIASJD OIASJD O" +
+            //    "SADIOJOIASJ DOJDS AODJ SAIODJOIASDJ OIASJD OIJD OIASJD OIASJDO IASDJOIASJD OISJD OASIDJ OASDOASIDJOASIDJOASIJDOIASJ DOIASJD OAISDJ " +
+            //    "DASOJ ODSAIJ DOIAJS DOIASJD OISAJD OSIAJD OASIJD OASIJD OASIJD OASIJD OASIJD OISAJD OASIJDOAISDJOIASDJ OISDJ OISDJ OSAIJD DISJ " +
+            //    "DASOJ ODSAIJ DOIAJS DOIASJD OISAJD OSIAJD OASIJD OASIJD OASIJD OASIJD OASIJD OISAJD OASIJDOAISDJOIASDJ OISDJ OISDJ OSAIJD DISJ " +
+            //    "DASOJ ODSAIJ DOIAJS DOIASJD OISAJD OSIAJD OASIJD OASIJD OASIJD OASIJD OASIJD OISAJD OASIJDOAISDJOIASDJ OISDJ OISDJ OSAIJD DISJ " +
+            //    "OIDSAJ DOSAIJ DASOIJDS AOIDJAS ODIJAS ODIJAS DOIASJ OASDIJOXICJZCOIAJCP9ASIUDPASUDDPOI SADIOP ASIHAHA UID ASUID IASODH AISUO DOAIUD" +
+            //    "");
+            //await ie.SendPaginatedMessage(ctx.Channel, ctx.User, pgs, timeoutoverride: TimeSpan.FromSeconds(20));
 
 
-            await ctx.RespondAsync(g.ToString() + "KKKKK\n"+ gg.ToString());
+            DiscordMessage mensagem = await ctx.RespondAsync("Página 1");
+
+            //var emojis = new PaginationEmojis(ctx.Client)
+            //{
+            //    Left = DiscordEmoji.FromName(ctx.Client, ":joy:")
+            //};
+            var interacao = ctx.Client.GetInteractivityModule();
+
+
+            Func<DiscordEmoji, bool> g = x => x.GetDiscordName() == ":gem:";
+            Func<DiscordEmoji, bool> y = x => x.GetDiscordName() == ":eyes:" || x.Name == "f";
+
+            var f = await Task.WhenAny(
+     interacao.WaitForMessageReactionAsync(g, mensagem).ContinueWith(x => ctx.RespondAsync("Emote g recebido")),
+     interacao.WaitForMessageReactionAsync(y, mensagem).ContinueWith(x => ctx.RespondAsync("Emote yes recebido"))
+
+     );         
+            //ReactionContext gg = await interacao.WaitForMessageReactionAsync(g, mensagem, timeoutoverride: TimeSpan.FromSeconds(30));
+            //await ctx.RespondAsync("E");
+
         }
     }
 }
