@@ -7,7 +7,7 @@ using ZaynBot.Entidades;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
-    public class ComandosPersonagem
+    public class ComandoPersonagem
     {
         [Command("personagem")]
         public async Task ComandoPersonagemAb(CommandContext ctx, DiscordUser membro = null)
