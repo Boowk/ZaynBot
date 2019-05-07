@@ -24,7 +24,7 @@ namespace ZaynBot.Comandos.ComandosInformação
                 .AddField("Servidores totais", $"{Bot.QuantidadeServidores}", true)
                 .AddField("Membros totais", $"{Bot.QuantidadeMembros}", true)
                 .AddField("Canais totais", $"{Bot.QuantidadeCanais}", true)
-                .AddField("Tempo ativo sem reiniciar!", $"{(Bot.TempoAtivo - DateTime.Now).Days} dias e {(Bot.TempoAtivo - DateTime.Now).Minutes} horas", true);
+                .AddField("Tempo ativo sem reiniciar!", $"**{(DateTime.Now - Bot.TempoAtivo).Days} dias, {(DateTime.Now - Bot.TempoAtivo).Hours} horas e {(DateTime.Now - Bot.TempoAtivo).Minutes} minutos.**", true);
             await ctx.RespondAsync(embed: embed.Build());
         }
     }
