@@ -43,6 +43,12 @@ namespace ZaynBot.Entidades
         internal string Client = "Seu Client ID...";
 
         /// <summary>
+        /// A sua key do DiscordBots.org
+        /// </summary>
+        [JsonProperty("discordBotsKey")]
+        internal string DiscordBotsKey = "Sua key do DiscordBots";
+
+        /// <summary>
         /// Carrega a config de um arquivo JSON.
         /// </summary>
         /// <param name="path">Caminho para o arquivo config.</param>
@@ -70,7 +76,7 @@ namespace ZaynBot.Entidades
         {
             using (var sw = new StreamWriter(path))
             {
-                sw.Write(JsonConvert.SerializeObject(this));
+                sw.Write(JsonConvert.SerializeObject(this, Formatting.Indented));
             }
         }
     }
