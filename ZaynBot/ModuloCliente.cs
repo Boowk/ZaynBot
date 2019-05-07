@@ -6,16 +6,14 @@ using DSharpPlus.Interactivity;
 using System;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
-using ZaynBot.Eventos;
-using ZaynBot.Funções;
+using ZaynBot.Eventos;  
 
 namespace ZaynBot
 {
-    public class Cliente
+    public class ModuloCliente
     {
         public static DiscordClient Client { get; private set; }
-        Usuario user;
-        public Cliente(DiscordConfiguration discordConfiguration, Usuario user)
+        public ModuloCliente(DiscordConfiguration discordConfiguration)
         {
             Client = new DiscordClient(discordConfiguration);
             Client.Ready += Client_Ready;
@@ -27,7 +25,6 @@ namespace ZaynBot
             {
                 Timeout = TimeSpan.FromMinutes(1)
             });
-            this.user = user;
         }
 
         private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
@@ -108,10 +105,9 @@ namespace ZaynBot
         {
             if (e.Message.Author.IsBot) return;
             if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
-            user.Copiar(Banco.ConsultarUsuario(e.Author));
             try
             {
-                await MensagemNovaEnviada.XpUsuario(e, user);
+                await MensagemNovaRecebida.ReceberXPNivelMensagens(e);
             }
             catch (Exception ex)
             {

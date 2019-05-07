@@ -3,30 +3,25 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Funções;
+using ZaynBot.Entidades; 
 
-namespace ZaynBot.Comandos.Informações
+namespace ZaynBot.Comandos.ComandosInformação
 {
-    public class Perfil
+    public class ComandoPerfil
     {
-        private Usuario _userDep;
-        public Perfil(Usuario userDep)
-        {
-            _userDep = userDep;
-        }
-
         [Command("perfil")]
-        public async Task VerPerfil(CommandContext ctx, DiscordMember membro = null)
+        public async Task ComandoPerfilAb(CommandContext ctx, DiscordMember membro = null)
         {
+            await ctx.TriggerTypingAsync();
+            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             if (membro == null)
             {
-                await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, _userDep).Build());
+                await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, usuario).Build());
                 return;
             }
             if (membro.IsBot)
             {
-                if (membro.Id != 459873132975620134)
+                if (membro.Id != Bot.Id)
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention}, não gosto dos outros bots! Porquê você não pergunta sobre mim? :(");
                     return;
@@ -35,14 +30,14 @@ namespace ZaynBot.Comandos.Informações
                 return;
             }
 
-            Usuario usuarioRequisitado = Banco.ConsultarUsuario(membro);
+            Usuario usuarioRequisitado = Banco.ConsultarUsuario(membro.Id);
             await ctx.RespondAsync(embed: GerarPerfil(membro, usuarioRequisitado).Build());
         }
 
         private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, Usuario usuario)
         {
             string guildaNome = "Nenhuma";
-            if (usuario.IdGuilda.ToString() != "000000000000000000000000")
+            if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)
             {
                 guildaNome = Banco.ConsultarGuilda(usuario.IdGuilda).Nome;
             }

@@ -15,8 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Comandos\Diversão\" />
-    <Folder Include="Comandos\Memes\" />
+    <Folder Include="Comandos\ComandosDiversão\" />
+    <Folder Include="Comandos\ComandosMeme\" />
+    <Folder Include="Funções\" />
     <Folder Include="Gameplay\" />
   </ItemGroup>
 

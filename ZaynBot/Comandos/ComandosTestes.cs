@@ -7,9 +7,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
 
 namespace ZaynBot.Comandos
 {
@@ -36,12 +34,6 @@ namespace ZaynBot.Comandos
             await ctx.RespondAsync(DiscordEmoji.FromGuildEmote(ctx.Client, 550295427883466793).ToString());
 
             await ctx.RespondAsync($"{emojiOutroCanal.ToString()}, {emoji}, {emoji3}, {emoji4},, {emoji6}");
-        }
-
-        Usuario dep;
-        public ComandosTestes(Usuario d)
-        {
-            dep = d;
         }
 
         [Command("purgeBot")]
@@ -107,8 +99,7 @@ namespace ZaynBot.Comandos
             var f = await Task.WhenAny(
      interacao.WaitForMessageReactionAsync(g, mensagem).ContinueWith(x => ctx.RespondAsync("Emote g recebido")),
      interacao.WaitForMessageReactionAsync(y, mensagem).ContinueWith(x => ctx.RespondAsync("Emote yes recebido"))
-
-     );         
+     );
             //ReactionContext gg = await interacao.WaitForMessageReactionAsync(g, mensagem, timeoutoverride: TimeSpan.FromSeconds(30));
             //await ctx.RespondAsync("E");
 

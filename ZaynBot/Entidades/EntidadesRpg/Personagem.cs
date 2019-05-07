@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZaynBot.Entidades.Rpg
+namespace ZaynBot.Entidades.EntidadesRpg
 {
 
     public class Personagem

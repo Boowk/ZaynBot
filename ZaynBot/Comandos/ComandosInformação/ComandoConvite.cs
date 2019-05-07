@@ -3,14 +3,15 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Threading.Tasks;
 
-namespace ZaynBot.Comandos.Informações
+namespace ZaynBot.Comandos.ComandosInformação
 {
-    public class Convite
+    public class ComandoConvite
     {
         [Command("convite")]
         [Description("Envia uma serie de link sobre o bot.")]
-        public async Task ConviteAb(CommandContext ctx)
+        public async Task ComandoConviteAb(CommandContext ctx)
         {
+            await ctx.TriggerTypingAsync();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithColor(DiscordColor.Blue);
             embed.Description = "[Servidor Oficial](https://discord.gg/GGRnMQu)\n" +

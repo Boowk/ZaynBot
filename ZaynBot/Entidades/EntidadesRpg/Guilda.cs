@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
-namespace ZaynBot.Entidades.Rpg
+namespace ZaynBot.Entidades.EntidadesRpg
 {
     [BsonIgnoreExtraElements]
     public class Guilda

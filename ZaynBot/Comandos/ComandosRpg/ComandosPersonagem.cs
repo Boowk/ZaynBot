@@ -4,25 +4,19 @@ using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
-using ZaynBot.Funções;
 
-namespace ZaynBot.Comandos.Rpg
+namespace ZaynBot.Comandos.ComandosRpg
 {
-    public class Personagem
+    public class ComandosPersonagem
     {
-        private Usuario _userDep;
-        public Personagem(Usuario userDep)
+        [Command("personagem")]
+        public async Task ComandoPersonagemAb(CommandContext ctx, DiscordUser membro = null)
         {
-            _userDep = userDep;
-        }
-
-
-        [Command("personagem")]                    
-        public async Task PersonagemAb(CommandContext ctx, DiscordUser membro = null)
-        {
+            await ctx.TriggerTypingAsync();
+            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             if (membro == null)
             {
-                await ctx.RespondAsync(embed: GerarPersonagem(ctx.Member, _userDep).Build());
+                await ctx.RespondAsync(embed: GerarPersonagem(ctx.Member, usuario).Build());
                 return;
             }
             if (membro.IsBot)
@@ -35,12 +29,12 @@ namespace ZaynBot.Comandos.Rpg
                 await ctx.RespondAsync($"{ctx.User.Mention}, você só precisa saber que o meu poder é mais de 8 mil! :stuck_out_tongue_closed_eyes:");
                 return;
             }
-            await ctx.RespondAsync("Atenção - Futuramente será necessario a habilidade inspecionar.", embed: GerarPersonagem(membro, Banco.ConsultarUsuario(membro)).Build());
+            await ctx.RespondAsync("Atenção - Futuramente será necessario a habilidade inspecionar.", embed: GerarPersonagem(membro, Banco.ConsultarUsuario(membro.Id)).Build());
         }
 
         private DiscordEmbedBuilder GerarPersonagem(DiscordUser membro, Usuario usuario)
         {
-            ZaynBot.Entidades.Rpg.Personagem personagem = usuario.Personagem;
+            Entidades.EntidadesRpg.Personagem personagem = usuario.Personagem;
             return new DiscordEmbedBuilder()
             {
                 Author = new DiscordEmbedBuilder.EmbedAuthor()

@@ -10,11 +10,10 @@ namespace ZaynBot
 {
     public class Program
     {
-        private ModuloComandos _todosOsComandos;
-        private Cliente _cliente;
+        private ModuloComando _todosOsComandos;
+        private ModuloCliente _cliente;
         private Config _config;
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
-
 
         public async Task RodarOBotAsync()
         {
@@ -43,39 +42,29 @@ namespace ZaynBot
 #endif
                 TokenType = TokenType.Bot,
                 EnableCompression = true,
-
                 AutoReconnect = true,
                 LogLevel = LogLevel.Debug,
                 UseInternalLogHandler = true,
-
             };
-
-            Usuario user = new Usuario();
-            _cliente = new Cliente(cfg, user);
-            DependencyCollection dep = null;
-            using (var d = new DependencyCollectionBuilder())
-            {
-                d.AddInstance(user);
-                dep = d.Build();
-            }
+            _cliente = new ModuloCliente(cfg);
 
 
-            _todosOsComandos = new ModuloComandos(new CommandsNextConfiguration
+            _todosOsComandos = new ModuloComando(new CommandsNextConfiguration
             {
 
 #if DEBUG
                 StringPrefix = _config.PrefixTeste,
 #else
                 StringPrefix = _config.Prefix,
-#endif                                                              
-                CaseSensitive = false,    
-                Dependencies = dep,
+#endif                                       
+                EnableDms = false,
+                CaseSensitive = false,
                 EnableDefaultHelp = false,
                 EnableMentionPrefix = true,
                 IgnoreExtraArguments = true,
-            }, Cliente.Client);
+            }, ModuloCliente.Client);
 
-            await Cliente.Client.ConnectAsync();
+            await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }
     }

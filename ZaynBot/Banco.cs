@@ -1,12 +1,11 @@
-﻿using DSharpPlus.Entities;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Linq.Expressions;
 using ZaynBot.Entidades;
-using ZaynBot.Entidades.Rpg;
+using ZaynBot.Entidades.EntidadesRpg;
 
-namespace ZaynBot.Funções
+namespace ZaynBot
 {
     public static class Banco
     {
@@ -15,21 +14,22 @@ namespace ZaynBot.Funções
         private const string ColecaoUsuarios = "usuarios";
         private const string ColecaoGuildas = "guildas";
         private const string ColecaoServidores = "servidores";
+        public const string ObjectIDNulo = "000000000000000000000000";
 
         /// <summary>
         /// Consulta por um usuario no banco de dados.
         /// </summary>
         /// <param name="discordUser"></param>
         /// <returns>Usuario</returns>
-        public static Usuario ConsultarUsuario(DiscordUser discordUser)
+        public static Usuario ConsultarUsuario(ulong discordUserId)
         {
-            Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(discordUser.Id);
+            Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(discordUserId);
             Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
             if (user != null)
             {
                 if (user.Personagem == null)
                 {
-                    user.Personagem = new Entidades.Rpg.Personagem();
+                    user.Personagem = new Personagem();
 
                     AlterarUsuario(user);
                 }
@@ -39,7 +39,7 @@ namespace ZaynBot.Funções
                 }
                 return user;
             }
-            user = new Usuario(discordUser.Id);
+            user = new Usuario(discordUserId);
             AdicionarItem(user, ColecaoUsuarios);
             return user;
         }

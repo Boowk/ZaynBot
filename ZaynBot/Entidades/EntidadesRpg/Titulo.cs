@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZaynBot.Entidades.Rpg
+namespace ZaynBot.Entidades.EntidadesRpg
 {
     public class Titulo
     {

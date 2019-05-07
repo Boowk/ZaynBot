@@ -8,60 +8,35 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
-using ZaynBot.Entidades.Rpg;
-using ZaynBot.Funções;
+using ZaynBot.Entidades.EntidadesRpg;    
 
-namespace ZaynBot.Comandos.Rpg
+namespace ZaynBot.Comandos.ComandosRpg
 {
     [Group("guilda")]
     [Description("Comandos da guilda.")]
-    public class GuildaComando
+    public class GrupoGuilda
     {
-
-        private Usuario _userDep;
-        public GuildaComando(Usuario userDep)
-        {
-            _userDep = userDep;
-        }
-
         public async Task ExecuteGroupAsync(CommandContext ctx)
         {
-
+            await Task.CompletedTask;
         }
 
         [Command("info")]
         [Description("Exibe a informação da sua guilda")]
-        public async Task GuildaInfo(CommandContext ctx, [Description("Outra guilda")]string nome = null)
+        public async Task ComandoGuildaInfo(CommandContext ctx, [Description("Outra guilda")]string nome = null)
         {
-            await ctx.TriggerTypingAsync();
-
+            await ctx.TriggerTypingAsync();    
             await ctx.RespondAsync("Comando em construção");
-            return;
-
-            if (nome == null)
-            {
-                if (_userDep.IdGuilda.ToString() == "000000000000000000000000")
-                {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você precisa de uma guilda antes de tentar ver alguma informação.");
-                    return;
-                };
-
-                Guilda guilda = Banco.ConsultarGuilda(_userDep.IdGuilda);
-
-
-            }
-
-
-
         }
 
         [Command("convidar")]
         [Description("Convida um usuario para a sua guilda")]
-        public async Task GuildaConvidar(CommandContext ctx, [Description("Membro do servidor")]DiscordMember membro = null)
+        public async Task ComandoGuildaConvidar(CommandContext ctx, [Description("Membro do servidor")]DiscordMember membro = null)
         {
             await ctx.TriggerTypingAsync();
+            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
 
-            if (_userDep.IdGuilda.ToString() == "000000000000000000000000")
+            if (usuario.IdGuilda.ToString() == Banco.ObjectIDNulo)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa de uma guilda antes de sair convidando.");
                 return;
@@ -79,14 +54,14 @@ namespace ZaynBot.Comandos.Rpg
                 return;
             }
 
-            Guilda guilda = Banco.ConsultarGuilda(_userDep.IdGuilda);
+            Guilda guilda = Banco.ConsultarGuilda(usuario.IdGuilda);
             if (guilda.Convites.Count > 5)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, a sua guilda já alcançou o limite máximo de convites!");
                 return;
             }
 
-            Usuario userConvidado = Banco.ConsultarUsuario(membro);
+            Usuario userConvidado = Banco.ConsultarUsuario(membro.Id);
             if (userConvidado.ConvitesGuildas.Count > 5)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, {membro.Mention} tem 5 convites pendentes ainda!");
@@ -104,11 +79,12 @@ namespace ZaynBot.Comandos.Rpg
 
         [Command("criar")]
         [Description("Cria uma guilda")]
-        public async Task GuildaCriar(CommandContext ctx, [RemainingText, Description("Nome")]string nome = null)
+        public async Task ComandoGuildaCriar(CommandContext ctx, [RemainingText, Description("Nome")]string nome = null)
         {
             await ctx.TriggerTypingAsync();
+            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
 
-            if (_userDep.IdGuilda.ToString() != "000000000000000000000000")
+            if (usuario.IdGuilda.ToString() !=  Banco.ObjectIDNulo)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você já tem uma guilda! Saia antes de tentar criar uma.");
                 return;
@@ -151,24 +127,27 @@ namespace ZaynBot.Comandos.Rpg
                 return;
             }
             ObjectId idGuilda = Banco.ConsultarGuildaCriador(ctx.User.Id);
-            _userDep.IdGuilda = idGuilda;
-            _userDep.ConvitesGuildas.Clear();
-            Banco.AlterarUsuario(_userDep);
+            usuario.IdGuilda = idGuilda;
+            usuario.ConvitesGuildas.Clear();
+            Banco.AlterarUsuario(usuario);
             await ctx.RespondAsync($"{ctx.User.Mention}, a guilda {nome} foi criada!");
         }
 
         [Command("aceitar")]
         [Description("Mostra os convites para aceitar")]
-        public async Task GuildaAceitar(CommandContext ctx)
+        public async Task ComandoGuildaAceitar(CommandContext ctx)
         {
-            if (_userDep.ConvitesGuildas.Count == 0)
+            await ctx.TriggerTypingAsync();
+            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+
+            if (usuario.ConvitesGuildas.Count == 0)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não tem convites pendentes.");
                 return;
             }
             StringBuilder nomeGuildas = new StringBuilder();
             int index = 0;
-            foreach (var item in _userDep.ConvitesGuildas)
+            foreach (var item in usuario.ConvitesGuildas)
             {
                 nomeGuildas.Append(index + " - " + Banco.ConsultarGuilda(item.IdGuilda).Nome + " - Data do convite: " + item.DataConvidado + "\n");
             }
@@ -193,19 +172,19 @@ namespace ZaynBot.Comandos.Rpg
             Convite vaiEntrar;
             try
             {
-                vaiEntrar = _userDep.ConvitesGuildas[escolha];
+                vaiEntrar = usuario.ConvitesGuildas[escolha];
             }
             catch
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, não tem convite nesse slot!");
                 return;
             }
-            _userDep.IdGuilda = vaiEntrar.IdGuilda;
-            _userDep.ConvitesGuildas.Clear();
-            Banco.AlterarUsuario(_userDep);
+            usuario.IdGuilda = vaiEntrar.IdGuilda;
+            usuario.ConvitesGuildas.Clear();
+            Banco.AlterarUsuario(usuario);
             Guilda guilda = Banco.ConsultarGuilda(vaiEntrar.IdGuilda);
-            guilda.Membros.Add(_userDep.Id);
-            guilda.Convites.RemoveAll(x => x.IdUsuario == _userDep.Id);
+            guilda.Membros.Add(usuario.Id);
+            guilda.Convites.RemoveAll(x => x.IdUsuario == usuario.Id);
             Banco.AlterarGuilda(guilda);
 
             await ctx.RespondAsync($"{ctx.User.Mention} acaba de entrar na guilda {guilda.Nome}!!");

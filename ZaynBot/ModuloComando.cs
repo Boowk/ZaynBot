@@ -6,17 +6,17 @@ using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ZaynBot.Comandos.Administração;
-using ZaynBot.Comandos.Informações;
-using ZaynBot.Comandos.Rpg;
+using ZaynBot.Comandos.ComandosAdministração;
+using ZaynBot.Comandos.ComandosInformação;
+using ZaynBot.Comandos.ComandosRpg;              
 
 namespace ZaynBot.Comandos
 {
-    public class ModuloComandos
+    public class ModuloComando
     {
         public CommandsNextModule Comandos { get; }
 
-        public ModuloComandos(CommandsNextConfiguration ccfg, DiscordClient client)
+        public ModuloComando(CommandsNextConfiguration ccfg, DiscordClient client)
         {
             Comandos = client.UseCommandsNext(ccfg);
             Comandos.CommandExecuted += ComandoExecutado;
@@ -30,14 +30,14 @@ namespace ZaynBot.Comandos
             Comandos.SetHelpFormatter<AjudaFormatador>();
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
-            Comandos.RegisterCommands<ComandosInfo>();
+            Comandos.RegisterCommands<GrupoInfo>();
             Comandos.RegisterCommands<ComandosAdm>();
-            Comandos.RegisterCommands<Perfil>();
-            Comandos.RegisterCommands<Convite>();
+            Comandos.RegisterCommands<ComandoPerfil>();
+            Comandos.RegisterCommands<ComandoConvite>();
 
             #region ComandosRPG
-            Comandos.RegisterCommands<Personagem>();
-            Comandos.RegisterCommands<GuildaComando>();
+            Comandos.RegisterCommands<ComandosPersonagem>();
+            Comandos.RegisterCommands<GrupoGuilda>();
             #endregion
         }
 

@@ -3,7 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Threading.Tasks;
 
-namespace ZaynBot.Comandos.Administração
+namespace ZaynBot.Comandos.ComandosAdministração
 {
     [Group("adm")]
     [Description("Comandos administrativos.")]
@@ -12,18 +12,20 @@ namespace ZaynBot.Comandos.Administração
         [Command("botjogando")]
         [RequireOwner]
         [Hidden]
-        public async Task ComandoBotJogando(CommandContext ctx, [RemainingText] string texto = "")
+        public async Task ComandoAdmBotJogando(CommandContext ctx, [RemainingText] string texto = "")
         {
-            await Cliente.Client.UpdateStatusAsync(new DiscordGame(texto));
+            await ctx.TriggerTypingAsync();
+            await ModuloCliente.Client.UpdateStatusAsync(new DiscordGame(texto));
             await ctx.RespondAsync("Status jogando alterado com sucesso!");
         }
 
         [Command("foryou")]
         [RequireOwner]
         [Hidden]
-        public async Task foryou(CommandContext ctx, DiscordGuild f, ulong g, [RemainingText] string texto)
+        public async Task ComandoAdmForyou(CommandContext ctx, DiscordGuild f, ulong g, [RemainingText] string texto)
         {
-            DiscordGuild ff = await Cliente.Client.GetGuildAsync(f.Id);
+            await ctx.TriggerTypingAsync();
+            DiscordGuild ff = await ModuloCliente.Client.GetGuildAsync(f.Id);
             DiscordChannel gg = ff.GetChannel(g);
             await gg.SendMessageAsync(texto);
         }

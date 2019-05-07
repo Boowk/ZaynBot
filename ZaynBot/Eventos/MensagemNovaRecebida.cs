@@ -3,22 +3,21 @@ using DSharpPlus.EventArgs;
 using System;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
-using ZaynBot.Funções;
 
 namespace ZaynBot.Eventos
 {
-    public static class MensagemNovaEnviada
+    public static class MensagemNovaRecebida
     {
-        public static async Task XpUsuario(MessageCreateEventArgs e, Usuario user)
+        public static async Task ReceberXPNivelMensagens(MessageCreateEventArgs e)
         {
-            if (DateTime.UtcNow >= user.DataMensagemEnviada)
+            Usuario user = Banco.ConsultarUsuario(e.Author.Id);
+            if (DateTime.UtcNow >= user.DataUltimaMensagemEnviada)
             {
-                user.DataMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
+                user.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
                 Random random = new Random();
                 int quantiaSorteada = random.Next(5, 26);
                 bool evoluiu = user.AdicionarExp(quantiaSorteada);
                 Banco.AlterarUsuario(user);
-
                 if (evoluiu == true)
                 {
                     e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} evoluiu regen para o nível {user.Nivel}.", DateTime.Now);
