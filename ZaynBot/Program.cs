@@ -32,6 +32,7 @@ namespace ZaynBot
                 Console.ReadKey();
                 Environment.Exit(0);
             }
+            Bot.DiscordBotsApiKey = _config.DiscordBotsKey;
 
             DiscordConfiguration cfg = new DiscordConfiguration
             {

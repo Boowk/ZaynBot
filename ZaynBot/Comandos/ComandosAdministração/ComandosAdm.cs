@@ -1,7 +1,10 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DiscordBotsList.Api;
+using DiscordBotsList.Api.Objects;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Threading.Tasks;
+using ZaynBot.Entidades;
 
 namespace ZaynBot.Comandos.ComandosAdministração
 {
@@ -15,8 +18,12 @@ namespace ZaynBot.Comandos.ComandosAdministração
         public async Task ComandoAdmBotJogando(CommandContext ctx, [RemainingText] string texto = "")
         {
             await ctx.TriggerTypingAsync();
+            AuthDiscordBotListApi DblApi = new AuthDiscordBotListApi(Bot.Id, Bot.DiscordBotsApiKey);
+            IDblSelfBot me = await DblApi.GetMeAsync();
+            await me.UpdateStatsAsync(Bot.QuantidadeServidores);
+
             await ModuloCliente.Client.UpdateStatusAsync(new DiscordGame(texto));
-            await ctx.RespondAsync("Status jogando alterado com sucesso!");
+            await ctx.RespondAsync("Status jogando alterado com sucesso para " + Bot.QuantidadeServidores + " servidores!");
         }
 
         [Command("foryou")]

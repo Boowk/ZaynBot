@@ -6,7 +6,7 @@ using DSharpPlus.Interactivity;
 using System;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
-using ZaynBot.Eventos;  
+using ZaynBot.Eventos;
 
 namespace ZaynBot
 {
@@ -18,17 +18,48 @@ namespace ZaynBot
             Client = new DiscordClient(discordConfiguration);
             Client.Ready += Client_Ready;
             Client.GuildAvailable += Client_GuildAvailable;
+            Client.GuildDeleted += Client_GuildDeleted;
+            Client.ChannelCreated += Client_ChannelCreated;
             Client.ClientErrored += Client_ClientError;
+            Client.ChannelDeleted += Client_ChannelDeleted;
             Client.MessageCreated += Client_MessageCreated;
             Client.GuildMemberAdded += Client_GuildMemberAdded;
+            Client.GuildMemberRemoved += Client_GuildMemberRemoved;
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(1)
             });
         }
 
+        private Task Client_ChannelDeleted(ChannelDeleteEventArgs e)
+        {
+            Bot.QuantidadeCanais--;
+            return Task.CompletedTask;
+        }
+
+        private Task Client_ChannelCreated(ChannelCreateEventArgs e)
+        {
+            Bot.QuantidadeCanais++;
+            return Task.CompletedTask;
+        }
+
+        private Task Client_GuildDeleted(GuildDeleteEventArgs e)
+        {
+            Bot.QuantidadeServidores--;
+            Bot.QuantidadeMembros -= e.Guild.MemberCount;
+            Bot.QuantidadeCanais -= e.Guild.Channels.Count;
+            return Task.CompletedTask;
+        }
+
+        private Task Client_GuildMemberRemoved(GuildMemberRemoveEventArgs e)
+        {
+            Bot.QuantidadeMembros--;
+            return Task.CompletedTask;
+        }
+
         private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
         {
+            Bot.QuantidadeMembros++;
             await UsuarioNovoEntrouGuilda.EventoBemVindoAsync(e);
         }
 
@@ -130,6 +161,9 @@ namespace ZaynBot
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"Guilda disponível: {e.Guild.Name}", DateTime.Now);
+            Bot.QuantidadeServidores++;
+            Bot.QuantidadeMembros += e.Guild.MemberCount;
+            Bot.QuantidadeCanais += e.Guild.Channels.Count;
             return Task.CompletedTask;
         }
 
