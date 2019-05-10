@@ -23,7 +23,6 @@ namespace ZaynBot.Comandos
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<AjudaFormatador>();
             RegistrarComandos();
-            _Gameplay.Mapas.Areas areas = new _Gameplay.Mapas.Areas();
         }
 
         public void RegistrarComandos()

@@ -17,6 +17,11 @@ namespace ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa
         public Direcoes Direcao { get; set; }
         public int RegiaoId { get; set; }
 
+        public Saida(Direcoes direcao, int id)
+        {
+            Direcao = direcao;
+            RegiaoId = id;
+        }
 
         //var south = new Exit
         //{

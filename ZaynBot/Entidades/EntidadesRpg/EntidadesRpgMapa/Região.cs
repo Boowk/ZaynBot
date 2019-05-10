@@ -43,7 +43,11 @@ namespace ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa
 
         //[JsonIgnore]
         //public List<Inimigo> Inimigos { get; set; }
-                               
+
+        public Região()
+        {
+            Saidas = new List<Saida>();
+        }
 
     }
 }

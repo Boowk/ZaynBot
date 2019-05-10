@@ -65,6 +65,8 @@ namespace ZaynBot
                 IgnoreExtraArguments = true,
             }, ModuloCliente.Client);
 
+            _Gameplay.Mapas.Areas areas = new _Gameplay.Mapas.Areas();
+            await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }

@@ -34,7 +34,7 @@ namespace ZaynBot.Comandos.ComandosInformação
                 await ctx.TriggerTypingAsync();
                 if (server == "servidor")
                 {
-                    //Porco xxx
+                    //Para fazer: Limpar
                     IMongoClient client = new MongoClient("mongodb://localhost");
                     IMongoDatabase database = client.GetDatabase("zaynbot");
                     IMongoCollection<Usuario> col = database.GetCollection<Usuario>("usuarios");

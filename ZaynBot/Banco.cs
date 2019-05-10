@@ -1,7 +1,9 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using ZaynBot.Entidades;
 using ZaynBot.Entidades.EntidadesRpg;
 
@@ -27,16 +29,16 @@ namespace ZaynBot
             Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
             if (user != null)
             {
-                if (user.Personagem == null)
-                {
-                    user.Personagem = new Personagem();
+                //if (user.Personagem == null)
+                //{
+                //    user.Personagem = new Personagem();
 
-                    AlterarUsuario(user);
-                }
-                if (user.ConvitesGuildas == null)
-                {
-                    user.ConvitesGuildas = new System.Collections.Generic.List<Convite>();
-                }
+                //    AlterarUsuario(user);
+                //}
+                //if (user.ConvitesGuildas == null)
+                //{
+                //    user.ConvitesGuildas = new System.Collections.Generic.List<Convite>();
+                //}
                 return user;
             }
             user = new Usuario(discordUserId);
@@ -163,6 +165,26 @@ namespace ZaynBot
             IMongoCollection<T> col = database.GetCollection<T>(colecao);
 
             col.ReplaceOne(filtro, item);
+        }
+
+        public static async Task AtualizarBancoAllAsync()
+        {
+            IMongoClient client = new MongoClient("mongodb://localhost");
+            IMongoDatabase database = client.GetDatabase("zaynbot");
+            IMongoCollection<Usuario> col = database.GetCollection<Usuario>("usuarios");
+
+            await col.Find(FilterDefinition<Usuario>.Empty)
+                .ForEachAsync(x =>
+                {
+                    Expression<Func<Usuario, bool>> filtro = f => f.Id.Equals(x.Id);
+                    if (x.Personagem == null)
+                        x.Personagem = new Personagem();
+                    if (x.ConvitesGuildas == null)
+                        x.ConvitesGuildas = new List<Convite>();
+                    if (x.Personagem.LocalAtual == null)
+                        x.Personagem.LocalAtual = new Entidades.EntidadesRpg.EntidadesRpgMapa.Região();
+                    col.ReplaceOne(filtro, x);
+                }).ConfigureAwait(false);
         }
     }
 }
