@@ -2,8 +2,7 @@
 using DSharpPlus.CommandsNext;
 using System;
 using System.IO;
-using System.Threading.Tasks;
-using ZaynBot._Gameplay.Mundos.Anker;
+using System.Threading.Tasks;          
 using ZaynBot.Comandos;
 using ZaynBot.Entidades;
 
@@ -66,7 +65,7 @@ namespace ZaynBot
                 IgnoreExtraArguments = true,
             }, ModuloCliente.Client);
 
-            Anker mundoAnker = new Anker();
+            _Gameplay.Mundos.Anker.Areas mundoAnker = new _Gameplay.Mundos.Anker.Areas();
             await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
