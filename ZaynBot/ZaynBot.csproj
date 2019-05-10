@@ -19,7 +19,6 @@
     <Folder Include="Comandos\ComandosDiversão\" />
     <Folder Include="Comandos\ComandosMeme\" />
     <Folder Include="Funções\" />
-    <Folder Include="Gameplay\" />
   </ItemGroup>
 
 </Project>

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Comandos.ComandosAdministração;
 using ZaynBot.Comandos.ComandosInformação;
-using ZaynBot.Comandos.ComandosRpg;              
+using ZaynBot.Comandos.ComandosRpg;
 
 namespace ZaynBot.Comandos
 {
@@ -23,6 +23,7 @@ namespace ZaynBot.Comandos
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<AjudaFormatador>();
             RegistrarComandos();
+            _Gameplay.Mapas.Areas areas = new _Gameplay.Mapas.Areas();
         }
 
         public void RegistrarComandos()
@@ -38,6 +39,7 @@ namespace ZaynBot.Comandos
             #region ComandosRPG
             Comandos.RegisterCommands<ComandoPersonagem>();
             Comandos.RegisterCommands<GrupoGuilda>();
+            Comandos.RegisterCommands<ComandoViajar>();
             #endregion
         }
 
