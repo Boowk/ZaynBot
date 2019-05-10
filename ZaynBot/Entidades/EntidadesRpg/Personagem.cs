@@ -26,8 +26,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public Equipamento Equipamento { get; set; }
         public Habilidade Habilidade { get; set; }
         public Titulo Titulo { get; set; }
-        public Emprego Emprego { get; set; }
-        public object RegiaoAtual { get; internal set; }
+        public Emprego Emprego { get; set; }               
 
         public Personagem()
         {
