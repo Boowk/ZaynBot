@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
