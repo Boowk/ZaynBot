@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot.Entidades;
 using ZaynBot.Entidades.EntidadesRpg;
 
@@ -29,16 +30,7 @@ namespace ZaynBot
             Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
             if (user != null)
             {
-                //if (user.Personagem == null)
-                //{
-                //    user.Personagem = new Personagem();
-
-                //    AlterarUsuario(user);
-                //}
-                //if (user.ConvitesGuildas == null)
-                //{
-                //    user.ConvitesGuildas = new System.Collections.Generic.List<Convite>();
-                //}
+                user.Personagem.LocalAtual = Areas.Regiões[user.Personagem.LocalAtual.RegiaoId];
                 return user;
             }
             user = new Usuario(discordUserId);
@@ -182,7 +174,7 @@ namespace ZaynBot
                     if (x.ConvitesGuildas == null)
                         x.ConvitesGuildas = new List<Convite>();
                     if (x.Personagem.LocalAtual == null)
-                        x.Personagem.LocalAtual = new Entidades.EntidadesRpg.EntidadesRpgMapa.Região();
+                        x.Personagem.LocalAtual = Areas.Regiões[0];
                     col.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }

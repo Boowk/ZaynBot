@@ -27,7 +27,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public Habilidade Habilidade { get; set; }
         public Titulo Titulo { get; set; }
         public Emprego Emprego { get; set; }
-
+        public object RegiaoAtual { get; internal set; }
 
         public Personagem()
         {
@@ -47,6 +47,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
             Habilidade = new Habilidade();
             Titulo = new Titulo();
             Emprego = new Emprego("Desempregado");
+            LocalAtual = _Gameplay.Mundos.Anker.Areas.Regiões[0];
         }
 
         //public int Alimentar(int quantidade)

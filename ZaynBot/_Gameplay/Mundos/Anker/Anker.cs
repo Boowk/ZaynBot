@@ -1,32 +1,79 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 using ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
 {
-    public class Anker
+    public static class Anker
     {
-        public static ConcurrentDictionary<int, Região> Regiões;
-
-        public Anker()
+        public static Região AnkarEstrada()
         {
-            Regiões = new ConcurrentDictionary<int, Região>();
-            //AdicionarArea(Superficie.ArmazemGeral18Ab());
-        }
 
-        private static void AddLista(List<Região> lista)
-        {
-            foreach (var regs in lista)
+            /*
+            *  RegiaoId: Deve ser unico, utilizado para encontrar a região
+            *  RegiaoNome: Nome da região
+            *  Descrição: Descrição da região.
+            *  Saida = new List<Saida>(),     
+               Mob = new List<Mob>(),
+               Terreno = Região.Tipo.Campo,
+            * 
+            * 
+            */
+
+            Região regiao = new Região()
             {
-                Add(regs);
-            }
+                RegiaoId = 0,
+                RegiaoNome = "Estrada",
+                Descrição = "Uma estrada de terra.",
+                Terreno = Região.Tipo.Campo,
+
+                //Padrão
+                Saidas = new List<Saida>()
+            };
+
+            #region saidas
+
+            // Cria as saidas
+            Saida norte = new Saida
+            {
+                Direcao = Saida.Direcoes.Norte,
+                RegiaoId = 1
+            };
+
+            #endregion  
+            regiao.Saidas.Add(norte);
+
+            return regiao;
         }
 
-        private static void Add(Região regiao)
+        public static Região AnkarEstrada2()
         {
-            Regiões.TryAdd(regiao.RegiaoId, regiao);
+
+            Região regiao = new Região()
+            {
+                RegiaoId = 1,
+                RegiaoNome = "Estrada com pedras",
+                Descrição = "Uma estrada de terra com pedras.",
+                Terreno = Região.Tipo.Campo,
+
+                //Padrão
+                Saidas = new List<Saida>()
+            };
+
+            #region saidas
+
+            // Cria as saidas
+            Saida sul = new Saida
+            {
+                Direcao = Saida.Direcoes.Sul,
+                RegiaoId = 0
+            };
+
+            #endregion  
+            regiao.Saidas.Add(sul);
+
+            return regiao;
         }
     }
+
 }

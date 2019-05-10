@@ -39,6 +39,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<ComandoPersonagem>();
             Comandos.RegisterCommands<GrupoGuilda>();
             Comandos.RegisterCommands<ComandoViajar>();
+            Comandos.RegisterCommands<ComandoLocalizacao>();
             #endregion
         }
 

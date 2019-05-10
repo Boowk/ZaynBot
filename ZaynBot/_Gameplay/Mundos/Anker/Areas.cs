@@ -13,15 +13,8 @@ namespace ZaynBot._Gameplay.Mundos.Anker
         public Areas()
         {
             Regiões = new ConcurrentDictionary<int, Região>();
-            //AdicionarArea(Superficie.ArmazemGeral18Ab());
-        }
-
-        private static void AddLista(List<Região> lista)
-        {
-            foreach (var regs in lista)
-            {
-                Add(regs);
-            }
+            Add(Anker.AnkarEstrada());
+            Add(Anker.AnkarEstrada2());
         }
 
         private static void Add(Região regiao)
