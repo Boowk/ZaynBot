@@ -10,26 +10,19 @@ namespace ZaynBot.Entidades
     public class Usuario
     {
         public ulong Id { get; set; }
-        public int Nivel { get; set; }
-        public double ExperienciaProximoNivel { get; set; }
-        public double ExperienciaAtual { get; set; }
-        public DateTime DataContaCriada { get; set; }
-        public DateTime DataUltimaMensagemEnviada { get; set; }
-        public Personagem Personagem { get; set; }
-        public List<Convite> ConvitesGuildas { get; set; }
+        public int Nivel { get; set; } = 0;
+        public double ExperienciaProximoNivel { get; set; } = 100;
+        public double ExperienciaAtual { get; set; } = 0;
+        public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
+        public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
+        public Personagem Personagem { get; set; } = new Personagem();
+        public List<Convite> ConvitesGuildas { get; set; } = new List<Convite>();
 
         public ObjectId IdGuilda { get; set; }
 
         public Usuario(ulong id)
         {
             Id = id;
-            Personagem = new Personagem();
-            DataUltimaMensagemEnviada = DateTime.UtcNow;
-            DataContaCriada = DateTime.UtcNow;
-            ExperienciaAtual = 0;
-            ExperienciaProximoNivel = 100;
-            Nivel = 0;
-            ConvitesGuildas = new List<Convite>();
         }
 
         public bool AdicionarExp(int exp)
