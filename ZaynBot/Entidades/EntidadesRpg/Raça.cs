@@ -9,15 +9,15 @@ namespace ZaynBot.Entidades.EntidadesRpg
     public class Raça
     {
         public string Nome { get; set; }
-        [BsonIgnore] public int PontosDeVidaBase { get; set; }
-        [BsonIgnore] public int PontosDeManaBase { get; set; }
-        [BsonIgnore] public int AtaqueFisicoBase { get; set; }
-        [BsonIgnore] public int DefesaFisicaBase { get; set; }
-        [BsonIgnore] public int AtaqueMagicoBase { get; set; }
-        [BsonIgnore] public int DefesaMagicaBase { get; set; }
+        [BsonIgnore] public float PontosDeVidaBase { get; set; }
+        [BsonIgnore] public float PontosDeManaBase { get; set; }
+        [BsonIgnore] public float AtaqueFisicoBase { get; set; }
+        [BsonIgnore] public float DefesaFisicaBase { get; set; }
+        [BsonIgnore] public float AtaqueMagicoBase { get; set; }
+        [BsonIgnore] public float DefesaMagicaBase { get; set; }
         [BsonIgnore] public int VelocidadeBase { get; set; }
 
-        [BsonIgnore] public int 
+        //[BsonIgnore] public int
 
         // Habilidades Base
     }
