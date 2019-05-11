@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa;
+using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
 {

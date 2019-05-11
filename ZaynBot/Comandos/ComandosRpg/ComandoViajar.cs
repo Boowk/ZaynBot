@@ -3,7 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa;
+using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
