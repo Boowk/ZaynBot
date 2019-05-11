@@ -1,5 +1,5 @@
-﻿using System;
-using ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa;
+﻿using System;                                         
+using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot.Entidades.EntidadesRpg
 {

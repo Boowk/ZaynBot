@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace ZaynBot.Entidades.EntidadesRpg.EntidadesRpgMapa
+namespace ZaynBot.Entidades.EntidadesRpg.Mapa
 {
     public class Região
     {
