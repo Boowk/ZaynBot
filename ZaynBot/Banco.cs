@@ -175,6 +175,8 @@ namespace ZaynBot
                         x.ConvitesGuildas = new List<Convite>();
                     if (x.Personagem.LocalAtual == null)
                         x.Personagem.LocalAtual = Areas.Regiões[0];
+                    if (x.Personagem.Vivo == false)
+                        x.Personagem.Vivo = true;
                     col.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }

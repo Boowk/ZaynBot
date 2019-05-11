@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
+using ZaynBot._Gameplay.Raças;
 using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot.Entidades.EntidadesRpg
@@ -7,7 +8,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
     [BsonIgnoreExtraElements]
     public class Personagem
     {
-        public string Raça { get; set; }
+        public Raça RaçaPersonagem { get; set; }
         public float PontosDeVida { get; set; }
         public float PontosDeVidaMaxima { get; set; }
         public float PontosDeMana { get; set; }
@@ -34,17 +35,17 @@ namespace ZaynBot.Entidades.EntidadesRpg
 
         public Personagem()
         {
-            Raça = "Humano";
+            RaçaPersonagem = Humano.HumanoAb();
             Random random = new Random();
-            PontosDeVida = random.Next(10, 100);
+            PontosDeVida = random.Next(RaçaPersonagem.PontosDeVidaBase, 100);
             PontosDeVidaMaxima = PontosDeVida;
-            PontosDeMana = random.Next(8, 100);
+            PontosDeMana = random.Next(RaçaPersonagem.PontosDeManaBase, 100);
             PontosDeManaMaximo = PontosDeMana;
-            AtaqueFisico = random.Next(9, 20);
-            DefesaFisica = random.Next(7, 20);
-            AtaqueMagico = random.Next(4, 20);
-            DefesaMagica = random.Next(3, 20);
-            Velocidade = random.Next(4, 6);
+            AtaqueFisico = random.Next(RaçaPersonagem.AtaqueFisicoBase, 20);
+            DefesaFisica = random.Next(RaçaPersonagem.DefesaFisicaBase, 20);
+            AtaqueMagico = random.Next(RaçaPersonagem.AtaqueMagicoBase, 20);
+            DefesaMagica = random.Next(RaçaPersonagem.DefesaMagicaBase, 20);
+            Velocidade = random.Next(RaçaPersonagem.VelocidadeBase, 6);
             Sorte = 10;
             Equipamento = new Equipamento();
             Habilidade = new Habilidade();
@@ -52,7 +53,6 @@ namespace ZaynBot.Entidades.EntidadesRpg
             Emprego = new Emprego("Desempregado");
             LocalAtual = _Gameplay.Mundos.Anker.Areas.Regiões[0];
             Vivo = true;
-            DataMorte = DateTime.UtcNow;
         }
 
         //public int Alimentar(int quantidade)
