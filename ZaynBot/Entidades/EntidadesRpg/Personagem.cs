@@ -38,15 +38,15 @@ namespace ZaynBot.Entidades.EntidadesRpg
         {
             RaçaPersonagem = Humano.HumanoAb();
             Sortear sortear = new Sortear();
-            PontosDeVida = sortear.Valor(RaçaPersonagem.PontosDeVidaBase, 100);
+            PontosDeVida = sortear.Valor(RaçaPersonagem.PontosDeVidaBaseMin, RaçaPersonagem.PontosDeVidaBaseMax);
             PontosDeVidaMaxima = PontosDeVida;
-            PontosDeMana = sortear.Valor(RaçaPersonagem.PontosDeManaBase, 100);
+            PontosDeMana = sortear.Valor(RaçaPersonagem.PontosDeManaBaseMin, RaçaPersonagem.PontosDeManaBaseMax);
             PontosDeManaMaximo = PontosDeMana;
-            AtaqueFisico = sortear.Valor(RaçaPersonagem.AtaqueFisicoBase, 20);
-            DefesaFisica = sortear.Valor(RaçaPersonagem.DefesaFisicaBase, 20);
-            AtaqueMagico = sortear.Valor(RaçaPersonagem.AtaqueMagicoBase, 20);
-            DefesaMagica = sortear.Valor(RaçaPersonagem.DefesaMagicaBase, 20);
-            Velocidade = sortear.Valor(RaçaPersonagem.VelocidadeBase, 6);
+            AtaqueFisico = sortear.Valor(RaçaPersonagem.AtaqueFisicoBaseMin, RaçaPersonagem.AtaqueFisicoBaseMax);
+            DefesaFisica = sortear.Valor(RaçaPersonagem.DefesaFisicaBaseMin, RaçaPersonagem.DefesaFisicaBaseMax);
+            AtaqueMagico = sortear.Valor(RaçaPersonagem.AtaqueMagicoBaseMin, RaçaPersonagem.AtaqueMagicoBaseMax);
+            DefesaMagica = sortear.Valor(RaçaPersonagem.DefesaMagicaBaseMin, RaçaPersonagem.DefesaMagicaBaseMax);
+            Velocidade = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMax);
             Sorte = 10;
             Equipamento = new Equipamento();
             Habilidade = new Habilidade();
