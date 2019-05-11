@@ -29,6 +29,9 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public Titulo Titulo { get; set; }
         public Emprego Emprego { get; set; }
 
+        public bool Vivo { get; set; }
+        public DateTime DataMorte { get; set; }
+
         public Personagem()
         {
             Raça = "Humano";
@@ -48,6 +51,8 @@ namespace ZaynBot.Entidades.EntidadesRpg
             Titulo = new Titulo();
             Emprego = new Emprego("Desempregado");
             LocalAtual = _Gameplay.Mundos.Anker.Areas.Regiões[0];
+            Vivo = true;
+            DataMorte = DateTime.UtcNow;
         }
 
         //public int Alimentar(int quantidade)
