@@ -1,7 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ZaynBot.Entidades.EntidadesRpg
 {
@@ -21,7 +19,6 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public List<Hit> Hits { get; set; } // Aleatoriamente vai sair um dano que ele tiver e com base no estilo para mostrar ao jogador a fraqueza
         public int ChanceDeAparecer { get; set; }
         // public List<ItemChanceCair> ChanceCairItem { get; set; } = new List<ItemChanceCair>();
-
     }
 
     public class Hit
