@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot.Entidades.EntidadesRpg;
 
 namespace ZaynBot.Comandos
 {
@@ -103,6 +104,26 @@ namespace ZaynBot.Comandos
             //ReactionContext gg = await interacao.WaitForMessageReactionAsync(g, mensagem, timeoutoverride: TimeSpan.FromSeconds(30));
             //await ctx.RespondAsync("E");
 
+        }
+
+        [Command("testemob")]
+        [Hidden]
+        [RequireOwner]
+        public async Task mobteste(CommandContext ctx)
+        {
+            Mob mobTeste = new Mob()
+            {
+                AtaqueFisico = 10,
+                AtaqueMagico = 10,
+                ChanceDeAparecer = 4,
+                DefesaFisica = 10,
+                DefesaMagica = 10,
+                PontosDeVida = 10,
+                PontosDeVidaMaxima = 10,
+                Velocidade = 10,
+            }.Raca("Goblin");
+
+            await ctx.RespondAsync($"{mobTeste.Raça}, ataque {mobTeste.AtaqueFisico}");
         }
     }
 }

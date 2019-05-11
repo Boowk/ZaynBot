@@ -14,8 +14,7 @@ namespace ZaynBot._Gameplay.Mundos.Anker
             *  Descrição: Descrição da região.
             *  Saida = new List<Saida>(),     
                Mob = new List<Mob>(),
-               Terreno = Região.Tipo.Campo,
-            * 
+               Terreno = Região.Tipo.Campo,        
             * 
             */
 

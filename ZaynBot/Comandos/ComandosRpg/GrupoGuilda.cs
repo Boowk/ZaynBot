@@ -19,7 +19,7 @@ namespace ZaynBot.Comandos.ComandosRpg
     {
         public async Task ExecuteGroupAsync(CommandContext ctx)
         {
-            await ctx.RespondAsync("Teste");
+            await ctx.RespondAsync("Comando em desenvolvimento");
             await Task.CompletedTask;
         }
 

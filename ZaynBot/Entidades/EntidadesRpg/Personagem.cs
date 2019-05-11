@@ -16,7 +16,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public float DefesaFisica { get; set; }
         public float AtaqueMagico { get; set; }
         public float DefesaMagica { get; set; }
-        public float Velocidade { get; set; }
+        public int Velocidade { get; set; }
         public int Sorte { get; set; }
 
         public float Fome { get; set; }
