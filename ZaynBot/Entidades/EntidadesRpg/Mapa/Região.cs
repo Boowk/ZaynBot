@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace ZaynBot.Entidades.EntidadesRpg.Mapa
 {
+    [BsonIgnoreExtraElements]
     public class Região
     {
         //CIDADE               |   1  | 

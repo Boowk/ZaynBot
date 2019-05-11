@@ -1,5 +1,8 @@
-﻿namespace ZaynBot.Entidades.EntidadesRpg
+﻿using MongoDB.Bson.Serialization.Attributes;
+
+namespace ZaynBot.Entidades.EntidadesRpg
 {
+    [BsonIgnoreExtraElements]
     public class Emprego
     {
         public string Nome { get; }

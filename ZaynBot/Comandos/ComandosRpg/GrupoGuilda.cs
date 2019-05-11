@@ -8,16 +8,18 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;    
+using ZaynBot.Entidades.EntidadesRpg;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
-    [Group("guilda")]
+    [Group("guilda", CanInvokeWithoutSubcommand = true)]
     [Description("Comandos da guilda.")]
+
     public class GrupoGuilda
     {
         public async Task ExecuteGroupAsync(CommandContext ctx)
         {
+            await ctx.RespondAsync("Teste");
             await Task.CompletedTask;
         }
 
@@ -25,7 +27,7 @@ namespace ZaynBot.Comandos.ComandosRpg
         [Description("Exibe a informação da sua guilda")]
         public async Task ComandoGuildaInfo(CommandContext ctx, [Description("Outra guilda")]string nome = null)
         {
-            await ctx.TriggerTypingAsync();    
+            await ctx.TriggerTypingAsync();
             await ctx.RespondAsync("Comando em construção");
         }
 
@@ -84,7 +86,7 @@ namespace ZaynBot.Comandos.ComandosRpg
             await ctx.TriggerTypingAsync();
             Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
 
-            if (usuario.IdGuilda.ToString() !=  Banco.ObjectIDNulo)
+            if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você já tem uma guilda! Saia antes de tentar criar uma.");
                 return;

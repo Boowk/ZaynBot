@@ -1,9 +1,10 @@
-﻿using System;                                         
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot.Entidades.EntidadesRpg
 {
-
+    [BsonIgnoreExtraElements]
     public class Personagem
     {
         public string Raça { get; set; }
@@ -26,7 +27,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public Equipamento Equipamento { get; set; }
         public Habilidade Habilidade { get; set; }
         public Titulo Titulo { get; set; }
-        public Emprego Emprego { get; set; }               
+        public Emprego Emprego { get; set; }
 
         public Personagem()
         {

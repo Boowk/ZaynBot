@@ -16,6 +16,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public List<Convite> Convites { get; set; }
     }
 
+    [BsonIgnoreExtraElements]
     public class Convite
     {
         public ulong IdUsuario { get; set; }
