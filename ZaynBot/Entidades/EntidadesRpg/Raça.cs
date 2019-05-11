@@ -9,20 +9,22 @@ namespace ZaynBot.Entidades.EntidadesRpg
     public class Raça
     {
         public string Nome { get; set; }
-        [BsonIgnore] public float PontosDeVidaBaseMin { get; set; }
-        [BsonIgnore] public float PontosDeManaBaseMin { get; set; }
-        [BsonIgnore] public float AtaqueFisicoBaseMin { get; set; }
-        [BsonIgnore] public float DefesaFisicaBaseMin { get; set; }
-        [BsonIgnore] public float AtaqueMagicoBaseMin { get; set; }
-        [BsonIgnore] public float DefesaMagicaBaseMin { get; set; }
-        [BsonIgnore] public int VelocidadeBaseMin { get; set; }
+        [BsonIgnore] public float PontosDeVidaBaseMin { get; private set; }
+        [BsonIgnore] public float PontosDeManaBaseMin { get; private set; }
+        [BsonIgnore] public float AtaqueFisicoBaseMin { get; private set; }
+        [BsonIgnore] public float DefesaFisicaBaseMin { get; private set; }
+        [BsonIgnore] public float AtaqueMagicoBaseMin { get; private set; }
+        [BsonIgnore] public float DefesaMagicaBaseMin { get; private set; }
+        [BsonIgnore] public int VelocidadeBaseMin { get; private set; }
+        [BsonIgnore] public int SorteBaseMin { get; private set; }
 
-        [BsonIgnore] public float PontosDeVidaBaseMax { get; set; }
-        [BsonIgnore] public float PontosDeManaBaseMax { get; set; }
-        [BsonIgnore] public float AtaqueFisicoBaseMax { get; set; }
-        [BsonIgnore] public float DefesaFisicaBaseMax { get; set; }
-        [BsonIgnore] public float AtaqueMagicoBaseMax { get; set; }
-        [BsonIgnore] public float DefesaMagicaBaseMax { get; set; }
-        [BsonIgnore] public int VelocidadeBaseMax { get; set; }
+        [BsonIgnore] public float PontosDeVidaBaseMax { get; private set; }
+        [BsonIgnore] public float PontosDeManaBaseMax { get; private set; }
+        [BsonIgnore] public float AtaqueFisicoBaseMax { get; private set; }
+        [BsonIgnore] public float DefesaFisicaBaseMax { get; private set; }
+        [BsonIgnore] public float AtaqueMagicoBaseMax { get; private set; }
+        [BsonIgnore] public float DefesaMagicaBaseMax { get; private set; }
+        [BsonIgnore] public int VelocidadeBaseMax { get; private set; }
+        [BsonIgnore] public int SorteBaseMax { get; private set; }
     }
 }
