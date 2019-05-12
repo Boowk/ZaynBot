@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using ZaynBot._Gameplay.Raças;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
 using ZaynBot.Funções;
 
 namespace ZaynBot.Entidades.EntidadesRpg

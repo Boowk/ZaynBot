@@ -1,8 +1,5 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ZaynBot.Entidades.EntidadesRpg
 {
