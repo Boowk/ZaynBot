@@ -10,6 +10,8 @@ namespace ZaynBot.Entidades
     [BsonIgnoreExtraElements]
     public class Usuario
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
         public ulong Id { get; set; }
         public int Nivel { get; set; } = 0;
         public double ExperienciaProximoNivel { get; set; } = 100;

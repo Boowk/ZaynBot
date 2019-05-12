@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using ZaynBot.Funções;
 
 namespace ZaynBot.Entidades.EntidadesRpg
@@ -6,14 +7,21 @@ namespace ZaynBot.Entidades.EntidadesRpg
     [BsonIgnoreExtraElements]
     public class Mob
     {
-        public Raça RaçaMob { get; set; }
+        public Raça RaçaMob { get; set; }                              
         public string Nome { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVida { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVidaMaxima { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float AtaqueFisico { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DefesaFisica { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float AtaqueMagico { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DefesaMagica { get; set; }
+        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int Velocidade { get; set; }
         // public List<Hit> Hits { get; set; } // Aleatoriamente vai sair um dano que ele tiver e com base no estilo para mostrar ao jogador a fraqueza
         [BsonIgnore] public int ChanceDeAparecer { get; set; }

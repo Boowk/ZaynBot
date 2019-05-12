@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using ZaynBot._Gameplay.Raças;
 using ZaynBot.Funções;
@@ -11,23 +12,35 @@ namespace ZaynBot.Entidades.EntidadesRpg
         #region Atributos
 
         public Raça RaçaPersonagem { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVida { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVidaMaxima { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeMana { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeManaMaximo { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float AtaqueFisico { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DefesaFisica { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float AtaqueMagico { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DefesaMagica { get; set; }
+        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int Velocidade { get; set; }
+        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int Sorte { get; set; }
 
         #endregion
 
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float Fome { get; set; }
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float Sede { get; set; }
 
-
+        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
 
         public Equipamento Equipamento { get; set; }
