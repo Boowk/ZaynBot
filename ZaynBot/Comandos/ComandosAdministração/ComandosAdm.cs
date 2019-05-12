@@ -36,5 +36,15 @@ namespace ZaynBot.Comandos.ComandosAdministração
             DiscordChannel gg = ff.GetChannel(g);
             await gg.SendMessageAsync(texto);
         }
+
+        [Command("sudo")]
+        [RequireOwner]
+        [Hidden]
+        public async Task Sudo(CommandContext ctx, DiscordUser member, [RemainingText] string command)
+        {
+            await ctx.TriggerTypingAsync();
+            var cmds = ctx.CommandsNext;
+            await cmds.SudoAsync(member, ctx.Channel, command);
+        }
     }
 }
