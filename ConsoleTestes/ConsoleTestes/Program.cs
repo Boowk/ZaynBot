@@ -84,22 +84,26 @@ namespace ConsoleTestes
             //Console.WriteLine(atribs[0].Description.ToString());
             #endregion
 
-            ClassCopia c1 = new ClassCopia();
-            c1.Id = 1;
-            c1.Nome = "Classe 1";
-            Console.WriteLine($"Classe 1 criada: id: {c1.Id}, nome: {c1.Nome}");
+            //ClassCopia c1 = new ClassCopia();
+            //c1.Id = 1;
+            //c1.Nome = "Classe 1";
+            //Console.WriteLine($"Classe 1 criada: id: {c1.Id}, nome: {c1.Nome}");
 
-            // ClassCopia c2 = c1;
-            ClassCopia c2 = new ClassCopia();
-            c2 = c1;
-            c2.Id = 5;
-            c2.Nome = "Classe 2";
-            Console.WriteLine($"Classe 2 criada: id: {c2.Id}, nome: {c2.Nome}");
+            //// ClassCopia c2 = c1;
+            //ClassCopia c2 = new ClassCopia();
+            //c2 = c1;
+            //c2.Id = 5;
+            //c2.Nome = "Classe 2";
+            //Console.WriteLine($"Classe 2 criada: id: {c2.Id}, nome: {c2.Nome}");
 
-            Console.WriteLine("\n\n\n");
+            //Console.WriteLine("\n\n\n");
 
-            Console.WriteLine($"Classe 1: id: {c1.Id}, nome: {c1.Nome}");
-            Console.WriteLine($"Classe 2: id: {c2.Id}, nome: {c2.Nome}");
+            //Console.WriteLine($"Classe 1: id: {c1.Id}, nome: {c1.Nome}");
+            //Console.WriteLine($"Classe 2: id: {c2.Id}, nome: {c2.Nome}");
+
+            double calc;
+            calc = 24 / 100.0;
+            Console.WriteLine(calc);
 
             Console.ReadKey();
 

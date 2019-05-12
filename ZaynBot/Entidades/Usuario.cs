@@ -62,14 +62,14 @@ namespace ZaynBot.Entidades
 
         public void RegeneraçãoVida()
         {
-            float quantidade = Nivel / 100;
+            float quantidade = Nivel / 100.0F;
             Personagem.PontosDeVida += quantidade;
             if (Personagem.PontosDeVida >= Personagem.PontosDeVidaMaxima) Personagem.PontosDeVida = Personagem.PontosDeVidaMaxima;
         }
 
         public void RegeneraçãoMana()
         {
-            float quantidade = Nivel / 150;
+            float quantidade = Nivel / 150.0F;
             Personagem.PontosDeMana += quantidade;
             if (Personagem.PontosDeMana >= Personagem.PontosDeManaMaximo) Personagem.PontosDeMana = Personagem.PontosDeManaMaximo;
         }
