@@ -40,6 +40,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<GrupoGuilda>();
             Comandos.RegisterCommands<ComandoViajar>();
             Comandos.RegisterCommands<ComandoLocalizacao>();
+            Comandos.RegisterCommands<ComandoExplorar>();
             #endregion
         }
 

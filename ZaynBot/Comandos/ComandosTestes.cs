@@ -124,7 +124,7 @@ namespace ZaynBot.Comandos
                 PontosDeVida = 10,
                 PontosDeVidaMaxima = 10,
                 Velocidade = 10,
-            }.Raca(Humano.HumanoAb());
+            }.SetRaça(Humano.HumanoAb());
 
             await ctx.RespondAsync($"{mobTeste.Nome}, ataque {mobTeste.PontosDeVida}");
         }

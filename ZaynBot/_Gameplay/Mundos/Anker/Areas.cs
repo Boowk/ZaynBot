@@ -1,36 +1,34 @@
 ﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
+using ZaynBot._Gameplay.Raças;
+using ZaynBot.Entidades.EntidadesRpg;
 using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
 {
     public class Areas
     {
-        public static ConcurrentDictionary<int, Região> Regiões;
+        // Para fazer:
+        // Gerar em memoria, salvar em HD e depois deletar tudo da memoria.
+        private static List<Região> Regiões;
 
         public Areas()
         {
-            Regiões = new ConcurrentDictionary<int, Região>();
-            Add(Anker.AnkarEstrada());
-            Add(Anker.AnkarEstrada2());
-        }
-
-        private static void Add(Região regiao)
-        {
-            Regiões.TryAdd(regiao.RegiaoId, regiao);
-        }
-
-        public static Região GetRegiao(int id)
-        {
-            Região r = new Região()
+            // Deleta todas as zonas
+            Banco.DeletarRegions();
+            // Adiciona as zonas na lista
+            Regiões = new List<Região>
             {
-                Descrição = Regiões[id].Descrição,
-                Inimigos = Regiões[id].Inimigos,
-                RegiaoId = Regiões[id].RegiaoId,
-                RegiaoNome = Regiões[id].RegiaoNome,
-                Saidas = Regiões[id].Saidas,
-                Terreno = Regiões[id].Terreno,
+                Anker.AnkarEstrada(),
+                Anker.AnkarEstrada2()
             };
-            return r;
+            // Salva as zonas na HD
+            foreach (var item in Regiões)
+            {
+                Banco.AdicionarRegions(item);
+            }
+            // Limpa a lista para liberar memoria
+            Regiões = null;
         }
     }
 }

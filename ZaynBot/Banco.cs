@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot.Entidades;
 using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot
 {
@@ -16,8 +17,7 @@ namespace ZaynBot
         private const string BancoDeDados = "zaynbot";
         private const string ColecaoUsuarios = "usuarios";
         private const string ColecaoGuildas = "guildas";
-        private const string ColecaoServidores = "servidores";
-        private const string ColecaoBatalhas = "batalhas";
+        private const string ColecaoRegiões = "regions";
         public const string ObjectIDNulo = "000000000000000000000000";
 
         /// <summary>
@@ -30,10 +30,7 @@ namespace ZaynBot
             Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(discordUserId);
             Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
             if (user != null)
-            {
-                user.Personagem.LocalAtual = Areas.GetRegiao(user.Personagem.LocalAtual.RegiaoId);
                 return user;
-            }
             user = new Usuario(discordUserId);
             AdicionarItem(user, ColecaoUsuarios);
             return user;
@@ -159,6 +156,36 @@ namespace ZaynBot
             col.ReplaceOne(filtro, item);
         }
 
+        private static void DeletarItem<T>(Expression<Func<T, bool>> filtro, string colecao) where T : class
+        {
+            IMongoClient client = new MongoClient(LocalBancoSalvo);
+            IMongoDatabase database = client.GetDatabase(BancoDeDados);
+            IMongoCollection<T> col = database.GetCollection<T>(colecao);
+
+            col.DeleteOne(filtro);
+        }
+
+        public static void DeletarRegions()
+        {
+            IMongoClient client = new MongoClient(LocalBancoSalvo);
+            IMongoDatabase database = client.GetDatabase(BancoDeDados);
+            IMongoCollection<Região> col = database.GetCollection<Região>(ColecaoRegiões);
+            col.DeleteMany(FilterDefinition<Região>.Empty);
+        }
+        public static void AdicionarRegions(Região regiao)
+        {
+            AdicionarItem(regiao, ColecaoRegiões);
+        }
+        public static Região ConsultarRegions(int id)
+        {
+            Expression<Func<Região, bool>> filtro = x => x.Id.Equals(id);
+            Região region = ConsultarItem(filtro, ColecaoRegiões);
+            if (region != null)
+                return region;
+            return null;
+
+        }
+
         public static async Task AtualizarBancoAllAsync()
         {
             IMongoClient client = new MongoClient("mongodb://localhost");
@@ -173,8 +200,6 @@ namespace ZaynBot
                         x.Personagem = new Personagem();
                     if (x.ConvitesGuildas == null)
                         x.ConvitesGuildas = new List<Convite>();
-                    if (x.Personagem.LocalAtual == null)
-                        x.Personagem.LocalAtual = Areas.Regiões[0];
                     if (x.Personagem.Vivo == false)
                         x.Personagem.Vivo = true;
                     if (x.Personagem.RaçaPersonagem.Nome == null)

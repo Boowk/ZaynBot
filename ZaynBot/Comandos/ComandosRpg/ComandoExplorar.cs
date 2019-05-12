@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
 using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -25,19 +26,19 @@ namespace ZaynBot.Comandos.ComandosRpg
                 await ctx.RespondAsync($"{ctx.User.Mention}, somente o lider da part pode usar esse comando!");
                 return;
             }
+            Região localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
 
-            if (personagem.LocalAtual.Inimigos.Count == 0)
+            if (localAtual.Inimigos.Count == 0)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, parece que está região não tem nenhum inimigo.");
                 return;
             }
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-            string inimigoMensagem = "";
+
 
             if (personagem.CampoBatalha.Inimigos.Count <= 2)
             {
-                List<Mob> pesos = personagem.LocalAtual.Inimigos;
+                List<Mob> pesos = localAtual.Inimigos;
 
                 int somaPeso = 0;
                 for (int i = 0; i < pesos.Count; i++)
@@ -53,18 +54,12 @@ namespace ZaynBot.Comandos.ComandosRpg
                     posicaoEscolhida++;
                     sorteio -= pesos[posicaoEscolhida].ChanceDeAparecer;
                 } while (sorteio > 0);
+                Mob inimigo = pesos[posicaoEscolhida];
 
-                int ultimoId = 0;
-                if (personagem.CampoBatalha.Inimigos.Count == 0)
-                    ultimoId = 0;
-                else
-                    ultimoId = 1 + (personagem.CampoBatalha.Inimigos[personagem.CampoBatalha.Inimigos.Count - 1].IdCombate);
+                personagem.CampoBatalha.Inimigos.Add(inimigo.SetRaça(inimigo.RaçaMob));
 
-                inimigo.Id = ultimoId;
-                personagem.Inimigos.Add(inimigo);
-
-
-                inimigoMensagem = $"{inimigo.Nome}(ID {inimigo.Id}) apareceu na sua frente.";
+                string inimigoMensagem = $"{inimigo.Nome} com {string.Format("{0:N2}", inimigo.PontosDeVidaMaxima)} de vida, apareceu na sua frente!";
+                await ctx.RespondAsync(ctx.User.Mention + ", " + inimigoMensagem);
             }
             else
             {
@@ -76,7 +71,7 @@ namespace ZaynBot.Comandos.ComandosRpg
             //embed.AddField("Inimigos encontrados", InimigosApareceu.ToString());
             //embed.WithColor(DiscordColor.Red);
 
-            await ctx.RespondAsync(ctx.User.Mention + ", " + inimigoMensagem);
+            //await ctx.RespondAsync(ctx.User.Mention + ", " + inimigoMensagem);
         }
     }
 }

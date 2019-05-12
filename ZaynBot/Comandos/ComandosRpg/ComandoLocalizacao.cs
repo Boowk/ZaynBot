@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot.Entidades;
 using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -18,16 +19,18 @@ namespace ZaynBot.Comandos.ComandosRpg
         {
             Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             Personagem personagem = usuario.Personagem;
+            Região localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
+
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 
             embed.WithTitle($"Localização do {ctx.User.Username}");
-            embed.WithDescription($"{personagem.LocalAtual.RegiaoNome} - {personagem.LocalAtual.Descrição}");
+            embed.WithDescription($"{localAtual.RegiaoNome} - {localAtual.Descrição}");
 
             StringBuilder conexoesDisponiveis = new StringBuilder();
             StringBuilder npcsDisponiveis = new StringBuilder();
-            foreach (var reg in personagem.LocalAtual.Saidas)
+            foreach (var reg in localAtual.Saidas)
             {
-                conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {Areas.Regiões[reg.RegiaoId].RegiaoNome}\n");
+                conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {Banco.ConsultarRegions(reg.RegiaoId).RegiaoNome}\n");
             }
 
             //foreach (var npc in personagem.RegiaoAtual.Npcs)

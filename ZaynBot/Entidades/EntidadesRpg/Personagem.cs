@@ -29,7 +29,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public float Sede { get; set; }
 
 
-        public Região LocalAtual { get; set; }
+        public int LocalAtualId { get; set; }
 
         public Equipamento Equipamento { get; set; }
         public Habilidade Habilidade { get; set; }
@@ -59,7 +59,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
             Habilidade = new Habilidade();
             Titulo = new Titulo();
             Emprego = new Emprego("Desempregado");
-            LocalAtual = _Gameplay.Mundos.Anker.Areas.Regiões[0];
+            LocalAtualId = 0;
             Vivo = true;
             CampoBatalha = new Batalha();
         }

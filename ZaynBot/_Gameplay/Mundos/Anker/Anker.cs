@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using ZaynBot._Gameplay.Raças;
+using ZaynBot.Entidades.EntidadesRpg;
 using ZaynBot.Entidades.EntidadesRpg.Mapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
@@ -20,7 +22,7 @@ namespace ZaynBot._Gameplay.Mundos.Anker
 
             Região regiao = new Região()
             {
-                RegiaoId = 0,
+                Id = 0,
                 RegiaoNome = "Estrada",
                 Descrição = "Uma estrada de terra.",
                 Terreno = Região.Tipo.Campo,
@@ -28,6 +30,12 @@ namespace ZaynBot._Gameplay.Mundos.Anker
                 //Padrão
                 Saidas = new List<Saida>()
             };
+
+            Mob NpcTeste = new Mob("Npc de teste :)")
+            {
+
+            }.SetRaça(Humano.HumanoAb());
+            regiao.Inimigos.Add(NpcTeste);
 
             #region saidas
 
@@ -49,7 +57,7 @@ namespace ZaynBot._Gameplay.Mundos.Anker
 
             Região regiao = new Região()
             {
-                RegiaoId = 1,
+                Id = 1,
                 RegiaoNome = "Estrada com pedras",
                 Descrição = "Uma estrada de terra com pedras.",
                 Terreno = Região.Tipo.Campo,

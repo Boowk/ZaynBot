@@ -2,7 +2,7 @@
 using DSharpPlus.CommandsNext;
 using System;
 using System.IO;
-using System.Threading.Tasks;          
+using System.Threading.Tasks;
 using ZaynBot.Comandos;
 using ZaynBot.Entidades;
 

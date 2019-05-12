@@ -51,23 +51,26 @@ namespace ZaynBot.Comandos.ComandosRpg
                 default:
                     await ctx.RespondAsync($"{ctx.User.Mention}, você informou uma direção certa?");
                     break;
-            }    
+            }
         }
 
         public static async Task ExplorarAreaAsync(Saida.Direcoes direcao, CommandContext ctx)
         {
             Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
-            foreach (var item in usuario.Personagem.LocalAtual.Saidas)
+            Região localAtual = Banco.ConsultarRegions(usuario.Personagem.LocalAtualId);
+
+            foreach (var item in localAtual.Saidas)
             {
                 if (item.Direcao == direcao)
                 {
-                    usuario.Personagem.LocalAtual = Areas.Regiões[item.RegiaoId];
+                    usuario.Personagem.LocalAtualId = item.RegiaoId;
                     Banco.AlterarUsuario(usuario);
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você chegou em: {usuario.Personagem.LocalAtual.RegiaoNome}");
+                    localAtual = Banco.ConsultarRegions(item.RegiaoId);
+                    await ctx.RespondAsync($"{ctx.User.Mention}, você chegou em: {localAtual.RegiaoNome}");
                     return;
                 }
             }
             await ctx.RespondAsync($"{ctx.User.Mention}, parece que você não vai chegar a lugar nenhum indo por ai.");
-        }              
+        }
     }
 }
