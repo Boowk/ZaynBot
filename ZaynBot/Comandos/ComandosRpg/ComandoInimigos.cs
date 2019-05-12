@@ -1,8 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
@@ -14,7 +12,7 @@ namespace ZaynBot.Comandos.ComandosRpg
     {
         [Command("inimigos")]
         [Aliases("ins")]
-        [Description("Veja todos os inimigos a sua volta.")]                     
+        [Description("Veja todos os inimigos a sua volta.")]
         public async Task VerInimigos(CommandContext ctx)
         {
             Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);

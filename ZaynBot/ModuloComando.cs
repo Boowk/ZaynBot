@@ -42,6 +42,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<ComandoLocalizacao>();
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoInimigos>();
+            Comandos.RegisterCommands<ComandoAtacar>();
             #endregion
         }
 
