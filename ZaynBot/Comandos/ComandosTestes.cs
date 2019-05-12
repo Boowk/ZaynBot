@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot._Gameplay.Raças;
 using ZaynBot.Entidades.EntidadesRpg;
 
 namespace ZaynBot.Comandos
@@ -121,9 +122,9 @@ namespace ZaynBot.Comandos
                 PontosDeVida = 10,
                 PontosDeVidaMaxima = 10,
                 Velocidade = 10,
-            }.Raca("Goblin");
+            }.Raca(Humano.HumanoAb());
 
-            await ctx.RespondAsync($"{mobTeste.Raça}, ataque {mobTeste.AtaqueFisico}");
+            await ctx.RespondAsync($"{mobTeste.RaçaMob.Nome}, ataque {mobTeste.PontosDeVida}");
         }
     }
 }

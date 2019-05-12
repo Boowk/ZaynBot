@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
+using ZaynBot.Funções;
 
 namespace ZaynBot.Entidades.EntidadesRpg
 {
@@ -8,7 +9,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
     {
         public int IdCombate { get; set; }
 
-        public string Raça { get; set; }
+        public Raça RaçaMob { get; set; }
         public float PontosDeVida { get; set; }
         public float PontosDeVidaMaxima { get; set; }
         public float AtaqueFisico { get; set; }
@@ -29,9 +30,17 @@ namespace ZaynBot.Entidades.EntidadesRpg
 
     public static class ExtensaoMob
     {
-        public static Mob Raca(this Mob mob, string raca)
+        public static Mob Raca(this Mob mob, Raça raca)
         {
-            mob.Raça = raca;
+            Sortear sortear = new Sortear();
+            mob.RaçaMob = raca;
+            mob.PontosDeVida += sortear.Valor(raca.PontosDeVidaBaseMin, raca.PontosDeVidaBaseMax);
+            mob.PontosDeVidaMaxima = mob.PontosDeVida;
+            mob.AtaqueFisico += sortear.Valor(raca.AtaqueFisicoBaseMin, raca.AtaqueFisicoBaseMax);
+            mob.DefesaFisica += sortear.Valor(raca.DefesaFisicaBaseMin, raca.DefesaFisicaBaseMax);
+            mob.AtaqueMagico += sortear.Valor(raca.AtaqueMagicoBaseMin, raca.AtaqueMagicoBaseMax);
+            mob.DefesaMagica += sortear.Valor(raca.DefesaMagicaBaseMin, raca.DefesaMagicaBaseMax);
+            mob.Velocidade += sortear.Valor(raca.VelocidadeBaseMin, raca.VelocidadeBaseMax);
             return mob;
         }
     }
