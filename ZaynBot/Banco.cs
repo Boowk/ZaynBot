@@ -17,6 +17,7 @@ namespace ZaynBot
         private const string ColecaoUsuarios = "usuarios";
         private const string ColecaoGuildas = "guildas";
         private const string ColecaoServidores = "servidores";
+        private const string ColecaoBatalhas = "batalhas";
         public const string ObjectIDNulo = "000000000000000000000000";
 
         /// <summary>
@@ -52,11 +53,11 @@ namespace ZaynBot
         /// <summary>
         /// Consulta por uma guilda no banco de dados.
         /// </summary>
-        /// <param name="idGuilda"></param>
+        /// <param name="guildaId"></param>
         /// <returns>Guilda</returns>
-        public static Guilda ConsultarGuilda(ObjectId idGuilda)
+        public static Guilda ConsultarGuilda(ObjectId guildaId)
         {
-            Expression<Func<Guilda, bool>> filtro = x => x.Id.Equals(idGuilda);
+            Expression<Func<Guilda, bool>> filtro = x => x.Id.Equals(guildaId);
             Guilda guilda = ConsultarItem(filtro, ColecaoGuildas);
             if (guilda != null)
             {
@@ -110,7 +111,6 @@ namespace ZaynBot
 
             AlterarItem(filtro, guilda, ColecaoGuildas);
         }
-
 
         /// <summary>
         /// Consulta por um item no banco de dados

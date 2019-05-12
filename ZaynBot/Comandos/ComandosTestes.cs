@@ -114,7 +114,7 @@ namespace ZaynBot.Comandos
         [RequireOwner]
         public async Task mobteste(CommandContext ctx)
         {
-            Mob mobTeste = new Mob()
+            Mob mobTeste = new Mob("Teste Mob")
             {
                 AtaqueFisico = 10,
                 AtaqueMagico = 10,
@@ -126,7 +126,7 @@ namespace ZaynBot.Comandos
                 Velocidade = 10,
             }.Raca(Humano.HumanoAb());
 
-            await ctx.RespondAsync($"{mobTeste.RaçaMob.Nome}, ataque {mobTeste.PontosDeVida}");
+            await ctx.RespondAsync($"{mobTeste.Nome}, ataque {mobTeste.PontosDeVida}");
         }
     }
 }

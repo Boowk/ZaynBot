@@ -5,9 +5,8 @@ namespace ZaynBot.Entidades.EntidadesRpg
     [BsonIgnoreExtraElements]
     public class Mob
     {
-        public int IdCombate { get; set; }
-
         public Raça RaçaMob { get; set; }
+        public string Nome { get; set; }
         public float PontosDeVida { get; set; }
         public float PontosDeVidaMaxima { get; set; }
         public float AtaqueFisico { get; set; }
@@ -18,6 +17,11 @@ namespace ZaynBot.Entidades.EntidadesRpg
         // public List<Hit> Hits { get; set; } // Aleatoriamente vai sair um dano que ele tiver e com base no estilo para mostrar ao jogador a fraqueza
         [BsonIgnore] public int ChanceDeAparecer { get; set; }
         // public List<ItemChanceCair> ChanceCairItem { get; set; } = new List<ItemChanceCair>();
+
+        public Mob(string nome)
+        {
+            Nome = nome;
+        }
     }
 
     //public class Hit

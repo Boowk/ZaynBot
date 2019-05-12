@@ -15,11 +15,16 @@ namespace ZaynBot.Comandos.ComandosRpg
         [Command("explorar")]
         [Aliases("ex")]
         [Description("Explora a região para encontrar inimigos.")]
-        [Cooldown(max_uses: 1, reset: 6, bucket_type: CooldownBucketType.User)]
         public async Task ExplorarInimigos(CommandContext ctx) // [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
         {
             Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             Personagem personagem = usuario.Personagem;
+
+            if (personagem.CampoBatalha.Party == true)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, somente o lider da part pode usar esse comando!");
+                return;
+            }
 
             if (personagem.LocalAtual.Inimigos.Count == 0)
             {
@@ -32,38 +37,34 @@ namespace ZaynBot.Comandos.ComandosRpg
 
             if (personagem.CampoBatalha.Inimigos.Count <= 2)
             {
-                //List<Mob> pesos = personagem.LocalAtual.Inimigos;
+                List<Mob> pesos = personagem.LocalAtual.Inimigos;
 
-                //int somaPeso = 0;
-                //for (int i = 0; i < pesos.Count; i++)
-                //{
-                //    somaPeso += pesos[i].ChanceDeAparecer;
-                //}
+                int somaPeso = 0;
+                for (int i = 0; i < pesos.Count; i++)
+                {
+                    somaPeso += pesos[i].ChanceDeAparecer;
+                }
 
-                //Random r = new Random();
-                //int sorteio = r.Next(0, somaPeso);
-                //int posicaoEscolhida = -1;
-                //do
-                //{
-                //    posicaoEscolhida++;
-                //    sorteio -= pesos[posicaoEscolhida].ChanceDeAparecer;
-                //} while (sorteio > 0);              
+                Random r = new Random();
+                int sorteio = r.Next(0, somaPeso);
+                int posicaoEscolhida = -1;
+                do
+                {
+                    posicaoEscolhida++;
+                    sorteio -= pesos[posicaoEscolhida].ChanceDeAparecer;
+                } while (sorteio > 0);
 
-                //int ultimoId = 0;
-                //if (personagem.Inimigos.Count == 0)
-                //{
-                //    ultimoId = 0;
-                //}
-                //else
-                //{
-                //    ultimoId = 1 + (personagem.Inimigos[personagem.Inimigos.Count - 1].Id);
-                //}
+                int ultimoId = 0;
+                if (personagem.CampoBatalha.Inimigos.Count == 0)
+                    ultimoId = 0;
+                else
+                    ultimoId = 1 + (personagem.CampoBatalha.Inimigos[personagem.CampoBatalha.Inimigos.Count - 1].IdCombate);
 
-                //inimigo.Id = ultimoId;
-                //personagem.Inimigos.Add(inimigo);
+                inimigo.Id = ultimoId;
+                personagem.Inimigos.Add(inimigo);
 
 
-                //inimigoMensagem = $"{inimigo.Nome}(ID {inimigo.Id}) apareceu na sua frente.";
+                inimigoMensagem = $"{inimigo.Nome}(ID {inimigo.Id}) apareceu na sua frente.";
             }
             else
             {

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,8 @@ namespace ZaynBot.Entidades.EntidadesRpg
     [BsonIgnoreExtraElements]
     public class Batalha
     {
+        public bool Party { get; set; } = false;
+        public ulong PartyId { get; set; }
         // Para saber quem está na Party.
         public Dictionary<ulong, int> PersonagensVelocidade { get; set; } = new Dictionary<ulong, int>();
         // Após o jogador ter feito o seu "Ataque", fica salvo quem foi que atacou.
