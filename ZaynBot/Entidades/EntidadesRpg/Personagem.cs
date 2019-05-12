@@ -77,4 +77,12 @@ namespace ZaynBot.Entidades.EntidadesRpg
         //    return (int)Sede;
         //}
     }
+
+    public static class ExtensãoPersonagem
+    {
+        public static string Texto(this float numero)
+        {
+            return string.Format("{0:N2}", numero);
+        }
+    }
 }

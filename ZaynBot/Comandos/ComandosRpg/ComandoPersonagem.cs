@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
+using ZaynBot.Entidades.EntidadesRpg;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -49,12 +50,12 @@ namespace ZaynBot.Comandos.ComandosRpg
                 ThumbnailUrl = membro.AvatarUrl,
             }
             .AddField("⌈Raça⌋", $"{personagem.RaçaPersonagem.Nome}", true)
-            .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida}/{personagem.PontosDeVidaMaxima}", true)
-            .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana}/{personagem.PontosDeManaMaximo}", true)
-            .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico}", true)
-            .AddField("⌈Defesa física⌋", $"{personagem.DefesaFisica}", true)
-            .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico}", true)
-            .AddField("⌈Defesa mágica⌋", $"{personagem.DefesaMagica}", true)
+            .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida.Texto()}/{personagem.PontosDeVidaMaxima.Texto()}", true)
+            .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana.Texto()}/{personagem.PontosDeManaMaximo.Texto()}", true)
+            .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico.Texto()}", true)
+            .AddField("⌈Defesa física⌋", $"{personagem.DefesaFisica.Texto()}", true)
+            .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico.Texto()}", true)
+            .AddField("⌈Defesa mágica⌋", $"{personagem.DefesaMagica.Texto()}", true)
             .AddField("⌈Velocidade⌋", $"{personagem.Velocidade}", true)
             .AddField("⌈Sorte⌋", $"{personagem.Sorte}", true)
             .AddField("⌈Equipamento⌋", $"Em contrução", true)
@@ -63,5 +64,6 @@ namespace ZaynBot.Comandos.ComandosRpg
             .AddField("⌈Empregos disponíveis⌋", $"Em contrução", true)
             .AddField("⌈Bêncãos⌋", $"Nenhuma", true);
         }
+
     }
 }
