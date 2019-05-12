@@ -41,6 +41,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<ComandoViajar>();
             Comandos.RegisterCommands<ComandoLocalizacao>();
             Comandos.RegisterCommands<ComandoExplorar>();
+            Comandos.RegisterCommands<ComandoInimigos>();
             #endregion
         }
 

@@ -32,9 +32,7 @@ namespace ZaynBot.Comandos.ComandosRpg
                 return;
             }
 
-
-
-            if (personagem.CampoBatalha.Inimigos.Count <= 2)
+            if (personagem.CampoBatalha.Inimigos.Count < 2)
             {
                 List<Mob> pesos = localAtual.Inimigos;
 
@@ -57,6 +55,7 @@ namespace ZaynBot.Comandos.ComandosRpg
                 personagem.CampoBatalha.Inimigos.Add(inimigo.SetRaça(inimigo.RaçaMob));
 
                 string inimigoMensagem = $"{inimigo.Nome} com {string.Format("{0:N2}", inimigo.PontosDeVidaMaxima)} de vida, apareceu na sua frente!";
+                Banco.AlterarUsuario(usuario);
                 await ctx.RespondAsync(ctx.User.Mention + ", " + inimigoMensagem);
             }
             else
