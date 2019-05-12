@@ -48,7 +48,7 @@ namespace ZaynBot.Comandos.ComandosRpg
                 Timestamp = DateTime.Now,
                 ThumbnailUrl = membro.AvatarUrl,
             }
-            .AddField("⌈Raça⌋", $"{personagem.Raça}", true)
+            .AddField("⌈Raça⌋", $"{personagem.RaçaPersonagem.Nome}", true)
             .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida}/{personagem.PontosDeVidaMaxima}", true)
             .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana}/{personagem.PontosDeManaMaximo}", true)
             .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico}", true)

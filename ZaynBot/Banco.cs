@@ -177,6 +177,8 @@ namespace ZaynBot
                         x.Personagem.LocalAtual = Areas.Regiões[0];
                     if (x.Personagem.Vivo == false)
                         x.Personagem.Vivo = true;
+                    if (x.Personagem.RaçaPersonagem.Nome == null)
+                        x.Personagem.RaçaPersonagem = _Gameplay.Raças.Humano.HumanoAb();
                     col.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }
