@@ -34,10 +34,9 @@ namespace ZaynBot.Entidades.EntidadesRpg.Mapa
         [BsonIgnore] public string RegiaoNome { get; set; }
         [BsonIgnore] public string Descrição { get; set; } = "Sem descrição";
         [BsonIgnore] public Tipo Terreno { get; set; }
-        [BsonIgnore] public List<Saida> Saidas { get; set; }
+        [BsonIgnore] public List<Saida> Saidas { get; set; } = new List<Saida>();
         //[BsonIgnore] public List<Npc> Npcs { get; set; }
-        //  [JsonIgnore]
-        //  public List<GrupoDeInimigo> Inimigos { get; set; } = new List<GrupoDeInimigo>();   
+        [BsonIgnore] public List<Mob> Inimigos { get; set; } = new List<Mob>();
         //public List<Regiao> Conexoes { get; set; }
 
         //[JsonIgnore]

@@ -9,6 +9,8 @@ namespace ZaynBot.Entidades.EntidadesRpg
     [BsonIgnoreExtraElements]
     public class Personagem
     {
+        #region Atributos
+
         public Raça RaçaPersonagem { get; set; }
         public float PontosDeVida { get; set; }
         public float PontosDeVidaMaxima { get; set; }
@@ -21,8 +23,11 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public int Velocidade { get; set; }
         public int Sorte { get; set; }
 
+        #endregion
+
         public float Fome { get; set; }
         public float Sede { get; set; }
+
 
         public Região LocalAtual { get; set; }
 
@@ -33,6 +38,8 @@ namespace ZaynBot.Entidades.EntidadesRpg
 
         public bool Vivo { get; set; }
         public DateTime DataMorte { get; set; }
+
+        public Batalha CampoBatalha { get; set; }
 
         public Personagem()
         {
@@ -54,6 +61,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
             Emprego = new Emprego("Desempregado");
             LocalAtual = _Gameplay.Mundos.Anker.Areas.Regiões[0];
             Vivo = true;
+            CampoBatalha = new Batalha();
         }
 
         //public int Alimentar(int quantidade)

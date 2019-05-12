@@ -8,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot._Gameplay.Raças;
 using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.Funções;
 
 namespace ZaynBot.Comandos
 {

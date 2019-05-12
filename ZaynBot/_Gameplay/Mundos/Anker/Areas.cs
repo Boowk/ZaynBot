@@ -18,5 +18,19 @@ namespace ZaynBot._Gameplay.Mundos.Anker
         {
             Regiões.TryAdd(regiao.RegiaoId, regiao);
         }
+
+        public static Região GetRegiao(int id)
+        {
+            Região r = new Região()
+            {
+                Descrição = Regiões[id].Descrição,
+                Inimigos = Regiões[id].Inimigos,
+                RegiaoId = Regiões[id].RegiaoId,
+                RegiaoNome = Regiões[id].RegiaoNome,
+                Saidas = Regiões[id].Saidas,
+                Terreno = Regiões[id].Terreno,
+            };
+            return r;
+        }
     }
 }

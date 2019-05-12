@@ -16,7 +16,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public float DefesaMagica { get; set; }
         public int Velocidade { get; set; }
         // public List<Hit> Hits { get; set; } // Aleatoriamente vai sair um dano que ele tiver e com base no estilo para mostrar ao jogador a fraqueza
-        public int ChanceDeAparecer { get; set; }
+        [BsonIgnore] public int ChanceDeAparecer { get; set; }
         // public List<ItemChanceCair> ChanceCairItem { get; set; } = new List<ItemChanceCair>();
     }
 

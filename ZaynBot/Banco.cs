@@ -30,7 +30,7 @@ namespace ZaynBot
             Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
             if (user != null)
             {
-                user.Personagem.LocalAtual = Areas.Regiões[user.Personagem.LocalAtual.RegiaoId];
+                user.Personagem.LocalAtual = Areas.GetRegiao(user.Personagem.LocalAtual.RegiaoId);
                 return user;
             }
             user = new Usuario(discordUserId);
