@@ -14,18 +14,18 @@ namespace ZaynBot.Eventos
             if (DateTime.UtcNow >= user.DataUltimaMensagemEnviada)
             {
                 user.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
-                Random random = new Random();
-                int quantiaSorteada = random.Next(5, 26);
-                bool evoluiu = user.AdicionarExp(quantiaSorteada);
+                Tuple<bool, int> result = user.AdicionarExp();
+                user.RegeneraçãoMana();
+                user.RegeneraçãoVida();
                 Banco.AlterarUsuario(user);
-                if (evoluiu == true)
+                if (result.Item1 == true)
                 {
                     e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} evoluiu regen para o nível {user.Nivel}.", DateTime.Now);
                     await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}! A sua regeneração de vida e mana aumentou para o nível {user.Nivel}! :beginner:");
                 }
                 else
                 {
-                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} recebeu {quantiaSorteada} de exp.", DateTime.Now);
+                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} recebeu {result.Item2} de exp.", DateTime.Now);
                 }
             }
         }
