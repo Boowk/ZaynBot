@@ -22,15 +22,15 @@ namespace ZaynBot.Comandos.ComandosRpg
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 
-            if (personagem.CampoBatalha.Inimigos.Count == 0)
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention}, não tem nenhum inimigo na sua frente para você atacar.");
-                return;
-            }
-
             if (personagem.PontosDeVida <= 0)
             {
                 await ctx.RespondAsync($"**{ctx.User.Mention}, você está morto.**");
+                return;
+            }
+
+            if (personagem.CampoBatalha.Inimigos.Count == 0)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, não tem nenhum inimigo na sua frente para você atacar.");
                 return;
             }
 
@@ -74,7 +74,7 @@ namespace ZaynBot.Comandos.ComandosRpg
                 // MorteInimigo(personagem, inimigo, mensagemDrops);
             }
 
-            embed.AddField("Inimigos atacados", $"{inimigo.Nome}(ID {id}) recebeu {string.Format("{0:N2}", danoNoinimigo)} de dano.\n{mensagemMortos.ToString()}", true);
+            embed.AddField("Inimigos atacados", $"{inimigo.Nome}(ID {id}) recebeu {danoNoinimigo.Texto()} de dano.\n{mensagemMortos.ToString()}", true);
 
             //if (mensagemDrops.ToString() != "")
             //{

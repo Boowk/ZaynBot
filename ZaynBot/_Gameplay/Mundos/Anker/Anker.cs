@@ -31,7 +31,7 @@ namespace ZaynBot._Gameplay.Mundos.Anker
                 Saidas = new List<Saida>()
             };
 
-            Mob NpcTeste = new Mob("Npc de teste :)")
+            Mob NpcTeste = new Mob("Npc de teste")
             {
 
             }.SetRaça(Humano.HumanoAb());
