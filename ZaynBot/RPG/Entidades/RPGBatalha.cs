@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     public class Batalha

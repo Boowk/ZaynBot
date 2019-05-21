@@ -1,6 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     public class Emprego
