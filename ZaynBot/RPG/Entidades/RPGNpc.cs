@@ -1,12 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Npc
+    public class RPGNpc
     {
         public string Nome { get; set; }
         public string FalaInicio { get; set; }
@@ -19,7 +17,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
     public class NpcVenda
     {
         public int Preco { get; set; }
-        public Item Item { get; set; }
+        public RPGItem Item { get; set; }
     }
 
     [BsonIgnoreExtraElements]

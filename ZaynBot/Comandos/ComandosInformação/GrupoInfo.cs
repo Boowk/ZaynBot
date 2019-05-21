@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Entidades;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos.ComandosInformação
 {
@@ -37,14 +38,14 @@ namespace ZaynBot.Comandos.ComandosInformação
                     //Para fazer: Limpar
                     IMongoClient client = new MongoClient("mongodb://localhost");
                     IMongoDatabase database = client.GetDatabase("zaynbot");
-                    IMongoCollection<Usuario> col = database.GetCollection<Usuario>("usuarios");
+                    IMongoCollection<RPGUsuario> col = database.GetCollection<RPGUsuario>("usuarios");
                     StringBuilder gg = new StringBuilder();
 
                     List<ulong> ids = new List<ulong>();
                     List<int> niveis = new List<int>();
                     List<DiscordUser> usuarios = new List<DiscordUser>();
 
-                    await col.Find(FilterDefinition<Usuario>.Empty).Limit(10).Sort("{Nivel: -1}")
+                    await col.Find(FilterDefinition<RPGUsuario>.Empty).Limit(10).Sort("{Nivel: -1}")
                         .ForEachAsync(x =>
                         {
                             ids.Add(x.Id);

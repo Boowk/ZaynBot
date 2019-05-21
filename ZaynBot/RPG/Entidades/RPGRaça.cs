@@ -1,9 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Raça
+    public class RPGRaça
     {
         public string Nome { get; private set; }
         [BsonIgnore] public float PontosDeVidaBaseMin { get; private set; }
@@ -24,7 +24,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         [BsonIgnore] public int VelocidadeBaseMax { get; private set; }
         [BsonIgnore] public int SorteBaseMax { get; private set; }
 
-        public Raça(string nome)
+        public RPGRaça(string nome)
         {
             Nome = nome;
         }

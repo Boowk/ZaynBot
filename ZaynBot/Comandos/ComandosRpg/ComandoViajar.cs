@@ -1,9 +1,8 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
-using ZaynBot._Gameplay.Mundos.Anker;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
+using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -33,19 +32,19 @@ namespace ZaynBot.Comandos.ComandosRpg
             {
                 case "norte":
                 case "n":
-                    await ExplorarAreaAsync(Saida.Direcoes.Norte, ctx);
+                    await ExplorarAreaAsync(RPGSaida.Direcoes.Norte, ctx);
                     break;
                 case "sul":
                 case "s":
-                    await ExplorarAreaAsync(Saida.Direcoes.Sul, ctx);
+                    await ExplorarAreaAsync(RPGSaida.Direcoes.Sul, ctx);
                     break;
                 case "oeste":
                 case "o":
-                    await ExplorarAreaAsync(Saida.Direcoes.Oeste, ctx);
+                    await ExplorarAreaAsync(RPGSaida.Direcoes.Oeste, ctx);
                     break;
                 case "leste":
                 case "l":
-                    await ExplorarAreaAsync(Saida.Direcoes.Leste, ctx);
+                    await ExplorarAreaAsync(RPGSaida.Direcoes.Leste, ctx);
                     break;
 
                 default:
@@ -54,10 +53,10 @@ namespace ZaynBot.Comandos.ComandosRpg
             }
         }
 
-        public static async Task ExplorarAreaAsync(Saida.Direcoes direcao, CommandContext ctx)
+        public static async Task ExplorarAreaAsync(RPGSaida.Direcoes direcao, CommandContext ctx)
         {
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
-            Região localAtual = Banco.ConsultarRegions(usuario.Personagem.LocalAtualId);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGRegião localAtual = Banco.ConsultarRegions(usuario.Personagem.LocalAtualId);
 
             foreach (var item in localAtual.Saidas)
             {

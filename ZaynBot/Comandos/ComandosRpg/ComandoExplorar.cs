@@ -3,9 +3,8 @@ using DSharpPlus.CommandsNext.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
+using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -16,15 +15,15 @@ namespace ZaynBot.Comandos.ComandosRpg
         [Description("Explora a região para encontrar inimigos.")]
         public async Task ExplorarInimigos(CommandContext ctx) // [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
         {
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
-            Personagem personagem = usuario.Personagem;
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.CampoBatalha.Party == true)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, somente o lider da part pode usar esse comando!");
                 return;
             }
-            Região localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
+            RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
 
             if (localAtual.Inimigos.Count == 0)
             {
@@ -34,7 +33,7 @@ namespace ZaynBot.Comandos.ComandosRpg
 
             if (personagem.CampoBatalha.Inimigos.Count < 2)
             {
-                List<Mob> pesos = localAtual.Inimigos;
+                List<RPGMob> pesos = localAtual.Inimigos;
 
                 int somaPeso = 0;
                 for (int i = 0; i < pesos.Count; i++)
@@ -50,7 +49,7 @@ namespace ZaynBot.Comandos.ComandosRpg
                     posicaoEscolhida++;
                     sorteio -= pesos[posicaoEscolhida].ChanceDeAparecer;
                 } while (sorteio > 0);
-                Mob inimigo = pesos[posicaoEscolhida];
+                RPGMob inimigo = pesos[posicaoEscolhida];
 
                 personagem.CampoBatalha.Inimigos.Add(inimigo.SetRaça(inimigo.RaçaMob));
 

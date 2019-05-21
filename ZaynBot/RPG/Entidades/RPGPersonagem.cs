@@ -4,14 +4,14 @@ using System;
 using ZaynBot._Gameplay.Raças;
 using ZaynBot.Funções;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Personagem
+    public class RPGPersonagem
     {
         #region Atributos
 
-        public Raça RaçaPersonagem { get; set; }
+        public RPGRaça RaçaPersonagem { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVida { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
@@ -43,17 +43,17 @@ namespace ZaynBot.Entidades.EntidadesRpg
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
 
-        public Equipamento Equipamento { get; set; }
-        public Habilidade Habilidade { get; set; }
-        public Titulo Titulo { get; set; }
-        public Emprego Emprego { get; set; }
+        public RPGEquipamento Equipamento { get; set; }
+        public RPGHabilidade Habilidade { get; set; }
+        public RPGTitulo Titulo { get; set; }
+        public RPGEmprego Emprego { get; set; }
 
         public bool Vivo { get; set; }
         public DateTime DataMorte { get; set; }
 
-        public Batalha CampoBatalha { get; set; }
+        public RPGBatalha CampoBatalha { get; set; }
 
-        public Personagem()
+        public RPGPersonagem()
         {
             RaçaPersonagem = Humano.HumanoAb();
             Sortear sortear = new Sortear();
@@ -67,13 +67,13 @@ namespace ZaynBot.Entidades.EntidadesRpg
             DefesaMagica = sortear.Valor(RaçaPersonagem.DefesaMagicaBaseMin, RaçaPersonagem.DefesaMagicaBaseMax);
             Velocidade = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMax);
             Sorte = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMin);
-            Equipamento = new Equipamento();
-            Habilidade = new Habilidade();
-            Titulo = new Titulo();
-            Emprego = new Emprego("Desempregado");
+            Equipamento = new RPGEquipamento();
+            Habilidade = new RPGHabilidade();
+            Titulo = new RPGTitulo();
+            Emprego = new RPGEmprego("Desempregado");
             LocalAtualId = 0;
             Vivo = true;
-            CampoBatalha = new Batalha();
+            CampoBatalha = new RPGBatalha();
         }
 
         //public int Alimentar(int quantidade)

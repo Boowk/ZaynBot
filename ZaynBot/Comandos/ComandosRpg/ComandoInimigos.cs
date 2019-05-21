@@ -3,8 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Text;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -15,8 +14,8 @@ namespace ZaynBot.Comandos.ComandosRpg
         [Description("Veja todos os inimigos a sua volta.")]
         public async Task VerInimigos(CommandContext ctx)
         {
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
-            Personagem personagem = usuario.Personagem;
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGPersonagem personagem = usuario.Personagem;
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 

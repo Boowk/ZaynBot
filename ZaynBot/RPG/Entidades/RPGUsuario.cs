@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using ZaynBot.Entidades.EntidadesRpg;
 using ZaynBot.Funções;
 
-namespace ZaynBot.Entidades
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Usuario
+    public class RPGUsuario
     {
         [BsonId]
         [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
@@ -18,12 +17,12 @@ namespace ZaynBot.Entidades
         public double ExperienciaAtual { get; set; } = 0;
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
-        public Personagem Personagem { get; set; } = new Personagem();
+        public RPGPersonagem Personagem { get; set; } = new RPGPersonagem();
         public List<Convite> ConvitesGuildas { get; set; } = new List<Convite>();
 
         public ObjectId IdGuilda { get; set; }
 
-        public Usuario(ulong id)
+        public RPGUsuario(ulong id)
         {
             Id = id;
         }

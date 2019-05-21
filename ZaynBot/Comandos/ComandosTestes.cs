@@ -9,10 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot._Gameplay.Raças;
-using ZaynBot.Entidades.EntidadesRpg;
-using ZaynBot.Funções;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos
 {
@@ -123,7 +121,7 @@ namespace ZaynBot.Comandos
         [RequireOwner]
         public async Task mobteste(CommandContext ctx)
         {
-            Mob mobTeste = new Mob("Teste Mob")
+            RPGMob mobTeste = new RPGMob("Teste Mob")
             {
                 AtaqueFisico = 10,
                 AtaqueMagico = 10,

@@ -3,12 +3,12 @@
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Emprego
+    public class RPGEmprego
     {
         public string Nome { get; }
         public int Nivel { get; }
 
-        public Emprego(string nome, int nivel = 1)
+        public RPGEmprego(string nome, int nivel = 1)
         {
             Nome = nome;
             Nivel = nivel;

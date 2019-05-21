@@ -1,12 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ZaynBot.Entidades.EntidadesRpg.Mapa
+namespace ZaynBot.RPG.Entidades.Mapa
 {
     [BsonIgnoreExtraElements]
-    public class Saida
+    public class RPGSaida
     {
         public enum Direcoes
         {

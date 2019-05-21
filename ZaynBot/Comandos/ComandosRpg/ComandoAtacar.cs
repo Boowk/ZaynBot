@@ -1,12 +1,9 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -17,8 +14,8 @@ namespace ZaynBot.Comandos.ComandosRpg
         [Description("Ataca o inimigo na sua frente.")]
         public async Task Atacar(CommandContext ctx, [Description("Id do alvo")] int id = 0)
         {
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
-            Personagem personagem = usuario.Personagem;
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGPersonagem personagem = usuario.Personagem;
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 
@@ -34,7 +31,7 @@ namespace ZaynBot.Comandos.ComandosRpg
                 return;
             }
 
-            Mob inimigo = null;
+            RPGMob inimigo = null;
 
             if (id != 0)
             {

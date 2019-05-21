@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
+using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
 {
@@ -7,14 +7,14 @@ namespace ZaynBot._Gameplay.Mundos.Anker
     {
         // Para fazer:
         // Gerar em memoria, salvar em HD e depois deletar tudo da memoria.
-        private static List<Região> Regiões;
+        private static List<RPGRegião> Regiões;
 
         public Areas()
         {
             // Deleta todas as zonas
             Banco.DeletarRegions();
             // Adiciona as zonas na lista
-            Regiões = new List<Região>
+            Regiões = new List<RPGRegião>
             {
                 Anker.AnkarEstrada(),
                 Anker.AnkarEstrada2()

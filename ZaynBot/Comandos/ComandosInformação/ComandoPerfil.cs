@@ -3,7 +3,8 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades; 
+using ZaynBot.Entidades;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos.ComandosInformação
 {
@@ -13,7 +14,7 @@ namespace ZaynBot.Comandos.ComandosInformação
         public async Task ComandoPerfilAb(CommandContext ctx, DiscordMember membro = null)
         {
             await ctx.TriggerTypingAsync();
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             if (membro == null)
             {
                 await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, usuario).Build());
@@ -30,11 +31,11 @@ namespace ZaynBot.Comandos.ComandosInformação
                 return;
             }
 
-            Usuario usuarioRequisitado = Banco.ConsultarUsuario(membro.Id);
+            RPGUsuario usuarioRequisitado = Banco.ConsultarUsuario(membro.Id);
             await ctx.RespondAsync(embed: GerarPerfil(membro, usuarioRequisitado).Build());
         }
 
-        private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, Usuario usuario)
+        private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, RPGUsuario usuario)
         {
             string guildaNome = "Nenhuma";
             if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)
