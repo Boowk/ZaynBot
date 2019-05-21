@@ -5,10 +5,9 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Comandos.ComandosInformação
+namespace ZaynBot.RPG.Comandos
 {
     [Group("info")]
     [Description("Comandos informativos.")]

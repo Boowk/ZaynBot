@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ZaynBot
+namespace ZaynBot.Core.Entidades
 {
-    public static class Bot
+    public static class CoreBot
     {
         public const ulong Id = 459873132975620134;
         public static string DiscordBotsApiKey { get; set; }

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ZaynBot.Comandos
+namespace ZaynBot.Core
 {
     public class AjudaFormatador : IHelpFormatter
     {

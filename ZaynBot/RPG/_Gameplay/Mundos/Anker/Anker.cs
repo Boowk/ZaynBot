@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using ZaynBot._Gameplay.Raças;
+using ZaynBot.RPG._Gameplay.Raças;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
-namespace ZaynBot._Gameplay.Mundos.Anker
+namespace ZaynBot.RPG._Gameplay.Mundos.Anker
 {
     public static class Anker
     {

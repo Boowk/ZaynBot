@@ -3,10 +3,10 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
+using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Comandos.ComandosInformação
+namespace ZaynBot.RPG.Comandos
 {
     public class ComandoPerfil
     {
@@ -22,7 +22,7 @@ namespace ZaynBot.Comandos.ComandosInformação
             }
             if (membro.IsBot)
             {
-                if (membro.Id != Bot.Id)
+                if (membro.Id != CoreBot.Id)
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention}, não gosto dos outros bots! Porquê você não pergunta sobre mim? :(");
                     return;

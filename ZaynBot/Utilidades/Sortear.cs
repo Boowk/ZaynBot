@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using ZaynBot.Entidades.EntidadesRpg;
-using static ZaynBot.Funções.Sortear;
+using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Funções
+namespace ZaynBot.Utilidades
 {
     public class Sortear
     {
@@ -34,7 +33,7 @@ namespace ZaynBot.Funções
             return (float)random.NextDouble() * (max - min) + min;
         }
 
-        public Mob ListaMob(List<Mob> mobs)
+        public RPGMob ListaMob(List<RPGMob> mobs)
         {
             mobs.Shuffle();     //Randomiza os mobs para ter chance de cair qualquer um
             int somaPeso = 0;    //Quantidade Max

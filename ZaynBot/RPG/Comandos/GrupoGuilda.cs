@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Comandos.ComandosRpg
+namespace ZaynBot.RPG.Comandos
 {
     [Group("guilda", CanInvokeWithoutSubcommand = true)]
     [Description("Comandos da guilda.")]

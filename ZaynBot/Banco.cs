@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using ZaynBot.RPG._Gameplay.Raças;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
@@ -201,7 +202,7 @@ namespace ZaynBot
                     if (x.Personagem.Vivo == false)
                         x.Personagem.Vivo = true;
                     if (x.Personagem.RaçaPersonagem.Nome == null)
-                        x.Personagem.RaçaPersonagem = _Gameplay.Raças.Humano.HumanoAb();
+                        x.Personagem.RaçaPersonagem = Humano.HumanoAb();
                     col.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }

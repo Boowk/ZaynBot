@@ -5,8 +5,9 @@ using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Eventos;
+using ZaynBot.Core.Entidades;
+using ZaynBot.Core.Eventos;
+using ZaynBot.RPG;
 
 namespace ZaynBot
 {
@@ -33,34 +34,34 @@ namespace ZaynBot
 
         private Task Client_ChannelDeleted(ChannelDeleteEventArgs e)
         {
-            Bot.QuantidadeCanais--;
+            CoreBot.QuantidadeCanais--;
             return Task.CompletedTask;
         }
 
         private Task Client_ChannelCreated(ChannelCreateEventArgs e)
         {
-            Bot.QuantidadeCanais++;
+            CoreBot.QuantidadeCanais++;
             return Task.CompletedTask;
         }
 
         private Task Client_GuildDeleted(GuildDeleteEventArgs e)
         {
-            Bot.QuantidadeServidores--;
-            Bot.QuantidadeMembros -= e.Guild.MemberCount;
-            Bot.QuantidadeCanais -= e.Guild.Channels.Count;
+            CoreBot.QuantidadeServidores--;
+            CoreBot.QuantidadeMembros -= e.Guild.MemberCount;
+            CoreBot.QuantidadeCanais -= e.Guild.Channels.Count;
             return Task.CompletedTask;
         }
 
         private Task Client_GuildMemberRemoved(GuildMemberRemoveEventArgs e)
         {
-            Bot.QuantidadeMembros--;
+            CoreBot.QuantidadeMembros--;
             return Task.CompletedTask;
         }
 
         private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
         {
-            Bot.QuantidadeMembros++;
-            await UsuarioNovoEntrouGuilda.EventoBemVindoAsync(e);
+            CoreBot.QuantidadeMembros++;
+            await EventoMensagemBoasVindas.EventoBemVindoAsync(e);
         }
 
         //private async Task DoWorkAsyncInfiniteLoop()
@@ -161,9 +162,9 @@ namespace ZaynBot
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"Guilda disponível: {e.Guild.Name}", DateTime.Now);
-            Bot.QuantidadeServidores++;
-            Bot.QuantidadeMembros += e.Guild.MemberCount;
-            Bot.QuantidadeCanais += e.Guild.Channels.Count;
+            CoreBot.QuantidadeServidores++;
+            CoreBot.QuantidadeMembros += e.Guild.MemberCount;
+            CoreBot.QuantidadeCanais += e.Guild.Channels.Count;
             return Task.CompletedTask;
         }
 

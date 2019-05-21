@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ZaynBot.Eventos
+namespace ZaynBot.Core.Eventos
 {
-    public static class UsuarioNovoEntrouGuilda
+    public static class EventoMensagemBoasVindas
     {
         public static async Task EventoBemVindoAsync(GuildMemberAddEventArgs e)
         {

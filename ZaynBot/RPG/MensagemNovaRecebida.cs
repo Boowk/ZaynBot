@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Eventos
+namespace ZaynBot.RPG
 {
     public static class MensagemNovaRecebida
     {

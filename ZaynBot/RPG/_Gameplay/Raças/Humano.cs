@@ -1,7 +1,7 @@
 ﻿using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot._Gameplay.Raças
-{
+namespace ZaynBot.RPG._Gameplay.Raças
+{ 
     public static class Humano
     {
         public static RPGRaça HumanoAb()

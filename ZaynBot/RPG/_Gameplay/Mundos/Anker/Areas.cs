@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ZaynBot.RPG.Entidades.Mapa;
 
-namespace ZaynBot._Gameplay.Mundos.Anker
+namespace ZaynBot.RPG._Gameplay.Mundos.Anker
 {
     public class Areas
     {

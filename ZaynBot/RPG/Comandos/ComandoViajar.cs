@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
-namespace ZaynBot.Comandos.ComandosRpg
+namespace ZaynBot.RPG.Comandos
 {
     public class ComandoViajar
     {

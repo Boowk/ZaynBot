@@ -2,7 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 
-namespace ZaynBot.Comandos
+namespace ZaynBot.Core.Comandos
 {
     public class Ajuda
     {

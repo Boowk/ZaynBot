@@ -6,11 +6,11 @@ using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ZaynBot.Comandos.ComandosAdministração;
-using ZaynBot.Comandos.ComandosInformação;
-using ZaynBot.Comandos.ComandosRpg;
+using ZaynBot.Core;
+using ZaynBot.Core.Comandos;
+using ZaynBot.RPG.Comandos;
 
-namespace ZaynBot.Comandos
+namespace ZaynBot
 {
     public class ModuloComando
     {
@@ -31,7 +31,7 @@ namespace ZaynBot.Comandos
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<GrupoInfo>();
-            Comandos.RegisterCommands<ComandosAdm>();
+            Comandos.RegisterCommands<ComandosAdministracao>();
             Comandos.RegisterCommands<ComandoPerfil>();
             Comandos.RegisterCommands<ComandoConvite>();
 

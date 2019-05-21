@@ -3,8 +3,8 @@ using DSharpPlus.CommandsNext;
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using ZaynBot.Comandos;
-using ZaynBot.Entidades;
+using ZaynBot.Core.Entidades;
+using ZaynBot.RPG._Gameplay.Mundos.Anker;
 
 namespace ZaynBot
 {
@@ -12,7 +12,7 @@ namespace ZaynBot
     {
         private ModuloComando _todosOsComandos;
         private ModuloCliente _cliente;
-        private Config _config;
+        private CoreConfig _config;
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
         public async Task RodarOBotAsync()
@@ -23,7 +23,7 @@ namespace ZaynBot
 #else
             string projetoRaiz = Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../")) + "config.json";
 #endif
-            _config = Config.LoadFromFile(projetoRaiz);
+            _config = CoreConfig.LoadFromFile(projetoRaiz);
             if (_config == null)
             {
                 Console.WriteLine("O arquivo config.json não existe!");
@@ -32,7 +32,7 @@ namespace ZaynBot
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            Bot.DiscordBotsApiKey = _config.DiscordBotsKey;
+            CoreBot.DiscordBotsApiKey = _config.DiscordBotsKey;
 
             DiscordConfiguration cfg = new DiscordConfiguration
             {
@@ -65,7 +65,7 @@ namespace ZaynBot
                 IgnoreExtraArguments = true,
             }, ModuloCliente.Client);
 
-            _Gameplay.Mundos.Anker.Areas mundoAnker = new _Gameplay.Mundos.Anker.Areas();
+            Areas mundoAnker = new Areas();
             await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);

@@ -9,10 +9,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ZaynBot._Gameplay.Raças;
+using ZaynBot.RPG._Gameplay.Raças;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Comandos
+namespace ZaynBot
 {
     public class ComandosTestes
     {

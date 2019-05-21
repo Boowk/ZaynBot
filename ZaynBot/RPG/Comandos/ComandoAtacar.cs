@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.Comandos.ComandosRpg
+namespace ZaynBot.RPG.Comandos
 {
     public class ComandoAtacar
     {

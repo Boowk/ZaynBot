@@ -1,9 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace ZaynBot
+namespace ZaynBot.Core.Entidades
 {
-    internal class Config
+    internal class CoreConfig
     {
         /// <summary>
         /// O token do seu bot
@@ -53,18 +53,18 @@ namespace ZaynBot
         /// </summary>
         /// <param name="path">Caminho para o arquivo config.</param>
         /// <returns></returns>
-        public static Config LoadFromFile(string path)
+        public static CoreConfig LoadFromFile(string path)
         {
             if (!File.Exists(path))
             {
-                Config config = new Config();
+                CoreConfig config = new CoreConfig();
                 config.SaveToFile(path);
                 return null;
             }
 
             using (var sr = new StreamReader(path))
             {
-                return JsonConvert.DeserializeObject<Config>(sr.ReadToEnd());
+                return JsonConvert.DeserializeObject<CoreConfig>(sr.ReadToEnd());
             }
         }
 
