@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ZaynBot.Entidades
+namespace ZaynBot
 {
     public static class Bot
     {

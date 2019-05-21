@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Comandos\ComandosDiversão\**" />
+    <Compile Remove="Comandos\ComandosMeme\**" />
+    <EmbeddedResource Remove="Comandos\ComandosDiversão\**" />
+    <EmbeddedResource Remove="Comandos\ComandosMeme\**" />
+    <None Remove="Comandos\ComandosDiversão\**" />
+    <None Remove="Comandos\ComandosMeme\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="DiscordBotsList.Api" Version="1.3.0" />
     <PackageReference Include="DSharpPlus" Version="3.2.3" />
     <PackageReference Include="DSharpPlus.CommandsNext" Version="3.2.3" />
@@ -13,11 +22,6 @@
     <PackageReference Include="DSharpPlus.Rest" Version="3.2.3" />
     <PackageReference Include="DSharpPlus.VoiceNext" Version="3.2.3" />
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Comandos\ComandosDiversão\" />
-    <Folder Include="Comandos\ComandosMeme\" />
   </ItemGroup>
 
 </Project>

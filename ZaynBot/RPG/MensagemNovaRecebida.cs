@@ -2,7 +2,6 @@
 using DSharpPlus.EventArgs;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Eventos
