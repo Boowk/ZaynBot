@@ -4,13 +4,12 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
 
-namespace ZaynBot.Comandos.ComandosAdministração
+namespace ZaynBot.Comandos.Administracao
 {
     [Group("adm")]
     [Description("Comandos administrativos.")]
-    public class ComandosAdm
+    public class ComandosAdministracao
     {
         [Command("botjogando")]
         [RequireOwner]

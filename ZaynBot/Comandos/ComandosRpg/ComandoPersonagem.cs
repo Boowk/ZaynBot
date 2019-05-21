@@ -3,8 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -14,7 +13,7 @@ namespace ZaynBot.Comandos.ComandosRpg
         public async Task ComandoPersonagemAb(CommandContext ctx, DiscordUser membro = null)
         {
             await ctx.TriggerTypingAsync();
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             if (membro == null)
             {
                 await ctx.RespondAsync(embed: GerarPersonagem(ctx.Member, usuario).Build());
@@ -33,9 +32,9 @@ namespace ZaynBot.Comandos.ComandosRpg
             await ctx.RespondAsync("Atenção - Futuramente será necessario a habilidade inspecionar.", embed: GerarPersonagem(membro, Banco.ConsultarUsuario(membro.Id)).Build());
         }
 
-        private DiscordEmbedBuilder GerarPersonagem(DiscordUser membro, Usuario usuario)
+        private DiscordEmbedBuilder GerarPersonagem(DiscordUser membro, RPGUsuario usuario)
         {
-            Entidades.EntidadesRpg.Personagem personagem = usuario.Personagem;
+            RPGPersonagem personagem = usuario.Personagem;
             return new DiscordEmbedBuilder()
             {
                 Author = new DiscordEmbedBuilder.EmbedAuthor()

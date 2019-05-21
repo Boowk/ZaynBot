@@ -7,8 +7,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -36,7 +35,7 @@ namespace ZaynBot.Comandos.ComandosRpg
         public async Task ComandoGuildaConvidar(CommandContext ctx, [Description("Membro do servidor")]DiscordMember membro = null)
         {
             await ctx.TriggerTypingAsync();
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
 
             if (usuario.IdGuilda.ToString() == Banco.ObjectIDNulo)
             {
@@ -56,14 +55,14 @@ namespace ZaynBot.Comandos.ComandosRpg
                 return;
             }
 
-            Guilda guilda = Banco.ConsultarGuilda(usuario.IdGuilda);
+            RPGGuilda guilda = Banco.ConsultarGuilda(usuario.IdGuilda);
             if (guilda.Convites.Count > 5)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, a sua guilda já alcançou o limite máximo de convites!");
                 return;
             }
 
-            Usuario userConvidado = Banco.ConsultarUsuario(membro.Id);
+            RPGUsuario userConvidado = Banco.ConsultarUsuario(membro.Id);
             if (userConvidado.ConvitesGuildas.Count > 5)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, {membro.Mention} tem 5 convites pendentes ainda!");
@@ -84,7 +83,7 @@ namespace ZaynBot.Comandos.ComandosRpg
         public async Task ComandoGuildaCriar(CommandContext ctx, [RemainingText, Description("Nome")]string nome = null)
         {
             await ctx.TriggerTypingAsync();
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
 
             if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)
             {
@@ -117,7 +116,7 @@ namespace ZaynBot.Comandos.ComandosRpg
             }
 
 
-            bool criou = Banco.CriarGuilda(new Guilda()
+            bool criou = Banco.CriarGuilda(new RPGGuilda()
             {
                 IdDono = ctx.User.Id,
                 Nome = nome
@@ -140,7 +139,7 @@ namespace ZaynBot.Comandos.ComandosRpg
         public async Task ComandoGuildaAceitar(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
 
             if (usuario.ConvitesGuildas.Count == 0)
             {
@@ -184,7 +183,7 @@ namespace ZaynBot.Comandos.ComandosRpg
             usuario.IdGuilda = vaiEntrar.IdGuilda;
             usuario.ConvitesGuildas.Clear();
             Banco.AlterarUsuario(usuario);
-            Guilda guilda = Banco.ConsultarGuilda(vaiEntrar.IdGuilda);
+            RPGGuilda guilda = Banco.ConsultarGuilda(vaiEntrar.IdGuilda);
             guilda.Membros.Add(usuario.Id);
             guilda.Convites.RemoveAll(x => x.IdUsuario == usuario.Id);
             Banco.AlterarGuilda(guilda);

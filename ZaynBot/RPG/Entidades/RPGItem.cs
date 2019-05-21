@@ -1,12 +1,9 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Item
+    public class RPGItem
     {
         public enum Tipo
         {
@@ -20,7 +17,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public int Quantidade { get; set; }
         public float PreçoBase { get; set; }
 
-        public Item(string nome, string descrição, Tipo tipo_item, float preco_base, int quantidade = 1)
+        public RPGItem(string nome, string descrição, Tipo tipo_item, float preco_base, int quantidade = 1)
         {
             Nome = nome;
             Descricao = descrição;

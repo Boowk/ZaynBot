@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
 
-namespace ZaynBot.Entidades
+namespace ZaynBot
 {
     internal class Config
     {

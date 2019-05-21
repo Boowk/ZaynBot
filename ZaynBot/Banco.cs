@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ZaynBot._Gameplay.Mundos.Anker;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
+using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot
 {
@@ -25,13 +23,13 @@ namespace ZaynBot
         /// </summary>
         /// <param name="discordUser"></param>
         /// <returns>Usuario</returns>
-        public static Usuario ConsultarUsuario(ulong discordUserId)
+        public static RPGUsuario ConsultarUsuario(ulong discordUserId)
         {
-            Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(discordUserId);
-            Usuario user = ConsultarItem(filtro, ColecaoUsuarios);
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(discordUserId);
+            RPGUsuario user = ConsultarItem(filtro, ColecaoUsuarios);
             if (user != null)
                 return user;
-            user = new Usuario(discordUserId);
+            user = new RPGUsuario(discordUserId);
             AdicionarItem(user, ColecaoUsuarios);
             return user;
         }
@@ -40,9 +38,9 @@ namespace ZaynBot
         /// Altera um usuario no banco de dados.
         /// </summary>
         /// <param name="usuario"></param>
-        public static void AlterarUsuario(Usuario usuario)
+        public static void AlterarUsuario(RPGUsuario usuario)
         {
-            Expression<Func<Usuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
 
             AlterarItem(filtro, usuario, ColecaoUsuarios);
         }
@@ -52,10 +50,10 @@ namespace ZaynBot
         /// </summary>
         /// <param name="guildaId"></param>
         /// <returns>Guilda</returns>
-        public static Guilda ConsultarGuilda(ObjectId guildaId)
+        public static RPGGuilda ConsultarGuilda(ObjectId guildaId)
         {
-            Expression<Func<Guilda, bool>> filtro = x => x.Id.Equals(guildaId);
-            Guilda guilda = ConsultarItem(filtro, ColecaoGuildas);
+            Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guildaId);
+            RPGGuilda guilda = ConsultarItem(filtro, ColecaoGuildas);
             if (guilda != null)
             {
                 return guilda;
@@ -65,8 +63,8 @@ namespace ZaynBot
 
         public static ObjectId ConsultarGuildaCriador(ulong dono)
         {
-            Expression<Func<Guilda, bool>> filtro = x => x.IdDono.Equals(dono);
-            Guilda guilda = ConsultarItem(filtro, ColecaoGuildas);
+            Expression<Func<RPGGuilda, bool>> filtro = x => x.IdDono.Equals(dono);
+            RPGGuilda guilda = ConsultarItem(filtro, ColecaoGuildas);
 
             return guilda.Id;
         }
@@ -76,16 +74,16 @@ namespace ZaynBot
         /// </summary>
         /// <param name="idGuilda"></param>
         /// <returns>Guilda</returns>
-        public static bool CriarGuilda(Guilda guilda)
+        public static bool CriarGuilda(RPGGuilda guilda)
         {
-            Expression<Func<Guilda, bool>> filtro = x => x.Nome.Equals(guilda.Nome);
-            Guilda guildaAchou = ConsultarItem(filtro, ColecaoGuildas);
+            Expression<Func<RPGGuilda, bool>> filtro = x => x.Nome.Equals(guilda.Nome);
+            RPGGuilda guildaAchou = ConsultarItem(filtro, ColecaoGuildas);
             if (guildaAchou != null)
             {
                 return false;
             }
 
-            guildaAchou = new Guilda()
+            guildaAchou = new RPGGuilda()
             {
                 Convites = new System.Collections.Generic.List<Convite>(),
                 Nome = guilda.Nome,
@@ -102,9 +100,9 @@ namespace ZaynBot
         /// Altera uma guilda no banco de dados.
         /// </summary>
         /// <param name="idGuilda"></param>
-        public static void AlterarGuilda(Guilda guilda)
+        public static void AlterarGuilda(RPGGuilda guilda)
         {
-            Expression<Func<Guilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
+            Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
 
             AlterarItem(filtro, guilda, ColecaoGuildas);
         }
@@ -169,17 +167,17 @@ namespace ZaynBot
         {
             IMongoClient client = new MongoClient(LocalBancoSalvo);
             IMongoDatabase database = client.GetDatabase(BancoDeDados);
-            IMongoCollection<Região> col = database.GetCollection<Região>(ColecaoRegiões);
-            col.DeleteMany(FilterDefinition<Região>.Empty);
+            IMongoCollection<RPGRegião> col = database.GetCollection<RPGRegião>(ColecaoRegiões);
+            col.DeleteMany(FilterDefinition<RPGRegião>.Empty);
         }
-        public static void AdicionarRegions(Região regiao)
+        public static void AdicionarRegions(RPGRegião regiao)
         {
             AdicionarItem(regiao, ColecaoRegiões);
         }
-        public static Região ConsultarRegions(int id)
+        public static RPGRegião ConsultarRegions(int id)
         {
-            Expression<Func<Região, bool>> filtro = x => x.Id.Equals(id);
-            Região region = ConsultarItem(filtro, ColecaoRegiões);
+            Expression<Func<RPGRegião, bool>> filtro = x => x.Id.Equals(id);
+            RPGRegião region = ConsultarItem(filtro, ColecaoRegiões);
             if (region != null)
                 return region;
             return null;
@@ -190,14 +188,14 @@ namespace ZaynBot
         {
             IMongoClient client = new MongoClient("mongodb://localhost");
             IMongoDatabase database = client.GetDatabase("zaynbot");
-            IMongoCollection<Usuario> col = database.GetCollection<Usuario>("usuarios");
+            IMongoCollection<RPGUsuario> col = database.GetCollection<RPGUsuario>("usuarios");
 
-            await col.Find(FilterDefinition<Usuario>.Empty)
+            await col.Find(FilterDefinition<RPGUsuario>.Empty)
                 .ForEachAsync(x =>
                 {
-                    Expression<Func<Usuario, bool>> filtro = f => f.Id.Equals(x.Id);
+                    Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
                     if (x.Personagem == null)
-                        x.Personagem = new Personagem();
+                        x.Personagem = new RPGPersonagem();
                     if (x.ConvitesGuildas == null)
                         x.ConvitesGuildas = new List<Convite>();
                     if (x.Personagem.Vivo == false)

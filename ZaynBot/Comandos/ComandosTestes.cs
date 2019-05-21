@@ -7,11 +7,10 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using ZaynBot._Gameplay.Mundos.Anker;
 using ZaynBot._Gameplay.Raças;
-using ZaynBot.Entidades.EntidadesRpg;
-using ZaynBot.Funções;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Comandos
 {
@@ -71,6 +70,7 @@ namespace ZaynBot.Comandos
         }
 
 
+        CancellationTokenSource cts;
         [Command("testef")]
         [Hidden]
         [RequireOwner]
@@ -87,7 +87,7 @@ namespace ZaynBot.Comandos
             //    "");
             //await ie.SendPaginatedMessage(ctx.Channel, ctx.User, pgs, timeoutoverride: TimeSpan.FromSeconds(20));
 
-
+            cts = new CancellationTokenSource();
             DiscordMessage mensagem = await ctx.RespondAsync("Página 1");
 
             //var emojis = new PaginationEmojis(ctx.Client)
@@ -101,12 +101,19 @@ namespace ZaynBot.Comandos
             Func<DiscordEmoji, bool> y = x => x.GetDiscordName() == ":eyes:" || x.Name == "f";
 
             var f = await Task.WhenAny(
-     interacao.WaitForMessageReactionAsync(g, mensagem).ContinueWith(x => ctx.RespondAsync("Emote g recebido")),
-     interacao.WaitForMessageReactionAsync(y, mensagem).ContinueWith(x => ctx.RespondAsync("Emote yes recebido"))
-     );
-            //ReactionContext gg = await interacao.WaitForMessageReactionAsync(g, mensagem, timeoutoverride: TimeSpan.FromSeconds(30));
+                interacao.WaitForMessageReactionAsync(g, mensagem, timeoutoverride: TimeSpan.FromSeconds(10)).ContinueWith(x => MetodoAsync(x.Result, ctx), cts.Token),
+                interacao.WaitForMessageReactionAsync(y, mensagem, timeoutoverride: TimeSpan.FromSeconds(10)).ContinueWith(x => MetodoAsync(x.Result, ctx), cts.Token)
+                );
+
+            // ReactionContext gg = await interacao.WaitForMessageReactionAsync(g, mensagem, timeoutoverride: TimeSpan.FromSeconds(30));
             //await ctx.RespondAsync("E");
 
+        }
+
+        public async Task MetodoAsync(ReactionContext result, CommandContext ctx)
+        {
+            cts.Cancel();
+            await ctx.RespondAsync($"reação: {result.Emoji.Name}");
         }
 
         [Command("testemob")]
@@ -114,7 +121,7 @@ namespace ZaynBot.Comandos
         [RequireOwner]
         public async Task mobteste(CommandContext ctx)
         {
-            Mob mobTeste = new Mob("Teste Mob")
+            RPGMob mobTeste = new RPGMob("Teste Mob")
             {
                 AtaqueFisico = 10,
                 AtaqueMagico = 10,

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using ZaynBot._Gameplay.Raças;
-using ZaynBot.Entidades.EntidadesRpg;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
+using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot._Gameplay.Mundos.Anker
 {
     public static class Anker
     {
-        public static Região AnkarEstrada()
+        public static RPGRegião AnkarEstrada()
         {
 
             /*
@@ -20,18 +20,18 @@ namespace ZaynBot._Gameplay.Mundos.Anker
             * 
             */
 
-            Região regiao = new Região()
+            RPGRegião regiao = new RPGRegião()
             {
                 Id = 0,
                 RegiaoNome = "Estrada",
                 Descrição = "Uma estrada de terra.",
-                Terreno = Região.Tipo.Campo,
+                Terreno = RPGRegião.Tipo.Campo,
 
                 //Padrão
-                Saidas = new List<Saida>()
+                Saidas = new List<RPGSaida>()
             };
 
-            Mob NpcTeste = new Mob("Npc de teste")
+            RPGMob NpcTeste = new RPGMob("Npc de teste :)")
             {
 
             }.SetRaça(Humano.HumanoAb());
@@ -40,9 +40,9 @@ namespace ZaynBot._Gameplay.Mundos.Anker
             #region saidas
 
             // Cria as saidas
-            Saida norte = new Saida
+            RPGSaida norte = new RPGSaida
             {
-                Direcao = Saida.Direcoes.Norte,
+                Direcao = RPGSaida.Direcoes.Norte,
                 RegiaoId = 1
             };
 
@@ -52,26 +52,26 @@ namespace ZaynBot._Gameplay.Mundos.Anker
             return regiao;
         }
 
-        public static Região AnkarEstrada2()
+        public static RPGRegião AnkarEstrada2()
         {
 
-            Região regiao = new Região()
+            RPGRegião regiao = new RPGRegião()
             {
                 Id = 1,
                 RegiaoNome = "Estrada com pedras",
                 Descrição = "Uma estrada de terra com pedras.",
-                Terreno = Região.Tipo.Campo,
+                Terreno = RPGRegião.Tipo.Campo,
 
                 //Padrão
-                Saidas = new List<Saida>()
+                Saidas = new List<RPGSaida>()
             };
 
             #region saidas
 
             // Cria as saidas
-            Saida sul = new Saida
+            RPGSaida sul = new RPGSaida
             {
-                Direcao = Saida.Direcoes.Sul,
+                Direcao = RPGSaida.Direcoes.Sul,
                 RegiaoId = 0
             };
 

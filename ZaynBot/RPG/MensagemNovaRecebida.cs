@@ -2,7 +2,7 @@
 using DSharpPlus.EventArgs;
 using System;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Eventos
 {
@@ -10,7 +10,7 @@ namespace ZaynBot.Eventos
     {
         public static async Task ReceberXPNivelMensagens(MessageCreateEventArgs e)
         {
-            Usuario user = Banco.ConsultarUsuario(e.Author.Id);
+            RPGUsuario user = Banco.ConsultarUsuario(e.Author.Id);
             if (DateTime.UtcNow >= user.DataUltimaMensagemEnviada)
             {
                 user.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);

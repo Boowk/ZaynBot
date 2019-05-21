@@ -3,9 +3,8 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Text;
 using System.Threading.Tasks;
-using ZaynBot.Entidades;
-using ZaynBot.Entidades.EntidadesRpg;
-using ZaynBot.Entidades.EntidadesRpg.Mapa;
+using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.Comandos.ComandosRpg
 {
@@ -16,9 +15,9 @@ namespace ZaynBot.Comandos.ComandosRpg
         [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
         public async Task Localizacao(CommandContext ctx)
         {
-            Usuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
-            Personagem personagem = usuario.Personagem;
-            Região localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
+            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGPersonagem personagem = usuario.Personagem;
+            RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 

@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Batalha
+    public class RPGBatalha
     {
         public bool Party { get; set; } = false;
         public ulong PartyId { get; set; }
@@ -14,7 +14,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public Dictionary<ulong, int> PersonagensVelocidadeAtacou { get; set; } = new Dictionary<ulong, int>();
 
         // Se for a vez do Mob - Automaticamente joga até chegar a vez de algum jogador
-        public List<Mob> Inimigos { get; set; } = new List<Mob>();
+        public List<RPGMob> Inimigos { get; set; } = new List<RPGMob>();
 
         // E assim finaliza um round
 

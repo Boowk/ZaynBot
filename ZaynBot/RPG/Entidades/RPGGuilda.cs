@@ -3,10 +3,10 @@ using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Guilda
+    public class RPGGuilda
     {
         public ObjectId Id { get; set; }
         public ulong IdDono { get; set; }

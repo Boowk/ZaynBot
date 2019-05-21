@@ -2,12 +2,12 @@
 using MongoDB.Bson.Serialization.Attributes;
 using ZaynBot.Funções;
 
-namespace ZaynBot.Entidades.EntidadesRpg
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class Mob
+    public class RPGMob
     {
-        public Raça RaçaMob { get; set; }                              
+        public RPGRaça RaçaMob { get; set; }                              
         public string Nome { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVida { get; set; }
@@ -28,7 +28,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
         public int ChanceDeAparecer { get; set; }
         // public List<ItemChanceCair> ChanceCairItem { get; set; } = new List<ItemChanceCair>();
 
-        public Mob(string nome)
+        public RPGMob(string nome)
         {
             Nome = nome;
         }
@@ -36,7 +36,7 @@ namespace ZaynBot.Entidades.EntidadesRpg
 
     public static class Extensão
     {
-        public static Mob SetRaça(this Mob mob, Raça raca)
+        public static RPGMob SetRaça(this RPGMob mob, RPGRaça raca)
         {
             Sortear sortear = new Sortear();
             mob.RaçaMob = raca;

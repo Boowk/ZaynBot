@@ -1,10 +1,10 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace ZaynBot.Entidades.EntidadesRpg.Mapa
+namespace ZaynBot.RPG.Entidades.Mapa
 {
     [BsonIgnoreExtraElements]
-    public class Região
+    public class RPGRegião
     {
         //CIDADE               |   1  | 
         //CAMPO                |   2  | 
@@ -34,9 +34,9 @@ namespace ZaynBot.Entidades.EntidadesRpg.Mapa
         public string RegiaoNome { get; set; }
         public string Descrição { get; set; } = "Sem descrição";
         public Tipo Terreno { get; set; }
-        public List<Saida> Saidas { get; set; } = new List<Saida>();
+        public List<RPGSaida> Saidas { get; set; } = new List<RPGSaida>();
         //[BsonIgnore] public List<Npc> Npcs { get; set; }
-        public List<Mob> Inimigos { get; set; } = new List<Mob>();
+        public List<RPGMob> Inimigos { get; set; } = new List<RPGMob>();
         //public List<Regiao> Conexoes { get; set; }
 
         //[JsonIgnore]

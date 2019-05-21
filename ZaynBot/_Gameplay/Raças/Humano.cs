@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using ZaynBot.Entidades.EntidadesRpg;
+﻿using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot._Gameplay.Raças
 {
     public static class Humano
     {
-        public static Raça HumanoAb()
+        public static RPGRaça HumanoAb()
         {
-            Raça raça = new Raça("Humano");
+            RPGRaça raça = new RPGRaça("Humano");
             raça.SetPontosDeVidaBase(10, 100);
             raça.SetPontosDeManaBase(8, 20);
             raça.SetAtaqueFisicoBase(9, 15);
