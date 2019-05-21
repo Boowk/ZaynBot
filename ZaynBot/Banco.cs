@@ -10,20 +10,26 @@ using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot
 {
-    public static class Banco
+    public class Banco
     {
         public static string ObjectIDNulo { get; } = "000000000000000000000000";
 
-        private static readonly IMongoClient _client = new MongoClient("mongodb://localhost");
-        private static readonly IMongoDatabase _database = _client.GetDatabase("zaynbot");
-
         #region Coleções
 
-        public static readonly IMongoCollection<RPGRegião> ColecaoRegioes = _database.GetCollection<RPGRegião>("regions");
-        public static readonly IMongoCollection<RPGUsuario> ColecaoUsuarios = _database.GetCollection<RPGUsuario>("usuarios");
-        public static readonly IMongoCollection<RPGGuilda> ColecaoGuildas = _database.GetCollection<RPGGuilda>("guildas");
+        public static IMongoCollection<RPGRegião> ColecaoRegioes { get; private set; }
+        public static IMongoCollection<RPGUsuario> ColecaoUsuarios { get; private set; }
+        public static IMongoCollection<RPGGuilda> ColecaoGuildas { get; private set; }
 
         #endregion
+
+        public Banco()
+        {
+            IMongoClient _client = new MongoClient("mongodb://localhost");
+            IMongoDatabase _database = _client.GetDatabase("zaynbot");
+            ColecaoRegioes = _database.GetCollection<RPGRegião>("regions");
+            ColecaoUsuarios = _database.GetCollection<RPGUsuario>("usuarios");
+            ColecaoGuildas = _database.GetCollection<RPGGuilda>("guildas");
+        }
 
         /// <summary>
         /// Consulta por um usuario no banco de dados.
@@ -108,7 +114,7 @@ namespace ZaynBot
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
             ColecaoGuildas.ReplaceOne(filtro, guilda);
         }
-        
+
         public static RPGRegião ConsultarRegions(int id)
         {
             Expression<Func<RPGRegião, bool>> filtro = x => x.Id.Equals(id);
