@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MongoDB.Driver;
+using System.Collections.Generic;
 using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.RPG._Gameplay.Mundos.Anker
@@ -12,7 +13,8 @@ namespace ZaynBot.RPG._Gameplay.Mundos.Anker
         public Areas()
         {
             // Deleta todas as zonas
-            Banco.DeletarRegions();
+            Banco.ColecaoRegioes.DeleteMany(FilterDefinition<RPGRegião>.Empty);
+
             // Adiciona as zonas na lista
             Regiões = new List<RPGRegião>
             {
@@ -22,7 +24,7 @@ namespace ZaynBot.RPG._Gameplay.Mundos.Anker
             // Salva as zonas na HD
             foreach (var item in Regiões)
             {
-                Banco.AdicionarRegions(item);
+                Banco.ColecaoRegioes.InsertOne(item);
             }
             // Limpa a lista para liberar memoria
             Regiões = null;

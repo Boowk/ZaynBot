@@ -12,12 +12,18 @@ namespace ZaynBot
 {
     public static class Banco
     {
-        private const string LocalBancoSalvo = "mongodb://localhost";
-        private const string BancoDeDados = "zaynbot";
-        private const string ColecaoUsuarios = "usuarios";
-        private const string ColecaoGuildas = "guildas";
-        private const string ColecaoRegiões = "regions";
-        public const string ObjectIDNulo = "000000000000000000000000";
+        public static string ObjectIDNulo { get; } = "000000000000000000000000";
+
+        private static readonly IMongoClient _client = new MongoClient("mongodb://localhost");
+        private static readonly IMongoDatabase _database = _client.GetDatabase("zaynbot");
+
+        #region Coleções
+
+        public static readonly IMongoCollection<RPGRegião> ColecaoRegioes = _database.GetCollection<RPGRegião>("regions");
+        public static readonly IMongoCollection<RPGUsuario> ColecaoUsuarios = _database.GetCollection<RPGUsuario>("usuarios");
+        public static readonly IMongoCollection<RPGGuilda> ColecaoGuildas = _database.GetCollection<RPGGuilda>("guildas");
+
+        #endregion
 
         /// <summary>
         /// Consulta por um usuario no banco de dados.
@@ -27,11 +33,11 @@ namespace ZaynBot
         public static RPGUsuario ConsultarUsuario(ulong discordUserId)
         {
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(discordUserId);
-            RPGUsuario user = ConsultarItem(filtro, ColecaoUsuarios);
+            RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
             if (user != null)
                 return user;
             user = new RPGUsuario(discordUserId);
-            AdicionarItem(user, ColecaoUsuarios);
+            ColecaoUsuarios.InsertOne(user);
             return user;
         }
 
@@ -42,8 +48,7 @@ namespace ZaynBot
         public static void AlterarUsuario(RPGUsuario usuario)
         {
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
-
-            AlterarItem(filtro, usuario, ColecaoUsuarios);
+            ColecaoUsuarios.ReplaceOne(filtro, usuario);
         }
 
         /// <summary>
@@ -54,19 +59,16 @@ namespace ZaynBot
         public static RPGGuilda ConsultarGuilda(ObjectId guildaId)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guildaId);
-            RPGGuilda guilda = ConsultarItem(filtro, ColecaoGuildas);
+            RPGGuilda guilda = ColecaoGuildas.Find(filtro).FirstOrDefault();
             if (guilda != null)
-            {
                 return guilda;
-            }
             return null;
         }
 
         public static ObjectId ConsultarGuildaCriador(ulong dono)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.IdDono.Equals(dono);
-            RPGGuilda guilda = ConsultarItem(filtro, ColecaoGuildas);
-
+            RPGGuilda guilda = ColecaoGuildas.Find(filtro).FirstOrDefault();
             return guilda.Id;
         }
 
@@ -78,7 +80,7 @@ namespace ZaynBot
         public static bool CriarGuilda(RPGGuilda guilda)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Nome.Equals(guilda.Nome);
-            RPGGuilda guildaAchou = ConsultarItem(filtro, ColecaoGuildas);
+            RPGGuilda guildaAchou = ColecaoGuildas.Find(filtro).FirstOrDefault();
             if (guildaAchou != null)
             {
                 return false;
@@ -93,7 +95,7 @@ namespace ZaynBot
                 Descricao = "Sem descrição",
                 Id = new ObjectId(),
             };
-            AdicionarItem(guildaAchou, ColecaoGuildas);
+            ColecaoGuildas.InsertOne(guildaAchou);
             return true;
         }
 
@@ -104,94 +106,21 @@ namespace ZaynBot
         public static void AlterarGuilda(RPGGuilda guilda)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
-
-            AlterarItem(filtro, guilda, ColecaoGuildas);
+            ColecaoGuildas.ReplaceOne(filtro, guilda);
         }
-
-        /// <summary>
-        /// Consulta por um item no banco de dados
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="colecao"></param>
-        /// <param name="filtro"></param>
-        /// <returns></returns>
-        private static T ConsultarItem<T>(Expression<Func<T, bool>> filtro, string colecao) where T : class
-        {
-            IMongoClient client = new MongoClient(LocalBancoSalvo);
-            IMongoDatabase database = client.GetDatabase(BancoDeDados);
-            IMongoCollection<T> col = database.GetCollection<T>(colecao);
-
-            return col.Find(filtro).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Adiciona um item no banco de dados.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="item"></param>
-        /// <param name="colecao"></param>
-        private static void AdicionarItem<T>(T item, string colecao) where T : class
-        {
-            IMongoClient client = new MongoClient(LocalBancoSalvo);
-            IMongoDatabase database = client.GetDatabase(BancoDeDados);
-            IMongoCollection<T> col = database.GetCollection<T>(colecao);
-
-            col.InsertOne(item);
-        }
-
-        /// <summary>
-        /// Altera um item no banco de dados, com base em algum valor especifico.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="filtro"></param>
-        /// <param name="item"></param>
-        /// <param name="colecao"></param>
-        private static void AlterarItem<T>(Expression<Func<T, bool>> filtro, T item, string colecao) where T : class
-        {
-            IMongoClient client = new MongoClient(LocalBancoSalvo);
-            IMongoDatabase database = client.GetDatabase(BancoDeDados);
-            IMongoCollection<T> col = database.GetCollection<T>(colecao);
-
-            col.ReplaceOne(filtro, item);
-        }
-
-        private static void DeletarItem<T>(Expression<Func<T, bool>> filtro, string colecao) where T : class
-        {
-            IMongoClient client = new MongoClient(LocalBancoSalvo);
-            IMongoDatabase database = client.GetDatabase(BancoDeDados);
-            IMongoCollection<T> col = database.GetCollection<T>(colecao);
-
-            col.DeleteOne(filtro);
-        }
-
-        public static void DeletarRegions()
-        {
-            IMongoClient client = new MongoClient(LocalBancoSalvo);
-            IMongoDatabase database = client.GetDatabase(BancoDeDados);
-            IMongoCollection<RPGRegião> col = database.GetCollection<RPGRegião>(ColecaoRegiões);
-            col.DeleteMany(FilterDefinition<RPGRegião>.Empty);
-        }
-        public static void AdicionarRegions(RPGRegião regiao)
-        {
-            AdicionarItem(regiao, ColecaoRegiões);
-        }
+        
         public static RPGRegião ConsultarRegions(int id)
         {
             Expression<Func<RPGRegião, bool>> filtro = x => x.Id.Equals(id);
-            RPGRegião region = ConsultarItem(filtro, ColecaoRegiões);
+            RPGRegião region = ColecaoRegioes.Find(filtro).FirstOrDefault();
             if (region != null)
                 return region;
             return null;
-
         }
 
         public static async Task AtualizarBancoAllAsync()
         {
-            IMongoClient client = new MongoClient("mongodb://localhost");
-            IMongoDatabase database = client.GetDatabase("zaynbot");
-            IMongoCollection<RPGUsuario> col = database.GetCollection<RPGUsuario>("usuarios");
-
-            await col.Find(FilterDefinition<RPGUsuario>.Empty)
+            await ColecaoUsuarios.Find(FilterDefinition<RPGUsuario>.Empty)
                 .ForEachAsync(x =>
                 {
                     Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
@@ -203,7 +132,7 @@ namespace ZaynBot
                         x.Personagem.Vivo = true;
                     if (x.Personagem.RaçaPersonagem.Nome == null)
                         x.Personagem.RaçaPersonagem = Humano.HumanoAb();
-                    col.ReplaceOne(filtro, x);
+                    ColecaoUsuarios.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }
     }
