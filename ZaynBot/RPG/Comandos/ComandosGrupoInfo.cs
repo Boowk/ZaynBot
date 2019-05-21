@@ -11,7 +11,7 @@ namespace ZaynBot.RPG.Comandos
 {
     [Group("info")]
     [Description("Comandos informativos.")]
-    public class GrupoInfo
+    public class ComandosGrupoInfo
     {
         [Command("ping")]
         [Description("Exibe o tempo de resposta do bot ao servidor do discord.")]

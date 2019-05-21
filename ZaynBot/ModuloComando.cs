@@ -30,7 +30,7 @@ namespace ZaynBot
             Comandos.SetHelpFormatter<AjudaFormatador>();
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
-            Comandos.RegisterCommands<GrupoInfo>();
+            Comandos.RegisterCommands<ComandosGrupoInfo>();
             Comandos.RegisterCommands<ComandosAdministracao>();
             Comandos.RegisterCommands<ComandoPerfil>();
             Comandos.RegisterCommands<ComandoConvite>();
