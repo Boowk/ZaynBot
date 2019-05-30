@@ -13,6 +13,7 @@ namespace ZaynBot
     public class Banco
     {
         public static string ObjectIDNulo { get; } = "000000000000000000000000";
+        public static IMongoDatabase Database { get; private set; }
 
         #region Coleções
 
@@ -25,10 +26,10 @@ namespace ZaynBot
         public Banco()
         {
             IMongoClient _client = new MongoClient("mongodb://localhost");
-            IMongoDatabase _database = _client.GetDatabase("zaynbot");
-            ColecaoRegioes = _database.GetCollection<RPGRegião>("regions");
-            ColecaoUsuarios = _database.GetCollection<RPGUsuario>("usuarios");
-            ColecaoGuildas = _database.GetCollection<RPGGuilda>("guildas");
+            Database = _client.GetDatabase("zaynbot");
+            ColecaoRegioes = Database.GetCollection<RPGRegião>("regions");
+            ColecaoUsuarios = Database.GetCollection<RPGUsuario>("usuarios");
+            ColecaoGuildas = Database.GetCollection<RPGGuilda>("guildas");
         }
 
         /// <summary>

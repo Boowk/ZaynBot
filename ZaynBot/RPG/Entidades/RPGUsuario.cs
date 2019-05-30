@@ -56,7 +56,7 @@ namespace ZaynBot.RPG.Entidades
         {
             Nivel += 1;
             ExperienciaAtual = 0;
-            ExperienciaProximoNivel += 25;
+            ExperienciaProximoNivel += 100;
         }
 
         public void RegeneraçãoVida()

@@ -13,8 +13,7 @@ namespace ZaynBot.RPG._Gameplay.Mundos.Anker
         public Areas()
         {
             // Deleta todas as zonas
-            Banco.ColecaoRegioes.DeleteMany(FilterDefinition<RPGRegião>.Empty);
-
+            Banco.Database.DropCollection("regions");
             // Adiciona as zonas na lista
             Regiões = new List<RPGRegião>
             {
