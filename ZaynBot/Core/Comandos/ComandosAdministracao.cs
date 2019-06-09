@@ -3,8 +3,11 @@ using DiscordBotsList.Api.Objects;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Core.Comandos
 {
@@ -45,6 +48,17 @@ namespace ZaynBot.Core.Comandos
             await ctx.TriggerTypingAsync();
             var cmds = ctx.CommandsNext;
             await cmds.SudoAsync(member, ctx.Channel, command);
+        }
+
+        [Command("resetar")]
+        [RequireOwner]
+        [Hidden]
+        public async Task Deletar(CommandContext ctx, DiscordUser member)
+        {
+            await ctx.TriggerTypingAsync();
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(member.Id);
+            Banco.ColecaoUsuarios.DeleteOne(filtro);
+            await ctx.RespondAsync("Membro resetado.");
         }
     }
 }
