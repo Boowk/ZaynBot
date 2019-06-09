@@ -18,7 +18,7 @@ namespace ZaynBot.RPG.Comandos
 
         [Command("reencarnar")]
         [Description("Reencarnar criando um persoonagem novo.")]
-        // [Cooldown(1, 120, CooldownBucketType.User)]
+        [Cooldown(1, 120, CooldownBucketType.User)]
         public async Task Reencarnar(CommandContext ctx)
         {
             RPGUsuario usuario = await Banco.ConsultarUsuarioAsync(ctx);
@@ -60,7 +60,7 @@ namespace ZaynBot.RPG.Comandos
                     await mensagem.CreateReactionAsync(emoji);
                     Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
                     opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                        .ContinueWith(x => GetRacaEscolhido(Banco.ConsultarRaca(item), usuario, ctx), _cts.Token);
+                        .ContinueWith(x => GetRacaEscolhido(Banco.ConsultarRaca(item), x.Result, usuario, ctx), _cts.Token);
                     index++;
                 }
             }
@@ -72,9 +72,13 @@ namespace ZaynBot.RPG.Comandos
             await Task.WhenAny(opcoes);
         }
 
-        public async Task GetRacaEscolhido(RPGRaça racaEscolhida, RPGUsuario usuario, CommandContext ctx)
+        public async Task GetRacaEscolhido(RPGRaça racaEscolhida, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx)
         {
-            _cts.Cancel();
+            if (reacao == null)
+            {
+                _cts.Cancel();
+                return;
+            }
             ListaEmojis emojis = new ListaEmojis();
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
             Banco.AlterarUsuario(usuario);
