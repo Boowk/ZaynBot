@@ -22,7 +22,8 @@ namespace ZaynBot.RPG
             Emojis = new Dictionary<int, string>()
             {
                 {1, ":one:"},
-                {2, ":two:" }
+                {2, ":two:" },
+                {3, ":three:" }
             };
         }
 
