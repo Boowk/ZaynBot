@@ -13,9 +13,6 @@ namespace ZaynBot.RPG.Comandos
         [Description("Viaja para outra área disponível")]
         public async Task ComandoPersonagemAb(CommandContext ctx, [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
         {
-            await ctx.RespondAsync("O comando viajar, agora está sendo separado para z!norte, z!sul, z!oeste e z!leste.\n" +
-                "Aguarde novas atualizações para poder explorar mais.");
-            return;
             RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
@@ -25,12 +22,6 @@ namespace ZaynBot.RPG.Comandos
             //    await ctx.RespondAsync($"{ctx.User.Mention}, você deve matar todos os inimigos antes de ir para outra área.");
             //    return;
             //}
-
-            if (direcao == "nenhuma")
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você precisa informar uma direção para viajar.");
-                return;
-            }
 
 
             switch (direcao.ToLower())

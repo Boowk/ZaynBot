@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
 using ZaynBot.RPG.Comandos;
+using ZaynBot.RPG.Comandos.Viajar;
 
 namespace ZaynBot
 {
@@ -38,6 +39,7 @@ namespace ZaynBot
             #region ComandosRPG
             Comandos.RegisterCommands<ComandoPersonagem>();
             // Comandos.RegisterCommands<GrupoGuilda>();
+            Comandos.RegisterCommands<ComandoLeste>();
             Comandos.RegisterCommands<ComandoReencarnar>();
             Comandos.RegisterCommands<ComandoViajar>();
             Comandos.RegisterCommands<ComandoLocalizacao>();
