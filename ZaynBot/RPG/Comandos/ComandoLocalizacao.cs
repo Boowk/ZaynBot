@@ -23,13 +23,13 @@ namespace ZaynBot.RPG.Comandos
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 
             embed.WithTitle($"Localização do {ctx.User.Username}");
-            embed.WithDescription($"{localAtual.RegiaoNome} - {localAtual.Descrição}");
+            embed.WithDescription($"{localAtual.Nome} - {localAtual.Descrição}");
 
             StringBuilder conexoesDisponiveis = new StringBuilder();
             StringBuilder npcsDisponiveis = new StringBuilder();
-            foreach (var reg in localAtual.Saidas)
+            foreach (var reg in localAtual.SaidasRegioes)
             {
-                conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {Banco.ConsultarRegions(reg.RegiaoId).RegiaoNome}\n");
+                conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {Banco.ConsultarRegions(reg.RegiaoId).Nome}\n");
             }
 
             //foreach (var npc in personagem.RegiaoAtual.Npcs)

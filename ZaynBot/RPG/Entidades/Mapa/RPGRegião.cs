@@ -17,32 +17,28 @@ namespace ZaynBot.RPG.Entidades.Mapa
         //DESERTO              |   8  |
         //DESCONHECIDO         |   9  |    
         //PROIBIDO
-        public enum Tipo
-        {
-            Cidade,
-            Campo,
-            Floresta,
-            Colina,
-            Montanha,
-            Agua,
-            Ar,
-            Deserto,
-            Desconhecido,
-            Proibido
-        }
+        //public enum Tipo
+        //{
+        //    Cidade,
+        //    Campo,
+        //    Floresta,
+        //    Colina,
+        //    Montanha,
+        //    Agua,
+        //    Ar,
+        //    Deserto,
+        //    Desconhecido,
+        //    Proibido
+        //}
 
         [BsonId]
         [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
         public int Id { get; set; }
-        public string RegiaoNome { get; set; }
-        public string Descrição { get; set; } = "Sem descrição";
-        public Tipo Terreno { get; set; }
-        public List<RPGSaida> Saidas { get; set; } = new List<RPGSaida>();
-        //[BsonIgnore] public List<Npc> Npcs { get; set; }
+        public string Nome { get; set; }
+        public string Descrição { get; set; }
+        public List<RPGSaida> SaidasRegioes { get; set; } = new List<RPGSaida>();
+        public List<RPGSaida> Entrada { get; set; } = new List<RPGSaida>();
+        public List<RPGNpc> Npcs { get; set; } = new List<RPGNpc>();
         public List<RPGMob> Inimigos { get; set; } = new List<RPGMob>();
-        //public List<Regiao> Conexoes { get; set; }
-
-        //[JsonIgnore]
-        //public List<Inimigo> Inimigos { get; set; }
     }
 }

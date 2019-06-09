@@ -34,19 +34,19 @@ namespace ZaynBot.RPG.Comandos
             {
                 case "norte":
                 case "n":
-                    await ExplorarAreaAsync(RPGSaida.Direcoes.Norte, ctx);
+                    await ExplorarAreaAsync(EnumDirecoes.Norte, ctx);
                     break;
                 case "sul":
                 case "s":
-                    await ExplorarAreaAsync(RPGSaida.Direcoes.Sul, ctx);
+                    await ExplorarAreaAsync(EnumDirecoes.Sul, ctx);
                     break;
                 case "oeste":
                 case "o":
-                    await ExplorarAreaAsync(RPGSaida.Direcoes.Oeste, ctx);
+                    await ExplorarAreaAsync(EnumDirecoes.Oeste, ctx);
                     break;
                 case "leste":
                 case "l":
-                    await ExplorarAreaAsync(RPGSaida.Direcoes.Leste, ctx);
+                    await ExplorarAreaAsync(EnumDirecoes.Leste, ctx);
                     break;
 
                 default:
@@ -55,19 +55,19 @@ namespace ZaynBot.RPG.Comandos
             }
         }
 
-        public static async Task ExplorarAreaAsync(RPGSaida.Direcoes direcao, CommandContext ctx)
+        public static async Task ExplorarAreaAsync(EnumDirecoes direcao, CommandContext ctx)
         {
             RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
             RPGRegião localAtual = Banco.ConsultarRegions(usuario.Personagem.LocalAtualId);
 
-            foreach (var item in localAtual.Saidas)
+            foreach (var item in localAtual.SaidasRegioes)
             {
                 if (item.Direcao == direcao)
                 {
                     usuario.Personagem.LocalAtualId = item.RegiaoId;
                     Banco.AlterarUsuario(usuario);
                     localAtual = Banco.ConsultarRegions(item.RegiaoId);
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você chegou em: {localAtual.RegiaoNome}");
+                    await ctx.RespondAsync($"{ctx.User.Mention}, você chegou em: {localAtual.Nome}");
                     return;
                 }
             }
