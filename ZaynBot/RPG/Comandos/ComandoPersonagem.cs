@@ -49,7 +49,7 @@ namespace ZaynBot.RPG.Comandos
                 Timestamp = DateTime.Now,
                 ThumbnailUrl = membro.AvatarUrl,
             }
-            .AddField("⌈Raça⌋", $"{personagem.RaçaPersonagem.Nome}", true)
+            .AddField("⌈Raça⌋", $"{personagem.Raca.Nome}", true)
             .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida.Texto()}/{personagem.PontosDeVidaMaxima.Texto()}", true)
             .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana.Texto()}/{personagem.PontosDeManaMaximo.Texto()}", true)
             .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico.Texto()}", true)
@@ -57,7 +57,7 @@ namespace ZaynBot.RPG.Comandos
             .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico.Texto()}", true)
             .AddField("⌈Defesa mágica⌋", $"{personagem.DefesaMagica.Texto()}", true)
             .AddField("⌈Velocidade⌋", $"{personagem.Velocidade}", true)
-            .AddField("⌈Sorte⌋", $"{personagem.Sorte}", true)
+            .AddField("⌈Sorte⌋", $"{personagem.Raca.Sorte}", true)
             .AddField("⌈Equipamento⌋", $"Em contrução", true)
             .AddField("⌈Habiliades⌋", $"Em contrução", true)
             .AddField("⌈Títulos adquiridos⌋", $"Em contrução", true)

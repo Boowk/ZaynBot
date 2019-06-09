@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace ZaynBot.RPG.Entidades
 {
@@ -9,7 +10,10 @@ namespace ZaynBot.RPG.Entidades
         /*
          * Força	Inteligência	Percepção	Destreza	Constituição	Sorte
          */
-        public string Nome { get; private set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
+        public int Id { get; set; }
+        public string Nome { get; set; }
         public string Descricao { get; set; }
         public int Forca { get; set; }
         public int Inteligencia { get; set; }

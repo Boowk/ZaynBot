@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades.Mapa
@@ -30,6 +31,8 @@ namespace ZaynBot.RPG.Entidades.Mapa
             Proibido
         }
 
+        [BsonId]
+        [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
         public int Id { get; set; }
         public string RegiaoNome { get; set; }
         public string Descrição { get; set; } = "Sem descrição";

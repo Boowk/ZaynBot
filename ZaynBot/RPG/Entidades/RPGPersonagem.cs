@@ -10,7 +10,7 @@ namespace ZaynBot.RPG.Entidades
     {
         #region Atributos
 
-        public RPGRaça RaçaPersonagem { get; set; }
+        public RPGRaça Raca { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVida { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
@@ -29,15 +29,13 @@ namespace ZaynBot.RPG.Entidades
         public float DefesaMagica { get; set; }
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int Velocidade { get; set; }
-        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
-        public int Sorte { get; set; }
 
         #endregion
 
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
-        public float Fome { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
-        public float Sede { get; set; }
+        //[BsonRepresentation(BsonType.Double, AllowTruncation = true)]
+        //public float Fome { get; set; }
+        //[BsonRepresentation(BsonType.Double, AllowTruncation = true)]
+        //public float Sede { get; set; }
 
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
@@ -54,18 +52,24 @@ namespace ZaynBot.RPG.Entidades
 
         public RPGPersonagem(RPGRaça raca)
         {
-            //RaçaPersonagem = Humano.HumanoAb();
-            //Sortear sortear = new Sortear();
-            //PontosDeVida = sortear.Valor(RaçaPersonagem.PontosDeVidaBaseMin, RaçaPersonagem.PontosDeVidaBaseMax);
-            //PontosDeVidaMaxima = PontosDeVida;
-            //PontosDeMana = sortear.Valor(RaçaPersonagem.PontosDeManaBaseMin, RaçaPersonagem.PontosDeManaBaseMax);
-            //PontosDeManaMaximo = PontosDeMana;
-            //AtaqueFisico = sortear.Valor(RaçaPersonagem.AtaqueFisicoBaseMin, RaçaPersonagem.AtaqueFisicoBaseMax);
-            //DefesaFisica = sortear.Valor(RaçaPersonagem.DefesaFisicaBaseMin, RaçaPersonagem.DefesaFisicaBaseMax);
-            //AtaqueMagico = sortear.Valor(RaçaPersonagem.AtaqueMagicoBaseMin, RaçaPersonagem.AtaqueMagicoBaseMax);
-            //DefesaMagica = sortear.Valor(RaçaPersonagem.DefesaMagicaBaseMin, RaçaPersonagem.DefesaMagicaBaseMax);
-            //Velocidade = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMax);
-            //Sorte = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMin);
+            Raca = raca;
+            Sortear sortear = new Sortear();
+            int sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            PontosDeVida = sortear.Valor(raca.Constituicao * 1 + sorte, raca.Constituicao * 10 + sorte);
+            sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            PontosDeMana = sortear.Valor(Raca.Inteligencia * 1 + sorte, raca.Inteligencia * 10 + sorte);
+            PontosDeManaMaximo = PontosDeMana;
+            PontosDeVidaMaxima = PontosDeVida;
+            sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            AtaqueFisico = sortear.Valor(Raca.Forca * 1 + sorte, Raca.Forca * 10 + sorte);
+            sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            DefesaFisica = sortear.Valor(Raca.Constituicao * 1 + sorte, Raca.Constituicao * 10 + sorte);
+            sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            AtaqueMagico = sortear.Valor(Raca.Inteligencia * 1 + sorte, Raca.Inteligencia * 10 + sorte);
+            sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            DefesaMagica = sortear.Valor(Raca.Inteligencia * 1 + sorte, Raca.Inteligencia * 10 + sorte);
+            sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
+            Velocidade = sortear.Valor(Raca.Destreza * 1 + sorte, Raca.Destreza * 10 + sorte);
             Equipamento = new RPGEquipamento();
             Habilidade = new RPGHabilidade();
             Titulo = new RPGTitulo();

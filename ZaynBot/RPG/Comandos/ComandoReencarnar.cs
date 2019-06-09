@@ -40,9 +40,9 @@ namespace ZaynBot.RPG.Comandos
             embed.WithFooter("Clique no emoji para escolhar a sua raça. Se tiver dúvidas, escreva z!raca <nome>");
             embed.WithColor(DiscordColor.Goldenrod);
             ListaEmojis emojis = new ListaEmojis(ctx);
-            foreach (var item in usuario.RacasDisponiveis)
+            foreach (var item in usuario.RacasDisponiveisId)
             {
-                racas.Append($"{emojis.ProxEmoji()} - {item.Nome}\n");
+                racas.Append($"{emojis.ProxEmoji()} - {Banco.ConsultarRaca(item).Nome}\n");
             }
             embed.WithDescription(racas.ToString());
             DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
@@ -52,15 +52,15 @@ namespace ZaynBot.RPG.Comandos
             Task[] opcoes;
             try
             {
-                opcoes = new Task[usuario.RacasDisponiveis.Count];
+                opcoes = new Task[usuario.RacasDisponiveisId.Count];
                 int index = 0;
-                foreach (var item in usuario.RacasDisponiveis)
+                foreach (var item in usuario.RacasDisponiveisId)
                 {
                     DiscordEmoji emoji = emojis.ProxEmoji();
                     await mensagem.CreateReactionAsync(emoji);
                     Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
                     opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                        .ContinueWith(x => GetRacaEscolhido(item, usuario, ctx), _cts.Token);
+                        .ContinueWith(x => GetRacaEscolhido(Banco.ConsultarRaca(item), usuario, ctx), _cts.Token);
                     index++;
                 }
             }

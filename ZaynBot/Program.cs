@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
+using ZaynBot.Data.Raças;
 using ZaynBot.RPG.Data.Mundos.Anker;
 
 namespace ZaynBot
@@ -65,6 +66,7 @@ namespace ZaynBot
             }, ModuloCliente.Client);
             new Banco();
             new Areas();
+            new Raças();
             // await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);

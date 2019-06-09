@@ -20,6 +20,7 @@ namespace ZaynBot
         public static IMongoCollection<RPGRegião> ColecaoRegioes { get; private set; }
         public static IMongoCollection<RPGUsuario> ColecaoUsuarios { get; private set; }
         public static IMongoCollection<RPGGuilda> ColecaoGuildas { get; private set; }
+        public static IMongoCollection<RPGRaça> ColecaoRacas { get; private set; }
 
         #endregion
 
@@ -30,6 +31,7 @@ namespace ZaynBot
             ColecaoRegioes = Database.GetCollection<RPGRegião>("regions");
             ColecaoUsuarios = Database.GetCollection<RPGUsuario>("usuarios");
             ColecaoGuildas = Database.GetCollection<RPGGuilda>("guildas");
+            ColecaoRacas = Database.GetCollection<RPGRaça>("racas");
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace ZaynBot
             if (user.Personagem == null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa criar um personagem com o comando z!reencarnar");
-                return null;
+                return user;
             }
             return user;
         }
@@ -164,6 +166,15 @@ namespace ZaynBot
             RPGRegião region = ColecaoRegioes.Find(filtro).FirstOrDefault();
             if (region != null)
                 return region;
+            return null;
+        }
+
+        public static RPGRaça ConsultarRaca(int id)
+        {
+            Expression<Func<RPGRaça, bool>> filtro = x => x.Id.Equals(id);
+            RPGRaça raca = ColecaoRacas.Find(filtro).FirstOrDefault();
+            if (raca != null)
+                return raca;
             return null;
         }
 
