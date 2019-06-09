@@ -1,4 +1,4 @@
-﻿namespace ZaynBot.RPG.Entidades.Mapa
+﻿namespace ZaynBot.RPG.Entidades.Enuns
 {
     public enum EnumDirecoes
     {

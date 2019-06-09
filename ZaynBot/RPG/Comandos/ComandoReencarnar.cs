@@ -39,7 +39,7 @@ namespace ZaynBot.RPG.Comandos
             embed.WithTitle("**⌈Raças⌋**");
             embed.WithFooter("Clique no emoji para escolhar a sua raça. Se tiver dúvidas, escreva z!raca <nome>");
             embed.WithColor(DiscordColor.Goldenrod);
-            ListaEmojis emojis = new ListaEmojis(ctx);
+            ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
             foreach (var item in usuario.RacasDisponiveisId)
             {
                 racas.Append($"{emojis.ProxEmoji()} - {Banco.ConsultarRaca(item).Nome}\n");
@@ -79,7 +79,7 @@ namespace ZaynBot.RPG.Comandos
                 _cts.Cancel();
                 return;
             }
-            ListaEmojis emojis = new ListaEmojis();
+            ListaEmojisSelecao emojis = new ListaEmojisSelecao();
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
             Banco.AlterarUsuario(usuario);
             await ctx.RespondAsync($"Raça escolhida: {racaEscolhida.Nome}");

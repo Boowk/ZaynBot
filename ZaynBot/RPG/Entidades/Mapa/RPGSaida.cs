@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades.Mapa
 {

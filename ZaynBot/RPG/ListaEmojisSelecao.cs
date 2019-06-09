@@ -6,24 +6,30 @@ using System.Text;
 
 namespace ZaynBot.RPG
 {
-    public class ListaEmojis
+    public class ListaEmojisSelecao
     {
         public int SelecaoAtual { get; private set; } = 0;
         readonly CommandContext _ctx;
         public Dictionary<int, string> Emojis { get; private set; }
 
-        public ListaEmojis(CommandContext ctx) : this()
+        public ListaEmojisSelecao(CommandContext ctx) : this()
         {
             _ctx = ctx;
         }
 
-        public ListaEmojis()
+        public ListaEmojisSelecao()
         {
             Emojis = new Dictionary<int, string>()
             {
                 {1, ":one:"},
                 {2, ":two:" },
-                {3, ":three:" }
+                {3, ":three:" },
+                {4, ":four:" },
+                {5, ":five:" },
+                {6, ":six:" },
+                {7, ":seven:" },
+                {8, ":eight:" },
+                {9, ":nine:" },
             };
         }
 
