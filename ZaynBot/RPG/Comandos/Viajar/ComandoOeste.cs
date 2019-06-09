@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.RPG.Comandos.Viajar

@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.RPG.Comandos.Viajar
