@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
-using ZaynBot.RPG._Gameplay.Mundos.Anker;
+using ZaynBot.RPG.Data.Mundos.Anker;
 
 namespace ZaynBot
 {

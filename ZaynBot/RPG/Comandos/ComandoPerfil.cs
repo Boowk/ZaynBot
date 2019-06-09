@@ -38,10 +38,10 @@ namespace ZaynBot.RPG.Comandos
         private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, RPGUsuario usuario)
         {
             string guildaNome = "Nenhuma";
-            if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)
-            {
-                guildaNome = Banco.ConsultarGuilda(usuario.IdGuilda).Nome;
-            }
+            //if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)
+            //{
+            //    guildaNome = Banco.ConsultarGuilda(usuario.IdGuilda).Nome;
+            //}
 
             return new DiscordEmbedBuilder()
             {

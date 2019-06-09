@@ -1,10 +1,10 @@
-﻿using MongoDB.Bson;
+﻿using DSharpPlus.CommandsNext;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ZaynBot.RPG._Gameplay.Raças;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
@@ -32,19 +32,46 @@ namespace ZaynBot
             ColecaoGuildas = Database.GetCollection<RPGGuilda>("guildas");
         }
 
-        /// <summary>
-        /// Consulta por um usuario no banco de dados.
-        /// </summary>
-        /// <param name="discordUser"></param>
-        /// <returns>Usuario</returns>
-        public static RPGUsuario ConsultarUsuario(ulong discordUserId)
+        public static async Task<RPGUsuario> ConsultarUsuarioPersonagemAsync(CommandContext ctx)
         {
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(discordUserId);
+            await ctx.TriggerTypingAsync();
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(ctx.User.Id);
             RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
-            if (user != null)
-                return user;
-            user = new RPGUsuario(discordUserId);
-            ColecaoUsuarios.InsertOne(user);
+            if (user == null)
+            {
+                user = new RPGUsuario(ctx.User.Id);
+                ColecaoUsuarios.InsertOne(user);
+            }
+            if (user.Personagem == null)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, você precisa criar um personagem com o comando z!reencarnar");
+                return null;
+            }
+            return user;
+        }
+
+        public static async Task<RPGUsuario> ConsultarUsuarioAsync(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(ctx.User.Id);
+            RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
+            if (user == null)
+            {
+                user = new RPGUsuario(ctx.User.Id);
+                ColecaoUsuarios.InsertOne(user);
+            }
+            return user;
+        }
+
+        public static RPGUsuario ConsultarUsuario(ulong id)
+        {
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(id);
+            RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
+            if (user == null)
+            {
+                user = new RPGUsuario(id);
+                ColecaoUsuarios.InsertOne(user);
+            }
             return user;
         }
 
@@ -133,12 +160,10 @@ namespace ZaynBot
                     Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
                     if (x.Personagem == null)
                         x.Personagem = new RPGPersonagem();
-                    if (x.ConvitesGuildas == null)
-                        x.ConvitesGuildas = new List<Convite>();
                     if (x.Personagem.Vivo == false)
                         x.Personagem.Vivo = true;
-                    if (x.Personagem.RaçaPersonagem.Nome == null)
-                        x.Personagem.RaçaPersonagem = Humano.HumanoAb();
+                    //if (x.Personagem.RaçaPersonagem.Nome == null)
+                    //    x.Personagem.RaçaPersonagem = Humano.HumanoAb();
                     ColecaoUsuarios.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }

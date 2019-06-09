@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
-using ZaynBot.RPG._Gameplay.Raças;
 using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
@@ -55,18 +54,18 @@ namespace ZaynBot.RPG.Entidades
 
         public RPGPersonagem()
         {
-            RaçaPersonagem = Humano.HumanoAb();
-            Sortear sortear = new Sortear();
-            PontosDeVida = sortear.Valor(RaçaPersonagem.PontosDeVidaBaseMin, RaçaPersonagem.PontosDeVidaBaseMax);
-            PontosDeVidaMaxima = PontosDeVida;
-            PontosDeMana = sortear.Valor(RaçaPersonagem.PontosDeManaBaseMin, RaçaPersonagem.PontosDeManaBaseMax);
-            PontosDeManaMaximo = PontosDeMana;
-            AtaqueFisico = sortear.Valor(RaçaPersonagem.AtaqueFisicoBaseMin, RaçaPersonagem.AtaqueFisicoBaseMax);
-            DefesaFisica = sortear.Valor(RaçaPersonagem.DefesaFisicaBaseMin, RaçaPersonagem.DefesaFisicaBaseMax);
-            AtaqueMagico = sortear.Valor(RaçaPersonagem.AtaqueMagicoBaseMin, RaçaPersonagem.AtaqueMagicoBaseMax);
-            DefesaMagica = sortear.Valor(RaçaPersonagem.DefesaMagicaBaseMin, RaçaPersonagem.DefesaMagicaBaseMax);
-            Velocidade = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMax);
-            Sorte = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMin);
+            //RaçaPersonagem = Humano.HumanoAb();
+            //Sortear sortear = new Sortear();
+            //PontosDeVida = sortear.Valor(RaçaPersonagem.PontosDeVidaBaseMin, RaçaPersonagem.PontosDeVidaBaseMax);
+            //PontosDeVidaMaxima = PontosDeVida;
+            //PontosDeMana = sortear.Valor(RaçaPersonagem.PontosDeManaBaseMin, RaçaPersonagem.PontosDeManaBaseMax);
+            //PontosDeManaMaximo = PontosDeMana;
+            //AtaqueFisico = sortear.Valor(RaçaPersonagem.AtaqueFisicoBaseMin, RaçaPersonagem.AtaqueFisicoBaseMax);
+            //DefesaFisica = sortear.Valor(RaçaPersonagem.DefesaFisicaBaseMin, RaçaPersonagem.DefesaFisicaBaseMax);
+            //AtaqueMagico = sortear.Valor(RaçaPersonagem.AtaqueMagicoBaseMin, RaçaPersonagem.AtaqueMagicoBaseMax);
+            //DefesaMagica = sortear.Valor(RaçaPersonagem.DefesaMagicaBaseMin, RaçaPersonagem.DefesaMagicaBaseMax);
+            //Velocidade = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMax);
+            //Sorte = sortear.Valor(RaçaPersonagem.VelocidadeBaseMin, RaçaPersonagem.VelocidadeBaseMin);
             Equipamento = new RPGEquipamento();
             Habilidade = new RPGHabilidade();
             Titulo = new RPGTitulo();

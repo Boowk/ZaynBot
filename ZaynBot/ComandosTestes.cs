@@ -9,8 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using ZaynBot.RPG._Gameplay.Raças;
-using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot
 {
@@ -121,19 +119,19 @@ namespace ZaynBot
         [RequireOwner]
         public async Task mobteste(CommandContext ctx)
         {
-            RPGMob mobTeste = new RPGMob("Teste Mob")
-            {
-                AtaqueFisico = 10,
-                AtaqueMagico = 10,
-                ChanceDeAparecer = 4,
-                DefesaFisica = 10,
-                DefesaMagica = 10,
-                PontosDeVida = 10,
-                PontosDeVidaMaxima = 10,
-                Velocidade = 10,
-            }.SetRaça(Humano.HumanoAb());
+            //RPGMob mobTeste = new RPGMob("Teste Mob")
+            //{
+            //    AtaqueFisico = 10,
+            //    AtaqueMagico = 10,
+            //    ChanceDeAparecer = 4,
+            //    DefesaFisica = 10,
+            //    DefesaMagica = 10,
+            //    PontosDeVida = 10,
+            //    PontosDeVidaMaxima = 10,
+            //    Velocidade = 10,
+            //}.SetRaça(Humano.HumanoAb());
 
-            await ctx.RespondAsync($"{mobTeste.Nome}, ataque {mobTeste.PontosDeVida}");
+         //   await ctx.RespondAsync($"{mobTeste.Nome}, ataque {mobTeste.PontosDeVida}");
         }
     }
 }

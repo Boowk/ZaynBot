@@ -17,10 +17,7 @@ namespace ZaynBot.RPG.Entidades
         public double ExperienciaAtual { get; set; } = 0;
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
-        public RPGPersonagem Personagem { get; set; } = new RPGPersonagem();
-        public List<Convite> ConvitesGuildas { get; set; } = new List<Convite>();
-
-        public ObjectId IdGuilda { get; set; }
+        public RPGPersonagem Personagem { get; set; }
 
         public RPGUsuario(ulong id)
         {
@@ -61,14 +58,14 @@ namespace ZaynBot.RPG.Entidades
 
         public void RegeneraçãoVida()
         {
-            float quantidade = Nivel / 100.0F;
+            float quantidade = Nivel / 25.0F;
             Personagem.PontosDeVida += quantidade;
             if (Personagem.PontosDeVida >= Personagem.PontosDeVidaMaxima) Personagem.PontosDeVida = Personagem.PontosDeVidaMaxima;
         }
 
         public void RegeneraçãoMana()
         {
-            float quantidade = Nivel / 150.0F;
+            float quantidade = Nivel / 30.0F;
             Personagem.PontosDeMana += quantidade;
             if (Personagem.PontosDeMana >= Personagem.PontosDeManaMaximo) Personagem.PontosDeMana = Personagem.PontosDeManaMaximo;
         }

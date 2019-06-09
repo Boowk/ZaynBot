@@ -14,9 +14,9 @@ namespace ZaynBot.RPG.Comandos
         [Description("Ataca o inimigo na sua frente.")]
         public async Task Atacar(CommandContext ctx, [Description("Id do alvo")] int id = 0)
         {
-            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
-
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 
             if (personagem.PontosDeVida <= 0)

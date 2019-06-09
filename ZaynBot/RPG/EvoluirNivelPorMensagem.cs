@@ -6,7 +6,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG
 {
-    public static class MensagemNovaRecebida
+    public static class EvoluirNivelPorMensagem
     {
         public static async Task ReceberXPNivelMensagens(MessageCreateEventArgs e)
         {
@@ -15,8 +15,11 @@ namespace ZaynBot.RPG
             {
                 user.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
                 Tuple<bool, int> result = user.AdicionarExp();
-                user.RegeneraçãoMana();
-                user.RegeneraçãoVida();
+                if (user.Personagem != null)
+                {
+                    user.RegeneraçãoMana();
+                    user.RegeneraçãoVida();
+                }
                 Banco.AlterarUsuario(user);
                 if (result.Item1 == true)
                 {

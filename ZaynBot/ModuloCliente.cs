@@ -139,7 +139,7 @@ namespace ZaynBot
             if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
             try
             {
-                await MensagemNovaRecebida.ReceberXPNivelMensagens(e);
+                await EvoluirNivelPorMensagem.ReceberXPNivelMensagens(e);
             }
             catch (Exception ex)
             {

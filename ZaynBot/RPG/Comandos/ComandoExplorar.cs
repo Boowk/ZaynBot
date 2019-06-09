@@ -15,7 +15,8 @@ namespace ZaynBot.RPG.Comandos
         [Description("Explora a região para encontrar inimigos.")]
         public async Task ExplorarInimigos(CommandContext ctx) // [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
         {
-            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.CampoBatalha.Party == true)
