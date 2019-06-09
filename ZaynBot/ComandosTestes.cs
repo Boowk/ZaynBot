@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot
 {
@@ -65,6 +66,18 @@ namespace ZaynBot
             h.Add(new Page() { Content = "Pag 3" });
 
             await ie.SendPaginatedMessage(ctx.Channel, ctx.User, h, timeoutoverride: TimeSpan.FromSeconds(20));
+        }
+
+
+        [Command("testec")]
+        [Hidden]
+        [RequireOwner]
+        public async Task f(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            RPGUsuario usuario = await Banco.ConsultarUsuarioAsync(ctx);
+            usuario.Personagem.MissoesConcluidasId.Add(0);
+            Banco.AlterarUsuario(usuario);
         }
 
 

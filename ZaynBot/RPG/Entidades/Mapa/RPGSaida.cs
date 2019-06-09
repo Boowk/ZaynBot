@@ -8,5 +8,8 @@ namespace ZaynBot.RPG.Entidades.Mapa
     {
         public EnumDirecoes Direcao { get; set; }
         public int RegiaoId { get; set; }
+        public bool Travado { get; set; }
+        public bool DestravaMissao { get; set; }
+        public int IdMissaoDestravarPorta { get; set; }
     }
 }
