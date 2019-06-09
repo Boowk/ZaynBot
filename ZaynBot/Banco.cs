@@ -195,10 +195,10 @@ namespace ZaynBot
                 .ForEachAsync(x =>
                 {
                     Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
-                    if (x.Personagem.Vivo == false)
-                        x.Personagem.Vivo = true;
-                    //if (x.Personagem.RaçaPersonagem.Nome == null)
-                    //    x.Personagem.RaçaPersonagem = Humano.HumanoAb();
+                    if (x.Personagem.MissaoEmAndamento == null)
+                        x.Personagem.MissaoEmAndamento = new RPGMissao();
+                    if (x.Personagem.MissoesConcluidasId == null)
+                        x.Personagem.MissoesConcluidasId = new List<int>();
                     ColecaoUsuarios.ReplaceOne(filtro, x);
                 }).ConfigureAwait(false);
         }

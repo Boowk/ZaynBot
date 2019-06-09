@@ -69,6 +69,7 @@ namespace ZaynBot
             new Areas();
             new Raças();
             new Missoes();
+            await Banco.AtualizarBancoAllAsync();
             // await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
