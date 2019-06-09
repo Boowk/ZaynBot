@@ -32,6 +32,11 @@ namespace ZaynBot
             ColecaoGuildas = Database.GetCollection<RPGGuilda>("guildas");
         }
 
+        /// <summary>
+        /// Procura no banco por um usuario e verifica se existe um personagem antes de devolver.
+        /// </summary>
+        /// <param name="CommandContext"></param>
+        /// <returns></returns>
         public static async Task<RPGUsuario> ConsultarUsuarioPersonagemAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
@@ -50,6 +55,11 @@ namespace ZaynBot
             return user;
         }
 
+        /// <summary>
+        /// Procura no banco por um usuario e o devolve sem verificar personagem.
+        /// </summary>
+        /// <param name="CommandContext"></param>
+        /// <returns></returns>
         public static async Task<RPGUsuario> ConsultarUsuarioAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
@@ -63,6 +73,11 @@ namespace ZaynBot
             return user;
         }
 
+        /// <summary>
+        /// Procura no banco por um usuario e o devolve sem verificar personagem.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static RPGUsuario ConsultarUsuario(ulong id)
         {
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(id);
@@ -76,7 +91,7 @@ namespace ZaynBot
         }
 
         /// <summary>
-        /// Altera um usuario no banco de dados.
+        /// Altera um usuario no banco.
         /// </summary>
         /// <param name="usuario"></param>
         public static void AlterarUsuario(RPGUsuario usuario)

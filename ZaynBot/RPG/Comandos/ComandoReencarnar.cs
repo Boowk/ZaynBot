@@ -14,8 +14,12 @@ namespace ZaynBot.RPG.Comandos
         [Description("Reencarnar criando um persoonagem novo.")]
         public async Task Reencarnar(CommandContext ctx)
         {
-            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
-            if (usuario.Personagem == null) return;
+            RPGUsuario usuario = await Banco.ConsultarUsuarioAsync(ctx);
+            if (usuario.Personagem != null)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, você precisa morrer antes de tentar reencarnar novamente!");
+                return;
+            }
             RPGPersonagem personagem = usuario.Personagem;
         }
     }
