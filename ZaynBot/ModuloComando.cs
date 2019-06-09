@@ -39,13 +39,15 @@ namespace ZaynBot
             #region ComandosRPG
             Comandos.RegisterCommands<ComandoPersonagem>();
             // Comandos.RegisterCommands<GrupoGuilda>();
-            Comandos.RegisterCommands<ComandoLeste>();
             Comandos.RegisterCommands<ComandoReencarnar>();
-            Comandos.RegisterCommands<ComandoViajar>();
             Comandos.RegisterCommands<ComandoLocalizacao>();
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoInimigos>();
             Comandos.RegisterCommands<ComandoAtacar>();
+            Comandos.RegisterCommands<ComandoLeste>();
+            Comandos.RegisterCommands<ComandoNorte>();
+            Comandos.RegisterCommands<ComandoOeste>();
+            Comandos.RegisterCommands<ComandoSul>();
             #endregion
         }
 

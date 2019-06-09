@@ -1,6 +1,5 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,12 +9,12 @@ using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.RPG.Comandos.Viajar
 {
-    public class ComandoLeste
+    public class ComandoOeste
     {
-        [Command("leste")]
-        [Aliases("l")]
-        [Description("Explora a área ao leste.")]
-        public async Task Leste(CommandContext ctx)
+        [Command("oeste")]
+        [Aliases("e")]
+        [Description("Explora a área ao Oeste.")]
+        public async Task Oeste(CommandContext ctx)
         {
             RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
@@ -25,13 +24,13 @@ namespace ZaynBot.RPG.Comandos.Viajar
 
             foreach (var item in localAtual.SaidasRegioes)
             {
-                if (item.Direcao == EnumDirecoes.Leste)
+                if (item.Direcao == EnumDirecoes.Oeste)
                 {
                     usuario.Personagem.LocalAtualId = item.RegiaoId;
                     Banco.AlterarUsuario(usuario);
                     localAtual = Banco.ConsultarRegions(item.RegiaoId);
                     RPGEmbed embed = new RPGEmbed(ctx, "Viajem do");
-                    embed.Embed.WithDescription("Você foi para o leste.");
+                    embed.Embed.WithDescription("Você foi para o oeste.");
                     embed.Embed.AddField(localAtual.Nome, localAtual.Descrição);
                     await ctx.RespondAsync(embed: embed.Build());
                     return;

@@ -20,30 +20,29 @@ namespace ZaynBot.RPG.Comandos
             RPGPersonagem personagem = usuario.Personagem;
             RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-
-            embed.WithTitle($"Localização do {ctx.User.Username}");
-            embed.WithDescription($"{localAtual.Nome} - {localAtual.Descrição}");
-
+            RPGEmbed embed = new RPGEmbed(ctx, "Localização do");
+            embed.Embed.WithTitle(localAtual.Nome);
+            embed.Embed.WithDescription(localAtual.Descrição);
             StringBuilder conexoesDisponiveis = new StringBuilder();
-            StringBuilder npcsDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
             {
                 conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {Banco.ConsultarRegions(reg.RegiaoId).Nome}\n");
             }
+            embed.Embed.AddField("Locais disponíveis", conexoesDisponiveis.ToString());
+            embed.Embed.WithColor(DiscordColor.Blue);
+            await ctx.RespondAsync(embed: embed.Build());
 
+            //            StringBuilder npcsDisponiveis = new StringBuilder();
             //foreach (var npc in personagem.RegiaoAtual.Npcs)
             //{
             //    npcsDisponiveis.Append($"{npc.Nome}\n");
             //}
 
-            embed.AddField("Conexões disponíveis", conexoesDisponiveis.ToString());
+
             //if (npcsDisponiveis.ToString() != "")
             //{
             //    embed.AddField("Npcs", npcsDisponiveis.ToString());
             //}
-            embed.WithColor(DiscordColor.Blue);
-            await ctx.RespondAsync(embed: embed.Build());
         }
     }
 }
