@@ -52,7 +52,7 @@ namespace ZaynBot.RPG.Entidades
 
         public RPGBatalha CampoBatalha { get; set; }
 
-        public RPGPersonagem()
+        public RPGPersonagem(RPGRaça raca)
         {
             //RaçaPersonagem = Humano.HumanoAb();
             //Sortear sortear = new Sortear();

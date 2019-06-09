@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using ZaynBot.RPG.Data.Raças;
 using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
@@ -18,10 +19,15 @@ namespace ZaynBot.RPG.Entidades
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
         public RPGPersonagem Personagem { get; set; }
+        public List<RPGRaça> RacasDisponiveis { get; set; }
 
         public RPGUsuario(ulong id)
         {
             Id = id;
+            RacasDisponiveis = new List<RPGRaça>
+            {
+                Humano.HumanoAb(),
+            };
         }
 
         public bool AdicionarExp(int exp)

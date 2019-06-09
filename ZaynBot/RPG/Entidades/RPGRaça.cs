@@ -22,7 +22,5 @@ namespace ZaynBot.RPG.Entidades
         {
             Nome = nome;
         }
-
-        public RPGRaça() { }
     }
 }

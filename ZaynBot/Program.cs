@@ -48,7 +48,7 @@ namespace ZaynBot
                 UseInternalLogHandler = true,
             };
             _cliente = new ModuloCliente(cfg);
-            
+
             _todosOsComandos = new ModuloComando(new CommandsNextConfiguration
             {
 
@@ -65,7 +65,7 @@ namespace ZaynBot
             }, ModuloCliente.Client);
             new Banco();
             new Areas();
-            await Banco.AtualizarBancoAllAsync();
+            // await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }

@@ -173,8 +173,6 @@ namespace ZaynBot
                 .ForEachAsync(x =>
                 {
                     Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
-                    if (x.Personagem == null)
-                        x.Personagem = new RPGPersonagem();
                     if (x.Personagem.Vivo == false)
                         x.Personagem.Vivo = true;
                     //if (x.Personagem.RaçaPersonagem.Nome == null)
