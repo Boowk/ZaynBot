@@ -12,8 +12,9 @@ namespace ZaynBot.RPG.Comandos
         [Command("personagem")]
         public async Task ComandoPersonagemAb(CommandContext ctx, DiscordUser membro = null)
         {
-            await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            if (usuario.Personagem == null) return;
+            RPGPersonagem personagem = usuario.Personagem;
             if (membro == null)
             {
                 await ctx.RespondAsync(embed: GerarPersonagem(ctx.Member, usuario).Build());

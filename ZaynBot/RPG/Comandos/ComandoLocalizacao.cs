@@ -15,7 +15,8 @@ namespace ZaynBot.RPG.Comandos
         [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
         public async Task Localizacao(CommandContext ctx)
         {
-            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
             RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
 

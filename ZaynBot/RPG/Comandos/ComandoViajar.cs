@@ -13,7 +13,9 @@ namespace ZaynBot.RPG.Comandos
         [Description("Viaja para outra área disponível")]
         public async Task ComandoPersonagemAb(CommandContext ctx, [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
         {
-
+            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            if (usuario.Personagem == null) return;
+            RPGPersonagem personagem = usuario.Personagem;
 
             //if (personagem.Inimigos.Count >= 1)
             //{
