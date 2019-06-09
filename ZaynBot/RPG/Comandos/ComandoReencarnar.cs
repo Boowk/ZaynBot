@@ -28,11 +28,11 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            //await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
-            //    "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +            //    "não desanime, você ira desbloquear mais enquanto avança.");
-            //await Task.Delay(1500);
-            //await ctx.RespondAsync($"Por favor, escolha a raça que você gostaria de escolher, {ctx.User.Mention}.");
-            //await Task.Delay(1500);
+            await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
+                "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +                "não desanime, você ira desbloquear mais enquanto avança.");
+            await Task.Delay(1500);
+            await ctx.RespondAsync($"Por favor, escolha a raça que você gostaria de escolher, {ctx.User.Mention}.");
+            await Task.Delay(1500);
             StringBuilder racas = new StringBuilder();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithAuthor($"Reencarnação do {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
