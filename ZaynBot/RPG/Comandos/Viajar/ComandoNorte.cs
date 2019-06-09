@@ -24,14 +24,38 @@ namespace ZaynBot.RPG.Comandos.Viajar
             {
                 if (item.Direcao == EnumDirecoes.Norte)
                 {
-                    usuario.Personagem.LocalAtualId = item.RegiaoId;
-                    Banco.AlterarUsuario(usuario);
-                    localAtual = Banco.ConsultarRegions(item.RegiaoId);
-                    RPGEmbed embed = new RPGEmbed(ctx, "Viajem do");
-                    embed.Embed.WithDescription("Você foi para o norte.");
-                    embed.Embed.AddField(localAtual.Nome, localAtual.Descrição);
-                    await ctx.RespondAsync(embed: embed.Build());
-                    return;
+                    bool podeIr = true;
+                    if (item.Travado == true)
+                    {
+                        podeIr = false;
+                        if (item.DestravaMissao)
+                        {
+                            foreach (var missao in personagem.MissoesConcluidasId)
+                            {
+                                if (missao == item.IdMissaoDestravarPorta)
+                                {
+                                    podeIr = true;
+                                }
+                            }
+                        }
+                    }
+
+                    if (podeIr == true)
+                    {
+                        usuario.Personagem.LocalAtualId = item.RegiaoId;
+                        Banco.AlterarUsuario(usuario);
+                        localAtual = Banco.ConsultarRegions(item.RegiaoId);
+                        RPGEmbed embed = new RPGEmbed(ctx, "Viajem do");
+                        embed.Embed.WithDescription("Você foi para o norte.");
+                        embed.Embed.AddField(localAtual.Nome, localAtual.Descrição);
+                        await ctx.RespondAsync(embed: embed.Build());
+                        return;
+                    }
+                    else
+                    {
+                        await ctx.RespondAsync($"{ctx.User.Mention}, parece que está saída está bloqueada.");
+                        return;
+                    }
                 }
             }
             await ctx.RespondAsync($"{ctx.User.Mention}, não tem caminho nessa direção.");
