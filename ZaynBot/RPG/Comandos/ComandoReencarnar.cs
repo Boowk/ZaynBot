@@ -28,11 +28,11 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
-                "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +                "não desanime, você ira desbloquear mais enquanto avança.");
-            await Task.Delay(1500);
-            await ctx.RespondAsync($"Por favor, escolha a raça que você gostaria de escolher, {ctx.User.Mention}.");
-            await Task.Delay(1500);
+            //await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
+            //    "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +            //    "não desanime, você ira desbloquear mais enquanto avança.");
+            //await Task.Delay(1500);
+            //await ctx.RespondAsync($"Por favor, escolha a raça que você gostaria de escolher, {ctx.User.Mention}.");
+            //await Task.Delay(1500);
             StringBuilder racas = new StringBuilder();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithAuthor($"Reencarnação do {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
@@ -85,17 +85,17 @@ namespace ZaynBot.RPG.Comandos
                 $"Também temos um sistema de arquivos(wiki) que você pode encontrar escrevendo z!convite\n" +
                 $"Não se esqueça de pedir ajuda no nosso servidor caso esteja preso em alguma área.\n" +
                 $"Divirta-se e aproveite o seu tempo aqui!!");
-            await Task.Delay(2500);
+            await Task.Delay(3500);
             await ctx.RespondAsync("Você está dentro de uma casa pegando fogo.\n" +
                 "Pessoas: - 'Socorro!!'\n" +
                 "Você escuta pessoas pedindo por socorro no quarto ao lado.\n" +
                 "Você tenta chegar onde está vindo as vozes.\n" +
                 "Ao chegar no quarto, você não encontra ninguém.");
-            await Task.Delay(2500);
-            await ctx.RespondAsync("Você percebe que tem uma caixa mágia de som no meio do quarto.\n" +
+            await Task.Delay(3500);
+            await ctx.RespondAsync("Você percebe que tem uma caixa mágica no meio do quarto.\n" +
                 "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n" +
                 "Você morreu.");
-            await Task.Delay(2500);
+            await Task.Delay(3500);
             await ctx.RespondAsync(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
         }
     }
