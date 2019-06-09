@@ -54,6 +54,12 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     else
                     {
                         await ctx.RespondAsync($"{ctx.User.Mention}, parece que está saída está bloqueada.");
+                        if (item.DesencadeiaMensagem == true)
+                        {
+                            RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
+                            embed.Embed.WithDescription(item.Mensagem);
+                            await ctx.RespondAsync(embed: embed.Build());
+                        }
                         return;
                     }
                 }

@@ -11,5 +11,8 @@ namespace ZaynBot.RPG.Entidades.Mapa
         public bool Travado { get; set; }
         public bool DestravaMissao { get; set; }
         public int IdMissaoDestravarPorta { get; set; }
+        public bool DesencadeiaMensagem { get; set; }
+        public string Mensagem { get; set; }
+
     }
 }
