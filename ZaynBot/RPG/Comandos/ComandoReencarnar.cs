@@ -86,6 +86,17 @@ namespace ZaynBot.RPG.Comandos
                 $"Não se esqueça de pedir ajuda no nosso servidor caso esteja preso em alguma área.\n" +
                 $"Divirta-se e aproveite o seu tempo aqui!!");
             await Task.Delay(2500);
+            await ctx.RespondAsync("Você está dentro de uma casa pegando fogo.\n" +
+                "Pessoas: - 'Socorro!!'\n" +
+                "Você escuta pessoas pedindo por socorro no quarto ao lado.\n" +
+                "Você tenta chegar onde está vindo as vozes.\n" +
+                "Ao chegar no quarto, você não encontra ninguém.");
+            await Task.Delay(2500);
+            await ctx.RespondAsync("Você percebe que tem uma caixa mágia de som no meio do quarto.\n" +
+                "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n" +
+                "Você morreu.");
+            await Task.Delay(2500);
+            await ctx.RespondAsync(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
         }
     }
 }
