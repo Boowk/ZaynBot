@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
+using System.Collections.Generic;
 using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
@@ -39,16 +40,18 @@ namespace ZaynBot.RPG.Entidades
 
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
+        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
+        public List<int> MissoesConcluidasId { get; set; } = new List<int>();
 
-        public RPGEquipamento Equipamento { get; set; }
-        public RPGHabilidade Habilidade { get; set; }
-        public RPGTitulo Titulo { get; set; }
+        public RPGEquipamento Equipamento { get; set; } = new RPGEquipamento();
+        public RPGHabilidade Habilidade { get; set; } = new RPGHabilidade();
+        public RPGTitulo Titulo { get; set; } = new RPGTitulo();
         public RPGEmprego Emprego { get; set; }
 
         public bool Vivo { get; set; }
         public DateTime DataMorte { get; set; }
 
-        public RPGBatalha CampoBatalha { get; set; }
+        public RPGBatalha CampoBatalha { get; set; } = new RPGBatalha();
 
         public RPGPersonagem(RPGRaça raca)
         {
@@ -70,13 +73,9 @@ namespace ZaynBot.RPG.Entidades
             DefesaMagica = sortear.Valor(Raca.Inteligencia * 1 + sorte, Raca.Inteligencia * 10 + sorte);
             sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);
             Velocidade = sortear.Valor(Raca.Destreza * 1 + sorte, Raca.Destreza * 10 + sorte);
-            Equipamento = new RPGEquipamento();
-            Habilidade = new RPGHabilidade();
-            Titulo = new RPGTitulo();
             Emprego = new RPGEmprego("Desempregado");
             LocalAtualId = 0;
             Vivo = true;
-            CampoBatalha = new RPGBatalha();
         }
 
         //public int Alimentar(int quantidade)
