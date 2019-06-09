@@ -85,18 +85,24 @@ namespace ZaynBot.RPG.Comandos
                 $"Também temos um sistema de arquivos(wiki) que você pode encontrar escrevendo z!convite\n" +
                 $"Não se esqueça de pedir ajuda no nosso servidor caso esteja preso em alguma área.\n" +
                 $"Divirta-se e aproveite o seu tempo aqui!!");
-            await Task.Delay(3500);
-            await ctx.RespondAsync("Você está dentro de uma casa pegando fogo.\n" +
+            await Task.Delay(4000);
+            RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
+            embed.Embed.WithDescription("Você está dentro de uma casa pegando fogo.\n" +
                 "Pessoas: - 'Socorro!!'\n" +
                 "Você escuta pessoas pedindo por socorro no quarto ao lado.\n" +
                 "Você tenta chegar onde está vindo as vozes.\n" +
                 "Ao chegar no quarto, você não encontra ninguém.");
-            await Task.Delay(3500);
-            await ctx.RespondAsync("Você percebe que tem uma caixa mágica no meio do quarto.\n" +
+            await ctx.RespondAsync(embed: embed.Build());
+            await Task.Delay(4000);
+            embed = new RPGEmbed(ctx, "Historia do");
+            embed.Embed.WithDescription("Você percebe que tem uma caixa mágica no meio do quarto.\n" +
                 "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n" +
                 "Você morreu.");
+            await ctx.RespondAsync(embed: embed.Build());
             await Task.Delay(3500);
-            await ctx.RespondAsync(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
+            embed = new RPGEmbed(ctx, "Historia do");
+            embed.Embed.WithDescription(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
+            await ctx.RespondAsync(embed: embed.Build());
         }
     }
 }

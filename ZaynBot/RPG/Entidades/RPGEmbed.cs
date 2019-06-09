@@ -16,7 +16,6 @@ namespace ZaynBot.RPG.Entidades
             Embed.WithFooter("Se estiver com dúvidas, escreva z!ajuda");
             Embed.WithColor(DiscordColor.Green);
             Embed.Timestamp = DateTime.Now;
-            Embed.ThumbnailUrl = ctx.User.AvatarUrl;
         }
 
         public DiscordEmbed Build()
