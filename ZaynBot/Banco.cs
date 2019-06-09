@@ -21,6 +21,7 @@ namespace ZaynBot
         public static IMongoCollection<RPGUsuario> ColecaoUsuarios { get; private set; }
         public static IMongoCollection<RPGGuilda> ColecaoGuildas { get; private set; }
         public static IMongoCollection<RPGRaça> ColecaoRacas { get; private set; }
+        public static IMongoCollection<RPGMissao> ColecaoMissoes { get; private set; }
 
         #endregion
 
@@ -32,6 +33,7 @@ namespace ZaynBot
             ColecaoUsuarios = Database.GetCollection<RPGUsuario>("usuarios");
             ColecaoGuildas = Database.GetCollection<RPGGuilda>("guildas");
             ColecaoRacas = Database.GetCollection<RPGRaça>("racas");
+            ColecaoMissoes = Database.GetCollection<RPGMissao>("missoes");
         }
 
         /// <summary>
@@ -169,12 +171,21 @@ namespace ZaynBot
             return null;
         }
 
-        public static RPGRaça ConsultarRaca(int id)
+        public static RPGRaça RacaConsultar(int id)
         {
             Expression<Func<RPGRaça, bool>> filtro = x => x.Id.Equals(id);
             RPGRaça raca = ColecaoRacas.Find(filtro).FirstOrDefault();
             if (raca != null)
                 return raca;
+            return null;
+        }
+
+        public static RPGMissao MissaoConsultar(int id)
+        {
+            Expression<Func<RPGMissao, bool>> filtro = x => x.Id.Equals(id);
+            RPGMissao missao = ColecaoMissoes.Find(filtro).FirstOrDefault();
+            if (missao != null)
+                return missao;
             return null;
         }
 
