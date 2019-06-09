@@ -14,13 +14,15 @@ namespace ZaynBot.RPG.Comandos
         public async Task ComandoConviteAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
+            DiscordUser criador = await ModuloCliente.Client.GetUserAsync(87604980344721408);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithColor(DiscordColor.Blue);
-            embed.Description = "[Servidor oficial](https://discord.gg/GGRnMQu)\n" +
-                "[Adicionar bot no servidor](https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=469887175&scope=bot)\n" +
-                "[Vote no bot](https://discordbots.org/bot/459873132975620134/vote)\n" +
-                "[Repositorio no Github](https://github.com/ZaynBot/ZaynBot)";
-            embed.WithThumbnailUrl("https://cdn.discordapp.com/attachments/570310203040595997/573688403971801098/18acb6595257356c7544bf6265fe5896.png")
+            embed.Description = "[Servidor oficial - Mundo da Zayn](https://discord.gg/GGRnMQu)\n" +
+                "[Adicionar bot no seu servidor](https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=469887175&scope=bot)\n" +
+                "[Vote no bot e ganhe uma recompensa](https://discordbots.org/bot/459873132975620134/vote)\n" +
+                "[Código fonte no Github](https://github.com/ZaynBot/ZaynBot)\n" +
+                $"Criador: {criador.Mention} - Estamos aceitando parcerias com outros canais.";
+            embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg")
                 .AddField("Servidores totais", $"{CoreBot.QuantidadeServidores}", true)
                 .AddField("Membros totais", $"{CoreBot.QuantidadeMembros}", true)
                 .AddField("Canais totais", $"{CoreBot.QuantidadeCanais}", true)
