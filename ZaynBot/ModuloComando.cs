@@ -63,8 +63,9 @@ namespace ZaynBot
                 }
                 else
                 {
-                    await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + my.GetRemainingCooldown(ctx).Seconds + " segundos.");
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author} deve esperar {my.GetRemainingCooldown(ctx).Seconds} segundos para usar {ctx.Message.Content}", DateTime.Now);
+                    int tempo = Convert.ToInt32((my.GetRemainingCooldown(ctx).TotalSeconds));
+                    await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + tempo + " segundos.");
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author} deve esperar {tempo} segundos para usar {ctx.Message.Content}", DateTime.Now);
                     return;
                 }
 

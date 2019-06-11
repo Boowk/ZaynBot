@@ -37,7 +37,7 @@ namespace ZaynBot.RPG.Comandos
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithAuthor($"Reencarnação do {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
             embed.WithTitle("**⌈Raças⌋**");
-            embed.WithFooter("Clique no emoji para escolhar a sua raça. Se tiver dúvidas, escreva z!raca <nome>");
+            embed.WithFooter("Clique no emoji para escolhar a sua raça. Se estiver com dúvidas, escreva z!raca <nome>");
             embed.WithColor(DiscordColor.Goldenrod);
             ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
             foreach (var item in usuario.RacasDisponiveisId)
@@ -89,21 +89,20 @@ namespace ZaynBot.RPG.Comandos
                 $"Também temos um sistema de arquivos(wiki) que você pode encontrar escrevendo z!convite\n" +
                 $"Não se esqueça de pedir ajuda no nosso servidor caso esteja preso em alguma área.\n" +
                 $"Divirta-se e aproveite o seu tempo aqui!!");
-            await Task.Delay(4000);
+            await Task.Delay(5000);
             RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
             embed.Embed.WithDescription("Você está dentro de uma casa pegando fogo.\n" +
-                "Pessoas: - 'Socorro!!'\n" +
-                "Você escuta pessoas pedindo por socorro no quarto ao lado.\n" +
-                "Você tenta chegar onde está vindo as vozes.\n" +
+                "Vozes falando: 'Ajuda!!'\n" +
+                "Você escuta pessoas pedindo por ajuda no quarto ao lado.\n" +
+                "Você vai até o quarto.\n" +
                 "Ao chegar no quarto, você não encontra ninguém.");
             await ctx.RespondAsync(embed: embed.Build());
-            await Task.Delay(4000);
+            await Task.Delay(5000);
             embed = new RPGEmbed(ctx, "Historia do");
-            embed.Embed.WithDescription("Você percebe que tem uma caixa mágica no meio do quarto.\n" +
-                "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n" +
-                "Você morreu.");
+            embed.Embed.WithDescription("Dentro do quarto, você percebe que tem uma caixa mágica no centro.\n" +
+                "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n");
             await ctx.RespondAsync(embed: embed.Build());
-            await Task.Delay(3500);
+            await Task.Delay(5000);
             embed = new RPGEmbed(ctx, "Historia do");
             embed.Embed.WithDescription(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
             await ctx.RespondAsync(embed: embed.Build());
