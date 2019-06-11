@@ -104,7 +104,7 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
             embed = new RPGEmbed(ctx, "Historia do");
-            embed.Embed.WithDescription("Dentro do quarto, você percebe que tem uma caixa mágica no centro.\n" +
+            embed.Embed.WithDescription("Dentro do quarto, você percebe uma caixa mágica no centro.\n" +
                 "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n");
             await ctx.RespondAsync(embed: embed.Build());
             await ctx.TriggerTypingAsync();
