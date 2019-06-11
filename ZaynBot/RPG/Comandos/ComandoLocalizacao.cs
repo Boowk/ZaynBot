@@ -30,6 +30,10 @@ namespace ZaynBot.RPG.Comandos
             }
             embed.Embed.AddField("Locais disponíveis", conexoesDisponiveis.ToString());
             embed.Embed.WithColor(DiscordColor.Blue);
+            if (localAtual.UrlImagem != null)
+            {
+                embed.Embed.WithThumbnailUrl(localAtual.UrlImagem);
+            }
             await ctx.RespondAsync(embed: embed.Build());
 
             //            StringBuilder npcsDisponiveis = new StringBuilder();

@@ -48,6 +48,10 @@ namespace ZaynBot.RPG.Comandos.Viajar
                         RPGEmbed embed = new RPGEmbed(ctx, "Viajem do");
                         embed.Embed.WithDescription("Você foi para o leste.");
                         embed.Embed.AddField(localAtual.Nome, localAtual.Descrição);
+                        if (localAtual.UrlImagem != null)
+                        {
+                            embed.Embed.WithThumbnailUrl(localAtual.UrlImagem);
+                        }
                         await ctx.RespondAsync(embed: embed.Build());
                         return;
                     }
