@@ -30,8 +30,10 @@ namespace ZaynBot.RPG.Comandos
 
             await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
                 "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +                "não desanime, você ira desbloquear mais enquanto avança.");
+            await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
             await ctx.RespondAsync($"Por favor, escolha a raça que você gostaria de escolher, {ctx.User.Mention}.");
+            await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
             StringBuilder racas = new StringBuilder();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
@@ -83,12 +85,14 @@ namespace ZaynBot.RPG.Comandos
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
             Banco.AlterarUsuario(usuario);
             await ctx.RespondAsync($"Raça escolhida: {racaEscolhida.Nome}");
+            await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
             await ctx.RespondAsync($"Parabéns {ctx.User.Mention}, você acabou de completar a criação do seu persoangem!\n" +
                 $"A ajuda pode ser encontrada digitando z!ajuda, que lhe dirá os comandos do bot.\n" +
                 $"Também temos um sistema de arquivos(wiki) que você pode encontrar escrevendo z!convite\n" +
                 $"Não se esqueça de pedir ajuda no nosso servidor caso esteja preso em alguma área.\n" +
                 $"Divirta-se e aproveite o seu tempo aqui!!");
+            await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
             RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
             embed.Embed.WithDescription("Você está dentro de uma casa pegando fogo.\n" +
@@ -97,11 +101,13 @@ namespace ZaynBot.RPG.Comandos
                 "Você vai até o quarto.\n" +
                 "Ao chegar no quarto, você não encontra ninguém.");
             await ctx.RespondAsync(embed: embed.Build());
+            await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
             embed = new RPGEmbed(ctx, "Historia do");
             embed.Embed.WithDescription("Dentro do quarto, você percebe que tem uma caixa mágica no centro.\n" +
                 "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n");
             await ctx.RespondAsync(embed: embed.Build());
+            await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
             embed = new RPGEmbed(ctx, "Historia do");
             embed.Embed.WithDescription(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
