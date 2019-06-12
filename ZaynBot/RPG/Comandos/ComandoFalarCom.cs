@@ -19,7 +19,7 @@ namespace ZaynBot.RPG.Comandos
         public class GrupoGuilda
         {
 
-            CancellationTokenSource _cts;
+
             public async Task ExecuteGroupAsync(CommandContext ctx)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, o uso correto é falar com <npc>.");
@@ -62,7 +62,7 @@ namespace ZaynBot.RPG.Comandos
                 embed.WithDescription(dialogos.ToString());
                 DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
                 emojis.ResetSelecao();
-                _cts = new CancellationTokenSource();
+                CancellationTokenSource cts = new CancellationTokenSource();
                 var interacao = ctx.Client.GetInteractivityModule();
                 Task[] opcoes;
                 try
@@ -75,7 +75,7 @@ namespace ZaynBot.RPG.Comandos
                         await mensagem.CreateReactionAsync(emoji);
                         Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
                         opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                            .ContinueWith(x => GetReacao(item, x.Result, usuario, ctx), _cts.Token);
+                            .ContinueWith(x => GetReacao(item, x.Result, usuario, ctx, cts), cts.Token);
                         index++;
                     }
                 }
@@ -179,9 +179,9 @@ namespace ZaynBot.RPG.Comandos
                 //}
             }
 
-            public async Task GetReacao(RPGNpcPergunta perguntaEscolhida, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx)
+            public async Task GetReacao(RPGNpcPergunta perguntaEscolhida, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx, CancellationTokenSource cts)
             {
-                _cts.Cancel();
+                cts.Cancel();
                 if (reacao == null)
                     return;
 
