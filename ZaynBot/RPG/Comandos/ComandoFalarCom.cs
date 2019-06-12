@@ -64,7 +64,6 @@ namespace ZaynBot.RPG.Comandos
                 embed.WithDescription(dialogos.ToString());
                 DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
                 emojis.ResetSelecao();
-                CancellationTokenSource cts = new CancellationTokenSource();
                 var interacao = ctx.Client.GetInteractivityModule();
                 Task[] opcoes;
                 try
@@ -77,7 +76,7 @@ namespace ZaynBot.RPG.Comandos
                         await mensagem.CreateReactionAsync(emoji);
                         Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
                         opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                            .ContinueWith(x => GetReacao(item, x.Result, usuario, ctx, cts), cts.Token);
+                            .ContinueWith(x => GetReacao(npc, item, x.Result, usuario, ctx, cts), cts.Token);
                         index++;
                     }
                 }
@@ -181,14 +180,14 @@ namespace ZaynBot.RPG.Comandos
                 //}
             }
 
-            public async Task GetReacao(RPGNpcPergunta perguntaEscolhida, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx, CancellationTokenSource cts)
+            public async Task GetReacao(RPGNpc npc, RPGNpcPergunta perguntaEscolhida, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx, CancellationTokenSource cts)
             {
                 cts.Cancel();
                 if (reacao == null)
                     return;
 
                 RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
-                embed.Embed.WithDescription(perguntaEscolhida.Resposta);
+                embed.Embed.WithDescription($"{npc.Nome} diz: - '{perguntaEscolhida.Resposta}'");
                 await ctx.RespondAsync(embed: embed.Build());
             }
         }
