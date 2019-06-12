@@ -16,6 +16,8 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             DiscordUser criador = await ModuloCliente.Client.GetUserAsync(87604980344721408);
             DiscordUser imain = await ModuloCliente.Client.GetUserAsync(383711472221421589);
+            DiscordUser ink = await ModuloCliente.Client.GetUserAsync(477203165641441292);
+            DiscordUser yuki = await ModuloCliente.Client.GetUserAsync(459410223480832010);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithColor(DiscordColor.Blue);
             embed.Description = "[Servidor oficial - Mundo da Zayn](https://discord.gg/GGRnMQu)\n" +
@@ -24,12 +26,11 @@ namespace ZaynBot.RPG.Comandos
                 "[Código fonte no Github](https://github.com/ZaynBot/ZaynBot)\n" +
                 "[Nossa wiki](https://github.com/ZaynBot/wiki/wiki)";
             embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg")
-                .AddField("Servidores totais", $"{CoreBot.QuantidadeServidores}", true)
-                .AddField("Membros totais", $"{CoreBot.QuantidadeMembros}", true)
-                .AddField("Canais totais", $"{CoreBot.QuantidadeCanais}", true)
-                .AddField("Tempo ativo sem reiniciar!", $"**{(DateTime.Now - CoreBot.TempoAtivo).Days} dias, {(DateTime.Now - CoreBot.TempoAtivo).Hours} horas e {(DateTime.Now - CoreBot.TempoAtivo).Minutes} minutos.**", true)
-                .AddField("Créditos", $"Criador - {criador.Mention}\n" +
-                $"Tester - {imain.Mention}");
+                .AddField("⌈Servidores⌋", $"{CoreBot.QuantidadeServidores}", true)
+                .AddField("⌈Jogadores⌋", $"{CoreBot.QuantidadeMembros}", true)
+                .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - CoreBot.TempoAtivo).Days} dias, {(DateTime.Now - CoreBot.TempoAtivo).Hours} horas e {(DateTime.Now - CoreBot.TempoAtivo).Minutes} minutos.**", true)
+                .AddField("⌈Criador⌋", criador.Mention, true)
+                .AddField("⌈Testador Beta⌋", $"{imain.Mention}, {ink.Mention}, {yuki.Mention}", true);
 
             await ctx.RespondAsync(embed: embed.Build());
         }
