@@ -27,7 +27,7 @@ namespace ZaynBot.RPG.Comandos
 
             [Command("com")]
             [Description("Conversa com algum npc")]
-            [Cooldown(1, 1, CooldownBucketType.User)]
+            [Cooldown(1, 10, CooldownBucketType.User)]
             public async Task ComandoGuildaInfo(CommandContext ctx, [Description("Nome"), RemainingText]string nome)
             {
                 RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
@@ -47,6 +47,8 @@ namespace ZaynBot.RPG.Comandos
                     await ctx.RespondAsync($"{ctx.User.Mention} , {nome} não foi encontrado.");
                     return;
                 }
+                CancellationTokenSource cts = new CancellationTokenSource();
+                CancelamentoToken.AdicionarOuAtualizar(ctx, cts);
 
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
                 embed.WithAuthor($"Conversa do {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);

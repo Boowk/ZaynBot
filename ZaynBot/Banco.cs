@@ -4,6 +4,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
@@ -56,6 +57,7 @@ namespace ZaynBot
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa criar um personagem com o comando z!reencarnar");
                 return user;
             }
+            CancelamentoToken.CancelarToken(ctx);
             return user;
         }
 
