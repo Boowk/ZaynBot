@@ -29,7 +29,8 @@ namespace ZaynBot.RPG.Comandos
             }
 
             await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
-                "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +                "não desanime, você ira desbloquear mais enquanto avança.");
+                "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +
+                "não desanime, você ira desbloquear mais enquanto avança.");
             await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
             await ctx.RespondAsync($"Por favor, escolha a raça que você gostaria de escolher, {ctx.User.Mention}.");
@@ -76,12 +77,10 @@ namespace ZaynBot.RPG.Comandos
 
         public async Task GetRacaEscolhido(RPGRaça racaEscolhida, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx)
         {
+            _cts.Cancel();
             if (reacao == null)
-            {
-                _cts.Cancel();
                 return;
-            }
-            ListaEmojisSelecao emojis = new ListaEmojisSelecao();
+
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
             Banco.AlterarUsuario(usuario);
             await ctx.RespondAsync($"Raça escolhida: {racaEscolhida.Nome}");

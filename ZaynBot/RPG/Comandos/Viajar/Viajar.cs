@@ -23,11 +23,11 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     if (item.Travado == true)
                     {
                         podeIr = false;
-                        if (item.DestravaMissao)
+                        if (item.DestravaComMissao)
                         {
                             foreach (var missao in personagem.MissoesConcluidasId)
                             {
-                                if (missao == item.IdMissaoDestravarPorta)
+                                if (missao == item.IdMissao)
                                 {
                                     podeIr = true;
                                 }
@@ -52,13 +52,9 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     }
                     else
                     {
-                        await ctx.RespondAsync($"{ctx.User.Mention}, parece que está saída está bloqueada.");
-                        if (item.DesencadeiaMensagem == true)
-                        {
-                            RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
-                            embed.Embed.WithDescription(item.Mensagem);
-                            await ctx.RespondAsync(embed: embed.Build());
-                        }
+                        RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
+                        embed.Embed.WithDescription(item.TravadoMensagem);
+                        await ctx.RespondAsync(embed: embed.Build());
                         return;
                     }
                 }
