@@ -35,7 +35,7 @@ namespace ZaynBot.RPG.Comandos
                 embed.AddField("Percepção", raca.Percepcao.ToString(), true);
                 embed.AddField("Destreza", raca.Destreza.ToString(), true);
                 embed.AddField("Constituição", raca.Constituicao.ToString(), true);
-                embed.AddField("Sorte", raca.Constituicao.ToString(), true);
+                embed.AddField("Sorte", raca.Sorte.ToString(), true);
                 embed.WithColor(DiscordColor.Lilac);
                 embed.Timestamp = DateTime.Now;
                 embed.WithAuthor(ctx.User.Username, icon_url: ctx.User.AvatarUrl);
