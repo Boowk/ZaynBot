@@ -231,7 +231,9 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 if (reacao.Emoji.GetDiscordName() == ":regional_indicator_s:")
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, missão `{missao.Nome}` aceita!");  
+                    usuario.Personagem.MissaoEmAndamento = missao;
+                    Banco.AlterarUsuario(usuario);
+                    await ctx.RespondAsync($"{ctx.User.Mention}, missão `{missao.Nome}` aceita!");
                 }
             }
         }

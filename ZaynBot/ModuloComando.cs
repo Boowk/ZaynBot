@@ -49,6 +49,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoOeste>();
             Comandos.RegisterCommands<ComandoSul>();
             Comandos.RegisterCommands<ComandoFalarCom>();
+            Comandos.RegisterCommands<ComandoMissao>();
             #endregion
         }
 
