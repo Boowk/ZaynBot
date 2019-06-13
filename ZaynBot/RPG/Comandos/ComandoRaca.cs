@@ -30,6 +30,12 @@ namespace ZaynBot.RPG.Comandos
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
                 embed.WithTitle($"Raça {raca.Nome}");
                 embed.WithDescription(raca.Descricao);
+                embed.AddField("Força", raca.Forca.ToString(), true);
+                embed.AddField("Inteligência", raca.Inteligencia.ToString(), true);
+                embed.AddField("Percepção", raca.Percepcao.ToString(), true);
+                embed.AddField("Destreza", raca.Destreza.ToString(), true);
+                embed.AddField("Constituição", raca.Constituicao.ToString(), true);
+                embed.AddField("Sorte", raca.Constituicao.ToString(), true);
                 embed.WithColor(DiscordColor.Lilac);
                 embed.Timestamp = DateTime.Now;
                 embed.WithAuthor(ctx.User.Username, icon_url: ctx.User.AvatarUrl);

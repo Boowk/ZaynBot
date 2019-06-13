@@ -202,19 +202,24 @@ namespace ZaynBot
 
         public static async Task AtualizarBancoAllAsync()
         {
-            //await ColecaoUsuarios.Find(FilterDefinition<RPGUsuario>.Empty)
-            //    .ForEachAsync(x =>
-            //    {
-            //        Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
-            //        if (x.Personagem != null)
-            //        {
-            //            if (x.Personagem.MissaoEmAndamento == null)
-            //                x.Personagem.MissaoEmAndamento = new RPGMissao();
-            //            if (x.Personagem.MissoesConcluidasId == null)
-            //                x.Personagem.MissoesConcluidasId = new List<int>();
-            //            ColecaoUsuarios.ReplaceOne(filtro, x);
-            //        }
-            //    }).ConfigureAwait(false);
+            List<int> racasdisponiveis = new List<int>
+            {
+                0,
+                1,
+                2,
+                3,
+            };
+
+            await ColecaoUsuarios.Find(FilterDefinition<RPGUsuario>.Empty)
+                .ForEachAsync(x =>
+                {
+                    Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
+                    if (x.Personagem != null)
+                    {
+                        x.RacasDisponiveisId = racasdisponiveis;
+                        ColecaoUsuarios.ReplaceOne(filtro, x);
+                    }
+                }).ConfigureAwait(false);
         }
     }
 }

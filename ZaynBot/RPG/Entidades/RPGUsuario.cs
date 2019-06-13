@@ -27,6 +27,9 @@ namespace ZaynBot.RPG.Entidades
             RacasDisponiveisId = new List<int>
             {
                 0,
+                1,
+                2,
+                3,
             };
         }
 
