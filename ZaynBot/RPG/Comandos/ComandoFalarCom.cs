@@ -50,18 +50,17 @@ namespace ZaynBot.RPG.Comandos
                 CancellationTokenSource cts = new CancellationTokenSource();
                 CancelamentoToken.AdicionarOuAtualizar(ctx, cts);
 
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-                embed.WithAuthor($"Conversa do {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
-                embed.WithTitle($"**⌈{npc.Nome}⌋**");
-                embed.WithFooter("Clique no emoji para escolhar um diálogo.");
-                embed.WithColor(DiscordColor.Goldenrod);
+                RPGEmbed embed = new RPGEmbed(ctx, "Conversa do", npc);
+                embed.Titulo(npc.Nome);
+                embed.Embed.WithFooter("Clique no emoji para escolhar um diálogo.");
+                embed.Embed.WithColor(DiscordColor.Goldenrod);
                 ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
-                StringBuilder dialogos = new StringBuilder();
+                StringBuilder dialogos = new StringBuilder($"{npc.FalaInicial}\n");
                 foreach (var item in npc.Perguntas)
                 {
                     dialogos.Append($"{emojis.ProxEmoji()} - {item.Pergunta}\n");
                 }
-                embed.WithDescription(dialogos.ToString());
+                embed.Embed.WithDescription(dialogos.ToString());
                 DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
                 emojis.ResetSelecao();
                 var interacao = ctx.Client.GetInteractivityModule();
@@ -186,9 +185,54 @@ namespace ZaynBot.RPG.Comandos
                 if (reacao == null)
                     return;
 
-                RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
-                embed.Embed.WithDescription($"{npc.Nome} diz: - '{perguntaEscolhida.Resposta}'");
+                RPGEmbed embed = new RPGEmbed(ctx, "Diálogo do", npc);
+                embed.DescricaoFala(npc, perguntaEscolhida.Resposta);
                 await ctx.RespondAsync(embed: embed.Build());
+                if (perguntaEscolhida.Missao == true)
+                {
+                    DiscordEmoji emojiSim = DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_s:");
+                    DiscordEmoji emojiNao = DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_n:");
+                    RPGMissao missao = Banco.MissaoConsultar(perguntaEscolhida.MissaoId);
+                    RPGEmbed embedMissao = new RPGEmbed(ctx, "Missão do");
+                    embedMissao.Embed.WithTitle("Você recebeu uma missão");
+                    embedMissao.Embed.WithFooter("S para aceitar, N para recusar");
+                    embedMissao.Embed.WithDescription(missao.Descricao);
+                    DiscordMessage mensagem = await ctx.RespondAsync(embed: embedMissao.Build());
+                    CancellationTokenSource ctss = new CancellationTokenSource();
+                    CancelamentoToken.AdicionarOuAtualizar(ctx, ctss);
+                    var interacao = ctx.Client.GetInteractivityModule();
+                    Task[] opcoes = new Task[2];
+                    bool emojiFunSim(DiscordEmoji x) => x.Equals(emojiSim);
+                    bool emojiFunNao(DiscordEmoji x) => x.Equals(emojiNao);
+                    opcoes[0] = interacao.WaitForMessageReactionAsync(emojiFunNao, mensagem, ctx.User, TimeSpan.FromSeconds(60))
+                        .ContinueWith(x => GetReacaoMissao(missao, x.Result, usuario, ctx, ctss), ctss.Token);
+                    opcoes[1] = interacao.WaitForMessageReactionAsync(emojiFunSim, mensagem, ctx.User, TimeSpan.FromSeconds(60))
+                        .ContinueWith(x => GetReacaoMissao(missao, x.Result, usuario, ctx, ctss), ctss.Token);
+
+                    try
+                    {
+                        await mensagem.CreateReactionAsync(emojiSim);
+                        await mensagem.CreateReactionAsync(emojiNao);
+                    }
+                    catch
+                    {
+                        await ctx.RespondAsync("Não tenho permissão para adicionar emojis :(");
+                        ctss.Cancel();
+                        return;
+                    }
+                    await Task.WhenAny(opcoes);
+                }
+            }
+
+            public async Task GetReacaoMissao(RPGMissao missao, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx, CancellationTokenSource cts)
+            {
+                cts.Cancel();
+                if (reacao == null)
+                    return;
+                if (reacao.Emoji.GetDiscordName() == ":regional_indicator_s:")
+                {
+                    await ctx.RespondAsync($"{ctx.User.Mention}, missão `{missao.Nome}` aceita!");  
+                }
             }
         }
     }
