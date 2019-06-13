@@ -182,6 +182,15 @@ namespace ZaynBot
             return null;
         }
 
+        public static RPGRaça RacaConsultar(string nome)
+        {
+            Expression<Func<RPGRaça, bool>> filtro = x => x.Nome.ToLower() == nome;
+            RPGRaça raca = ColecaoRacas.Find(filtro).FirstOrDefault();
+            if (raca != null)
+                return raca;
+            return null;
+        }
+
         public static RPGMissao MissaoConsultar(int id)
         {
             Expression<Func<RPGMissao, bool>> filtro = x => x.Id.Equals(id);
