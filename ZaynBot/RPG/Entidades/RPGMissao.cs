@@ -10,7 +10,7 @@ namespace ZaynBot.RPG.Entidades
     {
         [BsonId]
         [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
-        public int Id { get; set; }
+        public int Id { get; set; } 
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public List<ItensObjetivo> ItensObjetivo { get; set; } = new List<ItensObjetivo>();

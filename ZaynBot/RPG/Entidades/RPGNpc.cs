@@ -29,6 +29,7 @@ namespace ZaynBot.RPG.Entidades
         public string Resposta { get; set; }
         public bool Loja { get; set; } = false;
         public bool Missao { get; set; } = false;
-        public int MissaoId { get; set; }
+        public int MissaoId { get; set; } = -1;
+        public string MissaoAtivaPergunta { get; set; } = "O que era para eu fazer mesmo?";
     }
 }
