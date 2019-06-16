@@ -50,10 +50,19 @@ namespace ZaynBot.RPG.Comandos
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
                 embed.WithTitle("Ranque de nível global");
                 embed.WithTimestamp(DateTime.Now);
+
                 foreach (var item in lista)
                 {
                     DiscordUser usuario = await ctx.Client.GetUserAsync(item.Id);
-                    texto.Append($"{index} - {usuario.Username}#{usuario.Discriminator} - Nivel: {item.Nivel}\n");
+                    try
+                    {
+                        DiscordMember membro = await ctx.Guild.GetMemberAsync(usuario.Id);
+                        texto.Append($"{index} - {usuario.Mention}- Nivel: {item.Nivel}\n");
+                    }
+                    catch
+                    {
+                        texto.Append($"{index} - {usuario.Username}#{usuario.Discriminator} - Nivel: {item.Nivel}\n");
+                    }
                     index++;
                 }
                 embed.WithDescription(texto.ToString());
