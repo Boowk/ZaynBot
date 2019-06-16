@@ -56,6 +56,8 @@ namespace ZaynBot.RPG.Comandos
                     texto.Append($"{index} - {usuario.Mention} - Nivel: {item.Nivel}\n");
                     index++;
                 }
+                embed.WithDescription(texto.ToString());
+                embed.WithColor(DiscordColor.Chartreuse);
                 await ctx.RespondAsync(embed: embed.Build());
             }
 
