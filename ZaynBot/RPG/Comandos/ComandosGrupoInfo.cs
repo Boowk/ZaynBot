@@ -53,7 +53,7 @@ namespace ZaynBot.RPG.Comandos
                 foreach (var item in lista)
                 {
                     DiscordUser usuario = await ctx.Client.GetUserAsync(item.Id);
-                    texto.Append($"{index} - {usuario.Mention} - Nivel: {item.Nivel}\n");
+                    texto.Append($"{index} - {usuario.Username}#{usuario.Discriminator} - Nivel: {item.Nivel}\n");
                     index++;
                 }
                 embed.WithDescription(texto.ToString());
