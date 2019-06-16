@@ -23,16 +23,21 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     if (item.Travado == true)
                     {
                         podeIr = false;
-                        if (item.DestravaComMissao)
+                        if (item.DestravaComMissaoConcluida)
                         {
                             foreach (var missao in personagem.MissoesConcluidasId)
                             {
-                                if (missao == item.IdMissao)
+                                if (missao == item.DestravaComMissaoConcluidaId)
                                 {
                                     podeIr = true;
                                 }
                             }
                         }
+                    }
+                    else if (item.TravadoSemItemInventario == true)
+                    {
+                        podeIr = false;
+
                     }
 
                     if (podeIr == true)

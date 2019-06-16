@@ -34,19 +34,19 @@ namespace ZaynBot.RPG.Comandos
             {
                 embed.Embed.WithThumbnailUrl(localAtual.UrlImagem);
             }
+            StringBuilder npcsDisponiveis = new StringBuilder();
+            foreach (var npc in localAtual.Npcs)
+            {
+                if (npc.Visivel == true)
+                {
+                    npcsDisponiveis.Append($"{npc.Nome}\n");
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(npcsDisponiveis.ToString()))
+            {
+                embed.Embed.AddField("Npcs", npcsDisponiveis.ToString());
+            }
             await ctx.RespondAsync(embed: embed.Build());
-
-            //            StringBuilder npcsDisponiveis = new StringBuilder();
-            //foreach (var npc in personagem.RegiaoAtual.Npcs)
-            //{
-            //    npcsDisponiveis.Append($"{npc.Nome}\n");
-            //}
-
-
-            //if (npcsDisponiveis.ToString() != "")
-            //{
-            //    embed.AddField("Npcs", npcsDisponiveis.ToString());
-            //}
         }
     }
 }
