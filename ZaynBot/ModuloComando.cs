@@ -23,12 +23,7 @@ namespace ZaynBot
             Comandos.CommandExecuted += ComandoExecutado;
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<AjudaFormatador>();
-            RegistrarComandos();
-        }
 
-        public void RegistrarComandos()
-        {
-            Comandos.SetHelpFormatter<AjudaFormatador>();
             Comandos.RegisterCommands<ComandosTestes>();
             Comandos.RegisterCommands<Ajuda>();
             Comandos.RegisterCommands<ComandosGrupoInfo>();
