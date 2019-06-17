@@ -19,49 +19,12 @@ namespace ZaynBot
             Client = new DiscordClient(discordConfiguration);
             Client.Ready += Client_Ready;
             Client.GuildAvailable += Client_GuildAvailable;
-            Client.GuildDeleted += Client_GuildDeleted;
-            Client.ChannelCreated += Client_ChannelCreated;
             Client.ClientErrored += Client_ClientError;
-            Client.ChannelDeleted += Client_ChannelDeleted;
             Client.MessageCreated += Client_MessageCreated;
-            Client.GuildMemberAdded += Client_GuildMemberAdded;
-            Client.GuildMemberRemoved += Client_GuildMemberRemoved;
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(1)
             });
-        }
-
-        private Task Client_ChannelDeleted(ChannelDeleteEventArgs e)
-        {
-            CoreBot.QuantidadeCanais--;
-            return Task.CompletedTask;
-        }
-
-        private Task Client_ChannelCreated(ChannelCreateEventArgs e)
-        {
-            CoreBot.QuantidadeCanais++;
-            return Task.CompletedTask;
-        }
-
-        private Task Client_GuildDeleted(GuildDeleteEventArgs e)
-        {
-            CoreBot.QuantidadeServidores--;
-            CoreBot.QuantidadeMembros -= e.Guild.MemberCount;
-            CoreBot.QuantidadeCanais -= e.Guild.Channels.Count;
-            return Task.CompletedTask;
-        }
-
-        private Task Client_GuildMemberRemoved(GuildMemberRemoveEventArgs e)
-        {
-            CoreBot.QuantidadeMembros--;
-            return Task.CompletedTask;
-        }
-
-        private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
-        {
-            CoreBot.QuantidadeMembros++;
-            await EventoMensagemBoasVindas.EventoBemVindoAsync(e);
         }
 
         //private async Task DoWorkAsyncInfiniteLoop()
@@ -154,9 +117,7 @@ namespace ZaynBot
         private Task Client_Ready(ReadyEventArgs e)
         {
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", "Cliente está pronto para processar eventos.", DateTime.Now);
-
             return Task.CompletedTask;
-
         }
 
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
