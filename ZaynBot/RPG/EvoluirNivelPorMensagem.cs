@@ -10,7 +10,7 @@ namespace ZaynBot.RPG
     {
         public static async Task ReceberXPNivelMensagens(MessageCreateEventArgs e)
         {
-            RPGUsuario user = Banco.ConsultarUsuario(e.Author.Id);
+            RPGUsuario user = ModuloBanco.UsuarioConsultar(e.Author.Id);
             if (DateTime.UtcNow >= user.DataUltimaMensagemEnviada)
             {
                 user.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
@@ -20,7 +20,7 @@ namespace ZaynBot.RPG
                     user.RegeneraçãoMana();
                     user.RegeneraçãoVida();
                 }
-                Banco.AlterarUsuario(user);
+                ModuloBanco.UsuarioAlterar(user);
                 if (result.Item1 == true)
                 {
                     e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} evoluiu regen para o nível {user.Nivel}.", DateTime.Now);

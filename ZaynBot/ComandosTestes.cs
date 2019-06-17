@@ -75,9 +75,9 @@ namespace ZaynBot
         public async Task f(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = await Banco.ConsultarUsuarioAsync(ctx);
+            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarAsync(ctx);
             usuario.Personagem.MissoesConcluidasId.Add(0);
-            Banco.AlterarUsuario(usuario);
+            ModuloBanco.UsuarioAlterar(usuario);
         }
 
 

@@ -65,11 +65,11 @@ namespace ZaynBot
                 EnableMentionPrefix = true,
                 IgnoreExtraArguments = true,
             }, ModuloCliente.Client);
-            new Banco();
+            new ModuloBanco();
             new Areas();
             new Raças();
             new Missoes();
-            await Banco.AtualizarBancoAllAsync();
+            await ModuloBanco.AtualizarBancoAllAsync();
             // await Banco.AtualizarBancoAllAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);

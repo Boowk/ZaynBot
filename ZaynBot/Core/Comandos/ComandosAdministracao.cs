@@ -57,7 +57,7 @@ namespace ZaynBot.Core.Comandos
         {
             await ctx.TriggerTypingAsync();
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(member.Id);
-            Banco.ColecaoUsuarios.DeleteOne(filtro);
+            ModuloBanco.UsuarioColecao.DeleteOne(filtro);
             await ctx.RespondAsync("Membro resetado.");
         }
     }

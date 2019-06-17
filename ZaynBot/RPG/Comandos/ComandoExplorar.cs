@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Explora a região para encontrar inimigos.")]
         public async Task ExplorarInimigos(CommandContext ctx) // [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
         {
-            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
 
@@ -24,7 +24,7 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, somente o lider da part pode usar esse comando!");
                 return;
             }
-            RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
+            RPGRegião localAtual = ModuloBanco.RegiaoConsultar(personagem.LocalAtualId);
 
             if (localAtual.Inimigos.Count == 0)
             {
@@ -55,7 +55,7 @@ namespace ZaynBot.RPG.Comandos
                 personagem.CampoBatalha.Inimigos.Add(inimigo.SetRaça(inimigo.RaçaMob));
 
                 string inimigoMensagem = $"{inimigo.Nome} com {string.Format("{0:N2}", inimigo.PontosDeVidaMaxima)} de vida, apareceu na sua frente!";
-                Banco.AlterarUsuario(usuario);
+                ModuloBanco.UsuarioAlterar(usuario);
                 await ctx.RespondAsync(ctx.User.Mention + ", " + inimigoMensagem);
             }
             else

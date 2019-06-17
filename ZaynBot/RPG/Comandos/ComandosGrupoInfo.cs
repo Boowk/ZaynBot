@@ -37,7 +37,7 @@ namespace ZaynBot.RPG.Comandos
                 StringBuilder texto = new StringBuilder();
                 List<ListaRanque> lista = new List<ListaRanque>();
 
-                await Banco.ColecaoUsuarios.Find(FilterDefinition<RPGUsuario>.Empty).Limit(10).Sort("{Nivel: -1}")
+                await ModuloBanco.UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty).Limit(10).Sort("{Nivel: -1}")
                     .ForEachAsync(x =>
                     {
                         lista.Add(new ListaRanque

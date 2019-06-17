@@ -15,10 +15,10 @@ namespace ZaynBot.RPG.Comandos
         [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
         public async Task Localizacao(CommandContext ctx)
         {
-            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
-            RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
+            RPGRegião localAtual = ModuloBanco.RegiaoConsultar(personagem.LocalAtualId);
 
             RPGEmbed embed = new RPGEmbed(ctx, "Localização do");
             embed.Embed.WithTitle(localAtual.Nome);
@@ -26,7 +26,7 @@ namespace ZaynBot.RPG.Comandos
             StringBuilder conexoesDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
             {
-                conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {Banco.ConsultarRegions(reg.RegiaoId).Nome}\n");
+                conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {ModuloBanco.RegiaoConsultar(reg.RegiaoId).Nome}\n");
             }
             embed.Embed.AddField("Locais disponíveis", conexoesDisponiveis.ToString());
             embed.Embed.WithColor(DiscordColor.Blue);

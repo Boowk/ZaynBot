@@ -30,7 +30,7 @@ namespace ZaynBot.RPG.Comandos
             [Cooldown(1, 10, CooldownBucketType.User)]
             public async Task ComandoGuildaInfo(CommandContext ctx, [Description("Nome"), RemainingText]string nome)
             {
-                RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+                RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
                 if (usuario.Personagem == null) return;
                 RPGPersonagem personagem = usuario.Personagem;
                 if (string.IsNullOrWhiteSpace(nome))
@@ -40,7 +40,7 @@ namespace ZaynBot.RPG.Comandos
                 }
 
                 string nomeMinusculo = nome.ToLower();
-                RPGRegião localAtual = Banco.ConsultarRegions(personagem.LocalAtualId);
+                RPGRegião localAtual = ModuloBanco.RegiaoConsultar(personagem.LocalAtualId);
                 RPGNpc npc = localAtual.Npcs.Find(x => x.Nome.ToLower() == nomeMinusculo);
                 if (npc == null)
                 {
@@ -238,7 +238,7 @@ namespace ZaynBot.RPG.Comandos
                     CancelamentoToken.AdicionarOuAtualizar(ctx, cts);
                     DiscordEmoji emojiSim = DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_s:");
                     DiscordEmoji emojiNao = DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_n:");
-                    RPGMissao missao = Banco.MissaoConsultar(perguntaEscolhida.MissaoId);
+                    RPGMissao missao = ModuloBanco.MissaoConsultar(perguntaEscolhida.MissaoId);
                     RPGEmbed embedMissao = new RPGEmbed(ctx, "Missão do");
                     embedMissao.Embed.WithTitle("Você recebeu uma missão");
                     embedMissao.Embed.WithFooter("S para aceitar, N para recusar");
@@ -277,7 +277,7 @@ namespace ZaynBot.RPG.Comandos
                 if (reacao.Emoji.GetDiscordName() == ":regional_indicator_s:")
                 {
                     usuario.Personagem.MissaoEmAndamento = missao;
-                    Banco.AlterarUsuario(usuario);
+                    ModuloBanco.UsuarioAlterar(usuario);
                     await ctx.RespondAsync($"{ctx.User.Mention}, missão `{missao.Nome}` aceita!");
                 }
             }

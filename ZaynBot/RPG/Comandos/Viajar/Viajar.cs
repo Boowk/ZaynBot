@@ -9,11 +9,11 @@ namespace ZaynBot.RPG.Comandos.Viajar
     {
         public async void ViajarAbAsync(CommandContext ctx, EnumDirecoes enumDirecao, string direcao)
         {
-            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
 
-            RPGRegião localAtual = Banco.ConsultarRegions(usuario.Personagem.LocalAtualId);
+            RPGRegião localAtual = ModuloBanco.RegiaoConsultar(usuario.Personagem.LocalAtualId);
 
             foreach (var item in localAtual.SaidasRegioes)
             {
@@ -43,8 +43,8 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     if (podeIr == true)
                     {
                         usuario.Personagem.LocalAtualId = item.RegiaoId;
-                        Banco.AlterarUsuario(usuario);
-                        localAtual = Banco.ConsultarRegions(item.RegiaoId);
+                        ModuloBanco.UsuarioAlterar(usuario);
+                        localAtual = ModuloBanco.RegiaoConsultar(item.RegiaoId);
                         RPGEmbed embed = new RPGEmbed(ctx, "Viajem do");
                         embed.Embed.WithDescription($"Você foi para o {direcao}.");
                         embed.Embed.AddField(localAtual.Nome, localAtual.Descrição);

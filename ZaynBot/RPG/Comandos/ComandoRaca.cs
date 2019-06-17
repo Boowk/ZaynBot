@@ -24,7 +24,7 @@ namespace ZaynBot.RPG.Comandos
             }
 
             string nomeMinusculo = nome.ToLower();
-            RPGRaça raca = Banco.RacaConsultar(nomeMinusculo);
+            RPGRaça raca = ModuloBanco.RacaConsultar(nomeMinusculo);
             if (raca != null)
             {
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

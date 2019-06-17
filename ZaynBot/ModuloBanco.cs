@@ -4,53 +4,53 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot
 {
-    public class Banco
+    public class ModuloBanco
     {
-        public static string ObjectIDNulo { get; } = "000000000000000000000000";
         public static IMongoDatabase Database { get; private set; }
 
-        #region Coleções
+        #region Colecoes
 
-        public static IMongoCollection<RPGRegião> ColecaoRegioes { get; private set; }
-        public static IMongoCollection<RPGUsuario> ColecaoUsuarios { get; private set; }
-        public static IMongoCollection<RPGGuilda> ColecaoGuildas { get; private set; }
-        public static IMongoCollection<RPGRaça> ColecaoRacas { get; private set; }
-        public static IMongoCollection<RPGMissao> ColecaoMissoes { get; private set; }
+        public static IMongoCollection<RPGRegião> RegiaoColecao { get; private set; }
+        public static IMongoCollection<RPGUsuario> UsuarioColecao { get; private set; }
+        public static IMongoCollection<RPGGuilda> GuildaColecao { get; private set; }
+        public static IMongoCollection<RPGRaça> RacaColecao { get; private set; }
+        public static IMongoCollection<RPGMissao> MissaoColecao { get; private set; }
 
         #endregion
 
-        public Banco()
+        public ModuloBanco()
         {
             IMongoClient _client = new MongoClient("mongodb://localhost");
             Database = _client.GetDatabase("zaynbot");
-            ColecaoRegioes = Database.GetCollection<RPGRegião>("regions");
-            ColecaoUsuarios = Database.GetCollection<RPGUsuario>("usuarios");
-            ColecaoGuildas = Database.GetCollection<RPGGuilda>("guildas");
-            ColecaoRacas = Database.GetCollection<RPGRaça>("racas");
-            ColecaoMissoes = Database.GetCollection<RPGMissao>("missoes");
+            RegiaoColecao = Database.GetCollection<RPGRegião>("regions");
+            UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
+            GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
+            RacaColecao = Database.GetCollection<RPGRaça>("racas");
+            MissaoColecao = Database.GetCollection<RPGMissao>("missoes");
         }
+
+        #region CRUD Usuario
 
         /// <summary>
         /// Procura no banco por um usuario e verifica se existe um personagem antes de devolver.
         /// </summary>
         /// <param name="CommandContext"></param>
         /// <returns></returns>
-        public static async Task<RPGUsuario> ConsultarUsuarioPersonagemAsync(CommandContext ctx)
+        public static async Task<RPGUsuario> UsuarioConsultarPersonagemAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(ctx.User.Id);
-            RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
+            RPGUsuario user = UsuarioColecao.Find(filtro).FirstOrDefault();
             if (user == null)
             {
                 user = new RPGUsuario(ctx.User.Id);
-                ColecaoUsuarios.InsertOne(user);
+                UsuarioColecao.InsertOne(user);
             }
             if (user.Personagem == null)
             {
@@ -66,17 +66,10 @@ namespace ZaynBot
         /// </summary>
         /// <param name="CommandContext"></param>
         /// <returns></returns>
-        public static async Task<RPGUsuario> ConsultarUsuarioAsync(CommandContext ctx)
+        public static async Task<RPGUsuario> UsuarioConsultarAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(ctx.User.Id);
-            RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
-            if (user == null)
-            {
-                user = new RPGUsuario(ctx.User.Id);
-                ColecaoUsuarios.InsertOne(user);
-            }
-            return user;
+            return UsuarioConsultar(ctx.User.Id);
         }
 
         /// <summary>
@@ -84,14 +77,14 @@ namespace ZaynBot
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static RPGUsuario ConsultarUsuario(ulong id)
+        public static RPGUsuario UsuarioConsultar(ulong id)
         {
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(id);
-            RPGUsuario user = ColecaoUsuarios.Find(filtro).FirstOrDefault();
+            RPGUsuario user = UsuarioColecao.Find(filtro).FirstOrDefault();
             if (user == null)
             {
                 user = new RPGUsuario(id);
-                ColecaoUsuarios.InsertOne(user);
+                UsuarioColecao.InsertOne(user);
             }
             return user;
         }
@@ -100,30 +93,33 @@ namespace ZaynBot
         /// Altera um usuario no banco.
         /// </summary>
         /// <param name="usuario"></param>
-        public static void AlterarUsuario(RPGUsuario usuario)
+        public static void UsuarioAlterar(RPGUsuario usuario)
         {
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
-            ColecaoUsuarios.ReplaceOne(filtro, usuario);
+            UsuarioColecao.ReplaceOne(filtro, usuario);
         }
 
+        #endregion
+        #region CRUD Guilda
+    
         /// <summary>
         /// Consulta por uma guilda no banco de dados.
         /// </summary>
         /// <param name="guildaId"></param>
         /// <returns>Guilda</returns>
-        public static RPGGuilda ConsultarGuilda(ObjectId guildaId)
+        public static RPGGuilda GuildaConsultar(ObjectId guildaId)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guildaId);
-            RPGGuilda guilda = ColecaoGuildas.Find(filtro).FirstOrDefault();
+            RPGGuilda guilda = GuildaColecao.Find(filtro).FirstOrDefault();
             if (guilda != null)
                 return guilda;
             return null;
         }
 
-        public static ObjectId ConsultarGuildaCriador(ulong dono)
+        public static ObjectId GuildaConsultarCriador(ulong dono)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.IdDono.Equals(dono);
-            RPGGuilda guilda = ColecaoGuildas.Find(filtro).FirstOrDefault();
+            RPGGuilda guilda = GuildaColecao.Find(filtro).FirstOrDefault();
             return guilda.Id;
         }
 
@@ -132,10 +128,10 @@ namespace ZaynBot
         /// </summary>
         /// <param name="idGuilda"></param>
         /// <returns>Guilda</returns>
-        public static bool CriarGuilda(RPGGuilda guilda)
+        public static bool GuildaCriar(RPGGuilda guilda)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Nome.Equals(guilda.Nome);
-            RPGGuilda guildaAchou = ColecaoGuildas.Find(filtro).FirstOrDefault();
+            RPGGuilda guildaAchou = GuildaColecao.Find(filtro).FirstOrDefault();
             if (guildaAchou != null)
             {
                 return false;
@@ -150,7 +146,7 @@ namespace ZaynBot
                 Descricao = "Sem descrição",
                 Id = new ObjectId(),
             };
-            ColecaoGuildas.InsertOne(guildaAchou);
+            GuildaColecao.InsertOne(guildaAchou);
             return true;
         }
 
@@ -158,25 +154,31 @@ namespace ZaynBot
         /// Altera uma guilda no banco de dados.
         /// </summary>
         /// <param name="idGuilda"></param>
-        public static void AlterarGuilda(RPGGuilda guilda)
+        public static void GuildaAlterar(RPGGuilda guilda)
         {
             Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
-            ColecaoGuildas.ReplaceOne(filtro, guilda);
+            GuildaColecao.ReplaceOne(filtro, guilda);
         }
 
-        public static RPGRegião ConsultarRegions(int id)
+        #endregion
+        #region CRUD Regiao
+
+        public static RPGRegião RegiaoConsultar(int id)
         {
             Expression<Func<RPGRegião, bool>> filtro = x => x.Id.Equals(id);
-            RPGRegião region = ColecaoRegioes.Find(filtro).FirstOrDefault();
+            RPGRegião region = RegiaoColecao.Find(filtro).FirstOrDefault();
             if (region != null)
                 return region;
             return null;
         }
 
+        #endregion
+        #region CRUD Raca
+
         public static RPGRaça RacaConsultar(int id)
         {
             Expression<Func<RPGRaça, bool>> filtro = x => x.Id.Equals(id);
-            RPGRaça raca = ColecaoRacas.Find(filtro).FirstOrDefault();
+            RPGRaça raca = RacaColecao.Find(filtro).FirstOrDefault();
             if (raca != null)
                 return raca;
             return null;
@@ -185,41 +187,46 @@ namespace ZaynBot
         public static RPGRaça RacaConsultar(string nome)
         {
             Expression<Func<RPGRaça, bool>> filtro = x => x.Nome.ToLower() == nome;
-            RPGRaça raca = ColecaoRacas.Find(filtro).FirstOrDefault();
+            RPGRaça raca = RacaColecao.Find(filtro).FirstOrDefault();
             if (raca != null)
                 return raca;
             return null;
         }
 
+        #endregion
+        #region CRUD Missao
+
         public static RPGMissao MissaoConsultar(int id)
         {
             Expression<Func<RPGMissao, bool>> filtro = x => x.Id.Equals(id);
-            RPGMissao missao = ColecaoMissoes.Find(filtro).FirstOrDefault();
+            RPGMissao missao = MissaoColecao.Find(filtro).FirstOrDefault();
             if (missao != null)
                 return missao;
             return null;
         }
 
+        #endregion
+
         public static async Task AtualizarBancoAllAsync()
         {
-            List<int> racasdisponiveis = new List<int>
-            {
-                0,
-                1,
-                2,
-                3,
-            };
+            //List<int> racasdisponiveis = new List<int>
+            //{
+            //    0,
+            //    1,
+            //    2,
+            //    3,
+            //};
 
-            await ColecaoUsuarios.Find(FilterDefinition<RPGUsuario>.Empty)
-                .ForEachAsync(x =>
-                {
-                    Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
-                    if (x.Personagem != null)
-                    {
-                        x.RacasDisponiveisId = racasdisponiveis;
-                        ColecaoUsuarios.ReplaceOne(filtro, x);
-                    }
-                }).ConfigureAwait(false);
+            //await UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty)
+            //    .ForEachAsync(x =>
+            //    {
+            //        Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
+            //        if (x.Personagem != null)
+            //        {
+            //            x.RacasDisponiveisId = racasdisponiveis;
+            //            UsuarioColecao.ReplaceOne(filtro, x);
+            //        }
+            //    }).ConfigureAwait(false);
         }
     }
 }

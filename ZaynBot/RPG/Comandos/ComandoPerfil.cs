@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task ComandoPerfilAb(CommandContext ctx, DiscordMember membro = null)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = Banco.ConsultarUsuario(ctx.User.Id);
+            RPGUsuario usuario = ModuloBanco.UsuarioConsultar(ctx.User.Id);
             if (membro == null)
             {
                 await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, usuario).Build());
@@ -31,7 +31,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario usuarioRequisitado = Banco.ConsultarUsuario(membro.Id);
+            RPGUsuario usuarioRequisitado = ModuloBanco.UsuarioConsultar(membro.Id);
             await ctx.RespondAsync(embed: GerarPerfil(membro, usuarioRequisitado).Build());
         }
 

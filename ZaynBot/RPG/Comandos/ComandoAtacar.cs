@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Ataca o inimigo na sua frente.")]
         public async Task Atacar(CommandContext ctx, [Description("Id do alvo")] int id = 0)
         {
-            RPGUsuario usuario = await Banco.ConsultarUsuarioPersonagemAsync(ctx);
+            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
@@ -106,7 +106,7 @@ namespace ZaynBot.RPG.Comandos
             }
 
             embed.WithColor(DiscordColor.Red);
-            Banco.AlterarUsuario(usuario);
+            ModuloBanco.UsuarioAlterar(usuario);
             await ctx.RespondAsync(ctx.User.Mention, embed: embed.Build());
         }
 

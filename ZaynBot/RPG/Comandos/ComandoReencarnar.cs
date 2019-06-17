@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 120, CooldownBucketType.User)]
         public async Task Reencarnar(CommandContext ctx)
         {
-            RPGUsuario usuario = await Banco.ConsultarUsuarioAsync(ctx);
+            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarAsync(ctx);
             if (usuario.Personagem != null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa morrer antes de tentar reencarnar novamente!");
@@ -45,7 +45,7 @@ namespace ZaynBot.RPG.Comandos
             ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
             foreach (var item in usuario.RacasDisponiveisId)
             {
-                racas.Append($"{emojis.ProxEmoji()} - {Banco.RacaConsultar(item).Nome}\n");
+                racas.Append($"{emojis.ProxEmoji()} - {ModuloBanco.RacaConsultar(item).Nome}\n");
             }
             embed.WithDescription(racas.ToString());
             DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
@@ -63,7 +63,7 @@ namespace ZaynBot.RPG.Comandos
                     await mensagem.CreateReactionAsync(emoji);
                     Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
                     opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                        .ContinueWith(x => GetRacaEscolhido(Banco.RacaConsultar(item), x.Result, usuario, ctx), _cts.Token);
+                        .ContinueWith(x => GetRacaEscolhido(ModuloBanco.RacaConsultar(item), x.Result, usuario, ctx), _cts.Token);
                     index++;
                 }
             }
@@ -82,7 +82,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
 
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
-            Banco.AlterarUsuario(usuario);
+            ModuloBanco.UsuarioAlterar(usuario);
             await ctx.RespondAsync($"Raça escolhida: {racaEscolhida.Nome}");
             await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
@@ -109,7 +109,7 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
             embed = new RPGEmbed(ctx, "Historia do");
-            embed.Embed.WithDescription(Banco.ConsultarRegions(usuario.Personagem.LocalAtualId).Descrição);
+            embed.Embed.WithDescription(ModuloBanco.RegiaoConsultar(usuario.Personagem.LocalAtualId).Descrição);
             await ctx.RespondAsync(embed: embed.Build());
         }
     }
