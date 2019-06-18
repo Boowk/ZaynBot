@@ -21,7 +21,7 @@ namespace ZaynBot.Core.Comandos
                     "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` " +
                     "`inimigos` `missao` `raca`\n" +
                     "**Informativos -** `info ranque nivel`\n\n" +
-                    "```csharp\n# Não inclua os colchetes do exemplo quando utilizar os comandos!```");
+                    "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
             }
             else
             {
