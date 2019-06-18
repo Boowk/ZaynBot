@@ -22,7 +22,6 @@ namespace ZaynBot
         public static IMongoCollection<RPGGuilda> GuildaColecao { get; private set; }
         public static IMongoCollection<RPGRaça> RacaColecao { get; private set; }
         public static IMongoCollection<RPGMissao> MissaoColecao { get; private set; }
-        public static IMongoCollection<CoreServidor> ServidorColecao { get; private set; }
 
         #endregion
 
@@ -35,7 +34,6 @@ namespace ZaynBot
             GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
             RacaColecao = Database.GetCollection<RPGRaça>("racas");
             MissaoColecao = Database.GetCollection<RPGMissao>("missoes");
-            ServidorColecao = Database.GetCollection<CoreServidor>("servidores");
         }
 
         #region CRUD Usuario
@@ -200,33 +198,6 @@ namespace ZaynBot
             if (missao != null)
                 return missao;
             return null;
-        }
-
-        #endregion
-        #region CRUD Servidor
-
-        public static void ServidorAlterar(CoreServidor servidor)
-        {
-            Expression<Func<CoreServidor, bool>> filtro = x => x.Id.Equals(servidor.Id);
-            ServidorColecao.ReplaceOne(filtro, servidor);
-        }
-
-        public static CoreServidor ServidorConsulta(ulong id)
-        {
-            Expression<Func<CoreServidor, bool>> filtro = x => x.Id.Equals(id);
-            CoreServidor server = ServidorColecao.Find(filtro).FirstOrDefault();
-            if (server == null)
-            {
-                server = new CoreServidor(id);
-                ServidorColecao.InsertOne(server);
-            }
-            return server;
-        }
-
-        public static async Task<CoreServidor> ServidorConsultaAsync(CommandContext ctx)
-        {
-            await ctx.TriggerTypingAsync();
-            return ServidorConsulta(ctx.Guild.Id);
         }
 
         #endregion
