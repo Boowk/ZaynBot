@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace ZaynBot
 {
-   public static class CancelamentoToken
+    public static class CancelamentoToken
     {
         public static ConcurrentDictionary<ulong, CancellationTokenSource> Token { get; private set; } = new ConcurrentDictionary<ulong, CancellationTokenSource>();
 
@@ -16,9 +16,11 @@ namespace ZaynBot
             Token.AddOrUpdate(ctx.User.Id, cts, (key, oldValue) => cts);
         }
 
-        public static void CancelarToken(CommandContext ctx)
+        public static void CancelarToken(CommandContext ctx) => CancelarToken(ctx.User.Id);
+
+        public static void CancelarToken(ulong id)
         {
-            Token.TryGetValue(ctx.User.Id, out CancellationTokenSource token);
+            Token.TryGetValue(id, out CancellationTokenSource token);
             if (token != null)
             {
                 token.Cancel();

@@ -48,19 +48,12 @@ namespace ZaynBot
         public static async Task<RPGUsuario> UsuarioConsultarPersonagemAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(ctx.User.Id);
-            RPGUsuario user = UsuarioColecao.Find(filtro).FirstOrDefault();
-            if (user == null)
-            {
-                user = new RPGUsuario(ctx.User.Id);
-                UsuarioColecao.InsertOne(user);
-            }
+            RPGUsuario user = UsuarioConsultar(ctx.User.Id);
             if (user.Personagem == null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa criar um personagem com o comando z!reencarnar");
                 return user;
             }
-            CancelamentoToken.CancelarToken(ctx);
             return user;
         }
 
@@ -82,6 +75,7 @@ namespace ZaynBot
         /// <returns></returns>
         public static RPGUsuario UsuarioConsultar(ulong id)
         {
+            CancelamentoToken.CancelarToken(id);
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(id);
             RPGUsuario user = UsuarioColecao.Find(filtro).FirstOrDefault();
             if (user == null)
