@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext.Exceptions;
+using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
@@ -79,6 +80,8 @@ namespace ZaynBot
             }
             if (e.Exception is InvalidOperationException || e.Exception is CommandNotFoundException)
             {
+                DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
+                await ctx.RespondAsync($"**{x} | {ctx.User.Mention}, o comando{e.Context.RawArgumentString} não existe.**");
                 ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
                 return;
             }
