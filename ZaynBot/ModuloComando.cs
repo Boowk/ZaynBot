@@ -80,8 +80,12 @@ namespace ZaynBot
             }
             if (e.Exception is InvalidOperationException || e.Exception is CommandNotFoundException)
             {
-                DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
-                await ctx.RespondAsync($"**{x} | {ctx.User.Mention}, o comando{e.Context.RawArgumentString} não existe.**");
+                if (e.Command != null)
+                    if (e.Command.Name == "ajuda")
+                    {
+                        DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
+                        await ctx.RespondAsync($"**{x} | {ctx.User.Mention}, o comando{e.Context.RawArgumentString} não existe.**");
+                    }
                 ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
                 return;
             }
