@@ -18,9 +18,9 @@ namespace ZaynBot.Core.Comandos
                 await ctx.RespondAsync("```css\nLista de comandos```\n" +
                     "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n" +
                     "**Core -** `ajuda` `convite`\n" +
-                    "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` " +
+                    "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` `personagem raca` " +
                     "`inimigos` `missao` `raca`\n" +
-                    "**Informativos -** `info ranque nivel`\n\n" +
+                    "**Informativos -** `info`\n\n" +
                     "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
             }
             else
