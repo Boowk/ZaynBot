@@ -30,9 +30,9 @@ namespace ZaynBot.RPG.Comandos
             [Cooldown(1, 10, CooldownBucketType.User)]
             public async Task ComandoGuildaInfo(CommandContext ctx, [Description("Nome"), RemainingText]string nome)
             {
-                RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
-                if (usuario.Personagem == null) return;
-                RPGPersonagem personagem = usuario.Personagem;
+                    RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
+                    if (usuario.Personagem == null) return;
+                    RPGPersonagem personagem = usuario.Personagem;
                 if (string.IsNullOrWhiteSpace(nome))
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention}, você quer falar com o que?");

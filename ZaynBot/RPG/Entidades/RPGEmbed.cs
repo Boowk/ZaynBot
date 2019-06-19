@@ -40,7 +40,7 @@ namespace ZaynBot.RPG.Entidades
 
         public void Titulo(string titulo)
         {
-            Embed.WithTitle($"⌈{titulo}⌋");
+            Embed.WithTitle("titulo".Titulo());
         }
     }
 }
