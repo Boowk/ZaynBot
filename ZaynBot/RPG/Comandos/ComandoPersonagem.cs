@@ -10,27 +10,12 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoPersonagem
     {
         [Command("personagem")]
-        public async Task ComandoPersonagemAb(CommandContext ctx, DiscordUser membro = null)
+        public async Task ComandoPersonagemAb(CommandContext ctx)
         {
             RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
-            if (membro == null)
-            {
-                await ctx.RespondAsync(embed: GerarPersonagem(ctx.Member, usuario).Build());
-                return;
-            }
-            if (membro.IsBot)
-            {
-                if (membro.Id != 459873132975620134)
-                {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, não gosto dos outros bots! Porquê você não pergunta sobre mim? :(");
-                    return;
-                }
-                await ctx.RespondAsync($"{ctx.User.Mention}, você só precisa saber que o meu poder é mais de 8 mil! :stuck_out_tongue_closed_eyes:");
-                return;
-            }
-            await ctx.RespondAsync("Atenção - Futuramente será necessario a habilidade inspecionar.", embed: GerarPersonagem(membro, ModuloBanco.UsuarioConsultar(membro.Id)).Build());
+            await ctx.RespondAsync(embed: GerarPersonagem(ctx.Member, usuario).Build());
         }
 
         private DiscordEmbedBuilder GerarPersonagem(DiscordUser membro, RPGUsuario usuario)
@@ -64,6 +49,5 @@ namespace ZaynBot.RPG.Comandos
             .AddField("⌈Empregos disponíveis⌋", $"Em contrução", true)
             .AddField("⌈Bêncãos⌋", $"Nenhuma", true);
         }
-
     }
 }
