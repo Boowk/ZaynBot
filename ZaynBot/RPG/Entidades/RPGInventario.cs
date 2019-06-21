@@ -20,7 +20,10 @@ namespace ZaynBot.RPG.Entidades
             /* Verifica se existi o item no inventario
              * se não existir, o adiciona.
              * se existir, o soma
+             * 
+             * Equipamentos deve funcionar quase que da mesma forma.
             */
+
             return true;
         }
 

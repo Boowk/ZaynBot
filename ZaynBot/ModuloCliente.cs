@@ -21,10 +21,16 @@ namespace ZaynBot
             Client.GuildAvailable += Client_GuildAvailable;
             Client.ClientErrored += Client_ClientError;
             Client.MessageCreated += Client_MessageCreated;
+            Client.GuildMemberAdded += Client_GuildMemberAdded;
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(1)
             });
+        }
+
+        private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
+        {
+            await EventoMensagemBoasVindas.EventoBemVindoAsync(e);
         }
 
         //private async Task DoWorkAsyncInfiniteLoop()
