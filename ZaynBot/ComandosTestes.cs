@@ -144,7 +144,16 @@ namespace ZaynBot
             //    Velocidade = 10,
             //}.SetRaça(Humano.HumanoAb());
 
-         //   await ctx.RespondAsync($"{mobTeste.Nome}, ataque {mobTeste.PontosDeVida}");
+            //   await ctx.RespondAsync($"{mobTeste.Nome}, ataque {mobTeste.PontosDeVida}");
+        }
+
+        [Command("testecargo")]
+        [Hidden]
+        [RequireOwner]
+        public async Task testecargo(CommandContext ctx)
+        {
+            var g = ctx.Guild.Channels;
+            var role = ctx.Guild.Roles.FirstOrDefault(x => x.Name == "Verificado");
         }
     }
 }

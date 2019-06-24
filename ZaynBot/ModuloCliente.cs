@@ -4,6 +4,8 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Exceptions;
 using DSharpPlus.Interactivity;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
 using ZaynBot.Core.Eventos;
@@ -22,10 +24,43 @@ namespace ZaynBot
             Client.ClientErrored += Client_ClientError;
             Client.MessageCreated += Client_MessageCreated;
             Client.GuildMemberAdded += Client_GuildMemberAdded;
+            Client.MessageReactionAdded += Client_MessageReactionAdded;
+            Client.MessageReactionRemoved += Client_MessageReactionRemoved;
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(1)
             });
+        }
+
+        private async Task Client_MessageReactionRemoved(MessageReactionRemoveEventArgs e)
+        {
+            if (e.Message.Id == 592809002463789057)
+            {
+                if (e.Emoji.GetDiscordName() == ":white_check_mark:")
+                {
+                    DiscordGuild guildaZayn = await Client.GetGuildAsync(420044060720627712);
+                    var verificado = guildaZayn.Roles.FirstOrDefault(x => x.Id == 592837208247894046);
+                    DiscordMember membro = await guildaZayn.GetMemberAsync(e.User.Id);
+                    await membro.RevokeRoleAsync(verificado);
+
+                }
+            }
+            await Task.CompletedTask;
+        }
+
+        private async Task Client_MessageReactionAdded(MessageReactionAddEventArgs e)
+        {
+            if (e.Message.Id == 592809002463789057)
+            {
+                if (e.Emoji.GetDiscordName() == ":white_check_mark:")
+                {
+                    DiscordGuild guildaZayn = await Client.GetGuildAsync(420044060720627712);
+                    var verificado = guildaZayn.Roles.FirstOrDefault(x => x.Id == 592837208247894046);
+                    DiscordMember membro = await guildaZayn.GetMemberAsync(e.User.Id);
+                    await membro.GrantRoleAsync(verificado);
+                }
+            }
+            await Task.CompletedTask;
         }
 
         private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
