@@ -11,18 +11,23 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoPerfil
     {
         [Command("perfil")]
-        public async Task ComandoPerfilAb(CommandContext ctx, DiscordMember membro = null)
+        [Description("Exibe o seu perfil. E permite visualizar os de outros usuarios.\n\n" +
+            "Uso: z!perfil {nome}\n\n" +
+            "Exemplo: z!perfil\n\n" +
+            "Exemplo: z!perfil @usuario\n\n" +
+            "Exemplo: z!perfil 87604980344721408")]
+        public async Task ComandoPerfilAb(CommandContext ctx, DiscordUser user = null)
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario usuario = ModuloBanco.UsuarioConsultar(ctx.User.Id);
-            if (membro == null)
+            if (user == null)
             {
                 await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, usuario).Build());
                 return;
             }
-            if (membro.IsBot)
+            if (user.IsBot)
             {
-                if (membro.Id != CoreBot.Id)
+                if (user.Id != CoreBot.Id)
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention}, não gosto dos outros bots! Porquê você não pergunta sobre mim? :(");
                     return;
@@ -31,11 +36,11 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario usuarioRequisitado = ModuloBanco.UsuarioConsultar(membro.Id);
-            await ctx.RespondAsync(embed: GerarPerfil(membro, usuarioRequisitado).Build());
+            RPGUsuario usuarioRequisitado = ModuloBanco.UsuarioConsultar(user.Id);
+            await ctx.RespondAsync(embed: GerarPerfil(user, usuarioRequisitado).Build());
         }
 
-        private DiscordEmbedBuilder GerarPerfil(DiscordMember membro, RPGUsuario usuario)
+        private DiscordEmbedBuilder GerarPerfil(DiscordUser membro, RPGUsuario usuario)
         {
             string guildaNome = "Nenhuma";
             //if (usuario.IdGuilda.ToString() != Banco.ObjectIDNulo)

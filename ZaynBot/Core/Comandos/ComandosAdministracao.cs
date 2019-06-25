@@ -12,7 +12,7 @@ using ZaynBot.RPG.Entidades;
 namespace ZaynBot.Core.Comandos
 {
     [Group("adm")]
-    [Description("Comandos administrativos.")]
+    [Description("Comandos administrativos. - Somente disponível após doação. Verificar no comando convite.")]
     public class ComandosAdministracao
     {
         [Command("botjogando")]

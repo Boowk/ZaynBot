@@ -15,27 +15,32 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoFalarCom
     {
         [Group("falar", CanInvokeWithoutSubcommand = true)]
-        [Description("Falar com <npc>")]
+        [Description("Permite falar com os npcs.\n\n" +
+            "Uso: z!falar com *[npc]*\n\n" +
+            "Exemplo: z!falar com *voz estranha*")]
         public class GrupoGuilda
         {
 
 
             public async Task ExecuteGroupAsync(CommandContext ctx)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, o uso correto é falar com <npc>.");
+                await ctx.RespondAsync($"{ctx.User.Mention}, uso correto é: z!falar com *[npc]*\n\n" +
+            "Exemplo: z!falar com *voz estranha*");
             }
 
             [Command("com")]
-            [Description("Conversa com algum npc")]
+            [Description("Permite falar com os npcs.\n\n" +
+            "Uso: z!falar com *[npc]*\n\n" +
+            "Exemplo: z!falar com *voz estranha*")]
             [Cooldown(1, 10, CooldownBucketType.User)]
-            public async Task ComandoGuildaInfo(CommandContext ctx, [Description("Nome"), RemainingText]string nome)
+            public async Task ComandoGuildaInfo(CommandContext ctx, [RemainingText]string nome)
             {
-                    RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
-                    if (usuario.Personagem == null) return;
-                    RPGPersonagem personagem = usuario.Personagem;
+                RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
+                if (usuario.Personagem == null) return;
+                RPGPersonagem personagem = usuario.Personagem;
                 if (string.IsNullOrWhiteSpace(nome))
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você quer falar com o que?");
+                    await ctx.RespondAsync($"{ctx.User.Mention}, você quer falar com quem?");
                     return;
                 }
 

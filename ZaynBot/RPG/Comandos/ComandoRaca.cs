@@ -13,13 +13,16 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoRaca
     {
         [Command("raca")]
+        [Description("Exibe uma breve descrição da raça.\n\n" +
+        "Uso: z!raca [nome]\n\n" +
+            "Exemplo: z!raca humano")]
         public async Task ComandoRacaAb(CommandContext ctx, [Description("Nome."), RemainingText]string nome)
         {
             await ctx.TriggerTypingAsync();
 
             if (string.IsNullOrWhiteSpace(nome))
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, qual raça?");
+                await ctx.RespondAsync($"{ctx.User.Mention}, qual o nome da raça?");
                 return;
             }
 

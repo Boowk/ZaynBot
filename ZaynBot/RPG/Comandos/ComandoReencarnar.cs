@@ -17,7 +17,8 @@ namespace ZaynBot.RPG.Comandos
         CancellationTokenSource _cts;
 
         [Command("reencarnar")]
-        [Description("Reencarnar criando um persoonagem novo.")]
+        [Description("Reencarnar nascendo um novo persoonagem.\n\n" +
+            "Uso: z!reencarnar")]
         [Cooldown(1, 120, CooldownBucketType.User)]
         public async Task Reencarnar(CommandContext ctx)
         {

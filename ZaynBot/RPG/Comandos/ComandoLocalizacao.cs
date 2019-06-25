@@ -12,7 +12,8 @@ namespace ZaynBot.RPG.Comandos
     {
         [Command("localizacao")]
         [Aliases("local")]
-        [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
+        [Description("Mostra a sua localização atual e possíveis regiões para explorar.\n\n" +
+            "Uso: z!local")]
         public async Task Localizacao(CommandContext ctx)
         {
             RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);

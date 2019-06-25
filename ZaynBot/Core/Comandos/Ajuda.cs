@@ -8,7 +8,9 @@ namespace ZaynBot.Core.Comandos
     {
         [Command("ajuda")]
         [Aliases("h", "?")]
-        [Description("Exibe os comandos, a descrição do comando, suas abreviações e argumentos.")]
+        [Description("Exibe os comandos, a descrição, suas abreviações e exemplos.\n\n" +
+            "Uso: z!ajuda [comando]\n\n" +
+            "Exemplo: z!ajuda ajuda")]
         public async Task HelpAsync(CommandContext ctx, [Description("Nome do comando")]params string[] comando)
         {
             await ctx.TriggerTypingAsync();

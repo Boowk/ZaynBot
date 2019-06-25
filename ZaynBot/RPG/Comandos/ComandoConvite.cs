@@ -10,7 +10,7 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoConvite
     {
         [Command("convite")]
-        [Description("Envia uma serie de link sobre o bot.")]
+        [Description("Envia uma serie de link. Servidor oficial, adicionar bot, votar, código fonte, wiki, criadores e ajudantes")]
         public async Task ComandoConviteAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

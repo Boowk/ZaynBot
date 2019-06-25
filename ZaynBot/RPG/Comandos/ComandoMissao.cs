@@ -12,7 +12,8 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoMissao
     {
         [Command("missao")]
-        [Description("Mostra a missão atual")]
+        [Description("Mostra a missão atual.\n\n" +
+            "Uso: z!missao")]
         public async Task ComandoMissaoAb(CommandContext ctx)
         {
             RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);

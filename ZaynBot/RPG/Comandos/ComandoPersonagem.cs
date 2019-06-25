@@ -8,7 +8,8 @@ using ZaynBot.RPG.Entidades;
 namespace ZaynBot.RPG.Comandos
 {
     [Group("personagem", CanInvokeWithoutSubcommand = true)]
-    [Description("Exibe os atributos do personagem.")]
+    [Description("Exibe os atributos do seu personagem.\n\n" +
+        "Exemplo: z!personagem")]
     [Aliases("p")]
     public class ComandoPersonagem
     {
