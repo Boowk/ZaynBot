@@ -21,7 +21,7 @@ namespace ZaynBot.Core
 
         public IHelpFormatter WithCommandName(string nome)
         {
-            _nome = nome;
+            _nome = nome.First().ToString().ToUpper() + nome.Substring(1);
             return this;
         }
 
