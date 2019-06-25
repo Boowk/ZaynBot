@@ -29,8 +29,8 @@ namespace ZaynBot.RPG.Comandos
                 .AddField("⌈Servidores⌋", $"{CoreBot.QuantidadeServidores}", true)
                 .AddField("⌈Jogadores⌋", $"{CoreBot.QuantidadeMembros}", true)
                 .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - CoreBot.TempoAtivo).Days} dias, {(DateTime.Now - CoreBot.TempoAtivo).Hours} horas e {(DateTime.Now - CoreBot.TempoAtivo).Minutes} minutos.**", true)
-                .AddField("⌈Criador⌋", criador.Mention, true)
-                .AddField("⌈Testador Beta⌋", $"{imain.Mention}, {ink.Mention}, {yuki.Mention}", true);
+                .AddField("⌈Criador⌋", $"{criador.Username}#{criador.Discriminator}", true)
+                .AddField("⌈Testador Beta⌋", $"{imain.Username}#{imain.Discriminator}, {ink.Username}#{ink.Discriminator}, {yuki.Username}#{yuki.Discriminator}", true);
 
             await ctx.RespondAsync(embed: embed.Build());
         }
