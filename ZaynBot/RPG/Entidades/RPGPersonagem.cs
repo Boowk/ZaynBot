@@ -40,11 +40,11 @@ namespace ZaynBot.RPG.Entidades
 
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
-        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public List<int> MissoesConcluidasId { get; set; } = new List<int>();
         public RPGMissao MissaoEmAndamento { get; set; }
 
         public RPGEquipamento Equipamento { get; set; } = new RPGEquipamento();
+        public RPGInventario Inventario { get; set; }
         public RPGHabilidade Habilidade { get; set; } = new RPGHabilidade();
         public RPGTitulo Titulo { get; set; } = new RPGTitulo();
         public RPGEmprego Emprego { get; set; }
@@ -56,6 +56,7 @@ namespace ZaynBot.RPG.Entidades
 
         public RPGPersonagem(RPGRaça raca)
         {
+            Inventario = new RPGInventario(raca);
             Raca = raca;
             Sortear sortear = new Sortear();
             int sorte = sortear.Valor(Raca.Sorte, Raca.Sorte);

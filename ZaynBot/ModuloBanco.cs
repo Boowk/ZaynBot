@@ -204,21 +204,13 @@ namespace ZaynBot
 
         public static async Task AtualizarBancoAllAsync()
         {
-            //List<int> racasdisponiveis = new List<int>
-            //{
-            //    0,
-            //    1,
-            //    2,
-            //    3,
-            //};
-
             //await UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty)
             //    .ForEachAsync(x =>
             //    {
             //        Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
             //        if (x.Personagem != null)
             //        {
-            //            x.RacasDisponiveisId = racasdisponiveis;
+            //            x.Personagem = null;
             //            UsuarioColecao.ReplaceOne(filtro, x);
             //        }
             //    }).ConfigureAwait(false);
