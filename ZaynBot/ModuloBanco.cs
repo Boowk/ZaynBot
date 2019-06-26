@@ -201,19 +201,5 @@ namespace ZaynBot
         }
 
         #endregion
-
-        public static async Task AtualizarBancoAllAsync()
-        {
-            //await UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty)
-            //    .ForEachAsync(x =>
-            //    {
-            //        Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
-            //        if (x.Personagem != null)
-            //        {
-            //            x.Personagem = null;
-            //            UsuarioColecao.ReplaceOne(filtro, x);
-            //        }
-            //    }).ConfigureAwait(false);
-        }
     }
 }

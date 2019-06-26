@@ -3,6 +3,7 @@ using DiscordBotsList.Api.Objects;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using MongoDB.Driver;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -24,7 +25,6 @@ namespace ZaynBot.Core.Comandos
             AuthDiscordBotListApi DblApi = new AuthDiscordBotListApi(CoreBot.Id, CoreBot.DiscordBotsApiKey);
             IDblSelfBot me = await DblApi.GetMeAsync();
             await me.UpdateStatsAsync(CoreBot.QuantidadeServidores);
-
             await ModuloCliente.Client.UpdateStatusAsync(new DiscordGame(texto));
             await ctx.RespondAsync("Status jogando alterado com sucesso para " + CoreBot.QuantidadeServidores + " servidores!");
         }
@@ -59,6 +59,27 @@ namespace ZaynBot.Core.Comandos
             Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(member.Id);
             ModuloBanco.UsuarioColecao.DeleteOne(filtro);
             await ctx.RespondAsync("Membro resetado.");
+        }
+
+        [Command("remake")]
+        [RequireOwner]
+        [Hidden]
+        public async Task Remake(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            int quantidade = 0;
+            await ModuloBanco.UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty)
+                .ForEachAsync(x =>
+                {
+                    Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
+                    if (x.Personagem != null)
+                    {
+                        x.Personagem = null;
+                        quantidade++;
+                        ModuloBanco.UsuarioColecao.ReplaceOne(filtro, x);
+                    }
+                }).ConfigureAwait(false);
+            await ctx.RespondAsync($"{quantidade} refeitos.");
         }
     }
 }

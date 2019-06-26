@@ -73,8 +73,6 @@ namespace ZaynBot
             Console.WriteLine("Raças concluido.");
             new Missoes();
             Console.WriteLine("Missões concluido.");
-            await ModuloBanco.AtualizarBancoAllAsync();
-            Console.WriteLine("Usuarios atualizados\nConectando...");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }
