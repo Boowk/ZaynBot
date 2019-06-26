@@ -9,11 +9,11 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    [Group("inventario", CanInvokeWithoutSubcommand = true)]
-    [Description("Exibe inventário do seu personagem e a capacidade. \n\n" +
-"Uso: z!inventario [página]\n\n" +
-        "Exemplo: z!inventario 2")]
-    [Aliases("inv")]
+    [Group("mochila", CanInvokeWithoutSubcommand = true)]
+    [Description("Exibe o que tem dentro da mochila do seu personagem e a capacidade.\n\n" +
+"Uso: z!mochila [página]\n\n" +
+        "Exemplo: z!mochila 2")]
+    [Aliases("m")]
     public class ComandoInventario
     {
         public async Task ExecuteGroupAsync(CommandContext ctx, int pagina = 0)
@@ -22,7 +22,16 @@ namespace ZaynBot.RPG.Comandos
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
             RPGEmbed embed = new RPGEmbed(ctx, "Inventário do");
-            embed.Embed.WithTitle($"Peso {personagem.Inventario.PesoAtual}/{personagem.Inventario.PesoMaximo}");
+            DiscordEmoji mochila = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 590908712324038659);
+            embed.Embed.WithTitle($"{mochila} {personagem.Inventario.PesoAtual}/{personagem.Inventario.PesoMaximo}");
+            if (personagem.Inventario.PesoAtual == 0)
+            {
+                embed.Embed.WithDescription("Nem um farelo dentro.");
+            }
+            else
+            {
+
+            }
             embed.Embed.WithColor(DiscordColor.Purple);
             embed.Embed.WithFooter($"Página {pagina}");
             await ctx.RespondAsync(embed: embed.Build());
