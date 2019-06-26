@@ -28,7 +28,6 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa morrer antes de tentar reencarnar novamente!");
                 return;
             }
-
             await ctx.RespondAsync($"{ctx.User.Mention}, bem-vindo ao Dragons & Zayn's RPG! Prepare-se para uma grande aventura. Mas antes, primeiro, você precisa escolher a sua raça " +
                 "que será parte do seu personagem até a sua próxima jornada. Se você não tiver muitas raças para escolher, " +
                 "não desanime, você ira desbloquear mais enquanto avança.");
@@ -81,7 +80,6 @@ namespace ZaynBot.RPG.Comandos
             _cts.Cancel();
             if (reacao == null)
                 return;
-
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
             ModuloBanco.UsuarioAlterar(usuario);
             await ctx.RespondAsync($"Raça escolhida: {racaEscolhida.Nome}");

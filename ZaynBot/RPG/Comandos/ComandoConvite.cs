@@ -28,10 +28,11 @@ namespace ZaynBot.RPG.Comandos
             embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg")
                 .AddField("⌈Servidores⌋", $"{CoreBot.QuantidadeServidores}", true)
                 .AddField("⌈Jogadores⌋", $"{CoreBot.QuantidadeMembros}", true)
-                .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - CoreBot.TempoAtivo).Days} dias, {(DateTime.Now - CoreBot.TempoAtivo).Hours} horas e {(DateTime.Now - CoreBot.TempoAtivo).Minutes} minutos.**", true)
+                .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - CoreBot.TempoAtivo).Days} dias, " +
+                $"{(DateTime.Now - CoreBot.TempoAtivo).Hours} horas e {(DateTime.Now - CoreBot.TempoAtivo).Minutes} minutos.**", true)
                 .AddField("⌈Criador⌋", $"{criador.Username}#{criador.Discriminator}", true)
-                .AddField("⌈Testador Beta⌋", $"{imain.Username}#{imain.Discriminator}, {ink.Username}#{ink.Discriminator}, {yuki.Username}#{yuki.Discriminator}", true);
-
+                .AddField("⌈Testador Beta⌋", $"{imain.Username}#{imain.Discriminator}, {ink.Username}#{ink.Discriminator}, " +
+                $"{yuki.Username}#{yuki.Discriminator}", true);
             await ctx.RespondAsync(embed: embed.Build());
         }
     }

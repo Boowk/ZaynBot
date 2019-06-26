@@ -19,13 +19,11 @@ namespace ZaynBot.RPG.Comandos
             RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
-
             if (personagem.MissaoEmAndamento == null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não tem nenhuma missão ativa!");
                 return;
             }
-
             RPGEmbed embed = new RPGEmbed(ctx, "Missão do");
             embed.Titulo(personagem.MissaoEmAndamento.Nome);
             embed.Embed.WithDescription(personagem.MissaoEmAndamento.Descricao);

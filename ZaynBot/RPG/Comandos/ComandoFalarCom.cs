@@ -20,8 +20,6 @@ namespace ZaynBot.RPG.Comandos
             "Exemplo: z!falar com *voz estranha*")]
         public class GrupoGuilda
         {
-
-
             public async Task ExecuteGroupAsync(CommandContext ctx)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, uso correto é: z!falar com *[npc]*\n\n" +
@@ -43,7 +41,6 @@ namespace ZaynBot.RPG.Comandos
                     await ctx.RespondAsync($"{ctx.User.Mention}, você quer falar com quem?");
                     return;
                 }
-
                 string nomeMinusculo = nome.ToLower();
                 RPGRegião localAtual = ModuloBanco.RegiaoConsultar(personagem.LocalAtualId);
                 RPGNpc npc = localAtual.Npcs.Find(x => x.Nome.ToLower() == nomeMinusculo);
@@ -54,7 +51,6 @@ namespace ZaynBot.RPG.Comandos
                 }
                 CancellationTokenSource cts = new CancellationTokenSource();
                 CancelamentoToken.AdicionarOuAtualizar(ctx, cts);
-
                 RPGEmbed embed = new RPGEmbed(ctx, "Conversa do", npc);
                 embed.Titulo(npc.Nome);
                 embed.Embed.WithFooter("Clique no emoji para escolhar um diálogo.");
@@ -209,7 +205,6 @@ namespace ZaynBot.RPG.Comandos
                 cts.Cancel();
                 if (reacao == null)
                     return;
-
                 if (usuario.Personagem.MissaoEmAndamento == null)
                 {
                     RPGEmbed embed = new RPGEmbed(ctx, "Diálogo do", npc);
@@ -229,7 +224,6 @@ namespace ZaynBot.RPG.Comandos
                 {
                     RPGEmbed embed = new RPGEmbed(ctx, "Diálogo do", npc);
                     embed.DescricaoFala(npc, perguntaEscolhida.Resposta);
-
                     await ctx.RespondAsync(embed: embed.Build());
                     await EnviarMissao(perguntaEscolhida, usuario, ctx);
                 }
@@ -257,7 +251,6 @@ namespace ZaynBot.RPG.Comandos
                         .ContinueWith(x => GetReacaoMissao(missao, x.Result, usuario, ctx, cts), cts.Token);
                     opcoes[1] = interacao.WaitForMessageReactionAsync(emojiFunSim, mensagem, ctx.User, TimeSpan.FromSeconds(60))
                         .ContinueWith(x => GetReacaoMissao(missao, x.Result, usuario, ctx, cts), cts.Token);
-
                     try
                     {
                         await mensagem.CreateReactionAsync(emojiSim);
@@ -272,7 +265,6 @@ namespace ZaynBot.RPG.Comandos
                     await Task.WhenAny(opcoes);
                 }
             }
-
 
             public async Task GetReacaoMissao(RPGMissao missao, ReactionContext reacao, RPGUsuario usuario, CommandContext ctx, CancellationTokenSource cts)
             {

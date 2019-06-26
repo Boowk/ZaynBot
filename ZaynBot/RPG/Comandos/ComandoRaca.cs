@@ -19,13 +19,11 @@ namespace ZaynBot.RPG.Comandos
         public async Task ComandoRacaAb(CommandContext ctx, [Description("Nome."), RemainingText]string nome)
         {
             await ctx.TriggerTypingAsync();
-
             if (string.IsNullOrWhiteSpace(nome))
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, qual o nome da raça?");
                 return;
             }
-
             string nomeMinusculo = nome.ToLower();
             RPGRaça raca = ModuloBanco.RacaConsultar(nomeMinusculo);
             if (raca != null)

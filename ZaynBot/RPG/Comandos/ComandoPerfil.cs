@@ -35,7 +35,6 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, sou uma garotinha legal! e gosto bastante de você! Mesmo me abusando bastante com esses comandos.... estranhos...");
                 return;
             }
-
             RPGUsuario usuarioRequisitado = ModuloBanco.UsuarioConsultar(user.Id);
             await ctx.RespondAsync(embed: GerarPerfil(user, usuarioRequisitado).Build());
         }
@@ -47,7 +46,6 @@ namespace ZaynBot.RPG.Comandos
             //{
             //    guildaNome = Banco.ConsultarGuilda(usuario.IdGuilda).Nome;
             //}
-
             return new DiscordEmbedBuilder()
             {
                 Author = new DiscordEmbedBuilder.EmbedAuthor()

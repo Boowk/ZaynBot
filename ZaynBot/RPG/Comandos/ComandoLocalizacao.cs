@@ -20,7 +20,6 @@ namespace ZaynBot.RPG.Comandos
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
             RPGRegião localAtual = ModuloBanco.RegiaoConsultar(personagem.LocalAtualId);
-
             RPGEmbed embed = new RPGEmbed(ctx, "Localização do");
             embed.Embed.WithTitle(localAtual.Nome);
             embed.Embed.WithDescription(localAtual.Descrição);
