@@ -222,7 +222,7 @@ namespace ZaynBot.RPG.Comandos
                 if (perguntaEscolhida.MissaoId == usuario.Personagem.MissaoEmAndamento.Id)
                 {
                     RPGEmbed embed = new RPGEmbed(ctx, "Missão do");
-                    embed.DescricaoFala(npc, usuario.Personagem.MissaoEmAndamento.Descricao);
+                    embed.Embed.WithDescription(usuario.Personagem.MissaoEmAndamento.Descricao);
                     await ctx.RespondAsync(embed: embed.Build());
                 }
                 else

@@ -10,26 +10,22 @@ using ZaynBot.RPG.Entidades;
 namespace ZaynBot.RPG.Comandos
 {
     [Group("inventario", CanInvokeWithoutSubcommand = true)]
-    [Description("Exibe inventário do seu personagem. E executa outros comandos relacionados.\n\n" +
-"Exemplo: z!inventario")]
+    [Description("Exibe inventário do seu personagem e a capacidade. \n\n" +
+"Uso: z!inventario [página]\n\n" +
+        "Exemplo: z!inventario 2")]
     [Aliases("inv")]
-    public class ComandosInventario
+    public class ComandoInventario
     {
-        public async Task ExecuteGroupAsync(CommandContext ctx)
+        public async Task ExecuteGroupAsync(CommandContext ctx, int pagina = 0)
         {
             RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
             RPGEmbed embed = new RPGEmbed(ctx, "Inventário do");
-            //embed.Titulo(npc.Nome);
+            embed.Embed.WithTitle($"Peso {personagem.Inventario.PesoAtual}/{personagem.Inventario.PesoMaximo}");
             embed.Embed.WithColor(DiscordColor.Purple);
+            embed.Embed.WithFooter($"Página {pagina}");
             await ctx.RespondAsync(embed: embed.Build());
         }
-
-        //[Command("raca")]
-        //[Aliases("r")]
-        //public async Task ComandoPersonagemRaca(CommandContext ctx)
-        //{
-        //}
     }
 }
