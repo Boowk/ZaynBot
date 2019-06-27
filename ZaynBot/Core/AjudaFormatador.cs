@@ -13,7 +13,6 @@ namespace ZaynBot.Core
     public class AjudaFormatador : IHelpFormatter
     {
         private DiscordEmbedBuilder EmbedBuilder;
-
         private string _nome = null;
         private string _descricao = null;
         private string _abreviacoes = null;

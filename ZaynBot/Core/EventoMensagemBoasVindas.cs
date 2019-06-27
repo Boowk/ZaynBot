@@ -23,7 +23,6 @@ namespace ZaynBot.Core.Eventos
                 embed.WithDescription($"Para estar ganhando acesso ao restante do servidor, pedimos que leia todas as regras clicando [aqui](https://discordapp.com/channels/420044060720627712/592802494577508440/592805078126034946) ou indo no {g.Mention}");
                 embed.WithColor(DiscordColor.Green);
                 DiscordMessage m = await f.SendMessageAsync($"Seja bem-vindo ao Mundo da Zayn! {e.Member.Mention}!!", embed: embed.Build());
-
                 await Task.Delay(TimeSpan.FromSeconds(60));
                 await m.DeleteAsync();
             }

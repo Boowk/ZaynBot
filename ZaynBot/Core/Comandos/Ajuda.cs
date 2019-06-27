@@ -14,14 +14,13 @@ namespace ZaynBot.Core.Comandos
         public async Task HelpAsync(CommandContext ctx, [Description("Nome do comando")]params string[] comando)
         {
             await ctx.TriggerTypingAsync();
-
             if (comando.IsNullOrEmpty())
             {
                 await ctx.RespondAsync("```css\nLista de comandos```\n" +
                     "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n" +
                     "**Core -** `ajuda` `convite`\n" +
                     "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` `personagem raca` " +
-                    "`inimigos` `missao` `raca`\n" +
+                    "`inimigos` `missao` `raca` `mochila`\n" +
                     "**Informativos -** `info`\n\n" +
                     "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
             }

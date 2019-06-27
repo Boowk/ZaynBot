@@ -12,9 +12,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
             RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
             if (usuario.Personagem == null) return;
             RPGPersonagem personagem = usuario.Personagem;
-
             RPGRegião localAtual = ModuloBanco.RegiaoConsultar(usuario.Personagem.LocalAtualId);
-
             foreach (var item in localAtual.SaidasRegioes)
             {
                 if (item.Direcao == enumDirecao)
@@ -35,11 +33,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
                         }
                     }
                     else if (item.TravadoSemItemInventario == true)
-                    {
                         podeIr = false;
-
-                    }
-
                     if (podeIr == true)
                     {
                         usuario.Personagem.LocalAtualId = item.RegiaoId;
