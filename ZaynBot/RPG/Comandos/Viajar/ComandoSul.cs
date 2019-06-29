@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
             "Uso: z!sul")]
         public async Task Sul(CommandContext ctx)
         {
-            new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Sul, "sul");
+            await new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Sul, "sul");
             await Task.CompletedTask;
         }
     }

@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
             "Uso: z!norte")]
         public async Task Norte(CommandContext ctx)
         {
-            new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Norte, "norte");
+            await new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Norte, "norte");
             await Task.CompletedTask;
         }
     }
