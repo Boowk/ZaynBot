@@ -4,94 +4,17 @@
   <a href="https://discordbots.org/bot/459873132975620134" >
   <img src="https://discordbots.org/api/widget/status/459873132975620134.svg" alt="ZaynRPG" />
 </a></p>
-Olá, eu me chamo Zayn e sou apenas um simples bot brasileiro para o Discord com várias funções jamais vistas!
+Olá, eu me chamo Zayn e sou apenas um simples bot brasileiro para o Discord com várias funções de RPG e algumas administrativas!
 
-Eu tenho várias funções para entretenimento (como comandos engraçados e memes), funções sociais (sistema de perfil com XP e reputação ainda em desenvolvimento) e como foco principal ser o melhor bot brasileiro de RPG do discord!
+Eu tenho várias funções para entretenimento, funções sociais (sistema de perfil com XP e reputação ainda em desenvolvimento) e como foco principal ser um bot brasileiro de RPG do discord!
 
 Um dos motivos que me fizeram me tornar o que eu sou hoje é a falta de bots brasileiros para o Discord, já que muitos servidores brasileiros no Discord usam bots "de baixa qualidade" em português ou usam bots que falam (na verdade escrevem) em inglês... e convenhamos, nenhuma dessas opções parece agradável para os usuários... e por isto que eu prometo mudar isto!
 
-## Planos
-* [ ] O básico
-  * [x] Cooldown - Tempo de espera para usar comandos
-  * [x] Comandos encurtados
-  * [x] Comando de ajuda (básico)
-    * [ ] Personalizado
-  * [ ] Enviar mensagem
-    * [ ] Embed (Não está todos assim)
-    * ~~[x] Privado~~ (acho que isso transforma o bot chato)
-    * [ ] Formato normal (Personalizado)
-    * [ ] Formato imagem (Personalizado)
-* [ ] Administração
-  * [ ] Kick direto
-  * [ ] Ban direto
-  * [ ] Aviso a membro
-    * [ ] Dar aviso
-    * [ ] Spam
-    * [ ] Link de Convite
-  * [ ] Advertencia a membro
-    * [ ] Dar advertencia 
-    * [ ] Spam
-    * [ ] Link de Convite
-  * [ ] Ganha x Advertencia após x Avisos
-  * [ ] Ganha mute após x Advertencia
-  * [ ] Ganha kick após x Advertencia
-  * [ ] Ganha ban após x Advertencia
-  * [ ] Ganha cargo após x Advertencia
-  * [ ] Apagar x mensagens
-    * [ ] De usuario
-    * [ ] Do canal
-  * [ ] Enviar mensagem em canal especifico
-  * [ ] Canal de logs de advertencia, avisos, ban, kick
-* [ ] RPG
-  * [x] Nível de participação (Mensagens no chat, influencia no rpg)
-    * [ ] De Servidor
-    * [x] De RPG
-  * [ ] Trabalhos
-    * [ ] Nomes? (Plebeu, Mago, Arqueiro, etc?) - Tem alguns
-    * [ ] Passivas
-    * [ ] Habilidades
-    * [ ] Atributos
-    * [ ] XP
-  * [ ] Perfil (Mostra o perfil)
-    * [ ] Proezas
-    * [x] Nivel no RPG 
-    * [ ] Nivel no Servidor
-    * [x] Guilda
-    * [x] Foto do discord
-  * [ ] Personagem (Mostra o personagem)
-    * [x] Atributos
-    * ~~[ ] Nome~~ (Realmente é necessario?)
-    * [ ] Habilidades
-    * [ ] Empregos disponíveis
-    * [x] Emprego atual
-    * [ ] TItulos adquiridos
-    * [x] Titulo em uso
-    * [ ] Equipamentos
-    * [ ] Inventario (Ou outro comando)
-    * [ ] Peso atual e max
-  * [ ] Rank
-    * [x] Nivel de RPG
-    * [ ] Nivel de servidor
-    * [ ] De riqueza
-  * [ ] Jogador vs Jogador
-    * [ ] Como funcionara?
-  * [ ] Jogador vs Mobs
-    * [ ] Como funcionara?
-  * [ ] Dialogos
-    * [ ] Como funcionara?
-  * [ ] Escravos
-    * [ ] Como funcionara?
-  * [ ] Pets
-    * [ ] Como funcionara?
-  * [ ] Labirintos
-    * [ ] Como funcionara?
-  * [ ] Eventos (Mais para frente)
-
 ## 🤔 Como adiciono ela ao meu servidor?
 
-Se você quiser usar a Zaynrina no seu servidor, você pode adicionar ela clicando [aqui](https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=469887175&scope=bot).
+Se você quiser usar a Zayn no seu servidor, você pode adicionar ela clicando [aqui](https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=469887175&scope=bot).
 
-Enquanto é possível fazer "self hosting" (hospedar você mesmo) ela, eu não irei dar suporte para quem quiser fazer isto para evitar pessoas criando "clones" e levando todo o crédito por terem criado o bot, eu dou suporte se você quer fazer "self hosting" para ajudar e contribuir para ela.
+Enquanto é possível fazer "self hosting" (hospedar você mesmo) ela, eu não irei dar suporte para quem quiser fazer isto para evitar pessoas criando "clones" e levando todo o crédito por terem criado um bot, eu dou suporte se você quer fazer "self hosting" para ajudar e contribuir testando comandos novos.
 
 ## 💁 Suporte
 
@@ -100,7 +23,7 @@ Você pode obter suporte sobre a Zaynrina [clicando aqui](https://discord.gg/GGR
 ## 🙋 Como ajudar?
 
 Basta fazer um clone nesse repositorio.
-Ter instalado MongoDB e o Visual Studio 2018 para cima com .Net Core instalado.
+Ter instalado MongoDB e o Visual Studio 2016 para cima com .Net Core 1.0 instalado.
 Crie um comando, melhore algo, corrija algo. E faça um pull request.
 Você também pode abrir issues.
 
@@ -157,11 +80,11 @@ A Zaynrina utiliza várias [dependências no código-fonte dela](https://github.
 
 ## 💫 Agradecimentos especiais para...
 
-Imain#5986 do Discord por ter me dado motivação para continuar com o Bot.
+Imain#5986 do Discord por ser o mais viciado, que acaba encontrando bugs.
 
-Fusion_#1609 do Discord por ter colocado o bot no Server dele, onde encontrei mais pessoas que queria a continuação.
+Fusion_#1609 do Discord por ter colocado o bot no Servidor dele, onde encontrei pessoas legais que querem a continuação do rpg.
 
-𝓚α𝓇η#6775 do Discord por ter ajudado nas ideias do RPG
+𝓚α𝓇η#6775 do Discord por ter ajudado nas ideias do RPG.
 
 ## 📄 Licença
 
