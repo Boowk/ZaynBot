@@ -30,7 +30,7 @@ namespace ZaynBot.RPG.Comandos
             localAtual.Itens.TryGetValue(nome.ToLower(), out RPGItem item);
             if (item == null)
             {
-                await ctx.RespondAsync($"Utilize z!local, se encontrar algum *item* tente, usar esse comando, {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Utilize z!local, se encontrar algum *item*, tente usar este comando, {ctx.User.Mention}.");
                 return;
             }
 

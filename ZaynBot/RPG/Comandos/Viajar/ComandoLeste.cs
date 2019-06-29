@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
             "Uso: z!leste")]
         public async Task Leste(CommandContext ctx)
         {
-            new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Leste, "leste");
+            await new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Leste, "leste");
             await Task.CompletedTask;
         }
     }

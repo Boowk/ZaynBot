@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Entidades.Mapa;
@@ -8,7 +9,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
 {
     public class Viajar
     {
-        public async void ViajarAbAsync(CommandContext ctx, EnumDirecoes enumDirecao, string direcao)
+        public async Task ViajarAbAsync(CommandContext ctx, EnumDirecoes enumDirecao, string direcao)
         {
             RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
