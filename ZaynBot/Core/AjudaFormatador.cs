@@ -52,7 +52,6 @@ namespace ZaynBot.Core
         public CommandHelpMessage Build()
         {
             EmbedBuilder = new DiscordEmbedBuilder();
-            EmbedBuilder.WithTimestamp(DateTime.Now);
             EmbedBuilder.WithColor(DiscordColor.Cyan);
             EmbedBuilder.WithTitle($"**{_nome}**");
             _descricao = string.IsNullOrEmpty(_descricao) ? "Sem descrição" : _descricao;

@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("localizacao")]
         [Aliases("local")]
         [Description("Mostra a sua localização atual e possíveis regiões para explorar.\n\n" +
-            "Uso: z!local")]
+            "Uso: z!localizacao")]
         public async Task Localizacao(CommandContext ctx)
         {
             RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);

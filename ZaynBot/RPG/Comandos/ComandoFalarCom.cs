@@ -37,7 +37,7 @@ namespace ZaynBot.RPG.Comandos
                 RPGPersonagem personagem = usuario.Personagem;
                 if (string.IsNullOrWhiteSpace(nome))
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você quer falar com quem?");
+                    await ctx.RespondAsync($"{ctx.User.Mention}, qual o nome do seu amigo imaginário?");
                     return;
                 }
                 string nomeMinusculo = nome.ToLower();
@@ -45,7 +45,7 @@ namespace ZaynBot.RPG.Comandos
                 RPGNpc npc = localAtual.Npcs.Find(x => x.Nome.ToLower() == nomeMinusculo);
                 if (npc == null)
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention} , {nome} não foi encontrado.");
+                    await ctx.RespondAsync($"{ctx.User.Mention} , você fala, mas ninguém responde.");
                     return;
                 }
                 if (npc.FalarComSomenteSemMissaoConcluida)
@@ -53,7 +53,7 @@ namespace ZaynBot.RPG.Comandos
                     {
                         if (item == npc.FalarComSomenteSemMissaoConcluidaId)
                         {
-                            await ctx.RespondAsync($"{ctx.User.Mention} , {nome} não foi encontrado.");
+                            await ctx.RespondAsync($"{ctx.User.Mention} , você fala, mas ninguém responde.");
                             return;
                         }
                     }

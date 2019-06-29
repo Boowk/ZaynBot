@@ -12,9 +12,9 @@ namespace ZaynBot.RPG.Comandos
     {
         [Command("perfil")]
         [Description("Exibe o seu perfil. E permite visualizar os de outros usuarios.\n\n" +
-            "Uso: z!perfil {nome}\n\n" +
-            "Exemplo: z!perfil\n\n" +
-            "Exemplo: z!perfil @usuario\n\n" +
+            "Uso: z!perfil [nome]\n" +
+            "Exemplo: z!perfil\n" +
+            "Exemplo: z!perfil @usuario\n" +
             "Exemplo: z!perfil 87604980344721408")]
         public async Task ComandoPerfilAb(CommandContext ctx, DiscordUser user = null)
         {

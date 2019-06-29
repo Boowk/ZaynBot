@@ -10,7 +10,7 @@ namespace ZaynBot.RPG.Comandos
 {
     [Group("personagem", CanInvokeWithoutSubcommand = true)]
     [Description("Exibe os atributos do seu personagem.\n\n" +
-        "Exemplo: z!personagem")]
+        "Uso: z!personagem")]
     [Aliases("p")]
     public class ComandosPersonagem
     {
@@ -49,7 +49,7 @@ namespace ZaynBot.RPG.Comandos
 
         [Command("raca")]
         [Aliases("r")]
-        [Description("Exibe os atributos da raça seu personagem.\n\n" +
+        [Description("Exibe os atributos da raça do seu personagem.\n\n" +
         "Uso: z!personagem raca")]
         public async Task ComandoPersonagemRaca(CommandContext ctx)
         {

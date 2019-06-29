@@ -9,7 +9,8 @@ namespace ZaynBot.RPG.Comandos.Viajar
     {
         [Command("sul")]
         [Aliases("s")]
-        [Description("Explora a área ao Sul.")]
+        [Description("Explora a área ao Sul.\n\n" +
+            "Uso: z!sul")]
         public async Task Sul(CommandContext ctx)
         {
             new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Sul, "sul");

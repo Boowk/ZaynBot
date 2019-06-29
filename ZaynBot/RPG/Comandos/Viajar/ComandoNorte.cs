@@ -9,7 +9,8 @@ namespace ZaynBot.RPG.Comandos.Viajar
     {
         [Command("norte")]
         [Aliases("n")]
-        [Description("Explora a área ao Norte.")]
+        [Description("Explora a área ao Norte.\n\n" +
+            "Uso: z!norte")]
         public async Task Norte(CommandContext ctx)
         {
             new Viajar().ViajarAbAsync(ctx, EnumDirecoes.Norte, "norte");
