@@ -50,7 +50,7 @@ namespace ZaynBot
 
         private async Task Client_MessageReactionAdded(MessageReactionAddEventArgs e)
         {
-            if (e.Message.Id == 592809002463789057)
+            if (e.Message.Id == 594667356622684191)
             {
                 if (e.Emoji.GetDiscordName() == ":white_check_mark:")
                 {
