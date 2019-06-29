@@ -18,22 +18,21 @@ namespace ZaynBot.RPG.Comandos
     {
         public async Task ExecuteGroupAsync(CommandContext ctx, int pagina = 0)
         {
-            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
-            if (usuario.Personagem == null) return;
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
-            RPGEmbed embed = new RPGEmbed(ctx, "Inventário do");
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Inventário", ctx);
             DiscordEmoji mochila = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 590908712324038659);
-            embed.Embed.WithTitle($"{mochila} {personagem.Inventario.PesoAtual}/{personagem.Inventario.PesoMaximo}");
+            embed.WithTitle($"{mochila} {personagem.Inventario.PesoAtual}/{personagem.Inventario.PesoMaximo}");
             if (personagem.Inventario.PesoAtual == 0)
             {
-                embed.Embed.WithDescription("Nem um farelo dentro.");
+                embed.WithDescription("Nem um farelo dentro.");
             }
             else
             {
 
             }
-            embed.Embed.WithColor(DiscordColor.Purple);
-            embed.Embed.WithFooter($"Página {pagina}");
+            embed.WithColor(DiscordColor.Purple);
+            embed.WithFooter($"Página {pagina}");
             await ctx.RespondAsync(embed: embed.Build());
         }
     }

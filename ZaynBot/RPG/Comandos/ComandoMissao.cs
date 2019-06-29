@@ -16,18 +16,17 @@ namespace ZaynBot.RPG.Comandos
             "Uso: z!missao")]
         public async Task ComandoMissaoAb(CommandContext ctx)
         {
-            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
-            if (usuario.Personagem == null) return;
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
             if (personagem.MissaoEmAndamento == null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não tem nenhuma missão ativa!");
                 return;
             }
-            RPGEmbed embed = new RPGEmbed(ctx, "Missão do");
-            embed.Titulo(personagem.MissaoEmAndamento.Nome);
-            embed.Embed.WithDescription(personagem.MissaoEmAndamento.Descricao);
-            embed.Embed.WithColor(DiscordColor.HotPink);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Missão", ctx);
+            embed.WithTitle(personagem.MissaoEmAndamento.Nome.Titulo());
+            embed.WithDescription(personagem.MissaoEmAndamento.Descricao);
+            embed.WithColor(DiscordColor.HotPink);
             await ctx.RespondAsync(embed: embed.Build());
         }
     }

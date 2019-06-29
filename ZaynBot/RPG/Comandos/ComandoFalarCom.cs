@@ -33,8 +33,7 @@ namespace ZaynBot.RPG.Comandos
             [Cooldown(1, 10, CooldownBucketType.User)]
             public async Task ComandoGuildaInfo(CommandContext ctx, [RemainingText]string nome)
             {
-                RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
-                if (usuario.Personagem == null) return;
+                RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
                 RPGPersonagem personagem = usuario.Personagem;
                 if (string.IsNullOrWhiteSpace(nome))
                 {
@@ -42,21 +41,31 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
                 string nomeMinusculo = nome.ToLower();
-                RPGRegião localAtual = ModuloBanco.RegiaoConsultar(personagem.LocalAtualId);
+                RPGRegiao localAtual = usuario.GetRPGRegiao();
                 RPGNpc npc = localAtual.Npcs.Find(x => x.Nome.ToLower() == nomeMinusculo);
                 if (npc == null)
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention} , {nome} não foi encontrado.");
                     return;
                 }
+                if (npc.FalarComSomenteSemMissaoConcluida)
+                    foreach (var item in personagem.MissoesConcluidasId)
+                    {
+                        if (item == npc.FalarComSomenteSemMissaoConcluidaId)
+                        {
+                            await ctx.RespondAsync($"{ctx.User.Mention} , {nome} não foi encontrado.");
+                            return;
+                        }
+                    }
                 CancellationTokenSource cts = new CancellationTokenSource();
-                CancelamentoToken.AdicionarOuAtualizar(ctx, cts);
-                RPGEmbed embed = new RPGEmbed(ctx, "Conversa do", npc);
-                embed.Titulo(npc.Nome);
-                embed.Embed.WithFooter("Clique no emoji para escolhar um diálogo.");
-                embed.Embed.WithColor(DiscordColor.Goldenrod);
+                CancelamentoToken.AdicionarOuAtualizar(ctx.User.Id, cts);
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Conversa", npc, ctx);
+                embed.WithTitle(npc.Nome.Titulo());
+                embed.WithFooter("Clique no emoji para escolhar um diálogo.");
+                embed.WithColor(DiscordColor.Goldenrod);
                 ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
                 StringBuilder dialogos = new StringBuilder($"{npc.FalaInicial}\n");
+                List<int> missaoCompletada = new List<int>();
                 foreach (var item in npc.Perguntas)
                 {
                     bool missaoConcluida = false;
@@ -65,6 +74,7 @@ namespace ZaynBot.RPG.Comandos
                         if (item.MissaoId == missaoId)
                         {
                             missaoConcluida = true;
+                            missaoCompletada.Add(missaoId);
                             break;
                         }
                     }
@@ -81,23 +91,32 @@ namespace ZaynBot.RPG.Comandos
                         dialogos.Append($"{emojis.ProxEmoji()} - {item.Pergunta}\n");
                     }
                 }
-                embed.Embed.WithDescription(dialogos.ToString());
+                embed.WithDescription(dialogos.ToString());
                 DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
                 emojis.ResetSelecao();
                 var interacao = ctx.Client.GetInteractivityModule();
-                Task[] opcoes;
+                List<Task> opcoes;
                 try
                 {
-                    opcoes = new Task[npc.Perguntas.Count];
+                    opcoes = new List<Task>();
                     int index = 0;
                     foreach (var item in npc.Perguntas)
                     {
-                        DiscordEmoji emoji = emojis.ProxEmoji();
-                        await mensagem.CreateReactionAsync(emoji);
-                        Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
-                        opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                            .ContinueWith(x => GetReacao(npc, item, x.Result, usuario, ctx, cts), cts.Token);
-                        index++;
+                        bool achou = false;
+                        foreach (var itemf in missaoCompletada)
+                        {
+                            if (itemf == item.MissaoId)
+                                achou = true;
+                        }
+                        if (!achou)
+                        {
+                            DiscordEmoji emoji = emojis.ProxEmoji();
+                            await mensagem.CreateReactionAsync(emoji);
+                            Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
+                            opcoes.Add(interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
+                                .ContinueWith(x => GetReacao(npc, item, x.Result, usuario, ctx, cts), cts.Token));
+                            index++;
+                        }
                     }
                 }
                 catch
@@ -205,28 +224,19 @@ namespace ZaynBot.RPG.Comandos
                 cts.Cancel();
                 if (reacao == null)
                     return;
-                if (usuario.Personagem.MissaoEmAndamento == null)
-                {
-                    RPGEmbed embed = new RPGEmbed(ctx, "Diálogo do", npc);
-                    embed.DescricaoFala(npc, perguntaEscolhida.Resposta);
-
-                    await ctx.RespondAsync(embed: embed.Build());
-                    await EnviarMissao(perguntaEscolhida, usuario, ctx);
-                    return;
-                }
-                if (perguntaEscolhida.MissaoId == usuario.Personagem.MissaoEmAndamento.Id)
-                {
-                    RPGEmbed embed = new RPGEmbed(ctx, "Missão do");
-                    embed.Embed.WithDescription(usuario.Personagem.MissaoEmAndamento.Descricao);
-                    await ctx.RespondAsync(embed: embed.Build());
-                }
-                else
-                {
-                    RPGEmbed embed = new RPGEmbed(ctx, "Diálogo do", npc);
-                    embed.DescricaoFala(npc, perguntaEscolhida.Resposta);
-                    await ctx.RespondAsync(embed: embed.Build());
-                    await EnviarMissao(perguntaEscolhida, usuario, ctx);
-                }
+                if (usuario.Personagem.MissaoEmAndamento != null)
+                    if (perguntaEscolhida.MissaoId == usuario.Personagem.MissaoEmAndamento.Id)
+                    {
+                        DiscordEmbedBuilder embed2 = new DiscordEmbedBuilder().Padrao("Missão", ctx);
+                        embed2.WithDescription(usuario.Personagem.MissaoEmAndamento.Descricao);
+                        await ctx.RespondAsync(embed: embed2.Build());
+                        return;
+                    }
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Diálogo", npc, ctx);
+                embed.Fala(perguntaEscolhida.Resposta, npc);
+                await ctx.RespondAsync(embed: embed.Build());
+                await EnviarMissao(perguntaEscolhida, usuario, ctx);
+                return;
             }
 
             public async Task EnviarMissao(RPGNpcPergunta perguntaEscolhida, RPGUsuario usuario, CommandContext ctx)
@@ -234,14 +244,14 @@ namespace ZaynBot.RPG.Comandos
                 if (perguntaEscolhida.Missao == true)
                 {
                     CancellationTokenSource cts = new CancellationTokenSource();
-                    CancelamentoToken.AdicionarOuAtualizar(ctx, cts);
+                    CancelamentoToken.AdicionarOuAtualizar(ctx.User.Id, cts);
                     DiscordEmoji emojiSim = DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_s:");
                     DiscordEmoji emojiNao = DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_n:");
                     RPGMissao missao = ModuloBanco.MissaoConsultar(perguntaEscolhida.MissaoId);
-                    RPGEmbed embedMissao = new RPGEmbed(ctx, "Missão do");
-                    embedMissao.Embed.WithTitle("Você recebeu uma missão");
-                    embedMissao.Embed.WithFooter("S para aceitar, N para recusar");
-                    embedMissao.Embed.WithDescription(missao.Descricao);
+                    DiscordEmbedBuilder embedMissao = new DiscordEmbedBuilder().Padrao("Missão", ctx);
+                    embedMissao.WithTitle("Você recebeu uma missão");
+                    embedMissao.WithFooter("S para aceitar, N para recusar");
+                    embedMissao.WithDescription(missao.Descricao);
                     DiscordMessage mensagem = await ctx.RespondAsync(embed: embedMissao.Build());
                     var interacao = ctx.Client.GetInteractivityModule();
                     Task[] opcoes = new Task[2];
@@ -274,7 +284,7 @@ namespace ZaynBot.RPG.Comandos
                 if (reacao.Emoji.GetDiscordName() == ":regional_indicator_s:")
                 {
                     usuario.Personagem.MissaoEmAndamento = missao;
-                    ModuloBanco.UsuarioAlterar(usuario);
+                    ModuloBanco.UpdateUsuario(usuario);
                     await ctx.RespondAsync($"{ctx.User.Mention}, missão `{missao.Nome}` aceita!");
                 }
             }

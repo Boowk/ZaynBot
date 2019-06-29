@@ -20,7 +20,7 @@ namespace ZaynBot.Core.Comandos
                     "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n" +
                     "**Core -** `ajuda` `convite`\n" +
                     "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` `personagem raca` " +
-                    "`inimigos` `missao` `raca` `mochila`\n" +
+                    "`inimigos` `missao` `raca` `mochila` `pegar`\n" +
                     "**Informativos -** `info`\n\n" +
                     "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
             }

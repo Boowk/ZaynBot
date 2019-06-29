@@ -18,8 +18,7 @@ namespace ZaynBot.RPG.Comandos
             "Exemplo: z!perfil 87604980344721408")]
         public async Task ComandoPerfilAb(CommandContext ctx, DiscordUser user = null)
         {
-            await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = ModuloBanco.UsuarioConsultar(ctx.User.Id);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioAsync(ctx);
             if (user == null)
             {
                 await ctx.RespondAsync(embed: GerarPerfil(ctx.Member, usuario).Build());
@@ -35,7 +34,7 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, sou uma garotinha legal! e gosto bastante de você! Mesmo me abusando bastante com esses comandos.... estranhos...");
                 return;
             }
-            RPGUsuario usuarioRequisitado = ModuloBanco.UsuarioConsultar(user.Id);
+            RPGUsuario usuarioRequisitado = RPGUsuario.GetRPGUsuario(user.Id);
             await ctx.RespondAsync(embed: GerarPerfil(user, usuarioRequisitado).Build());
         }
 

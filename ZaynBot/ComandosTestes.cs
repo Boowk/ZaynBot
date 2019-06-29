@@ -74,10 +74,9 @@ namespace ZaynBot
         [RequireOwner]
         public async Task f(CommandContext ctx)
         {
-            await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioAsync(ctx);
             usuario.Personagem.MissoesConcluidasId.Add(0);
-            ModuloBanco.UsuarioAlterar(usuario);
+            ModuloBanco.UpdateUsuario(usuario);
         }
 
 
@@ -154,6 +153,16 @@ namespace ZaynBot
         {
             var g = ctx.Guild.Channels;
             var role = ctx.Guild.Roles.FirstOrDefault(x => x.Name == "Verificado");
+        }
+
+        [Command("testemissao")]
+        [Hidden]
+        [RequireOwner]
+        public async Task testemissao(CommandContext ctx)
+        {
+            RPGUsuario usuario = RPGUsuario.GetRPGUsuario(ctx.User.Id, false);
+            usuario.Personagem.MissaoEmAndamento = null;
+            ModuloBanco.UpdateUsuario(usuario);
         }
     }
 }

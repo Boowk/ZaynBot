@@ -9,16 +9,17 @@ namespace ZaynBot.RPG.Entidades
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public EnumTipoItem TipoItem { get; set; }
-        public int Quantidade { get; set; }
-        public float PreçoBase { get; set; }
+        public int Quantidade { get; set; } = 1;
+        public float PrecoBase { get; set; }
 
-        public RPGItem(string nome, string descrição, EnumTipoItem tipoTtem, float precoBase, int quantidade = 1)
-        {
-            Nome = nome;
-            Descricao = descrição;
-            TipoItem = tipoTtem;
-            PreçoBase = precoBase;
-            Quantidade = quantidade;
-        }
+        public bool CompletaMissaoAoPegar { get; set; }
+        public int CompletaMissaoAoPegarId { get; set; }
+
+        public bool PegarSomenteComMissaoEmAndamento { get; set; }
+        public string PegarSomenteComMissaoEmAndamentoMensagem { get; set; }
+        public int PegarSomenteComMissaoEmAndamentoId { get; set; }
+
+        public bool DesapareceAoPegar { get; set; }
+        public string DesapareceAoPegarMensagem { get; set; }
     }
 }

@@ -14,8 +14,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Veja todos os inimigos a sua volta.")]
         public async Task VerInimigos(CommandContext ctx)
         {
-            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarPersonagemAsync(ctx);
-            if (usuario.Personagem == null) return;
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

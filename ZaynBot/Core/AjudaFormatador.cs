@@ -20,7 +20,7 @@ namespace ZaynBot.Core
 
         public IHelpFormatter WithCommandName(string nome)
         {
-            _nome = nome.First().ToString().ToUpper() + nome.Substring(1);
+            _nome = nome.PrimeiraLetraMaiuscula();
             return this;
         }
 
@@ -31,9 +31,8 @@ namespace ZaynBot.Core
         }
 
         public IHelpFormatter WithGroupExecutable()
-        {
-            return this;
-        }
+         => this;
+
 
         public IHelpFormatter WithAliases(IEnumerable<string> aliases)
         {
@@ -42,9 +41,7 @@ namespace ZaynBot.Core
         }
 
         public IHelpFormatter WithArguments(IEnumerable<CommandArgument> arguments)
-        {
-            return this;
-        }
+        => this;
 
         public IHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {

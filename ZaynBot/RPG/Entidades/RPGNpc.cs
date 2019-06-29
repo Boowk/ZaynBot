@@ -10,6 +10,10 @@ namespace ZaynBot.RPG.Entidades
         public string Nome { get; set; } //Para encontra-lo
         public string FalaInicial { get; set; }
         public bool Visivel { get; set; } = true; // Aparece no comando localizacao?
+
+        public bool FalarComSomenteSemMissaoConcluida { get; set; }
+        public int FalarComSomenteSemMissaoConcluidaId { get; set; }
+
         public List<RPGNpcPergunta> Perguntas { get; set; } = new List<RPGNpcPergunta>();
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<string, NpcVenda> ItensAVenda { get; set; }

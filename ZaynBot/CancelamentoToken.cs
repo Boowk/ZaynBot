@@ -9,22 +9,16 @@ namespace ZaynBot
 {
     public static class CancelamentoToken
     {
-        public static ConcurrentDictionary<ulong, CancellationTokenSource> Token { get; private set; } = new ConcurrentDictionary<ulong, CancellationTokenSource>();
+        private static ConcurrentDictionary<ulong, CancellationTokenSource> _token = new ConcurrentDictionary<ulong, CancellationTokenSource>();
 
-        public static void AdicionarOuAtualizar(CommandContext ctx, CancellationTokenSource cts)
-        {
-            Token.AddOrUpdate(ctx.User.Id, cts, (key, oldValue) => cts);
-        }
-
-        public static void CancelarToken(CommandContext ctx) => CancelarToken(ctx.User.Id);
+        public static void AdicionarOuAtualizar(ulong id, CancellationTokenSource cts)
+         => _token.AddOrUpdate(id, cts, (key, oldValue) => cts);
 
         public static void CancelarToken(ulong id)
         {
-            Token.TryGetValue(id, out CancellationTokenSource token);
+            _token.TryRemove(id, out CancellationTokenSource token);
             if (token != null)
-            {
                 token.Cancel();
-            }
         }
     }
 }

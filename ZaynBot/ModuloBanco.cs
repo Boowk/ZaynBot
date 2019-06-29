@@ -1,11 +1,7 @@
-﻿using DSharpPlus.CommandsNext;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
-using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
@@ -17,7 +13,7 @@ namespace ZaynBot
 
         #region Colecoes
 
-        public static IMongoCollection<RPGRegião> RegiaoColecao { get; private set; }
+        public static IMongoCollection<RPGRegiao> RegiaoColecao { get; private set; }
         public static IMongoCollection<RPGUsuario> UsuarioColecao { get; private set; }
         public static IMongoCollection<RPGGuilda> GuildaColecao { get; private set; }
         public static IMongoCollection<RPGRaça> RacaColecao { get; private set; }
@@ -29,7 +25,7 @@ namespace ZaynBot
         {
             IMongoClient _client = new MongoClient("mongodb://localhost");
             Database = _client.GetDatabase("zaynbot");
-            RegiaoColecao = Database.GetCollection<RPGRegião>("regions");
+            RegiaoColecao = Database.GetCollection<RPGRegiao>("regions");
             UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
             GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
             RacaColecao = Database.GetCollection<RPGRaça>("racas");
@@ -38,59 +34,15 @@ namespace ZaynBot
 
         #region CRUD Usuario
 
-        /// <summary>
-        /// Procura no banco por um usuario e verifica se existe um personagem antes de devolver.
-        /// </summary>
-        /// <param name="CommandContext"></param>
-        /// <returns></returns>
-        public static async Task<RPGUsuario> UsuarioConsultarPersonagemAsync(CommandContext ctx)
+        public static RPGUsuario GetUsuario(ulong id)
         {
-            await ctx.TriggerTypingAsync();
-            RPGUsuario user = UsuarioConsultar(ctx.User.Id);
-            if (user.Personagem == null)
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você precisa criar um personagem com o comando z!reencarnar");
-                return user;
-            }
-            return user;
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id == id;
+            return UsuarioColecao.Find(filtro).FirstOrDefault();
         }
 
-        /// <summary>
-        /// Procura no banco por um usuario e o devolve sem verificar personagem.
-        /// </summary>
-        /// <param name="CommandContext"></param>
-        /// <returns></returns>
-        public static async Task<RPGUsuario> UsuarioConsultarAsync(CommandContext ctx)
+        public static void UpdateUsuario(RPGUsuario usuario)
         {
-            await ctx.TriggerTypingAsync();
-            return UsuarioConsultar(ctx.User.Id);
-        }
-
-        /// <summary>
-        /// Procura no banco por um usuario e o devolve sem verificar personagem.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static RPGUsuario UsuarioConsultar(ulong id)
-        {
-            CancelamentoToken.CancelarToken(id);
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(id);
-            RPGUsuario user = UsuarioColecao.Find(filtro).FirstOrDefault();
-            if (user == null)
-            {
-                user = new RPGUsuario(id);
-                UsuarioColecao.InsertOne(user);
-            }
-            return user;
-        }
-
-        /// <summary>
-        /// Altera um usuario no banco.
-        /// </summary>
-        /// <param name="usuario"></param>
-        public static void UsuarioAlterar(RPGUsuario usuario)
-        {
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id.Equals(usuario.Id);
+            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id == usuario.Id;
             UsuarioColecao.ReplaceOne(filtro, usuario);
         }
 
@@ -158,13 +110,10 @@ namespace ZaynBot
         #endregion
         #region CRUD Regiao
 
-        public static RPGRegião RegiaoConsultar(int id)
+        public static RPGRegiao GetRPGRegiao(int id)
         {
-            Expression<Func<RPGRegião, bool>> filtro = x => x.Id.Equals(id);
-            RPGRegião region = RegiaoColecao.Find(filtro).FirstOrDefault();
-            if (region != null)
-                return region;
-            return null;
+            Expression<Func<RPGRegiao, bool>> filtro = x => x.Id == id;
+            return RegiaoColecao.Find(filtro).FirstOrDefault();
         }
 
         #endregion

@@ -11,6 +11,7 @@ using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
 using ZaynBot.RPG.Comandos;
 using ZaynBot.RPG.Comandos.Viajar;
+using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
 {
@@ -33,7 +34,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoConvite>();
 
             #region ComandosRPG
-            Comandos.RegisterCommands<ComandoPersonagem>();
+            Comandos.RegisterCommands<ComandosPersonagem>();
             // Comandos.RegisterCommands<GrupoGuilda>();
             Comandos.RegisterCommands<ComandoReencarnar>();
             Comandos.RegisterCommands<ComandoLocalizacao>();
@@ -48,6 +49,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoMissao>();
             Comandos.RegisterCommands<ComandoRaca>();
             Comandos.RegisterCommands<ComandoInventario>();
+            Comandos.RegisterCommands<ComandoPegar>();
             #endregion
         }
 
@@ -88,6 +90,12 @@ namespace ZaynBot
                         await ctx.RespondAsync($"**{x} | {ctx.User.Mention}, o comando{e.Context.RawArgumentString} não existe.**");
                     }
                 ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
+                return;
+            }
+            if (e.Exception is PersonagemNullException px)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não tem um personagem.", DateTime.Now);
                 return;
             }
             //if(e.Exception is AggregateException)

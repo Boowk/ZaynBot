@@ -22,7 +22,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 120, CooldownBucketType.User)]
         public async Task Reencarnar(CommandContext ctx)
         {
-            RPGUsuario usuario = await ModuloBanco.UsuarioConsultarAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioAsync(ctx);
             if (usuario.Personagem != null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa morrer antes de tentar reencarnar novamente!");
@@ -37,8 +37,7 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
             StringBuilder racas = new StringBuilder();
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-            embed.WithAuthor($"Reencarnação do {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Reencarnação", ctx);
             embed.WithTitle("**⌈Raças⌋**");
             embed.WithFooter("Clique no emoji para escolhar a sua raça. Se estiver com dúvidas, escreva z!raca <nome>");
             embed.WithColor(DiscordColor.Goldenrod);
@@ -51,6 +50,7 @@ namespace ZaynBot.RPG.Comandos
             DiscordMessage mensagem = await ctx.RespondAsync(embed: embed.Build());
             emojis.ResetSelecao();
             _cts = new CancellationTokenSource();
+            CancelamentoToken.AdicionarOuAtualizar(ctx.User.Id, _cts);
             var interacao = ctx.Client.GetInteractivityModule();
             Task[] opcoes;
             try
@@ -81,7 +81,7 @@ namespace ZaynBot.RPG.Comandos
             if (reacao == null)
                 return;
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
-            ModuloBanco.UsuarioAlterar(usuario);
+            ModuloBanco.UpdateUsuario(usuario);
             await ctx.RespondAsync($"Raça escolhida: {racaEscolhida.Nome}");
             await ctx.TriggerTypingAsync();
             await Task.Delay(1500);
@@ -92,8 +92,8 @@ namespace ZaynBot.RPG.Comandos
                 $"Divirta-se e aproveite o seu tempo aqui!!");
             await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
-            RPGEmbed embed = new RPGEmbed(ctx, "Historia do");
-            embed.Embed.WithDescription("Você está dentro de uma casa pegando fogo.\n" +
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Historia", ctx);
+            embed.WithDescription("Você está dentro de uma casa pegando fogo.\n" +
                 "Vozes falando: 'Ajuda!!'\n" +
                 "Você escuta pessoas pedindo por ajuda no quarto ao lado.\n" +
                 "Você vai até o quarto.\n" +
@@ -101,14 +101,14 @@ namespace ZaynBot.RPG.Comandos
             await ctx.RespondAsync(embed: embed.Build());
             await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
-            embed = new RPGEmbed(ctx, "Historia do");
-            embed.Embed.WithDescription("Dentro do quarto, você percebe uma caixa mágica no centro.\n" +
+            embed = new DiscordEmbedBuilder().Padrao("Historia", ctx);
+            embed.WithDescription("Dentro do quarto, você percebe uma caixa mágica no centro.\n" +
                 "Mas quando tenta se aproximar, uma viga de madeira pegando fogo cai em você.\n");
             await ctx.RespondAsync(embed: embed.Build());
             await ctx.TriggerTypingAsync();
             await Task.Delay(5000);
-            embed = new RPGEmbed(ctx, "Historia do");
-            embed.Embed.WithDescription(ModuloBanco.RegiaoConsultar(usuario.Personagem.LocalAtualId).Descrição);
+            embed = new DiscordEmbedBuilder().Padrao("Historia", ctx);
+            embed.WithDescription(usuario.GetRPGRegiao().Descrição);
             await ctx.RespondAsync(embed: embed.Build());
         }
     }
