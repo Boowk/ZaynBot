@@ -40,7 +40,7 @@ namespace ZaynBot.RPG.Entidades.Mapa
         public List<RPGSaida> SaidasRegioes { get; set; } = new List<RPGSaida>();
         public List<RPGSaida> Entrada { get; set; } = new List<RPGSaida>();
         public List<RPGNpc> Npcs { get; set; } = new List<RPGNpc>();
-        public List<RPGMob> Inimigos { get; set; } = new List<RPGMob>();
+        public List<RPGMob> Mobs { get; set; } = new List<RPGMob>();
         public Dictionary<string, RPGItem> Itens { get; set; } = new Dictionary<string, RPGItem>();
 
         public static RPGRegiao GetRPGRegiao(int id)

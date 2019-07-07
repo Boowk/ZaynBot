@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Comandos
             "Uso: z!missao")]
         public async Task ComandoMissaoAb(CommandContext ctx)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
             if (personagem.MissaoEmAndamento == null)
             {

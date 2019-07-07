@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Comandos
     {
         public async Task ExecuteGroupAsync(CommandContext ctx)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
             {
@@ -31,12 +31,12 @@ namespace ZaynBot.RPG.Comandos
                 Timestamp = DateTime.Now,
                 ThumbnailUrl = ctx.User.AvatarUrl,
             }.AddField("⌈Raça⌋", $"{personagem.Raca.Nome}", true)
-            .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida.Texto()}/{personagem.PontosDeVidaMaxima.Texto()}", true)
-            .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana.Texto()}/{personagem.PontosDeManaMaximo.Texto()}", true)
-            .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico.Texto()}", true)
-            .AddField("⌈Defesa física⌋", $"{personagem.DefesaFisica.Texto()}", true)
-            .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico.Texto()}", true)
-            .AddField("⌈Defesa mágica⌋", $"{personagem.DefesaMagica.Texto()}", true)
+            .AddField("⌈Pontos de vida⌋", $"{personagem.PontosDeVida.Texto2Casas()}/{personagem.PontosDeVidaMaxima.Texto2Casas()}", true)
+            .AddField("⌈Pontos mágicos⌋", $"{personagem.PontosDeMana.Texto2Casas()}/{personagem.PontosDeManaMaximo.Texto2Casas()}", true)
+            .AddField("⌈Ataque físico⌋", $"{personagem.AtaqueFisico.Texto2Casas()}", true)
+            .AddField("⌈Defesa física⌋", $"{personagem.DefesaFisica.Texto2Casas()}", true)
+            .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico.Texto2Casas()}", true)
+            .AddField("⌈Defesa mágica⌋", $"{personagem.DefesaMagica.Texto2Casas()}", true)
             .AddField("⌈Velocidade⌋", $"{personagem.Velocidade}", true)
             .AddField("⌈Sorte⌋", $"{personagem.Raca.Sorte}", true)
             //.AddField("⌈Equipamento⌋", $"Em contrução", true)
@@ -53,7 +53,7 @@ namespace ZaynBot.RPG.Comandos
         "Uso: z!personagem raca")]
         public async Task ComandoPersonagemRaca(CommandContext ctx)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Raça do", ctx);
             embed.WithDescription($"**{personagem.Raca.Nome}** Nv.1 [Exp 123/451]");
@@ -74,7 +74,7 @@ namespace ZaynBot.RPG.Comandos
        "Uso: z!personagem missao")]
         public async Task ComandoPersonagemMissao(CommandContext ctx)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Missãoes concluídas", ctx);
             StringBuilder sb = new StringBuilder();

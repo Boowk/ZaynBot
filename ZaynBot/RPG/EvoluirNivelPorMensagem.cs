@@ -1,8 +1,10 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG
 {
@@ -10,27 +12,34 @@ namespace ZaynBot.RPG
     {
         public static async Task ReceberXPNivelMensagens(MessageCreateEventArgs e)
         {
-            RPGUsuario user = RPGUsuario.GetRPGUsuario(e.Author.Id, false);
-            if (DateTime.UtcNow >= user.DataUltimaMensagemEnviada)
+            RPGUsuario usuario = ModuloBanco.GetUsuario(e.Author.Id);
+            if (usuario != null)
             {
-                user.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
-                Tuple<bool, int> result = user.AdicionarExp();
-                if (user.Personagem != null)
+                if (DateTime.UtcNow >= usuario.DataUltimaMensagemEnviada)
                 {
-                    user.RegeneraçãoMana();
-                    user.RegeneraçãoVida();
-                }
-                ModuloBanco.UpdateUsuario(user);
-                if (result.Item1 == true)
-                {
-                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} evoluiu regen para o nível {user.Nivel}.", DateTime.Now);
-                    await e.Channel.SendMessageAsync($"Parabéns {e.Author.Mention}! A sua regeneração de vida e mana aumentou para o nível {user.Nivel}! :beginner:");
-                }
-                else
-                {
-                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"{e.Author.Username} recebeu {result.Item2} de exp.", DateTime.Now);
+                    if (usuario.Personagem.PontosDeVida > 0)
+                    {
+                        usuario.DataUltimaMensagemEnviada = DateTime.UtcNow.AddMinutes(2).AddSeconds(30);
+                        usuario.Personagem.Habilidades.TryGetValue("regeneração", out RPGHabilidade cura);
+                        if (cura != null)
+                        {
+                            Sortear sort = new Sortear();
+
+                            cura.AdicionarExp(sort.Valor(5, 25), usuario.Personagem);
+                            float quantidadeCura = usuario.Personagem.DefesaMagica * cura.CuraQuantidadePorcentagem;
+                            usuario.Personagem.PontosDeVida += quantidadeCura;
+                            if (usuario.Personagem.PontosDeVida > usuario.Personagem.PontosDeVidaMaxima)
+                                usuario.Personagem.PontosDeVida = usuario.Personagem.PontosDeVidaMaxima;
+                            float quantidadeMana = usuario.Personagem.PontosDeManaMaximo * cura.CuraQuantidadePorcentagem;
+                            usuario.Personagem.PontosDeMana += quantidadeMana;
+                            if (usuario.Personagem.PontosDeMana > usuario.Personagem.PontosDeManaMaximo)
+                                usuario.Personagem.PontosDeMana = usuario.Personagem.PontosDeManaMaximo;
+                            ModuloBanco.UpdateUsuario(usuario);
+                        }
+                    }
                 }
             }
+            await Task.CompletedTask;
         }
     }
 }

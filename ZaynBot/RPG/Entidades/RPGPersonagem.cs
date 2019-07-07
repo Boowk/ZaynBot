@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using ZaynBot.Data.Habilidades.Passivas;
 using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
@@ -40,19 +41,23 @@ namespace ZaynBot.RPG.Entidades
 
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
+        [BsonRepresentation(BsonType.Document, AllowTruncation = true)]
+        public Dictionary<string, RPGItem> ItensNoChao { get; set; } = new Dictionary<string, RPGItem>();
         public List<int> MissoesConcluidasId { get; set; } = new List<int>();
         public RPGMissao MissaoEmAndamento { get; set; }
 
+        public float PontosDeAcao { get; set; }
+
         public RPGEquipamento Equipamento { get; set; } = new RPGEquipamento();
         public RPGInventario Inventario { get; set; }
-        public RPGHabilidade Habilidade { get; set; } = new RPGHabilidade();
+        public Dictionary<string, RPGHabilidade> Habilidades { get; set; } = new Dictionary<string, RPGHabilidade>();
         public RPGTitulo Titulo { get; set; } = new RPGTitulo();
         public RPGEmprego Emprego { get; set; }
 
         public bool Vivo { get; set; }
         public DateTime DataMorte { get; set; }
 
-        public RPGBatalha CampoBatalha { get; set; } = new RPGBatalha();
+        public RPGBatalha Batalha { get; set; } = new RPGBatalha();
 
         public RPGPersonagem(RPGRaça raca)
         {
@@ -78,6 +83,8 @@ namespace ZaynBot.RPG.Entidades
             Emprego = new RPGEmprego("Desempregado");
             LocalAtualId = 0;
             Vivo = true;
+
+            Habilidades.Add(CuraMensagemHabilidade.CuraMensagemHabilidadeAb().Nome, CuraMensagemHabilidade.CuraMensagemHabilidadeAb());
         }
 
         //public int Alimentar(int quantidade)
@@ -93,13 +100,5 @@ namespace ZaynBot.RPG.Entidades
         //    if (Sede > 100) Sede = 100;
         //    return (int)Sede;
         //}
-    }
-
-    public static class ExtensãoPersonagem
-    {
-        public static string Texto(this float numero)
-        {
-            return string.Format("{0:N2}", numero);
-        }
     }
 }

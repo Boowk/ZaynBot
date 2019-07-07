@@ -69,16 +69,6 @@ namespace ZaynBot
         }
 
 
-        [Command("testec")]
-        [Hidden]
-        [RequireOwner]
-        public async Task f(CommandContext ctx)
-        {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioAsync(ctx);
-            usuario.Personagem.MissoesConcluidasId.Add(0);
-            ModuloBanco.UpdateUsuario(usuario);
-        }
-
 
         CancellationTokenSource cts;
         [Command("testef")]
@@ -155,14 +145,16 @@ namespace ZaynBot
             var role = ctx.Guild.Roles.FirstOrDefault(x => x.Name == "Verificado");
         }
 
-        [Command("testemissao")]
+        [Command("vida")]
         [Hidden]
         [RequireOwner]
-        public async Task testemissao(CommandContext ctx)
+        public async Task vida(CommandContext ctx, DiscordMember membro)
         {
-            RPGUsuario usuario = RPGUsuario.GetRPGUsuario(ctx.User.Id, false);
-            usuario.Personagem.MissaoEmAndamento = null;
-            ModuloBanco.UpdateUsuario(usuario);
+            await ctx.TriggerTypingAsync();
+            RPGUsuario usuario = RPGUsuario.GetRPGUsuario(membro);
+            usuario.Personagem.PontosDeVida = usuario.Personagem.PontosDeVidaMaxima;
+            await ctx.RespondAsync("Vida resetada.");
+            RPGUsuario.UpdateRPGUsuario(usuario);
         }
     }
 }

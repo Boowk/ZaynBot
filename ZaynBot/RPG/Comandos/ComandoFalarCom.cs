@@ -33,7 +33,7 @@ namespace ZaynBot.RPG.Comandos
             [Cooldown(1, 10, CooldownBucketType.User)]
             public async Task ComandoGuildaInfo(CommandContext ctx, [RemainingText]string nome)
             {
-                RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+                RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
                 RPGPersonagem personagem = usuario.Personagem;
                 if (string.IsNullOrWhiteSpace(nome))
                 {
@@ -284,7 +284,7 @@ namespace ZaynBot.RPG.Comandos
                 if (reacao.Emoji.GetDiscordName() == ":regional_indicator_s:")
                 {
                     usuario.Personagem.MissaoEmAndamento = missao;
-                    ModuloBanco.UpdateUsuario(usuario);
+                    RPGUsuario.UpdateRPGUsuario(usuario);
                     await ctx.RespondAsync($"{ctx.User.Mention}, missão `{missao.Nome}` aceita!");
                 }
             }

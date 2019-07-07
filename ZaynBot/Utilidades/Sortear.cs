@@ -7,31 +7,38 @@ namespace ZaynBot.Utilidades
 {
     public class Sortear
     {
-        private Random random;
+        private Random _random;
 
         public int Valor(int min, int max)
         {
-            random = new Random();
-            return random.Next(min, max + 1);
+            _random = new Random();
+            return _random.Next(min, max + 1);
         }
 
         public long Valor(long min, long max)
         {
-            random = new Random();
-            return (long)random.NextDouble() * (max - min) + min;
+            _random = new Random();
+            return (long)_random.NextDouble() * (max - min) + min;
         }
 
         public double Valor(double min, double max)
         {
-            random = new Random();
-            return random.NextDouble() * (max - min) + min;
+            _random = new Random();
+            return _random.NextDouble() * (max - min) + min;
         }
 
         public float Valor(float min, float max)
         {
-            random = new Random();
-            return (float)random.NextDouble() * (max - min) + min;
+            _random = new Random();
+            return (float)_random.NextDouble() * (max - min) + min;
         }
+
+        public bool Sucesso(double probabilidade)
+        {
+            _random = new Random();
+            return _random.NextDouble() < probabilidade;
+        }
+
 
         public RPGMob ListaMob(List<RPGMob> mobs)
         {
@@ -53,6 +60,45 @@ namespace ZaynBot.Utilidades
             //Retorna posiçãoescolhida
             return mobs[posicaoEscolhida];
         }
+
+
+        //public static List<RPGItem> SortearItemUnico(List<RPGItemDrop> itens)
+        //{
+        //    foreach (var item in itens)
+        //    {
+        //        List<ItemChanceCair> itemQuePodeCair = new List<ItemChanceCair>();
+        //        itemQuePodeCair.Add(itemComChanceDeCair);
+        //        itemQuePodeCair.Add(new ItemChanceCair
+        //        {
+        //            ChanceDeCair = 100 - itemComChanceDeCair.ChanceDeCair,
+        //            QuantidadeMinima = -100,
+        //        });
+
+        //        Random r = new Random();
+        //        int sorteio = r.Next(0, 100);
+        //        int posicaoEscolhida = -1;
+        //        do
+        //        {
+        //            posicaoEscolhida++;
+        //            sorteio -= itemQuePodeCair[posicaoEscolhida].ChanceDeCair;
+        //        } while (sorteio > 0);
+
+        //        if (itemQuePodeCair[posicaoEscolhida].QuantidadeMinima != -100)
+        //        {
+        //            Item objeto = itemQuePodeCair[posicaoEscolhida].Item.Clone();
+        //            if (itemQuePodeCair[posicaoEscolhida].QuantidadeMaxima == 1)
+        //            {
+        //                objeto.Quantidade = 1;
+        //            }
+        //            else
+        //            {
+        //                objeto.Quantidade = Sortear(itemQuePodeCair[posicaoEscolhida].QuantidadeMinima, itemQuePodeCair[posicaoEscolhida].QuantidadeMaxima);
+        //            }
+        //            itensQueCaiu.Add(objeto);
+        //        }
+        //    }
+        //    return itensQueCaiu;
+        //}
     }
 
     public static class ThreadSafeRandom

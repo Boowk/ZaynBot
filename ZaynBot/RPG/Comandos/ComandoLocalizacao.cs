@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Comandos
             "Uso: z!localizacao")]
         public async Task Localizacao(CommandContext ctx)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
             RPGRegiao localAtual = usuario.GetRPGRegiao();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Localização", ctx);
@@ -24,7 +24,9 @@ namespace ZaynBot.RPG.Comandos
             embed.WithDescription(localAtual.Descrição);
             StringBuilder conexoesDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
+            {
                 conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {RPGRegiao.GetRPGRegiao(reg.RegiaoId).Nome}\n");
+            }
             embed.AddField("Locais disponíveis", conexoesDisponiveis.ToString());
             embed.WithColor(DiscordColor.Blue);
             if (localAtual.UrlImagem != null)

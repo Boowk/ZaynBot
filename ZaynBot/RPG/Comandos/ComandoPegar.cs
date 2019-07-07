@@ -19,7 +19,7 @@ namespace ZaynBot.RPG.Comandos
             "Exemplo: z!pegar espada")]
         public async Task VerInimigos(CommandContext ctx, [RemainingText]string nome)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             if (string.IsNullOrWhiteSpace(nome))
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não ira conseguir pegar o vento.");
@@ -52,7 +52,7 @@ namespace ZaynBot.RPG.Comandos
                             await ctx.RespondAsync($"{ctx.User.Mention}, você completou a missão `{personagem.MissaoEmAndamento.Nome}`.");
                             personagem.MissoesConcluidasId.Add(personagem.MissaoEmAndamento.Id);
                             personagem.MissaoEmAndamento = null;
-                            ModuloBanco.UpdateUsuario(usuario);
+                            RPGUsuario.UpdateRPGUsuario(usuario);
                             return;
                         }
                         return;

@@ -22,4 +22,23 @@
     <PackageReference Include="MongoDB.Driver" Version="2.8.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\Mobs\Boss\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System">
+      <HintPath>System</HintPath>
+    </Reference>
+    <Reference Include="System.Data">
+      <HintPath>System.Data</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <HintPath>System.Drawing</HintPath>
+    </Reference>
+    <Reference Include="System.Xml">
+      <HintPath>System.Xml</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

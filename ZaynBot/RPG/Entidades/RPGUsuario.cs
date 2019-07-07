@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using ZaynBot.RPG.Data.Raças;
@@ -17,9 +18,6 @@ namespace ZaynBot.RPG.Entidades
         [BsonId]
         [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
         public ulong Id { get; set; }
-        public int Nivel { get; set; } = 0;
-        public double ExperienciaProximoNivel { get; set; } = 100;
-        public double ExperienciaAtual { get; set; } = 0;
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
         public RPGPersonagem Personagem { get; set; }
@@ -37,82 +35,38 @@ namespace ZaynBot.RPG.Entidades
             };
         }
 
-        public static async Task<RPGUsuario> GetRPGUsuarioComPersonagemAsync(CommandContext ctx)
+        /// <summary>
+        /// Inserido sempre no começo dos comandos em que envolve personagem.
+        /// </summary>
+        /// <param name="ctx"></param>
+        /// <returns></returns>
+        public static async Task<RPGUsuario> GetRPGUsuarioBaseAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             CancelamentoToken.CancelarToken(ctx.User.Id);
             RPGUsuario usuario = ModuloBanco.GetUsuario(ctx.User.Id);
-            if (usuario.Personagem == null)
+            if (usuario == null)
                 throw new PersonagemNullException();
             return usuario;
         }
 
-        public static async Task<RPGUsuario> GetRPGUsuarioAsync(CommandContext ctx)
+        /// <summary>
+        /// Usado sempre que for referenciar a outro usuario.
+        /// </summary>
+        /// <param name="usuario"></param>
+        /// <returns></returns>
+        public static RPGUsuario GetRPGUsuario(DiscordUser discordUsuario)
         {
-            await ctx.TriggerTypingAsync();
-            return GetRPGUsuario(ctx.User.Id);
-        }
-
-        public static RPGUsuario GetRPGUsuario(ulong id, bool cancelarComandoAnterior = true)
-        {
-            if (cancelarComandoAnterior)
-                CancelamentoToken.CancelarToken(id);
-            RPGUsuario usuario = ModuloBanco.GetUsuario(id);
+            RPGUsuario usuario = ModuloBanco.GetUsuario(discordUsuario.Id);
             if (usuario == null)
-            {
-                usuario = new RPGUsuario(id);
-                ModuloBanco.UsuarioColecao.InsertOne(usuario);
-            }
+                throw new PersonagemNullException($"{discordUsuario.Username}#{discordUsuario.Discriminator} não tem um personagem.");
             return usuario;
         }
 
         public RPGRegiao GetRPGRegiao()
              => ModuloBanco.GetRPGRegiao(Personagem.LocalAtualId);
 
-        public bool AdicionarExp(int exp)
-        {
-            double expResultante = ExperienciaAtual + exp;
-            if (expResultante >= ExperienciaProximoNivel)
-            {
-                do
-                {
-                    double quantosPrecisaProxNivel = expResultante - ExperienciaProximoNivel;
-                    Evoluir();
-                    expResultante = quantosPrecisaProxNivel;
-                } while (expResultante >= ExperienciaProximoNivel);
-                ExperienciaAtual += expResultante;
-                return true;
-            }
-            ExperienciaAtual += exp;
-            return false;
-        }
-
-        public Tuple<bool, int> AdicionarExp()
-        {
-            Sortear sortear = new Sortear();
-            int exp = sortear.Valor(5, 25);
-            return new Tuple<bool, int>(AdicionarExp(exp), exp);
-        }
-
-        private void Evoluir()
-        {
-            Nivel += 1;
-            ExperienciaAtual = 0;
-            ExperienciaProximoNivel += 100;
-        }
-
-        public void RegeneraçãoVida()
-        {
-            float quantidade = Nivel / 25.0F;
-            Personagem.PontosDeVida += quantidade;
-            if (Personagem.PontosDeVida >= Personagem.PontosDeVidaMaxima) Personagem.PontosDeVida = Personagem.PontosDeVidaMaxima;
-        }
-
-        public void RegeneraçãoMana()
-        {
-            float quantidade = Nivel / 30.0F;
-            Personagem.PontosDeMana += quantidade;
-            if (Personagem.PontosDeMana >= Personagem.PontosDeManaMaximo) Personagem.PontosDeMana = Personagem.PontosDeManaMaximo;
-        }
+        public static void UpdateRPGUsuario(RPGUsuario usuario)
+            => ModuloBanco.UpdateUsuario(usuario);
     }
 }

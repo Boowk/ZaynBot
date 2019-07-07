@@ -1,8 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ZaynBot.RPG
 {

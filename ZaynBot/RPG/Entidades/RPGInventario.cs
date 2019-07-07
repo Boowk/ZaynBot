@@ -9,9 +9,9 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class RPGInventario
     {
-        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PesoMaximo { get; set; }
-        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
+        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PesoAtual { get; set; }
         public Dictionary<string, RPGItem> Inventario { get; set; } = new Dictionary<string, RPGItem>();
 
@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Entidades
             PesoAtual = 0;
         }
 
-        public bool Adicionar(RPGItem item)
+        public bool Adicionar(RPGItem item, int quantidade)
         {
             /* Verifica se existi o item no inventario
              * se não existir, o adiciona.
@@ -29,6 +29,20 @@ namespace ZaynBot.RPG.Entidades
              * 
              * Equipamentos deve funcionar quase que da mesma forma.
             */
+
+            Inventario.TryGetValue(item.Nome, out RPGItem existeNoInventario);
+            if (existeNoInventario != null)
+            {
+                existeNoInventario.Quantidade += quantidade;
+                PesoAtual += item.Peso * quantidade;
+            }
+            else
+            {
+                RPGItem f = item.Copia();
+                f.Quantidade = quantidade;
+                PesoAtual += item.Peso * quantidade;
+                Inventario.Add(f);
+            }
 
             return true;
         }

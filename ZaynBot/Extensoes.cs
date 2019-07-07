@@ -46,5 +46,8 @@ namespace ZaynBot
 
         public static string PrimeiraLetraMaiuscula(this string texto)
             => texto.First().ToString().ToUpper() + texto.Substring(1);
+
+        public static string Texto2Casas(this float numero)
+            => string.Format("{0:N2}", numero);
     }
 }

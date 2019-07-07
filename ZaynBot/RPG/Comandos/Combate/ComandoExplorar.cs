@@ -6,34 +6,29 @@ using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
-namespace ZaynBot.RPG.Comandos
+namespace ZaynBot.RPG.Comandos.Combate
 {
     public class ComandoExplorar
     {
         [Command("explorar")]
         [Aliases("ex")]
         [Description("Explora a região para encontrar inimigos.")]
-        public async Task ExplorarInimigos(CommandContext ctx) // [Description("norte,sul,oeste,leste")] string direcao = "nenhuma")
+        public async Task ComandoExplorarAb(CommandContext ctx)
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioComPersonagemAsync(ctx);
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
             RPGPersonagem personagem = usuario.Personagem;
-
-            if (personagem.CampoBatalha.Party == true)
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention}, somente o lider da part pode usar esse comando!");
-                return;
-            }
             RPGRegiao localAtual = usuario.GetRPGRegiao();
 
-            if (localAtual.Inimigos.Count == 0)
+            if (localAtual.Mobs.Count == 0)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, parece que está região não tem nenhum inimigo.");
+                await ctx.RespondAsync($"{ctx.User.Mention}, você procura, mas não encontra ninguém.");
                 return;
             }
-
-            if (personagem.CampoBatalha.Inimigos.Count < 2)
+            if (personagem.Batalha == null)
+                personagem.Batalha = new RPGBatalha();
+            if (personagem.Batalha.Inimigos.Count == 0)
             {
-                List<RPGMob> pesos = localAtual.Inimigos;
+                List<RPGMob> pesos = localAtual.Mobs;
 
                 int somaPeso = 0;
                 for (int i = 0; i < pesos.Count; i++)
@@ -51,17 +46,13 @@ namespace ZaynBot.RPG.Comandos
                 } while (sorteio > 0);
                 RPGMob inimigo = pesos[posicaoEscolhida];
 
-                personagem.CampoBatalha.Inimigos.Add(inimigo.SetRaça(inimigo.RaçaMob));
+                personagem.Batalha.Inimigos.Add(inimigo);
 
-                string inimigoMensagem = $"{inimigo.Nome} com {string.Format("{0:N2}", inimigo.PontosDeVidaMaxima)} de vida, apareceu na sua frente!";
-                ModuloBanco.UpdateUsuario(usuario);
-                await ctx.RespondAsync(ctx.User.Mention + ", " + inimigoMensagem);
+                RPGUsuario.UpdateRPGUsuario(usuario);
+                await ctx.RespondAsync($"{ctx.User.Mention}, {inimigo.Nome} apareceu!");
             }
             else
-            {
                 await ctx.RespondAsync($"{ctx.User.Mention}, mate os inimigos que você já tem.");
-                return;
-            }
 
             //embed.WithTitle($"Exploração do {ctx.User.Username}");
             //embed.AddField("Inimigos encontrados", InimigosApareceu.ToString());

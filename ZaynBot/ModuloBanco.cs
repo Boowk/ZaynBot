@@ -25,7 +25,7 @@ namespace ZaynBot
         {
             IMongoClient _client = new MongoClient("mongodb://localhost");
             Database = _client.GetDatabase("zaynbot");
-            RegiaoColecao = Database.GetCollection<RPGRegiao>("regions");
+            RegiaoColecao = Database.GetCollection<RPGRegiao>("regioes");
             UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
             GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
             RacaColecao = Database.GetCollection<RPGRaça>("racas");

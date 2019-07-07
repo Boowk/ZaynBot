@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
 using ZaynBot.RPG.Comandos;
+using ZaynBot.RPG.Comandos.Combate;
 using ZaynBot.RPG.Comandos.Viajar;
 using ZaynBot.RPG.Exceptions;
 
@@ -32,6 +33,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandosAdministracao>();
             Comandos.RegisterCommands<ComandoPerfil>();
             Comandos.RegisterCommands<ComandoConvite>();
+            Comandos.RegisterCommands<ComandoHabilidades>();
 
             #region ComandosRPG
             Comandos.RegisterCommands<ComandosPersonagem>();
@@ -50,6 +52,9 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoRaca>();
             Comandos.RegisterCommands<ComandoInventario>();
             Comandos.RegisterCommands<ComandoPegar>();
+            Comandos.RegisterCommands<ComandoLoot>();
+            Comandos.RegisterCommands<ComandoColetar>();
+            Comandos.RegisterCommands<ComandoHabilidade>();
             #endregion
         }
 
@@ -74,7 +79,9 @@ namespace ZaynBot
             }
             if (e.Exception is ArgumentException ax)
             {
-                await ctx.RespondAsync($"{ctx.Member.Mention}, você está esquecendo de algum parâmetro? Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
+                await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Message.Author} Colocou parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
+                return;
             }
             if (e.Exception is UnauthorizedException)
             {
@@ -96,6 +103,13 @@ namespace ZaynBot
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
                 ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não tem um personagem.", DateTime.Now);
+                return;
+            }
+
+            if (e.Exception is NotFoundException nx)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas colocou um usuario inválido", DateTime.Now);
                 return;
             }
             //if(e.Exception is AggregateException)

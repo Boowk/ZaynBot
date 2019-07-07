@@ -5,5 +5,6 @@
         Arma,
         Armadura,
         Missao,
+        Venda,
     }
 }
