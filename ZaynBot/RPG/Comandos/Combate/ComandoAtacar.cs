@@ -127,7 +127,7 @@ namespace ZaynBot.RPG.Comandos.Combate
 
                     personagem.Batalha.Inimigos.Remove(inimigoAtacado);
                     mensagemMortos = $"{inimigoAtacado.Nome} morreu.";
-                    embed.AddField("Inimigos mortos".Titulo(), mensagemMortos.ToString(), true);
+                    embed.AddField("Inimigos mortos".Titulo(), mensagemMortos.ToString());
 
                     //Inimigo morreu
                     //List<RPGItem> item = Sortear.SortearItem(inimigo.ChanceCairItem);
@@ -178,14 +178,10 @@ namespace ZaynBot.RPG.Comandos.Combate
                                 itemSorteado.Quantidade += item.Item.Quantidade;
                             mensagemDrops.Append($"{item.Item.Quantidade} {item.Item.Nome}\n");
                         }
-                        else
-                        {
-                            mensagemDrops.Append($"{item.Item.Nome} não teve sorte \n");
-                        }
                     }
 
                     if (mensagemDrops.ToString() != "")
-                        embed.AddField("Drops", $"**{mensagemDrops.ToString()}**", true);
+                        embed.AddField("Drops", $"**{mensagemDrops.ToString()}**");
 
                     if (personagem.Batalha.Inimigos.Count == 0)
                         personagem.Batalha.Turno = 0;
