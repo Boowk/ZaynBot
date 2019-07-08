@@ -26,7 +26,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                 return;
             }
 
-            personagem.ItensNoChao.TryGetValue(nome, out RPGItem itemColetado);
+            personagem.ItensNoChao.TryGetValue(nome.ToLower(), out RPGItem itemColetado);
             if (itemColetado == null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não encontrou esse item no chão.");
