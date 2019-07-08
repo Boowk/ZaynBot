@@ -163,10 +163,6 @@ namespace ZaynBot.RPG.Comandos.Combate
                             mensagemDrops.Append($"{item.Item.Quantidade} {item.Item.Nome}\n");
                             break;
                         }
-                        else
-                        {
-                            mensagemDrops.Append($"{item.Item.Nome} não teve sorte \n");
-                        }
                     }
 
                     foreach (var item in inimigoAtacado.ChanceItemTodos)
