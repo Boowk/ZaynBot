@@ -11,7 +11,7 @@ namespace ZaynBot.Core.Comandos
 {
     public class ComandoInfo
     {
-        [Command("info")]
+        [Command("informacao")]
         [Description("Exibe uma breve descrição do bot.\n\n" +
           "Uso: z!info\n\n")]
         public async Task ComandoInfoAb(CommandContext ctx)

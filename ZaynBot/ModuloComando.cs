@@ -32,8 +32,8 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandosGrupoInfo>();
             Comandos.RegisterCommands<ComandosAdministracao>();
             Comandos.RegisterCommands<ComandoPerfil>();
-            Comandos.RegisterCommands<ComandoConvite>();
-            Comandos.RegisterCommands<ComandoInfo>();
+           Comandos.RegisterCommands<ComandoConvite>();
+          Comandos.RegisterCommands<ComandoInfo>();
 
 
             #region ComandosRPG

@@ -12,7 +12,6 @@ namespace ZaynBot.RPG.Comandos.Combate
     public class ComandoHabilidades
     {
         [Command("habilidades")]
-        [Aliases("hab")]
         [Description("Exibe todas as suas habilidades.\n\n" +
             "Uso: z!habilidades")]
         public async Task ComandoHabilidadesAb(CommandContext ctx)
