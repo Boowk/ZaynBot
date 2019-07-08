@@ -28,12 +28,13 @@ namespace ZaynBot
             Comandos.SetHelpFormatter<AjudaFormatador>();
 
             Comandos.RegisterCommands<ComandosTestes>();
-            Comandos.RegisterCommands<Ajuda>();
+            Comandos.RegisterCommands<ComandoAjuda>();
             Comandos.RegisterCommands<ComandosGrupoInfo>();
             Comandos.RegisterCommands<ComandosAdministracao>();
             Comandos.RegisterCommands<ComandoPerfil>();
             Comandos.RegisterCommands<ComandoConvite>();
-            Comandos.RegisterCommands<ComandoHabilidades>();
+            Comandos.RegisterCommands<ComandoInfo>();
+
 
             #region ComandosRPG
             Comandos.RegisterCommands<ComandosPersonagem>();
@@ -55,6 +56,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoLoot>();
             Comandos.RegisterCommands<ComandoColetar>();
             Comandos.RegisterCommands<ComandoHabilidade>();
+            Comandos.RegisterCommands<ComandoHabilidades>();
             #endregion
         }
 

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class Ajuda
+    public class ComandoAjuda
     {
         [Command("ajuda")]
         [Aliases("h", "?")]
@@ -18,10 +18,9 @@ namespace ZaynBot.Core.Comandos
             {
                 await ctx.RespondAsync("```css\nLista de comandos```\n" +
                     "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n" +
-                    "**Core -** `ajuda` `convite`\n" +
-                    "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` `personagem raca` " +
-                    "`inimigos` `missao` `raca` `mochila` `pegar`\n" +
-                    "**Informativos -** `info`\n\n" +
+                    "**Core -** `ajuda` `convite` `info`\n" +
+                    "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` `atacar` " +
+                    "`inimigos` `missao` `raca` `mochila` `pegar` `explorar` `coletar` `habilidades` `habilidade`\n" +
                     "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
             }
             else
