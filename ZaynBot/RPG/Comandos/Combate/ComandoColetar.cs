@@ -38,6 +38,12 @@ namespace ZaynBot.RPG.Comandos.Combate
                 return;
             }
 
+            if(quantidade <= 0)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, você não pode coletar {quantidade}, isso é tecnicamente impossível.");
+                return;
+            }
+
             float pesoTotal = (itemColetado.Peso * quantidade) + personagem.Inventario.PesoAtual;
             if (pesoTotal > personagem.Inventario.PesoMaximo)
             {

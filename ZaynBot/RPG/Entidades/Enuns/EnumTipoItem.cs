@@ -6,5 +6,6 @@
         Armadura,
         Missao,
         Venda,
+        Moeda,
     }
 }
