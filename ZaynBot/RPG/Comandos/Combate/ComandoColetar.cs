@@ -38,7 +38,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                 return;
             }
 
-            if(quantidade <= 0)
+            if (quantidade <= 0)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, você não pode coletar {quantidade}, isso é tecnicamente impossível.");
                 return;

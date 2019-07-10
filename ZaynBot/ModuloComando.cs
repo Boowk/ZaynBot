@@ -57,6 +57,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoColetar>();
             Comandos.RegisterCommands<ComandoHabilidade>();
             Comandos.RegisterCommands<ComandoHabilidades>();
+            Comandos.RegisterCommands<ComandoExaminar>();
             #endregion
         }
 

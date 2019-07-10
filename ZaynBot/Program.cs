@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
+using ZaynBot.Data.Itens;
 using ZaynBot.Data.Missoes;
 using ZaynBot.Data.Raças;
 using ZaynBot.RPG.Data.Mundos.Anker;
@@ -73,6 +74,8 @@ namespace ZaynBot
             Console.WriteLine("Raças concluido.");
             new Missoes();
             Console.WriteLine("Missões concluido.");
+            new TodosOsItens();
+            Console.WriteLine("Itens de consulta adicionados");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }
