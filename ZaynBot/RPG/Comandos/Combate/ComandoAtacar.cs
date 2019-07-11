@@ -67,16 +67,19 @@ namespace ZaynBot.RPG.Comandos.Combate
                 }
                 personagem.Batalha.PontosDeAcaoBase = personagem.Velocidade + velocidadeBatalha;
             }
-
+            // Definição do round - Aqui é feito o ataque do inimigo e 
+            // é onde é definido quando será o turno do jogador.
             StringBuilder mensagemAtaquesInimigos = new StringBuilder();
+            Sortear s = new Sortear();
             while (personagem.PontosDeAcao < personagem.Batalha.PontosDeAcaoBase)
             {
-                personagem.PontosDeAcao += personagem.Velocidade / 4;
+                personagem.PontosDeAcao += personagem.Velocidade / 4 + s.Valor(1, personagem.Raca.Sorte);
                 foreach (var inimigosAtacando in personagem.Batalha.Inimigos)
                 {
-                    inimigosAtacando.PontosDeAcao += inimigosAtacando.Velocidade / 4;
+                    inimigosAtacando.PontosDeAcao += (inimigosAtacando.Velocidade / 4) + s.Valor(1, 10);
                     if (inimigosAtacando.PontosDeAcao >= personagem.Batalha.PontosDeAcaoBase)
                     {
+                        // Ataque do inimigo
                         personagem.Batalha.Turno++;
                         inimigosAtacando.PontosDeAcao = 0;
                         float danoInimigo = CalcDano(personagem.DefesaFisica, inimigosAtacando.AtaqueFisico);
@@ -194,7 +197,8 @@ namespace ZaynBot.RPG.Comandos.Combate
         public static float CalcDano(float resistencia, float dano)
         {
             float porcentagemFinal = 100 / (100 + resistencia);
-            return dano * porcentagemFinal;
+            Sortear s = new Sortear();
+            return (s.Valor((dano / 2), dano)) * porcentagemFinal;
         }
     }
 }
