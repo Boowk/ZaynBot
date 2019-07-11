@@ -13,6 +13,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     {
         [Command("atacar")]
         [Aliases("at")]
+        [Cooldown(1, 1, CooldownBucketType.User)]
         [Description("Ataca o inimigo na sua frente.\n\n" +
             "Exemplo: z!atacar [id]\n\n" +
             "Uso: z!atacar 1")]
@@ -50,7 +51,8 @@ namespace ZaynBot.RPG.Comandos.Combate
             else
                 inimigo = personagem.Batalha.Inimigos[0];
             DiscordEmbedBuilder embed = CalcBatalha(usuario, inimigo);
-            await ctx.RespondAsync(ctx.User.Mention, embed: embed.Build());
+            embed.WithAuthor($"Combate - {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
+            await ctx.RespondAsync(embed: embed.Build());
 
         }
 
@@ -90,7 +92,7 @@ namespace ZaynBot.RPG.Comandos.Combate
             }
             personagem.Batalha.Turno++;
             personagem.PontosDeAcao = 0;
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao();
 
             if (inimigoAtacado != null)
             {
@@ -120,7 +122,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                 strVida.Append($"Vida: {personagem.PontosDeVida.Texto2Casas()}/{personagem.PontosDeVidaMaxima.Texto2Casas()}\n");
                 strVida.Append($"Mana: {personagem.PontosDeMana.Texto2Casas()}/{personagem.PontosDeManaMaximo.Texto2Casas()}\n");
                 strVida.Append($"Inimigos: {personagem.Batalha.Inimigos.Count}\n");
-                strVida.Append($"Turno {personagem.Batalha.Turno}");
+                embed.WithTitle($"{personagem.Batalha.Turno}º Turno".Titulo());
                 embed.WithDescription(strVida.ToString());
                 embed.WithColor(DiscordColor.Red);
 
@@ -184,7 +186,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                     }
 
                     if (mensagemDrops.ToString() != "")
-                        embed.AddField("Drops", $"**{mensagemDrops.ToString()}**");
+                        embed.AddField("Drops".Titulo(), $"**{mensagemDrops.ToString()}**");
 
                     if (personagem.Batalha.Inimigos.Count == 0)
                         personagem.Batalha.Turno = 0;
