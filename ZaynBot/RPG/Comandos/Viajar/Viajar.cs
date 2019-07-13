@@ -56,11 +56,11 @@ namespace ZaynBot.RPG.Comandos.Viajar
                                     velocidadeInimigo += vel.Velocidade;
                                 personagem.Batalha.PontosDeAcaoBase = personagem.Velocidade + velocidadeInimigo;
                             }
-                            while (personagem.PontosDeAcao < personagem.Batalha.PontosDeAcaoBase)
+                            while (personagem.Batalha.PontosDeAcao < personagem.Batalha.PontosDeAcaoBase)
                             {
                                 // Verifica quem começa atacando com base na velocidade maior
 
-                                personagem.PontosDeAcao += personagem.Velocidade / 4;
+                                personagem.Batalha.PontosDeAcao += personagem.Velocidade / 4;
                                 foreach (var inimigos in personagem.Batalha.Inimigos)
                                 {
                                     inimigos.PontosDeAcao += inimigos.Velocidade / 4;
@@ -79,7 +79,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
                                 }
                             }
                             personagem.Batalha.Turno++;
-                            personagem.PontosDeAcao = 0;
+                            personagem.Batalha.PontosDeAcao = 0;
                             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
 
 

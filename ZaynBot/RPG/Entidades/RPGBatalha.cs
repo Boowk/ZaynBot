@@ -6,6 +6,8 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class RPGBatalha
     {
+        public float PontosDeAcao { get; set; }
+
         public int Turno { get; set; } = 0;
         public List<RPGMob> Inimigos { get; set; } = new List<RPGMob>();
 

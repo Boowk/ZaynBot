@@ -46,15 +46,14 @@ namespace ZaynBot.RPG.Entidades
         public List<int> MissoesConcluidasId { get; set; } = new List<int>();
         public RPGMissao MissaoEmAndamento { get; set; }
 
-        public float PontosDeAcao { get; set; }
+
 
         public RPGEquipamento Equipamento { get; set; } = new RPGEquipamento();
         public RPGInventario Inventario { get; set; }
         public Dictionary<string, RPGHabilidade> Habilidades { get; set; } = new Dictionary<string, RPGHabilidade>();
         public RPGTitulo Titulo { get; set; } = new RPGTitulo();
         public RPGEmprego Emprego { get; set; }
-
-        public bool Vivo { get; set; }
+        
         public DateTime DataMorte { get; set; }
 
         public RPGBatalha Batalha { get; set; } = new RPGBatalha();
@@ -82,7 +81,6 @@ namespace ZaynBot.RPG.Entidades
             Velocidade = sortear.Valor(Raca.Destreza * 1 + sorte, Raca.Destreza * 10 + sorte);
             Emprego = new RPGEmprego("Desempregado");
             LocalAtualId = 0;
-            Vivo = true;
 
             Habilidades.Add(CuraMensagemHabilidade.CuraMensagemHabilidadeAb().Nome, CuraMensagemHabilidade.CuraMensagemHabilidadeAb());
         }

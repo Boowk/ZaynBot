@@ -27,7 +27,8 @@ namespace ZaynBot.RPG.Comandos
             {
                 conexoesDisponiveis.Append($"{reg.Direcao.ToString()} - {RPGRegiao.GetRPGRegiao(reg.RegiaoId).Nome}\n");
             }
-            embed.AddField("Locais disponíveis", conexoesDisponiveis.ToString());
+            if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
+                embed.AddField("Locais disponíveis", conexoesDisponiveis.ToString());
             embed.WithColor(DiscordColor.Blue);
             if (localAtual.UrlImagem != null)
                 embed.WithThumbnailUrl(localAtual.UrlImagem);

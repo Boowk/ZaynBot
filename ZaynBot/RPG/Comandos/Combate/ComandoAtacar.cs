@@ -73,9 +73,9 @@ namespace ZaynBot.RPG.Comandos.Combate
             // é onde é definido quando será o turno do jogador.
             StringBuilder mensagemAtaquesInimigos = new StringBuilder();
             Sortear s = new Sortear();
-            while (personagem.PontosDeAcao < personagem.Batalha.PontosDeAcaoBase)
+            while (personagem.Batalha.PontosDeAcao < personagem.Batalha.PontosDeAcaoBase)
             {
-                personagem.PontosDeAcao += personagem.Velocidade / 4 + s.Valor(1, personagem.Raca.Sorte);
+                personagem.Batalha.PontosDeAcao += personagem.Velocidade / 4 + s.Valor(1, personagem.Raca.Sorte);
                 foreach (var inimigosAtacando in personagem.Batalha.Inimigos)
                 {
                     inimigosAtacando.PontosDeAcao += (inimigosAtacando.Velocidade / 4) + s.Valor(1, 10);
@@ -91,7 +91,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                 }
             }
             personagem.Batalha.Turno++;
-            personagem.PontosDeAcao = 0;
+            personagem.Batalha.PontosDeAcao = 0;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao();
 
             if (inimigoAtacado != null)
