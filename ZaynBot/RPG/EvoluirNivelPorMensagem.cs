@@ -25,7 +25,7 @@ namespace ZaynBot.RPG
                         {
                             Sortear sort = new Sortear();
 
-                            cura.AdicionarExp(sort.Valor(5, 25), usuario.Personagem);
+                            cura.AdicionarExp((float)sort.Valor(5, 25));
                             float quantidadeCura = usuario.Personagem.DefesaMagica * cura.CuraQuantidadePorcentagem;
                             usuario.Personagem.PontosDeVida += quantidadeCura;
                             if (usuario.Personagem.PontosDeVida > usuario.Personagem.PontosDeVidaMaxima)

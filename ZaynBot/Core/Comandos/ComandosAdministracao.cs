@@ -8,6 +8,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
+using ZaynBot.RPG.Comandos.Combate;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Core.Comandos
@@ -80,6 +81,18 @@ namespace ZaynBot.Core.Comandos
                     }
                 }).ConfigureAwait(false);
             await ctx.RespondAsync($"{quantidade} refeitos.");
+        }
+
+        [Command("xpH")]
+        [RequireOwner]
+        [Hidden]
+        public async Task xpH(CommandContext ctx, float quantidade)
+        {
+            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
+            usuario.Personagem.Habilidades.TryGetValue("regeneração", out RPGHabilidade regen);
+            regen.AdicionarExp(quantidade);
+            RPGUsuario.UpdateRPGUsuario(usuario);
+            await new ComandoHabilidade().ComandoHabilidadeAb(ctx, "regeneração");
         }
     }
 }

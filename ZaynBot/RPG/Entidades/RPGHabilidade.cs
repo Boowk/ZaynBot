@@ -33,7 +33,7 @@ namespace ZaynBot.RPG.Entidades
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DanoSobeNivelPorcentagem { get; set; } // em porcentagem ex: subir 1% = 1,01
 
-        public void AdicionarExp(int exp, RPGPersonagem personagem)
+        public void AdicionarExp(float exp)
         {
             double expResultante = ExperienciaAtual + exp;
             if (expResultante >= ExperienciaProximoNivel)
@@ -41,20 +41,30 @@ namespace ZaynBot.RPG.Entidades
                 do
                 {
                     double quantosPrecisaProxNivel = expResultante - ExperienciaProximoNivel;
-                    Evoluir(personagem);
+                    Evoluir();
                     expResultante = quantosPrecisaProxNivel;
                 } while (expResultante >= ExperienciaProximoNivel);
                 ExperienciaAtual += expResultante;
+                return;
             }
             ExperienciaAtual += exp;
         }
 
-        private void Evoluir(RPGPersonagem personagem)
+        private void Evoluir()
         {
             Nivel += 1;
             ExperienciaAtual = 0;
             ExperienciaProximoNivel = ExperienciaProximoNivel * 1.10409;
-            CustoMana = CustoMana * 0.99F;
+            if (!Passiva)
+                CustoMana = CustoMana * 0.99F;
+            if (Cura)
+            {
+                CuraQuantidadePorcentagem = CuraQuantidadePorcentagem * CuraSobeNivelPorcentagem;
+            }
+            if (Dano)
+            {
+
+            }
         }
     }
 }

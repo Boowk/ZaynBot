@@ -81,9 +81,13 @@ namespace ZaynBot.RPG.Comandos
             if (reacao == null)
                 return;
             usuario.Personagem = new RPGPersonagem(racaEscolhida);
-            DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-            DiscordChannel CanalRPG = MundoZayn.GetChannel(519176927265947689);
-            await CanalRPG.SendMessageAsync($"*{ctx.User.Username} acabou de reencarnar como {racaEscolhida.Nome}.*");
+            try
+            {
+                DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
+                DiscordChannel CanalRPG = MundoZayn.GetChannel(519176927265947689);
+                await CanalRPG.SendMessageAsync($"*{ctx.User.Username} acabou de reencarnar como {racaEscolhida.Nome}.*");
+            }
+            catch { }
             if (_usuarioNull == true)
             {
                 ModuloBanco.UsuarioColecao.InsertOne(usuario);
