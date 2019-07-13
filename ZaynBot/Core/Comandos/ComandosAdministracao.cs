@@ -8,6 +8,7 @@ using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
+using ZaynBot.Data.Habilidades.Passivas;
 using ZaynBot.RPG.Comandos.Combate;
 using ZaynBot.RPG.Entidades;
 
@@ -72,11 +73,12 @@ namespace ZaynBot.Core.Comandos
             await ModuloBanco.UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty)
                 .ForEachAsync(x =>
                 {
-                    Expression<Func<RPGUsuario, bool>> filtro = f => f.Id.Equals(x.Id);
+                    Expression<Func<RPGUsuario, bool>> filtro = f => f.Id == x.Id;
                     if (x.Personagem != null)
                     {
-                        x.Personagem = null;
                         quantidade++;
+                        x.Personagem.Habilidades.Remove("regeneração");
+                        x.Personagem.Habilidades.Add(CuraMensagemHabilidade.CuraMensagemHabilidadeAb().Nome, CuraMensagemHabilidade.CuraMensagemHabilidadeAb());
                         ModuloBanco.UsuarioColecao.ReplaceOne(filtro, x);
                     }
                 }).ConfigureAwait(false);

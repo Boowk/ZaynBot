@@ -49,5 +49,8 @@ namespace ZaynBot
 
         public static string Texto2Casas(this float numero)
             => string.Format("{0:N2}", numero);
+
+        public static string Texto2Casas(this double numero)
+          => string.Format("{0:N2}", numero);
     }
 }
