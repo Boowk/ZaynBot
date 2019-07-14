@@ -96,5 +96,15 @@ namespace ZaynBot.Core.Comandos
             RPGUsuario.UpdateRPGUsuario(usuario);
             await new ComandoHabilidade().ComandoHabilidadeAb(ctx, "regeneração");
         }
+
+        [Command("testv")]
+        [RequireOwner]
+        public async Task Vote(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            AuthDiscordBotListApi DblApi = new AuthDiscordBotListApi(CoreBot.Id, CoreBot.DiscordBotsApiKey);
+            var me = await DblApi.HasVoted(ctx.User.Id);
+            await Task.CompletedTask;
+        }
     }
 }
