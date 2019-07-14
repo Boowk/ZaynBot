@@ -20,7 +20,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("reencarnar")]
         [Description("Reencarna em um novo persoonagem.\n\n" +
             "Uso: z!reencarnar")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 120, CooldownBucketType.User)]
         public async Task Reencarnar(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
