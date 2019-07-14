@@ -20,6 +20,7 @@ namespace ZaynBot.RPG.Entidades
         public ulong Id { get; set; }
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
+        public int Estrelas { get; set; }
         public RPGPersonagem Personagem { get; set; }
 
         public RPGUsuario(ulong id)

@@ -88,13 +88,24 @@ namespace ZaynBot.Core.Comandos
         [Command("xpH")]
         [RequireOwner]
         [Hidden]
-        public async Task xpH(CommandContext ctx, float quantidade)
+        public async Task xpH(CommandContext ctx, float quantidade, DiscordUser user = null, )
         {
-            RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
-            usuario.Personagem.Habilidades.TryGetValue("regeneração", out RPGHabilidade regen);
-            regen.AdicionarExp(quantidade);
-            RPGUsuario.UpdateRPGUsuario(usuario);
-            await new ComandoHabilidade().ComandoHabilidadeAb(ctx, "regeneração");
+            if (user == null)
+            {
+                RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
+                usuario.Personagem.Habilidades.TryGetValue("regeneração", out RPGHabilidade regen);
+                regen.AdicionarExp(quantidade);
+                RPGUsuario.UpdateRPGUsuario(usuario);
+                await new ComandoHabilidade().ComandoHabilidadeAb(ctx, "regeneração");
+            }
+            else
+            {
+                RPGUsuario usuario = RPGUsuario.GetRPGUsuario(user);
+                usuario.Personagem.Habilidades.TryGetValue("regeneração", out RPGHabilidade regen);
+                regen.AdicionarExp(quantidade);
+                RPGUsuario.UpdateRPGUsuario(usuario);
+                await ctx.RespondAsync($"Adicionado {quantidade} xp em regeneração em {user.Username}.");
+            }
         }
 
         [Command("testv")]
