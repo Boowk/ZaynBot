@@ -110,7 +110,7 @@ namespace ZaynBot.Core.Comandos
 
         [Command("estrelas")]
         [RequireOwner]
-        public async Task Estrelas(CommandContext ctx, int quantidade, DiscordUser user = null)
+        public async Task Estrelas(CommandContext ctx, int quantidade, DiscordMember user = null)
         {
             if (user == null)
             {
@@ -124,7 +124,7 @@ namespace ZaynBot.Core.Comandos
                 RPGUsuario usuario = RPGUsuario.GetRPGUsuario(user);
                 usuario.Estrelas += quantidade;
                 RPGUsuario.UpdateRPGUsuario(usuario);
-                await ctx.RespondAsync($"{user.Mention}, recebeu {quantidade} estrelas. :start:");
+                await ctx.RespondAsync($"{user.Mention}, recebeu {quantidade} estrelas. :star:");
             }
         }
     }
