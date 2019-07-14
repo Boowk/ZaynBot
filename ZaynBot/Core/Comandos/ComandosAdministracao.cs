@@ -108,14 +108,24 @@ namespace ZaynBot.Core.Comandos
             }
         }
 
-        [Command("testv")]
+        [Command("estrelas")]
         [RequireOwner]
-        public async Task Vote(CommandContext ctx)
+        public async Task Estrelas(CommandContext ctx, int quantidade, DiscordUser user = null)
         {
-            await ctx.TriggerTypingAsync();
-            AuthDiscordBotListApi DblApi = new AuthDiscordBotListApi(CoreBot.Id, CoreBot.DiscordBotsApiKey);
-            var me = await DblApi.HasVoted(ctx.User.Id);
-            await Task.CompletedTask;
+            if (user == null)
+            {
+                RPGUsuario usuario = await RPGUsuario.GetRPGUsuarioBaseAsync(ctx);
+                usuario.Estrelas += quantidade;
+                RPGUsuario.UpdateRPGUsuario(usuario);
+                await ctx.RespondAsync($"{ctx.User.Mention}, recebeu {quantidade} estrelas. :star:");
+            }
+            else
+            {
+                RPGUsuario usuario = RPGUsuario.GetRPGUsuario(user);
+                usuario.Estrelas += quantidade;
+                RPGUsuario.UpdateRPGUsuario(usuario);
+                await ctx.RespondAsync($"{user.Mention}, recebeu {quantidade} estrelas. :start:");
+            }
         }
     }
 }
