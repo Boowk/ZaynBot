@@ -13,8 +13,7 @@ namespace ZaynBot.Core.Comandos
     {
         [Command("informacao")]
         [Description("Exibe uma breve descrição do bot.\n\n" +
-          "Uso: z!info\n\n")]
-        [Aliases("info")]
+          "Uso: z!informacao")]
         public async Task ComandoInfoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

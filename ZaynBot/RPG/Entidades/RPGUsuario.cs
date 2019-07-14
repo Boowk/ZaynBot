@@ -21,18 +21,10 @@ namespace ZaynBot.RPG.Entidades
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
         public RPGPersonagem Personagem { get; set; }
-        public List<int> RacasDisponiveisId { get; set; }
 
         public RPGUsuario(ulong id)
         {
             Id = id;
-            RacasDisponiveisId = new List<int>
-            {
-                0,
-                1,
-                2,
-                3,
-            };
         }
 
         /// <summary>

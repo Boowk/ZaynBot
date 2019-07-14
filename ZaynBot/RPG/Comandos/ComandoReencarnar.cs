@@ -41,7 +41,14 @@ namespace ZaynBot.RPG.Comandos
             embed.WithColor(DiscordColor.Goldenrod);
             ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
             usuario = new RPGUsuario(ctx.User.Id);
-            foreach (var item in usuario.RacasDisponiveisId)
+            List<int> RacasDisponiveisId = new List<int>
+            {
+                0,
+                1,
+                2,
+                3,
+            };
+            foreach (var item in RacasDisponiveisId)
             {
                 racas.Append($"{emojis.ProxEmoji()} - {ModuloBanco.RacaConsultar(item).Nome}\n");
             }
@@ -55,9 +62,9 @@ namespace ZaynBot.RPG.Comandos
             Task[] opcoes;
             try
             {
-                opcoes = new Task[usuario.RacasDisponiveisId.Count];
+                opcoes = new Task[RacasDisponiveisId.Count];
                 int index = 0;
-                foreach (var item in usuario.RacasDisponiveisId)
+                foreach (var item in RacasDisponiveisId)
                 {
                     DiscordEmoji emoji = emojis.ProxEmoji();
                     await mensagem.CreateReactionAsync(emoji);
