@@ -88,7 +88,7 @@ namespace ZaynBot.Core.Comandos
         [Command("xpH")]
         [RequireOwner]
         [Hidden]
-        public async Task xpH(CommandContext ctx, float quantidade, DiscordUser user = null, )
+        public async Task xpH(CommandContext ctx, float quantidade, DiscordUser user = null)
         {
             if (user == null)
             {
