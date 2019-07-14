@@ -15,16 +15,17 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoReencarnar
     {
         CancellationTokenSource _cts;
-        bool _usuarioNull = true;
+        bool _usuarioNull;
 
         [Command("reencarnar")]
         [Description("Reencarna em um novo persoonagem.\n\n" +
             "Uso: z!reencarnar")]
-        [Cooldown(1, 120, CooldownBucketType.User)]
+        [Cooldown(1, 1, CooldownBucketType.User)]
         public async Task Reencarnar(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario usuario = ModuloBanco.GetUsuario(ctx.User.Id);
+            _usuarioNull = true;
             if (usuario != null)
             {
                 _usuarioNull = false;
