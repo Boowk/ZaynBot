@@ -12,6 +12,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     public class ComandoHabilidades
     {
         [Command("habilidades")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Exibe todas as suas habilidades.\n\n" +
             "Uso: z!habilidades")]
         public async Task ComandoHabilidadesAb(CommandContext ctx)

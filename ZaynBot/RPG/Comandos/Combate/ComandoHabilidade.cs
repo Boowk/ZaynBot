@@ -14,6 +14,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     public class ComandoHabilidade
     {
         [Command("habilidade")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Exibe as informações de uma habilidade.\n\n" +
        "Exemplo: z!habilidade [nome]\n\n" +
            "Uso: z!habilidade regeneração")]

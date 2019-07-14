@@ -11,6 +11,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     public class ComandoColetar
     {
         [Command("coletar")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Coleta os loots que estão no chão.\n\n" +
         "Exemplo: z!coletar [quantidade] [nome]\n\n" +
             "Uso: z!coletar 4 espada enferrujada")]

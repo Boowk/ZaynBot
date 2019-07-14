@@ -11,6 +11,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     {
         [Command("inimigos")]
         [Aliases("ins")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Veja todos os inimigos a sua volta.")]
         public async Task VerInimigos(CommandContext ctx)
         {

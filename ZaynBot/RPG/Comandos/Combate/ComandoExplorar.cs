@@ -12,6 +12,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     {
         [Command("explorar")]
         [Aliases("ex")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Explora a região para encontrar inimigos.")]
         public async Task ComandoExplorarAb(CommandContext ctx)
         {

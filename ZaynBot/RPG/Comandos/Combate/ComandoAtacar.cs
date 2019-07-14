@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     {
         [Command("atacar")]
         [Aliases("at")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Ataca o inimigo na sua frente.\n\n" +
             "Exemplo: z!atacar [id]\n\n" +
             "Uso: z!atacar 1")]

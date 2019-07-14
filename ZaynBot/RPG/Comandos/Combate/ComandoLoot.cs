@@ -12,6 +12,7 @@ namespace ZaynBot.RPG.Comandos.Combate
     public class ComandoLoot
     {
         [Command("loot")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Ver os loots que estão no chão.\n\n" +
          "Uso: z!loot")]
         public async Task ComandoLootAb(CommandContext ctx, int id = 0)
