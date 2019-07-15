@@ -38,6 +38,7 @@ namespace ZaynBot.RPG.Comandos
             .AddField("⌈Ataque mágico⌋", $"{personagem.AtaqueMagico.Texto2Casas()}", true)
             .AddField("⌈Defesa mágica⌋", $"{personagem.DefesaMagica.Texto2Casas()}", true)
             .AddField("⌈Velocidade⌋", $"{personagem.Velocidade}", true)
+            .AddField("Essência".Titulo(),$"{personagem.Essencia.Texto2Casas()}", true)
             .AddField("⌈Sorte⌋", $"{personagem.Raca.Sorte}", true)
             //.AddField("⌈Equipamento⌋", $"Em contrução", true)
             //.AddField("⌈Habiliades⌋", $"Em contrução", true)

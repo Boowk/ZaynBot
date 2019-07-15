@@ -150,6 +150,8 @@ namespace ZaynBot.RPG.Comandos.Combate
 
 
                     StringBuilder mensagemDrops = new StringBuilder();
+                    mensagemDrops.Append($"{inimigoAtacado.Essencia} Essência absorvida.\n");
+                    personagem.Essencia += inimigoAtacado.Essencia;
                     foreach (var item in inimigoAtacado.ChanceItemUnico)
                     {
                         if (Sortear.Sucesso(item.ChanceDeCair))
@@ -163,7 +165,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                                 personagem.ItensNoChao.Add(item.Item.Nome, item.Item);
                             else
                                 itemSorteado.Quantidade += item.Item.Quantidade;
-                            mensagemDrops.Append($"{item.Item.Quantidade} {item.Item.Nome.PrimeiraLetraMaiuscula()}\n");
+                            mensagemDrops.Append($"{item.Item.Quantidade} {item.Item.Nome.PrimeiraLetraMaiuscula()}.\n");
                             break;
                         }
                     }
@@ -179,7 +181,7 @@ namespace ZaynBot.RPG.Comandos.Combate
                                 personagem.ItensNoChao.Add(item.Item.Nome, item.Item);
                             else
                                 itemSorteado.Quantidade += item.Item.Quantidade;
-                            mensagemDrops.Append($"{item.Item.Quantidade} {item.Item.Nome.PrimeiraLetraMaiuscula()}\n");
+                            mensagemDrops.Append($"{item.Item.Quantidade} {item.Item.Nome.PrimeiraLetraMaiuscula()}.\n");
                         }
                     }
 

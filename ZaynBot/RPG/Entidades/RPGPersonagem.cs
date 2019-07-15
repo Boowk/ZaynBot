@@ -47,7 +47,7 @@ namespace ZaynBot.RPG.Entidades
         public List<int> MissoesConcluidasId { get; set; } = new List<int>();
         public RPGMissao MissaoEmAndamento { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
-        public float ExperienciaArmazenada { get; set; } = 0;
+        public float Essencia { get; set; } = 0;
 
         public RPGEquipamento Equipamento { get; set; } = new RPGEquipamento();
         public RPGInventario Inventario { get; set; }

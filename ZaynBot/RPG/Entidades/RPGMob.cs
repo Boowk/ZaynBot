@@ -24,7 +24,7 @@ namespace ZaynBot.RPG.Entidades
         [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int ChanceDeAparecer { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
-        public float Experiencia { get; set; }
+        public float Essencia { get; set; }
         public List<RPGItemDrop> ChanceItemUnico { get; set; } = new List<RPGItemDrop>();
         public List<RPGItemDrop> ChanceItemTodos { get; set; } = new List<RPGItemDrop>();
 
