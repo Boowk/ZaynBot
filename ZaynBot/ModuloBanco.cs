@@ -16,7 +16,6 @@ namespace ZaynBot
         public static IMongoCollection<RPGRegiao> RegiaoColecao { get; private set; }
         public static IMongoCollection<RPGUsuario> UsuarioColecao { get; private set; }
         public static IMongoCollection<RPGGuilda> GuildaColecao { get; private set; }
-        public static IMongoCollection<RPGRaça> RacaColecao { get; private set; }
         public static IMongoCollection<RPGMissao> MissaoColecao { get; private set; }
 
         #endregion
@@ -28,7 +27,6 @@ namespace ZaynBot
             RegiaoColecao = Database.GetCollection<RPGRegiao>("regioes");
             UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
             GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
-            RacaColecao = Database.GetCollection<RPGRaça>("racas");
             MissaoColecao = Database.GetCollection<RPGMissao>("missoes");
         }
 
