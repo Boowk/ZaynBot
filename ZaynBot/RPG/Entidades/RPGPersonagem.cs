@@ -63,16 +63,16 @@ namespace ZaynBot.RPG.Entidades
         {
             Inventario = new RPGInventario(raca.Forca, raca.Destreza);
             Raca = raca;
-            PontosDeVida = Sortear.Atributo(raca.Constituicao, raca.Sorte);
+            PontosDeVida = Sortear.Atributo(Raca.Constituicao, Raca.Sorte);
             PontosDeVidaMaxima = PontosDeVida;
-            PontosDeMana = Sortear.Atributo(Raca.Inteligencia, raca.Sorte);
+            PontosDeMana = Sortear.Atributo(Raca.Inteligencia, Raca.Sorte);
             PontosDeManaMaximo = PontosDeMana;
 
-            AtaqueFisico = Sortear.Atributo(Raca.Forca, raca.Sorte);
-            DefesaFisica = Sortear.Atributo(Raca.Constituicao, raca.Sorte);
-            AtaqueMagico = Sortear.Atributo(Raca.Inteligencia, raca.Sorte);
-            DefesaMagica = Sortear.Atributo(Raca.Inteligencia, raca.Sorte);
-            Velocidade = Sortear.Atributo(Raca.Destreza, raca.Sorte);
+            AtaqueFisico = Sortear.Atributo(Raca.Forca, Raca.Sorte);
+            DefesaFisica = Sortear.Atributo(Raca.Constituicao, Raca.Sorte);
+            AtaqueMagico = Sortear.Atributo(Raca.Inteligencia, Raca.Sorte);
+            DefesaMagica = Sortear.Atributo(Raca.Inteligencia, Raca.Sorte);
+            Velocidade = Sortear.Atributo(Raca.Destreza, Raca.Sorte);
             Emprego = new RPGEmprego("Desempregado");
             LocalAtualId = 0;
 

@@ -11,6 +11,7 @@ using ZaynBot.Core.Entidades;
 using ZaynBot.Data.Habilidades.Passivas;
 using ZaynBot.RPG.Comandos.Combate;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.Utilidades;
 
 namespace ZaynBot.Core.Comandos
 {
@@ -77,8 +78,17 @@ namespace ZaynBot.Core.Comandos
                     if (x.Personagem != null)
                     {
                         quantidade++;
-                        x.Personagem.Habilidades.Remove("regeneração");
-                        x.Personagem.Habilidades.Add(CuraMensagemHabilidade.CuraMensagemHabilidadeAb().Nome, CuraMensagemHabilidade.CuraMensagemHabilidadeAb());
+                        RPGRaça Raca = x.Personagem.Raca;
+                        x.Personagem.PontosDeVida = Sortear.Atributo(Raca.Constituicao, Raca.Sorte);
+                        x.Personagem.PontosDeVidaMaxima = x.Personagem.PontosDeVida;
+                        x.Personagem.PontosDeMana = Sortear.Atributo(Raca.Inteligencia, Raca.Sorte);
+                        x.Personagem.PontosDeManaMaximo = x.Personagem.PontosDeMana;
+
+                        x.Personagem.AtaqueFisico = Sortear.Atributo(Raca.Forca, Raca.Sorte);
+                        x.Personagem.DefesaFisica = Sortear.Atributo(Raca.Constituicao, Raca.Sorte);
+                        x.Personagem.AtaqueMagico = Sortear.Atributo(Raca.Inteligencia, Raca.Sorte);
+                        x.Personagem.DefesaMagica = Sortear.Atributo(Raca.Inteligencia, Raca.Sorte);
+                        x.Personagem.Velocidade = Sortear.Atributo(Raca.Destreza, Raca.Sorte);
                         ModuloBanco.UsuarioColecao.ReplaceOne(filtro, x);
                     }
                 }).ConfigureAwait(false);
