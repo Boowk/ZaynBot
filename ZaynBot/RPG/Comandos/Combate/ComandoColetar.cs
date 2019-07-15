@@ -30,7 +30,7 @@ namespace ZaynBot.RPG.Comandos.Combate
             personagem.ItensNoChao.TryGetValue(nome.ToLower(), out RPGItem itemColetado);
             if (itemColetado == null)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você não encontrou esse item no chão.");
+                await ctx.RespondAsync($"{ctx.User.Mention}, você não encontrou esse item.");
                 return;
             }
             if (itemColetado.Quantidade < quantidade)

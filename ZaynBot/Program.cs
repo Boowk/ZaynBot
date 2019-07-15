@@ -70,11 +70,11 @@ namespace ZaynBot
             Console.WriteLine("Modulo banco concluido.");
             new Areas();
             Console.WriteLine("Áreas concluido.");
-            new Raças();
+            new Racas();
             Console.WriteLine("Raças concluido.");
             new Missoes();
             Console.WriteLine("Missões concluido.");
-            new TodosOsItens();
+            new Itens();
             Console.WriteLine("Itens de consulta adicionados");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);

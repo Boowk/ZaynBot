@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ZaynBot.Data.Raças;
 using ZaynBot.RPG.Data.Raças;
 using ZaynBot.RPG.Entidades;
 
@@ -42,16 +43,9 @@ namespace ZaynBot.RPG.Comandos
             embed.WithColor(DiscordColor.Goldenrod);
             ListaEmojisSelecao emojis = new ListaEmojisSelecao(ctx);
             usuario = new RPGUsuario(ctx.User.Id);
-            List<int> RacasDisponiveisId = new List<int>
+            foreach (var item in Racas.Raca)
             {
-                0,
-                1,
-                2,
-                3,
-            };
-            foreach (var item in RacasDisponiveisId)
-            {
-                racas.Append($"{emojis.ProxEmoji()} - {ModuloBanco.RacaConsultar(item).Nome}\n");
+                racas.Append($"{emojis.ProxEmoji()} - {item.Value.Nome}\n");
             }
             embed.WithDescription(racas.ToString());
             DiscordMessage mensagem = await ctx.RespondAsync($"{ctx.User.Mention}, você está prestes a entrar em um mundo de fantasia. Bem vindo ao Dragons & Zayn's RPG! " +
@@ -63,15 +57,15 @@ namespace ZaynBot.RPG.Comandos
             Task[] opcoes;
             try
             {
-                opcoes = new Task[RacasDisponiveisId.Count];
+                opcoes = new Task[Racas.Raca.Count];
                 int index = 0;
-                foreach (var item in RacasDisponiveisId)
+                foreach (var item in Racas.Raca)
                 {
                     DiscordEmoji emoji = emojis.ProxEmoji();
                     await mensagem.CreateReactionAsync(emoji);
                     Func<DiscordEmoji, bool> emojiFun = x => x.Equals(emoji);
                     opcoes[index] = interacao.WaitForMessageReactionAsync(emojiFun, mensagem, ctx.User, TimeSpan.FromSeconds(60))
-                        .ContinueWith(x => GetRacaEscolhido(ModuloBanco.RacaConsultar(item), x.Result, usuario, ctx), _cts.Token);
+                        .ContinueWith(x => GetRacaEscolhido(Racas.GetRaca(item.Key), x.Result, usuario, ctx), _cts.Token);
                     index++;
                 }
             }

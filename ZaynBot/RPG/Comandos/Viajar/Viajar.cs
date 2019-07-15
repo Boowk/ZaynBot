@@ -94,8 +94,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
 
                             embed.WithColor(DiscordColor.Red);
                             RPGUsuario.UpdateRPGUsuario(usuario);
-                            Sortear sortear = new Sortear();
-                            if (sortear.Sucesso(0.5))
+                            if (Sortear.Sucesso(0.5))
                             {
                                 usuario.Personagem.LocalAtualId = item.RegiaoId;
                                 usuario.Personagem.ItensNoChao = new Dictionary<string, RPGItem>();

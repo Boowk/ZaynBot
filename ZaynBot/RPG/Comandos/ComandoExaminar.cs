@@ -25,7 +25,7 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa informar um nome válido.");
                 return;
             }
-            TodosOsItens.Oficiais.TryGetValue(nome.ToLower(), out RPGItem item);
+            RPGItem item = Itens.GetItem(nome);
             if (item == null)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, esse item é muito antigo, impossível examina-lo!");

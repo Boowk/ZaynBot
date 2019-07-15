@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using ZaynBot.Data.Raças;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 
@@ -24,8 +25,7 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, qual o nome da raça?");
                 return;
             }
-            string nomeMinusculo = nome.ToLower();
-            RPGRaça raca = ModuloBanco.RacaConsultar(nomeMinusculo);
+            RPGRaça raca = Racas.GetRaca(nome);
             if (raca != null)
             {
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

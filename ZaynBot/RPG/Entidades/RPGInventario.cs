@@ -12,14 +12,12 @@ namespace ZaynBot.RPG.Entidades
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PesoMaximo { get; set; }
         [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
-        public float PesoAtual { get; set; }
+        public float PesoAtual { get; set; } = 0;
         public Dictionary<string, RPGItem> Inventario { get; set; } = new Dictionary<string, RPGItem>();
 
-        public RPGInventario(RPGRaça raca)
-        {
-            PesoMaximo = 8 + raca.Forca + (raca.Destreza / 2);
-            PesoAtual = 0;
-        }
+        public RPGInventario(int forca, int destreza)
+            => PesoMaximo = 8 + forca + (destreza / 2);
+
 
         public bool Adicionar(RPGItem item, int quantidade)
         {
@@ -38,9 +36,9 @@ namespace ZaynBot.RPG.Entidades
             }
             else
             {
-                RPGItem f = item.Copia();
+                RPGItem f = item.Clone();
                 f.Quantidade = quantidade;
-                PesoAtual += item.Peso * quantidade;
+                PesoAtual += f.Peso * quantidade;
                 Inventario.Add(f);
             }
 

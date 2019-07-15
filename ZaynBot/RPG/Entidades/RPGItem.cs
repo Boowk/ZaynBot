@@ -29,9 +29,7 @@ namespace ZaynBot.RPG.Entidades
         public bool DesapareceAoPegar { get; set; }
         public string DesapareceAoPegarMensagem { get; set; }
 
-        public RPGItem Copia()
-        {
-            return (RPGItem)this.MemberwiseClone();
-        }
+        public RPGItem Clone()
+              => (RPGItem)MemberwiseClone();
     }
 }

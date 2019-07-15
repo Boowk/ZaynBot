@@ -117,27 +117,6 @@ namespace ZaynBot
         }
 
         #endregion
-        #region CRUD Raca
-
-        public static RPGRaça RacaConsultar(int id)
-        {
-            Expression<Func<RPGRaça, bool>> filtro = x => x.Id.Equals(id);
-            RPGRaça raca = RacaColecao.Find(filtro).FirstOrDefault();
-            if (raca != null)
-                return raca;
-            return null;
-        }
-
-        public static RPGRaça RacaConsultar(string nome)
-        {
-            Expression<Func<RPGRaça, bool>> filtro = x => x.Nome.ToLower() == nome;
-            RPGRaça raca = RacaColecao.Find(filtro).FirstOrDefault();
-            if (raca != null)
-                return raca;
-            return null;
-        }
-
-        #endregion
         #region CRUD Missao
 
         public static RPGMissao MissaoConsultar(int id)

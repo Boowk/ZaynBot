@@ -23,9 +23,8 @@ namespace ZaynBot.RPG
                         usuario.Personagem.Habilidades.TryGetValue("regeneração", out RPGHabilidade cura);
                         if (cura != null)
                         {
-                            Sortear sort = new Sortear();
 
-                            cura.AdicionarExp((float)sort.Valor(5, 25));
+                            cura.AdicionarExp(Sortear.Valor(5, 25));
                             float quantidadeCura = usuario.Personagem.DefesaMagica * cura.CuraQuantidadePorcentagem;
                             usuario.Personagem.PontosDeVida += quantidadeCura;
                             if (usuario.Personagem.PontosDeVida > usuario.Personagem.PontosDeVidaMaxima)

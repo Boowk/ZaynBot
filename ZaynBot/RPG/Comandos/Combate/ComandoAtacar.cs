@@ -72,13 +72,12 @@ namespace ZaynBot.RPG.Comandos.Combate
             // Definição do round - Aqui é feito o ataque do inimigo e 
             // é onde é definido quando será o turno do jogador.
             StringBuilder mensagemAtaquesInimigos = new StringBuilder();
-            Sortear s = new Sortear();
             while (personagem.Batalha.PontosDeAcao < personagem.Batalha.PontosDeAcaoBase)
             {
-                personagem.Batalha.PontosDeAcao += personagem.Velocidade / 4 + s.Valor(1, personagem.Raca.Sorte);
+                personagem.Batalha.PontosDeAcao += personagem.Velocidade / 4 + Sortear.Valor(1, personagem.Raca.Sorte);
                 foreach (var inimigosAtacando in personagem.Batalha.Inimigos)
                 {
-                    inimigosAtacando.PontosDeAcao += (inimigosAtacando.Velocidade / 4) + s.Valor(1, 10);
+                    inimigosAtacando.PontosDeAcao += (inimigosAtacando.Velocidade / 4) + Sortear.Valor(1, 10);
                     if (inimigosAtacando.PontosDeAcao >= personagem.Batalha.PontosDeAcaoBase)
                     {
                         // Ataque do inimigo
@@ -151,15 +150,14 @@ namespace ZaynBot.RPG.Comandos.Combate
 
 
                     StringBuilder mensagemDrops = new StringBuilder();
-                    Sortear sortear = new Sortear();
                     foreach (var item in inimigoAtacado.ChanceItemUnico)
                     {
-                        if (sortear.Sucesso(item.ChanceDeCair))
+                        if (Sortear.Sucesso(item.ChanceDeCair))
                         {
                             if (personagem.ItensNoChao == null)
                                 personagem.ItensNoChao = new Dictionary<string, RPGItem>();
                             personagem.ItensNoChao.TryGetValue(item.Item.Nome, out RPGItem itemSorteado);
-                            int quantidade = sortear.Valor(1, item.QuantidadeMaxima);
+                            int quantidade = Sortear.Valor(1, item.QuantidadeMaxima);
                             item.Item.Quantidade = quantidade;
                             if (itemSorteado == null)
                                 personagem.ItensNoChao.Add(item.Item.Nome, item.Item);
@@ -172,10 +170,10 @@ namespace ZaynBot.RPG.Comandos.Combate
 
                     foreach (var item in inimigoAtacado.ChanceItemTodos)
                     {
-                        if (sortear.Sucesso(item.ChanceDeCair))
+                        if (Sortear.Sucesso(item.ChanceDeCair))
                         {
                             personagem.ItensNoChao.TryGetValue(item.Item.Nome, out RPGItem itemSorteado);
-                            int quantidade = sortear.Valor(1, item.QuantidadeMaxima);
+                            int quantidade = Sortear.Valor(1, item.QuantidadeMaxima);
                             item.Item.Quantidade = quantidade;
                             if (itemSorteado == null)
                                 personagem.ItensNoChao.Add(item.Item.Nome, item.Item);
@@ -199,8 +197,7 @@ namespace ZaynBot.RPG.Comandos.Combate
         public static float CalcDano(float resistencia, float dano)
         {
             float porcentagemFinal = 100 / (100 + resistencia);
-            Sortear s = new Sortear();
-            return (s.Valor((dano / 2), dano)) * porcentagemFinal;
+            return (Sortear.Valor((dano / 2), dano)) * porcentagemFinal;
         }
     }
 }
