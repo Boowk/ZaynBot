@@ -45,7 +45,7 @@ namespace ZaynBot.RPG.Comandos
             usuario = new RPGUsuario(ctx.User.Id);
             foreach (var item in Racas.Raca)
             {
-                racas.Append($"{emojis.ProxEmoji()} - {item.Value.Nome}\n");
+                racas.Append($"{emojis.ProxEmoji()} - {item.Value.Nome.PrimeiraLetraMaiuscula()}\n");
             }
             embed.WithDescription(racas.ToString());
             DiscordMessage mensagem = await ctx.RespondAsync($"{ctx.User.Mention}, você está prestes a entrar em um mundo de fantasia. Bem vindo ao Dragons & Zayn's RPG! " +

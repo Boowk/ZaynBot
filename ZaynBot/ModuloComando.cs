@@ -76,7 +76,7 @@ namespace ZaynBot
                 {
                     int tempo = Convert.ToInt32((my.GetRemainingCooldown(ctx).TotalSeconds));
                     await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + tempo + " segundos.");
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author} deve esperar {tempo} segundos para usar {ctx.Message.Content}", DateTime.Now);
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} deve esperar {tempo} segundos para usar {ctx.Message.Content}", DateTime.Now);
                     return;
                 }
 
@@ -84,12 +84,12 @@ namespace ZaynBot
             if (e.Exception is ArgumentException ax)
             {
                 await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Message.Author} Colocou parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Message.Author.Id} Colocou parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
                 return;
             }
             if (e.Exception is UnauthorizedException)
             {
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"Sem permissão para falar no canal {ctx.Channel.Name}.", DateTime.Now);
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"Sem permissão para falar no canal {ctx.Channel.Id}.", DateTime.Now);
                 return;
             }
             if (e.Exception is InvalidOperationException || e.Exception is CommandNotFoundException)
@@ -100,20 +100,20 @@ namespace ZaynBot
                         DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
                         await ctx.RespondAsync($"**{x} | {ctx.User.Mention}, o comando{e.Context.RawArgumentString} não existe.**");
                     }
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
                 return;
             }
             if (e.Exception is PersonagemNullException px)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não tem um personagem.", DateTime.Now);
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id}, tentou executar o comando {ctx.Message.Content} mas não tem um personagem.", DateTime.Now);
                 return;
             }
 
             if (e.Exception is NotFoundException nx)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas colocou um usuario inválido", DateTime.Now);
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id}, tentou executar o comando {ctx.Message.Content} mas colocou um usuario inválido", DateTime.Now);
                 return;
             }
             //if(e.Exception is AggregateException)
@@ -121,13 +121,13 @@ namespace ZaynBot
             //    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
             //    return;
             //}
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Username} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
             return;
         }
 
         private Task ComandoExecutado(CommandExecutionEventArgs e)
         {
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{e.Context.User.Username} executou com sucesso '{e.Command.QualifiedName}'", DateTime.Now);
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{e.Context.User.Id} executou com sucesso '{e.Command.QualifiedName}'", DateTime.Now);
             return Task.CompletedTask;
         }
     }
