@@ -16,7 +16,14 @@ namespace ZaynBot.Core
         private string _nome = null;
         private string _descricao = null;
         private string _abreviacoes = null;
-        private string _subcomandos = null;
+
+        private StringBuilder MessageBuilder { get; }
+
+        public AjudaFormatador()
+        {
+            this.MessageBuilder = new StringBuilder();
+        }
+
 
         public IHelpFormatter WithCommandName(string nome)
         {
@@ -45,12 +52,27 @@ namespace ZaynBot.Core
 
         public IHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            _subcomandos = string.Join(", ", subcommands.Select(x => Formatter.InlineCode(x.Name)));
+            if (_nome == null)
+            {
+                this.MessageBuilder.Append("**Comandos:** ");
+            }
+            MessageBuilder.AppendLine(string.Join(", ", subcommands.Select(xc => xc.Name)));
             return this;
         }
 
         public CommandHelpMessage Build()
         {
+            if (_nome == null)
+            {
+                StringBuilder str = new StringBuilder();
+                str.Append("```css\nLista de comandos```\n" +
+                    "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n");
+                str.Append(MessageBuilder.ToString());
+                str.Append("```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
+
+                return new CommandHelpMessage(str.ToString());
+            }
+
             EmbedBuilder = new DiscordEmbedBuilder();
             EmbedBuilder.WithColor(DiscordColor.Cyan);
             EmbedBuilder.WithTitle($"**{_nome}**");
@@ -58,8 +80,9 @@ namespace ZaynBot.Core
             EmbedBuilder.WithDescription(_descricao);
             if (_abreviacoes != null)
                 EmbedBuilder.AddField("**Abreviações**", _abreviacoes);
-            if (_subcomandos != null)
-                EmbedBuilder.AddField("**Subcomandos**", _subcomandos);
+            if (MessageBuilder.ToString() != "")
+                EmbedBuilder.AddField("**Subcomandos**", MessageBuilder.ToString());
+
             return new CommandHelpMessage(embed: EmbedBuilder.Build());
         }
     }

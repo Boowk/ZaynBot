@@ -1,32 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using ZaynBot.RPG.Data.Raças;
 using ZaynBot.RPG.Entidades.Mapa;
 using ZaynBot.RPG.Exceptions;
-using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
 {
-    [BsonIgnoreExtraElements]
     public class RPGUsuario
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
         public ulong Id { get; set; }
         public DateTime DataContaCriada { get; set; } = DateTime.UtcNow;
         public DateTime DataUltimaMensagemEnviada { get; set; } = DateTime.UtcNow;
-        public int Estrelas { get; set; }
+        public int Estrelas { get; set; } = 0;
         public RPGPersonagem Personagem { get; set; }
 
         public RPGUsuario(ulong id)
-        {
-            Id = id;
-        }
+            => Id = id;
 
         /// <summary>
         /// Inserido sempre no começo dos comandos em que envolve personagem.

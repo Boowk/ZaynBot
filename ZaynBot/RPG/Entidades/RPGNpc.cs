@@ -1,10 +1,7 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-    [BsonIgnoreExtraElements]
     public class RPGNpc
     {
         public string Nome { get; set; } //Para encontra-lo
@@ -15,18 +12,15 @@ namespace ZaynBot.RPG.Entidades
         public int FalarComSomenteSemMissaoConcluidaId { get; set; }
 
         public List<RPGNpcPergunta> Perguntas { get; set; } = new List<RPGNpcPergunta>();
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<string, NpcVenda> ItensAVenda { get; set; }
     }
 
-    [BsonIgnoreExtraElements]
     public class NpcVenda
     {
         public int Preco { get; set; }
         public RPGItem Item { get; set; }
     }
 
-    [BsonIgnoreExtraElements]
     public class RPGNpcPergunta
     {
         public string Pergunta { get; set; }

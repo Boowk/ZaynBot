@@ -1,36 +1,24 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using ZaynBot.Data.Habilidades.Passivas;
 using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
 {
-    [BsonIgnoreExtraElements]
     public class RPGPersonagem
     {
         public RPGRaça Raca { get; set; }
 
         #region Atributos
 
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVida { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeVidaMaxima { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeMana { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PontosDeManaMaximo { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float AtaqueFisico { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DefesaFisica { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float AtaqueMagico { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float DefesaMagica { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float Velocidade { get; set; }
 
         #endregion
@@ -40,13 +28,10 @@ namespace ZaynBot.RPG.Entidades
         //[BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         //public float Sede { get; set; }
 
-        [BsonRepresentation(BsonType.Int32, AllowTruncation = true)]
         public int LocalAtualId { get; set; }
-        [BsonRepresentation(BsonType.Document, AllowTruncation = true)]
         public Dictionary<string, RPGItem> ItensNoChao { get; set; } = new Dictionary<string, RPGItem>();
         public List<int> MissoesConcluidasId { get; set; } = new List<int>();
         public RPGMissao MissaoEmAndamento { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float Essencia { get; set; } = 0;
 
         public RPGEquipamento Equipamento { get; set; } = new RPGEquipamento();

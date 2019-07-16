@@ -81,7 +81,7 @@ namespace ZaynBot.RPG.Comandos
             StringBuilder sb = new StringBuilder();
             if (personagem.MissoesConcluidasId.Count != 0)
                 foreach (var item in personagem.MissoesConcluidasId)
-                    sb.Append($"{ModuloBanco.MissaoConsultar(item).Nome}\n");
+                    sb.Append($"{ModuloBanco.GetMissao(item).Nome}\n");
             else
                 sb.Append("Nenhuma missão concluída.");
             embed.WithDescription(sb.ToString());

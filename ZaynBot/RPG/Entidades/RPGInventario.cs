@@ -1,23 +1,15 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-    [BsonIgnoreExtraElements]
     public class RPGInventario
     {
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PesoMaximo { get; set; }
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public float PesoAtual { get; set; } = 0;
         public Dictionary<string, RPGItem> Inventario { get; set; } = new Dictionary<string, RPGItem>();
 
         public RPGInventario(int forca, int destreza)
             => PesoMaximo = 8 + forca + (destreza / 2);
-
 
         public bool Adicionar(RPGItem item, int quantidade)
         {

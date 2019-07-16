@@ -1,4 +1,6 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
 using System.Linq.Expressions;
@@ -24,6 +26,97 @@ namespace ZaynBot
         {
             IMongoClient _client = new MongoClient("mongodb://localhost");
             Database = _client.GetDatabase("zaynbot");
+
+            #region Mapa
+            //           BsonSerializer.RegisterSerializer(
+            // typeof(decimal),
+            //  new DecimalSerializer(BsonType.Double,
+            //  new RepresentationConverter(
+            //    true, //allow truncation
+            //    true // allow overflow, return decimal.MinValue or decimal.MaxValue instead
+            //   ))
+            //);
+            BsonClassMap.RegisterClassMap<RPGUsuario>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+                m.MapIdMember(x => x.Id);
+                m.MapMember(c => c.Id).SetSerializer(new UInt64Serializer(BsonType.Int64));
+            });
+            BsonClassMap.RegisterClassMap<RPGTitulo>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGRaça>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+
+            });
+            BsonClassMap.RegisterClassMap<RPGPersonagem>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGNpc>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGMob>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGMissao>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+                m.MapIdMember(x => x.Id);
+            });
+            BsonClassMap.RegisterClassMap<RPGItemDrop>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGItem>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGInventario>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGHabilidade>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGGuilda>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGEquipamento>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGEmprego>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            BsonClassMap.RegisterClassMap<RPGBatalha>(m =>
+            {
+                m.AutoMap();
+                m.SetIgnoreExtraElements(true);
+            });
+            #endregion
+
             RegiaoColecao = Database.GetCollection<RPGRegiao>("regioes");
             UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
             GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
@@ -117,9 +210,9 @@ namespace ZaynBot
         #endregion
         #region CRUD Missao
 
-        public static RPGMissao MissaoConsultar(int id)
+        public static RPGMissao GetMissao(int id)
         {
-            Expression<Func<RPGMissao, bool>> filtro = x => x.Id.Equals(id);
+            Expression<Func<RPGMissao, bool>> filtro = x => x.Id == id;
             RPGMissao missao = MissaoColecao.Find(filtro).FirstOrDefault();
             if (missao != null)
                 return missao;

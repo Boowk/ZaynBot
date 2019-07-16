@@ -1,9 +1,6 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-
+﻿
 namespace ZaynBot.RPG.Entidades
 {
-    [BsonIgnoreExtraElements]
     public class RPGRaça
     {
         public string Nome { get; set; }
@@ -15,9 +12,7 @@ namespace ZaynBot.RPG.Entidades
         public int Constituicao { get; set; }
         public int Sorte { get; set; }
         public int Nivel { get; set; } = 1;
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public double ExperienciaProximoNivel { get; set; } = 1000;
-        [BsonRepresentation(BsonType.Double, AllowTruncation = true)]
         public double ExperienciaAtual { get; set; } = 0;
         public int PontosDisponiveis { get; set; } = 0;
 

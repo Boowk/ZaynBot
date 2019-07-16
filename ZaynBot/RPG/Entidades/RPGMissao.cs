@@ -1,15 +1,9 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
     public class RPGMissao
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.Int64, AllowTruncation = true)]
         public int Id { get; set; } 
         public string Nome { get; set; }
         public string Descricao { get; set; }

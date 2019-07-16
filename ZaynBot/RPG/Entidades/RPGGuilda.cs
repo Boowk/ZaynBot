@@ -1,11 +1,9 @@
 ﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-    [BsonIgnoreExtraElements]
     public class RPGGuilda
     {
         public ObjectId Id { get; set; }
@@ -16,7 +14,6 @@ namespace ZaynBot.RPG.Entidades
         public List<Convite> Convites { get; set; }
     }
 
-    [BsonIgnoreExtraElements]
     public class Convite
     {
         public ulong IdUsuario { get; set; }
