@@ -16,6 +16,8 @@ using ZaynBot.Utilidades;
 namespace ZaynBot.Core.Comandos
 {
     [Group("adm")]
+    [Hidden]
+    [RequireOwner]
     [Description("Comandos administrativos. - Somente disponível após doação. Verificar no comando convite.")]
     public class ComandosAdministracao
     {
@@ -120,6 +122,7 @@ namespace ZaynBot.Core.Comandos
 
         [Command("estrelas")]
         [RequireOwner]
+        [Hidden]
         public async Task Estrelas(CommandContext ctx, int quantidade, DiscordMember user = null)
         {
             if (user == null)
