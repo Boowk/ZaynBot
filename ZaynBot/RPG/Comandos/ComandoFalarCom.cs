@@ -17,8 +17,8 @@ namespace ZaynBot.RPG.Comandos
         [Command("falarcom")]
         [Aliases("fc")]
         [Description("Permite falar com os npcs.\n\n" +
-        "Uso: z!falar com *[npc]*\n\n" +
-        "Exemplo: z!falar com *voz estranha*")]
+        "Uso: z!falarcom *[npc]*\n\n" +
+        "Exemplo: z!falarcom *voz estranha*")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task ComandoFalarComAb(CommandContext ctx, [RemainingText]string nome)
         {

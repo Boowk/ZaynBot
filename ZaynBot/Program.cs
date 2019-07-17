@@ -47,7 +47,11 @@ namespace ZaynBot
                 TokenType = TokenType.Bot,
                 EnableCompression = true,
                 AutoReconnect = true,
+#if DEBUG
                 LogLevel = LogLevel.Debug,
+#else
+                LogLevel = LogLevel.Info,
+#endif
                 UseInternalLogHandler = true,
             };
             _cliente = new ModuloCliente(cfg);
@@ -59,7 +63,7 @@ namespace ZaynBot
                 StringPrefix = _config.PrefixTeste,
 #else
                 StringPrefix = _config.Prefix,
-#endif                                       
+#endif
                 EnableDms = false,
                 CaseSensitive = false,
                 EnableDefaultHelp = false,

@@ -8,8 +8,10 @@ namespace ZaynBot.RPG.Entidades
         public string Descricao { get; set; }
         public EnumTipoItem TipoItem { get; set; }
         public int Quantidade { get; set; } = 1;
-        public float PrecoBase { get; set; }
-        public float Peso { get; set; }
+        public float PrecoBase { get; set; } = 0;
+        public float Peso { get; set; } = 0.1F;
+
+
 
         public bool CompletaMissaoAoPegar { get; set; }
         public int CompletaMissaoAoPegarId { get; set; }
@@ -20,6 +22,11 @@ namespace ZaynBot.RPG.Entidades
 
         public bool DesapareceAoPegar { get; set; }
         public string DesapareceAoPegarMensagem { get; set; }
+
+        public RPGItem(string nome)
+        {
+            Nome = nome.ToLower();
+        }
 
         public RPGItem Clone()
               => (RPGItem)MemberwiseClone();

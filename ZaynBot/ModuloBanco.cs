@@ -1,5 +1,6 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
@@ -28,14 +29,11 @@ namespace ZaynBot
             Database = _client.GetDatabase("zaynbot");
 
             #region Mapa
-            //           BsonSerializer.RegisterSerializer(
-            // typeof(decimal),
-            //  new DecimalSerializer(BsonType.Double,
-            //  new RepresentationConverter(
-            //    true, //allow truncation
-            //    true // allow overflow, return decimal.MinValue or decimal.MaxValue instead
-            //   ))
-            //);
+            BsonSerializer.RegisterSerializer(typeof(float),
+                new SingleSerializer(BsonType.Double, new RepresentationConverter(
+                true, //allow truncation
+                true // allow overflow, return decimal.MinValue or decimal.MaxValue instead
+            )));
             BsonClassMap.RegisterClassMap<RPGUsuario>(m =>
             {
                 m.AutoMap();

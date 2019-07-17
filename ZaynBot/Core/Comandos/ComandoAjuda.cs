@@ -15,20 +15,6 @@ namespace ZaynBot.Core.Comandos
         {
             await ctx.TriggerTypingAsync();
             await ctx.CommandsNext.DefaultHelpAsync(ctx, comando); 
-
-            //if (comando.IsNullOrEmpty())
-            //{
-            //    await ctx.RespondAsync("```css\nLista de comandos```\n" +
-            //        "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n" +
-            //        "**Core -** `ajuda` `convite` `informacao` `votar`\n" +
-            //        "**RPG -** `reencarnar` `localizacao` `norte` `sul` `leste` `oeste` `falar com` `perfil` `personagem` `atacar` " +
-            //        "`inimigos` `missao` `raca` `mochila` `pegar` `explorar` `coletar` `habilidades` `habilidade` `examinar`\n" +
-            //        "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
-            //}
-            //else
-            //{
-               
-            //}
         }
     }
 }

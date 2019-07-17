@@ -7,5 +7,6 @@
         Missao,
         Venda,
         Moeda,
+        Recurso,
     }
 }
