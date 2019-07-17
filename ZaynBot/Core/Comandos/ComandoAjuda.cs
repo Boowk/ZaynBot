@@ -7,7 +7,7 @@ namespace ZaynBot.Core.Comandos
     public class ComandoAjuda
     {
         [Command("ajuda")]
-        [Aliases("h", "?")]
+        [Aliases("h", "?", "help")]
         [Description("Exibe os comandos, a descrição, suas abreviações e exemplos.\n\n" +
             "Uso: z!ajuda [comando]\n\n" +
             "Exemplo: z!ajuda ajuda")]

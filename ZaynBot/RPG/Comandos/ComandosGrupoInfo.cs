@@ -10,18 +10,18 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    [Group("info")]
-    [Description("Comandos informativos.")]
+    //[Group("info")]
+    //[Description("Comandos informativos.")]
     public class ComandosGrupoInfo
     {
-        [Command("ping")]
-        [Description("Exibe o tempo de resposta do bot ao servidor do discord.")]
-        public async Task ComandoInfoPing(CommandContext ctx)
-        {
-            await ctx.TriggerTypingAsync();
-            var emoji = DiscordEmoji.FromName(ctx.Client, ":ping_pong:");
-            await ctx.RespondAsync($"{emoji} Pong! Ping: {ctx.Client.Ping}ms");
-        }
+        //[Command("ping")]
+        //[Description("Exibe o tempo de resposta do bot ao servidor do discord.")]
+        //public async Task ComandoInfoPing(CommandContext ctx)
+        //{
+        //    await ctx.TriggerTypingAsync();
+        //    var emoji = DiscordEmoji.FromName(ctx.Client, ":ping_pong:");
+        //    await ctx.RespondAsync($"{emoji} Pong! Ping: {ctx.Client.Ping}ms");
+        //}
 
         //[Group("ranque")]
         //[Description("Comandos comparativos.")]

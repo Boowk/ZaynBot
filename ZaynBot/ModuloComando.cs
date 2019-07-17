@@ -98,9 +98,9 @@ namespace ZaynBot
                     if (e.Command.Name == "ajuda")
                     {
                         DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
-                        await ctx.RespondAsync($"**{x} | {ctx.User.Mention}, o comando{e.Context.RawArgumentString} não existe.**");
+                        await ctx.RespondAsync($"**{x} | {ctx.User.Mention} o comando{e.Context.RawArgumentString} não existe.**");
                     }
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id}, tentou o comando {ctx.Message.Content} não existente.", DateTime.Now);
+                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
                 return;
             }
             if (e.Exception is PersonagemNullException px)
