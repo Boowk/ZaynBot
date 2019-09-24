@@ -15,11 +15,11 @@ namespace ZaynBot.Core
 {
     public class IAjudaComando : BaseHelpFormatter
     {
+        private DiscordEmbedBuilder embedBuilder;
         public IAjudaComando(CommandContext ctx) : base(ctx)
         {
 
         }
-        //private DiscordEmbedBuilder _embedBuilder;
         //private string _nome = null;
         //private string _uso = null;
         //private string _descricao = null;

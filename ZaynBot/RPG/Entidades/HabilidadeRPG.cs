@@ -1,10 +1,12 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
+using ZaynBot.RPG.Habilidades;
 
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    [BsonDiscriminator(RootClass = true)]
+    [BsonDiscriminator("Hab")]
+    [BsonKnownTypes(typeof(DesarmadoHabilidade), typeof(EsmaganteHabilidade), typeof(PerfuranteHabilidade))]
     public class HabilidadeRPG : ProgressoRPG
     {
         public string Nome { get; set; }

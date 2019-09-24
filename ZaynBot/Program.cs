@@ -49,7 +49,7 @@ namespace ZaynBot
                 GatewayCompressionLevel = GatewayCompressionLevel.Stream,
                 AutoReconnect = true,
 #if DEBUG
-                LogLevel = LogLevel.Error,
+                LogLevel = LogLevel.Debug,
 #else
                 LogLevel = LogLevel.Info,
 #endif
