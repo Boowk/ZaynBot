@@ -4,9 +4,9 @@ using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
-using System.Linq.Expressions;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
+using static ZaynBot.RPG.Entidades.MobRPG;
 
 namespace ZaynBot
 {
@@ -14,14 +14,12 @@ namespace ZaynBot
     {
         public static IMongoDatabase Database { get; private set; }
 
-        #region Colecoes
-
-        public static IMongoCollection<RPGRegiao> RegiaoColecao { get; private set; }
-        public static IMongoCollection<RPGUsuario> UsuarioColecao { get; private set; }
+        public static IMongoCollection<RegiaoRPG> RegiaoColecao { get; private set; }
+        public static IMongoCollection<UsuarioRPG> UsuarioColecao { get; private set; }
         public static IMongoCollection<RPGGuilda> GuildaColecao { get; private set; }
-        public static IMongoCollection<RPGMissao> MissaoColecao { get; private set; }
 
-        #endregion
+        public static IMongoCollection<RacaRPG> RacaColecao { get; private set; }
+        public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
 
         public ModuloBanco()
         {
@@ -34,61 +32,32 @@ namespace ZaynBot
                 true, //allow truncation
                 true // allow overflow, return decimal.MinValue or decimal.MaxValue instead
             )));
-            BsonClassMap.RegisterClassMap<RPGUsuario>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-                m.MapIdMember(x => x.Id);
-                m.MapMember(c => c.Id).SetSerializer(new UInt64Serializer(BsonType.Int64));
-            });
-            BsonClassMap.RegisterClassMap<RPGTitulo>(m =>
+            BsonClassMap.RegisterClassMap<PersonagemRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGRaça>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-
-            });
-            BsonClassMap.RegisterClassMap<RPGPersonagem>(m =>
+            BsonClassMap.RegisterClassMap<MobRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGNpc>(m =>
+            BsonClassMap.RegisterClassMap<MobItemDropRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGMob>(m =>
+            BsonClassMap.RegisterClassMap<ItemRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGMissao>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-                m.MapIdMember(x => x.Id);
-            });
-            BsonClassMap.RegisterClassMap<RPGItemDrop>(m =>
+            BsonClassMap.RegisterClassMap<ItemDataRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGItem>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGInventario>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGHabilidade>(m =>
+            BsonClassMap.RegisterClassMap<MochilaRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
@@ -98,124 +67,54 @@ namespace ZaynBot
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGEquipamento>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGEmprego>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGBatalha>(m =>
+            BsonClassMap.RegisterClassMap<BatalhaRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
             #endregion
 
-            RegiaoColecao = Database.GetCollection<RPGRegiao>("regioes");
-            UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
+            RegiaoColecao = Database.GetCollection<RegiaoRPG>("regioes");
+            UsuarioColecao = Database.GetCollection<UsuarioRPG>("usuarios");
             GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
-            MissaoColecao = Database.GetCollection<RPGMissao>("missoes");
+
+            RacaColecao = Database.GetCollection<RacaRPG>("racas");
+            ItemColecao = Database.GetCollection<ItemRPG>("itens");
         }
 
         #region CRUD Usuario
 
-        public static RPGUsuario GetUsuario(ulong id)
-        {
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id == id;
-            return UsuarioColecao.Find(filtro).FirstOrDefault();
-        }
+        public static UsuarioRPG UsuarioGet(ulong id)
+            => UsuarioColecao.Find(x => x.Id == id).FirstOrDefault();
 
-        public static void UpdateUsuario(RPGUsuario usuario)
-        {
-            Expression<Func<RPGUsuario, bool>> filtro = x => x.Id == usuario.Id;
-            UsuarioColecao.ReplaceOne(filtro, usuario);
-        }
+        public static void UsuarioEdit(UsuarioRPG usuario)
+            => UsuarioColecao.ReplaceOne(x => x.Id == usuario.Id, usuario);
 
         #endregion
-        #region CRUD Guilda
 
-        /// <summary>
-        /// Consulta por uma guilda no banco de dados.
-        /// </summary>
-        /// <param name="guildaId"></param>
-        /// <returns>Guilda</returns>
-        public static RPGGuilda GuildaConsultar(ObjectId guildaId)
-        {
-            Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guildaId);
-            RPGGuilda guilda = GuildaColecao.Find(filtro).FirstOrDefault();
-            if (guilda != null)
-                return guilda;
-            return null;
-        }
-
-        public static ObjectId GuildaConsultarCriador(ulong dono)
-        {
-            Expression<Func<RPGGuilda, bool>> filtro = x => x.IdDono.Equals(dono);
-            RPGGuilda guilda = GuildaColecao.Find(filtro).FirstOrDefault();
-            return guilda.Id;
-        }
-
-        /// <summary>
-        /// Consulta por uma guilda no banco de dados.
-        /// </summary>
-        /// <param name="idGuilda"></param>
-        /// <returns>Guilda</returns>
-        public static bool GuildaCriar(RPGGuilda guilda)
-        {
-            Expression<Func<RPGGuilda, bool>> filtro = x => x.Nome.Equals(guilda.Nome);
-            RPGGuilda guildaAchou = GuildaColecao.Find(filtro).FirstOrDefault();
-            if (guildaAchou != null)
-            {
-                return false;
-            }
-
-            guildaAchou = new RPGGuilda()
-            {
-                Convites = new System.Collections.Generic.List<Convite>(),
-                Nome = guilda.Nome,
-                IdDono = guilda.IdDono,
-                Membros = new System.Collections.Generic.List<ulong>(),
-                Descricao = "Sem descrição",
-                Id = new ObjectId(),
-            };
-            GuildaColecao.InsertOne(guildaAchou);
-            return true;
-        }
-
-        /// <summary>
-        /// Altera uma guilda no banco de dados.
-        /// </summary>
-        /// <param name="idGuilda"></param>
-        public static void GuildaAlterar(RPGGuilda guilda)
-        {
-            Expression<Func<RPGGuilda, bool>> filtro = x => x.Id.Equals(guilda.Id);
-            GuildaColecao.ReplaceOne(filtro, guilda);
-        }
-
-        #endregion
         #region CRUD Regiao
 
-        public static RPGRegiao GetRPGRegiao(int id)
+        public static RegiaoRPG RegiaoGet(int id)
+            => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
+
+        #endregion
+
+        #region CRUD Raca
+
+        public static RacaRPG RacaGetRandom()
         {
-            Expression<Func<RPGRegiao, bool>> filtro = x => x.Id == id;
-            return RegiaoColecao.Find(filtro).FirstOrDefault();
+            int count = (int)RacaColecao.CountDocuments(FilterDefinition<RacaRPG>.Empty);
+            Random r = new Random();
+            int random = (int)r.Next(0, count);
+            return RacaColecao.Find(FilterDefinition<RacaRPG>.Empty).Skip(random).Limit(1).First();
         }
 
         #endregion
-        #region CRUD Missao
 
-        public static RPGMissao GetMissao(int id)
-        {
-            Expression<Func<RPGMissao, bool>> filtro = x => x.Id == id;
-            RPGMissao missao = MissaoColecao.Find(filtro).FirstOrDefault();
-            if (missao != null)
-                return missao;
-            return null;
-        }
+        #region CRUD Item
+
+        public static ItemRPG ItemGet(int id)
+             => ItemColecao.Find(x => x.Id == id).FirstOrDefault();
 
         #endregion
     }

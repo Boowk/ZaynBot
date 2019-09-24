@@ -1,0 +1,22 @@
+  float porcentagemFinal = 100 / (100 + resistencia);
+100 / 100 + 30
+0,7692307692307692 = 79,92
+    //        // Dano minimo sempre será o valor total dividido por 2. 
+    //        return (Sortear.Valor((dano / 2), dano)) * porcentagemFinal;
+
+
+ArmorRating = ((0.35 + 0.0065 * Skill ) * BaseArmorRating) * (ArmorHealth / MaxArmorHealth)
+skill 1
+armadura 50
+17,825 de armor
+
+25*0,95*0,215
+BaseWeaponDamage * 0.5 * ( 0.75 + Força ou agilidade * 0.005 ) * ( 0.2 + BladeSkill * 0.015 ) * ( ArmaVida/ArmaVidaMax + 1 )/2)
+
+dano 50
+forca 40
+skill 1
+vida 50/50
+5,10625‬ de dano
+
+monstros não tem armadura

@@ -5,8 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
 using ZaynBot.Data.Itens;
-using ZaynBot.Data.Missoes;
-using ZaynBot.Data.Raças;
+using ZaynBot.Data.Racas;
 using ZaynBot.RPG.Data.Mundos.Anker;
 
 namespace ZaynBot
@@ -45,10 +44,11 @@ namespace ZaynBot
                 Token = _config.Token,
 #endif
                 TokenType = TokenType.Bot,
-                EnableCompression = true,
+                ReconnectIndefinitely = true,
+                GatewayCompressionLevel = GatewayCompressionLevel.Stream,
                 AutoReconnect = true,
 #if DEBUG
-                LogLevel = LogLevel.Debug,
+                LogLevel = LogLevel.Error,
 #else
                 LogLevel = LogLevel.Info,
 #endif
@@ -56,14 +56,15 @@ namespace ZaynBot
             };
             _cliente = new ModuloCliente(cfg);
 
+            string[] prefix = new string[1];
+#if DEBUG
+            prefix[0] = _config.PrefixTeste;
+#else
+            prefix[0] = _config.Prefix;
+#endif
             _todosOsComandos = new ModuloComando(new CommandsNextConfiguration
             {
-
-#if DEBUG
-                StringPrefix = _config.PrefixTeste,
-#else
-                StringPrefix = _config.Prefix,
-#endif
+                StringPrefixes = prefix,
                 EnableDms = false,
                 CaseSensitive = false,
                 EnableDefaultHelp = false,
@@ -71,15 +72,13 @@ namespace ZaynBot
                 IgnoreExtraArguments = true,
             }, ModuloCliente.Client);
             new ModuloBanco();
-            Console.WriteLine("Modulo banco concluido.");
-            new Areas();
+            Console.WriteLine("Banco concluido.");
+            new TodasAsAreas();
             Console.WriteLine("Áreas concluido.");
-            new Racas();
+            new TodasAsRacas();
             Console.WriteLine("Raças concluido.");
-            new Missoes();
-            Console.WriteLine("Missões concluido.");
-            new Itens();
-            Console.WriteLine("Itens de consulta adicionados");
+            new TodosOsItens();
+            Console.WriteLine("Itens concluido.");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }

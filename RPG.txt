@@ -1,0 +1,105 @@
+Habilidades
+
+Perfurante
+Esmagante
+A distancia
+Desarmado
+Reparador
+Armadura pesada
+Armadura leve
+Mercador = se não for nivel 100, sempre vendera mais barato e sempre comprara mais caro
+Alquimia
+//Magias
+Ilusão
+Conjuracao
+Misticismo
+Alteração
+Destruição
+Restauração
+Habilidades só vão do nivel 0 a 100
+Ganha xp ao fazer ações 1,104
+
+Atributos básicos:
+
+Força
+Inteligencia
+Força de vontade = Mais para frente, alguns testes de skills, mas agr ajuda na regen da mana
+Agilidade = combate quem ataca etc
+Resistencia
+Ganha xp ao matar mobs
+
+Atributos derivados:
+
+Vida = resistencia *2. Quando o personagem evolui de nivel, se ganha resistencia / 10 de vida
+Magia = (inteligencia× 2) + bonus da alma + bonus da raça
+Magia regen = 0.01 * (0.75 + 0.02 * Willpower) * TotalMagicka.
+custo magias = BaseCost * (1.4 - 0.012 * Alteracao etc..)
+Fome = resistencia*1.6
+perde fome = (força * 1,3) / resistencia
+só ataques e viagens
+
+
+dano com as mãos =  Health_Damage = 1 + 10.5 * (Strength/100) * (HandToHandSkill/100)
+danoArma/danoMax =  BaseWeaponDamage * 0.5 * ( 0.75 + Força ou agilidade * 0.005 ) * ( 0.2 + BladeSkill * 0.015 ) * ( ArmaVida/ArmaVidaMax)
+Defesa/resistencia = BaseArmorRating * ( 0.35 + 0.0065 * OpponentArmorSkill) * ArmorHealth / MaxArmorHealth
+             resistenciaArmadura = 100 / (100 + resistencia);
+            // Dano minimo sempre será o valor total dividido por 2. 
+			danoMax = danoArma * ((Fome / MaxFome + 1 ) / 2)
+            Sortear((danoMax / 2), danoMax)) * porcentagemFinal;
+Os atributos base são do nível 1 a 100. Sempre que o personagem evoluir de nível, você pode aumentar 1 atributo.
+Alguns eventos dão mais pontos para gastar
+
+
+WeaponHealth degrades by (0.06 * BaseWeaponDamage) with each weapon strike. For example, a Daedric Longsword with base damage of 24 will lose (0.06 * 24) = 1.44 points per strike. 
+
+
+1 - Criar personagem.
+Será criado um personagem com raça aleatoria
+
+Raças:
+Bretões - id 0
+Força 30
+Inteligencia 50
+Força de vontade 50
+Agilidade 30
+Resistencia 30
+
+
+Nova formula para XP:
+
+1 variavel para guardar ExperienciaIncremento = 83 double
+ao evoluir de nivel faz = ExperienciaIncremento * 1,104 que será igual a = 91,632
+ai soma o 91,632 no ExperienciaProximoNivel que será agora ExperienciaMax
+
+
+
+
+ao usar escudo, tem uma pequena chance de defender com o escudo, reduzindo o dano recebido com base no nivel da habilidade bloquear em porcentagem. ex nivel 20, reduzi 0.5% * 20 do dano caso arma, e 20% caso escudo. e causa dano no escudo e não na amardura.
+
+armadura = ArmorRating = ( 0.35 + 0.0065 * Skill ) * BaseArmorRating( da armdura) * (ArmorHealth / MaxArmorHealth)
+You gain 1.5 experience points for every hit taken, desde que tenha armdua na parte recebida
+
+
+
+  float porcentagemFinal = 100 / (100 + resistencia);
+100 / 100 + 30
+0,7692307692307692 = 79,92
+    //        // Dano minimo sempre será o valor total dividido por 2. 
+    //        return (Sortear.Valor((dano / 2), dano)) * porcentagemFinal;
+
+
+ArmorRating = ((0.35 + 0.0065 * Skill ) * BaseArmorRating) * (ArmorHealth / MaxArmorHealth)
+skill 1
+armadura 50
+17,825 de armor
+
+25*0,95*0,215
+BaseWeaponDamage * 0.5 * ( 0.75 + Força ou agilidade * 0.005 ) * ( 0.2 + BladeSkill * 0.015 ) * ( ArmaVida/ArmaVidaMax + 1 )/2)
+
+dano 50
+forca 40
+skill 1
+vida 50/50
+5,10625 de dano
+
+monstros não tem armadura

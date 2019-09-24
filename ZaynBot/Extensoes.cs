@@ -24,21 +24,11 @@ namespace ZaynBot
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, CommandContext ctx)
         {
             embed.Padrao();
-            embed.WithAuthor($"{titulo} - {ctx.User.Username}", icon_url: ctx.User.AvatarUrl);
+            embed.WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
             return embed;
         }
 
-        public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, RPGNpc npc, CommandContext ctx)
-        {
-            embed.Padrao();
-            embed.WithAuthor($"{titulo} - {ctx.User.Username} com {npc.Nome}", icon_url: ctx.User.AvatarUrl);
-            return embed;
-        }
-
-        public static DiscordEmbedBuilder Fala(this DiscordEmbedBuilder embed, string fala, RPGNpc npc)
-            => embed.WithDescription($"{npc.Nome} diz: - '{fala}'");
-
-        public static void Add(this Dictionary<string, RPGItem> inventario, RPGItem item)
+        public static void Add(this Dictionary<string, ItemRPG> inventario, ItemRPG item)
             => inventario.Add(item.Nome.ToLower(), item);
 
         public static bool IsNullOrEmpty(this Array array)

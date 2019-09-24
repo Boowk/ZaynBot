@@ -10,7 +10,8 @@ using System.Threading.Tasks;
 using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
 using ZaynBot.RPG.Comandos;
-using ZaynBot.RPG.Comandos.Combate;
+using ZaynBot.RPG.Comandos.Ativavel;
+using ZaynBot.RPG.Comandos.Exibir;
 using ZaynBot.RPG.Comandos.Viajar;
 using ZaynBot.RPG.Exceptions;
 
@@ -18,113 +19,94 @@ namespace ZaynBot
 {
     public class ModuloComando
     {
-        public CommandsNextModule Comandos { get; }
+        public static CommandsNextExtension Comandos { get; private set; }
 
         public ModuloComando(CommandsNextConfiguration ccfg, DiscordClient client)
         {
             Comandos = client.UseCommandsNext(ccfg);
             Comandos.CommandExecuted += ComandoExecutado;
             Comandos.CommandErrored += ComandoAconteceuErro;
-            Comandos.SetHelpFormatter<AjudaFormatador>();
+            Comandos.SetHelpFormatter<IAjudaComando>();
 
-            Comandos.RegisterCommands<ComandosTestes>();
-            Comandos.RegisterCommands<ComandoAjuda>();
-            Comandos.RegisterCommands<ComandosGrupoInfo>();
-            Comandos.RegisterCommands<ComandosAdministracao>();
-            Comandos.RegisterCommands<ComandoPerfil>();
-            Comandos.RegisterCommands<ComandoConvite>();
-            Comandos.RegisterCommands<ComandoInfo>();
-            Comandos.RegisterCommands<ComandoVotar>();
-
+            
+            Comandos.RegisterCommands<AjudaComando>();
+           // Comandos.RegisterCommands<ComandosGrupoInfo>();
+            Comandos.RegisterCommands<AdmComandos>();
+            Comandos.RegisterCommands<ConviteComando>();
+            Comandos.RegisterCommands<InformacaoComando>();
+            Comandos.RegisterCommands<VotarComando>();
 
             #region ComandosRPG
-            Comandos.RegisterCommands<ComandosPersonagem>();
+            Comandos.RegisterCommands<StatusComando>();
             // Comandos.RegisterCommands<GrupoGuilda>();
-            Comandos.RegisterCommands<ComandoReencarnar>();
-            Comandos.RegisterCommands<ComandoLocalizacao>();
-            Comandos.RegisterCommands<ComandoExplorar>();
-            Comandos.RegisterCommands<ComandoInimigos>();
-            Comandos.RegisterCommands<ComandoAtacar>();
-            Comandos.RegisterCommands<ComandoLeste>();
-            Comandos.RegisterCommands<ComandoNorte>();
-            Comandos.RegisterCommands<ComandoOeste>();
-            Comandos.RegisterCommands<ComandoSul>();
-            Comandos.RegisterCommands<ComandoFalarCom>();
-            Comandos.RegisterCommands<ComandoMissao>();
-            Comandos.RegisterCommands<ComandoRaca>();
-            Comandos.RegisterCommands<ComandoInventario>();
-            Comandos.RegisterCommands<ComandoPegar>();
-            Comandos.RegisterCommands<ComandoLoot>();
-            Comandos.RegisterCommands<ComandoColetar>();
-            Comandos.RegisterCommands<ComandoHabilidade>();
-            Comandos.RegisterCommands<ComandoHabilidades>();
-            Comandos.RegisterCommands<ComandoExaminar>();
+            Comandos.RegisterCommands<ReencarnarComando>();
+            Comandos.RegisterCommands<LocalComando>();
+            Comandos.RegisterCommands<ExplorarComando>();
+            Comandos.RegisterCommands<InimigosComandos>();
+            Comandos.RegisterCommands<AtacarComando>();
+            Comandos.RegisterCommands<LesteComando>();
+            Comandos.RegisterCommands<NorteComando>();
+            Comandos.RegisterCommands<OesteComando>();
+            Comandos.RegisterCommands<SulComando>();
+            Comandos.RegisterCommands<MochilaComando>();
+            Comandos.RegisterCommands<HabilidadeComando>();
+            //Comandos.RegisterCommands<ExaminarComando>();
+            Comandos.RegisterCommands<EquiparComando>();
+            Comandos.RegisterCommands<EquipamentosComando>();
+            Comandos.RegisterCommands<DesequiparComando>();
+           // Comandos.RegisterCommands<TrocarEmpregoComando>();
+           // Comandos.RegisterCommands<EmpregoComando>();
+          //  Comandos.RegisterCommands<EmpregosComando>();
             #endregion
         }
 
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
             CommandContext ctx = e.Context;
-
-            if (e.Exception is ChecksFailedException ex)
+            switch (e.Exception)
             {
-                if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
-                {
-                    return;
-                }
-                else
-                {
-                    int tempo = Convert.ToInt32((my.GetRemainingCooldown(ctx).TotalSeconds));
-                    await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + tempo + " segundos.");
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} {tempo} segundos para usar {ctx.Message.Content}", DateTime.Now);
-                    return;
-                }
-
-            }
-            if (e.Exception is ArgumentException ax)
-            {
-                await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Message.Author.Id} parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
-                return;
-            }
-            if (e.Exception is UnauthorizedException)
-            {
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"Sem permissão para falar no canal {ctx.Channel.Id}.", DateTime.Now);
-                return;
-            }
-            if (e.Exception is InvalidOperationException || e.Exception is CommandNotFoundException)
-            {
-                if (e.Command != null)
-                    if (e.Command.Name == "ajuda")
+                case ChecksFailedException ex:
+                    if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
+                        return;
+                    else
                     {
-                        DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
-                        await ctx.RespondAsync($"**{x} | {ctx.User.Mention} o comando{e.Context.RawArgumentString} não existe.**");
+                        int tempo = Convert.ToInt32((my.GetRemainingCooldown(ctx).TotalSeconds));
+                        await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + tempo + " segundos.");
+                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} deve esperar {tempo} s para usar {ctx.Message.Content}", DateTime.Now);
                     }
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
-                return;
+                    return;
+                case ArgumentException ax:
+                    await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
+                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Message.Author.Id} parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
+                    return;
+                case UnauthorizedException ux:
+                    return;
+                case InvalidOperationException cff:
+                case CommandNotFoundException cf:
+                    if (e.Command != null)
+                        if (e.Command.Name == "ajuda")
+                        {
+                            DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
+                            await ctx.RespondAsync($"{x} | {ctx.User.Mention} o comando{e.Context.RawArgumentString} não existe.*");
+                        }
+                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
+                    return;
+                case PersonagemNullException px:
+                    await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
+                    return;
+                case NotFoundException nx:
+                    await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
+                    return;
+                case PersonagemNoLifeException pnx:
+                    await ctx.RespondAsync($"{ctx.User.Mention}, {pnx.ToString()}");
+                    return;
+                default:
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
+                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
+                    DiscordChannel CanalRPG = MundoZayn.GetChannel(600736364484493424);
+                    await CanalRPG.SendMessageAsync($"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}");
+                    break;
             }
-            if (e.Exception is PersonagemNullException px)
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id}, tentou o comando {ctx.Message.Content} mas não tem um personagem.", DateTime.Now);
-                return;
-            }
-
-            if (e.Exception is NotFoundException nx)
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
-                ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id}, tentou o comando {ctx.Message.Content} mas colocou um usuario inválido", DateTime.Now);
-                return;
-            }
-            //if(e.Exception is AggregateException)
-            //{
-            //    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Username}, tentou executar o comando {ctx.Message.Content} mas não existe.", DateTime.Now);
-            //    return;
-            //}
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
-            DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-            DiscordChannel CanalRPG = MundoZayn.GetChannel(600736364484493424);
-            await CanalRPG.SendMessageAsync($"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}");
         }
 
         private Task ComandoExecutado(CommandExecutionEventArgs e)

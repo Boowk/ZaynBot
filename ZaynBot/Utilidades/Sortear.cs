@@ -6,14 +6,10 @@ namespace ZaynBot.Utilidades
 {
     public static class Sortear
     {
-        public static float Atributo(int valor, int sorte)
+        public static float Atributo(float valor)
         {
-            Random rd = new Random();
-            Random rd2 = new Random();
-            int s = rd2.Next(1, sorte + 1);
-            int v = valor * 10;
-
-            return rd.Next((v / 2) + s, v + (1 + s));
+            float min = valor / 2;
+            return Valor(valor, min);
         }
 
         public static int Valor(int min, int max)
@@ -47,7 +43,7 @@ namespace ZaynBot.Utilidades
         }
 
 
-        public static RPGMob ListaMob(List<RPGMob> mobs)
+        public static MobRPG ListaMob(List<MobRPG> mobs)
         {
             int somaPeso = 0;    //Quantidade Max
             foreach (var item in mobs)

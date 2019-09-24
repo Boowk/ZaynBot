@@ -34,38 +34,38 @@ namespace ZaynBot
 
         private async Task Client_MessageReactionRemoved(MessageReactionRemoveEventArgs e)
         {
-            if (e.Message.Id == 594667356622684191)
-            {
-                if (e.Emoji.GetDiscordName() == ":white_check_mark:")
-                {
-                    DiscordGuild guildaZayn = await Client.GetGuildAsync(420044060720627712);
-                    var verificado = guildaZayn.Roles.FirstOrDefault(x => x.Id == 592837208247894046);
-                    DiscordMember membro = await guildaZayn.GetMemberAsync(e.User.Id);
-                    await membro.RevokeRoleAsync(verificado);
+            //if (e.Message.Id == 594667356622684191)
+            //{
+            //    if (e.Emoji.GetDiscordName() == ":white_check_mark:")
+            //    {
+            //        DiscordGuild guildaZayn = await Client.GetGuildAsync(420044060720627712);
+            //        var verificado = guildaZayn.Roles.FirstOrDefault(x => x.Id == 592837208247894046);
+            //        DiscordMember membro = await guildaZayn.GetMemberAsync(e.User.Id);
+            //        await membro.RevokeRoleAsync(verificado);
 
-                }
-            }
+            //    }
+            //}
             await Task.CompletedTask;
         }
 
         private async Task Client_MessageReactionAdded(MessageReactionAddEventArgs e)
         {
-            if (e.Message.Id == 594667356622684191)
-            {
-                if (e.Emoji.GetDiscordName() == ":white_check_mark:")
-                {
-                    DiscordGuild guildaZayn = await Client.GetGuildAsync(420044060720627712);
-                    var verificado = guildaZayn.Roles.FirstOrDefault(x => x.Id == 592837208247894046);
-                    DiscordMember membro = await guildaZayn.GetMemberAsync(e.User.Id);
-                    await membro.GrantRoleAsync(verificado);
-                }
-            }
+            //if (e.Message.Id == 594667356622684191)
+            //{
+            //    if (e.Emoji.GetDiscordName() == ":white_check_mark:")
+            //    {
+            //        DiscordGuild guildaZayn = await Client.GetGuildAsync(420044060720627712);
+            //        var verificado = guildaZayn.Roles.FirstOrDefault(x => x.Id == 592837208247894046);
+            //        DiscordMember membro = await guildaZayn.GetMemberAsync(e.User.Id);
+            //        await membro.GrantRoleAsync(verificado);
+            //    }
+            //}
             await Task.CompletedTask;
         }
 
         private async Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
         {
-            await EventoMensagemBoasVindas.EventoBemVindoAsync(e);
+            //await EventoMensagemBoasVindas.EventoBemVindoAsync(e);
         }
 
         //private async Task DoWorkAsyncInfiniteLoop()
@@ -140,18 +140,18 @@ namespace ZaynBot
         private async Task Client_MessageCreated(MessageCreateEventArgs e)
         {
             if (e.Message.Author.IsBot) return;
-            if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
-            try
-            {
-                await EvoluirNivelPorMensagem.ReceberXPNivelMensagens(e);
-            }
-            catch (Exception ex)
-            {
-                if (ex is UnauthorizedException || ex is AggregateException)
-                {
-                    e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"Sem permissão para falar no canal {e.Channel.Name}.", DateTime.Now);
-                }
-            }
+            //if (e.Message.MessageType == MessageType.GuildMemberJoin) return;
+            //try
+            //{
+            //    await EvoluirNivelPorMensagem.ReceberXPNivelMensagens(e);
+            //}
+            //catch (Exception ex)
+            //{
+            //    if (ex is UnauthorizedException || ex is AggregateException)
+            //    {
+            //        e.Client.DebugLogger.LogMessage(LogLevel.Info, e.Guild.Name, $"Sem permissão para falar no canal {e.Channel.Name}.", DateTime.Now);
+            //    }
+            //}
             await Task.CompletedTask;
         }
 

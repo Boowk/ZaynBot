@@ -1,24 +1,10 @@
-﻿using System;
-
-namespace ZaynBot.RPG.Exceptions
+﻿namespace ZaynBot.RPG.Exceptions
 {
-    public class PersonagemNullException : Exception
+    public class PersonagemNullException : MensagemException
     {
-        public string Mensagem { get; set; }
-
         public PersonagemNullException()
-        {
-            Mensagem = "você precisa criar um personagem com o comando z!reencarnar";
-        }
+            => Mensagem = "você precisa criar um personagem com o comando z!reencarnar";
 
-        public PersonagemNullException(string mensagem)
-        {
-            Mensagem = mensagem;
-        }
-
-        public override string ToString()
-        {
-            return Mensagem;
-        }
+        public PersonagemNullException(string mensagem) : base(mensagem) { }
     }
 }
