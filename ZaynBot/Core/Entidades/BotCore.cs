@@ -2,7 +2,7 @@
 
 namespace ZaynBot.Core.Entidades
 {
-    public static class CoreBot
+    public static class BotCore
     {
         public const ulong Id = 459873132975620134;
         public static string DiscordBotsApiKey { get; set; }

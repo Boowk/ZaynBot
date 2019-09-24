@@ -27,10 +27,10 @@ namespace ZaynBot.Core.Comandos
                 "[Vote no bot](https://discordbots.org/bot/459873132975620134/vote)\n" +
                 "[Código fonte no Github](https://github.com/ZaynBot/ZaynBot)\n";
             embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg")
-                .AddField("⌈Servidores⌋", $"{CoreBot.QuantidadeServidores}", true)
-                .AddField("⌈Jogadores⌋", $"{CoreBot.QuantidadeMembros}", true)
-                .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - CoreBot.TempoAtivo).Days} dias, " +
-                $"{(DateTime.Now - CoreBot.TempoAtivo).Hours} horas e {(DateTime.Now - CoreBot.TempoAtivo).Minutes} minutos.**", true)
+                .AddField("⌈Servidores⌋", $"{BotCore.QuantidadeServidores}", true)
+                .AddField("⌈Jogadores⌋", $"{BotCore.QuantidadeMembros}", true)
+                .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - BotCore.TempoAtivo).Days} dias, " +
+                $"{(DateTime.Now - BotCore.TempoAtivo).Hours} horas e {(DateTime.Now - BotCore.TempoAtivo).Minutes} minutos.**", true)
                 .AddField("⌈Criador⌋", $"{criador.Username}#{criador.Discriminator}", true)
                 .AddField("⌈Testador Beta⌋", $"{imain.Username}#{imain.Discriminator}, {ink.Username}#{ink.Discriminator}, " +
                 $"{yuki.Username}#{yuki.Discriminator}", true);

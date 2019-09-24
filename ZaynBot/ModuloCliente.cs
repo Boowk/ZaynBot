@@ -164,9 +164,9 @@ namespace ZaynBot
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"Guilda disponível: {e.Guild.Name}", DateTime.Now);
-            CoreBot.QuantidadeServidores++;
-            CoreBot.QuantidadeMembros += e.Guild.MemberCount;
-            CoreBot.QuantidadeCanais += e.Guild.Channels.Count;
+            BotCore.QuantidadeServidores++;
+            BotCore.QuantidadeMembros += e.Guild.MemberCount;
+            BotCore.QuantidadeCanais += e.Guild.Channels.Count;
             return Task.CompletedTask;
         }
 

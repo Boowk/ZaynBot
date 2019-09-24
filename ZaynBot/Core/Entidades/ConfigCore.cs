@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ZaynBot.Core.Entidades
 {
-    internal class CoreConfig
+    internal class ConfigCore
     {
         /// <summary>
         /// O token do seu bot
@@ -53,18 +53,18 @@ namespace ZaynBot.Core.Entidades
         /// </summary>
         /// <param name="path">Caminho para o arquivo config.</param>
         /// <returns></returns>
-        public static CoreConfig LoadFromFile(string path)
+        public static ConfigCore LoadFromFile(string path)
         {
             if (!File.Exists(path))
             {
-                CoreConfig config = new CoreConfig();
+                ConfigCore config = new ConfigCore();
                 config.SaveToFile(path);
                 return null;
             }
 
             using (var sr = new StreamReader(path))
             {
-                return JsonConvert.DeserializeObject<CoreConfig>(sr.ReadToEnd());
+                return JsonConvert.DeserializeObject<ConfigCore>(sr.ReadToEnd());
             }
         }
 

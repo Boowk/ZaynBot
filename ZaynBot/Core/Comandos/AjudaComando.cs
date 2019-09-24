@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
+using static DSharpPlus.CommandsNext.CommandsNextExtension;
 
 namespace ZaynBot.Core.Comandos
 {
@@ -13,11 +14,12 @@ namespace ZaynBot.Core.Comandos
         [UsoAtributo("ajuda [comando|]")]
         [ExemploAtributo("ajuda personagem")]
         [ExemploAtributo("ajuda")]
-        
+
         public async Task AjudaComandoAb(CommandContext ctx, params string[] comando)
         {
             await ctx.TriggerTypingAsync();
-           // await ctx.CommandsNext.DefaultHelpAsync(ctx, comando);
+            await new DefaultHelpModule().DefaultHelpAsync(ctx, comando);
+            // ctx.CommandsNext.DefaultHelpModule.DefaultHelpAsync(ctx, comando);
         }
     }
 }

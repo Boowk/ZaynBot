@@ -25,11 +25,11 @@ namespace ZaynBot.Core.Comandos
         public async Task ComandoAdmBotJogando(CommandContext ctx, [RemainingText] string texto = "")
         {
             await ctx.TriggerTypingAsync();
-            AuthDiscordBotListApi DblApi = new AuthDiscordBotListApi(CoreBot.Id, CoreBot.DiscordBotsApiKey);
+            AuthDiscordBotListApi DblApi = new AuthDiscordBotListApi(BotCore.Id, BotCore.DiscordBotsApiKey);
             IDblSelfBot me = await DblApi.GetMeAsync();
-            await me.UpdateStatsAsync(CoreBot.QuantidadeServidores);
+            await me.UpdateStatsAsync(BotCore.QuantidadeServidores);
             await ModuloCliente.Client.UpdateStatusAsync(new DiscordActivity(texto));
-            await ctx.RespondAsync("Status jogando alterado com sucesso para " + CoreBot.QuantidadeServidores + " servidores!");
+            await ctx.RespondAsync("Status jogando alterado com sucesso para " + BotCore.QuantidadeServidores + " servidores!");
         }
 
         [Command("foryou")]

@@ -1,5 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.Entities;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace ZaynBot
     {
         private ModuloComando _todosOsComandos;
         private ModuloCliente _cliente;
-        private CoreConfig _config;
+        private ConfigCore _config;
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
         public async Task RodarOBotAsync()
@@ -25,7 +26,7 @@ namespace ZaynBot
 #else
             string projetoRaiz = Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../")) + "config.json";
 #endif
-            _config = CoreConfig.LoadFromFile(projetoRaiz);
+            _config = ConfigCore.LoadFromFile(projetoRaiz);
             if (_config == null)
             {
                 Console.WriteLine("O arquivo config.json não existe!");
@@ -34,7 +35,7 @@ namespace ZaynBot
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            CoreBot.DiscordBotsApiKey = _config.DiscordBotsKey;
+            BotCore.DiscordBotsApiKey = _config.DiscordBotsKey;
 
             DiscordConfiguration cfg = new DiscordConfiguration
             {
@@ -70,6 +71,7 @@ namespace ZaynBot
                 EnableDefaultHelp = false,
                 EnableMentionPrefix = true,
                 IgnoreExtraArguments = true,
+                PrefixResolver = PrefixResolverCustomizado,
             }, ModuloCliente.Client);
             new ModuloBanco();
             Console.WriteLine("Banco concluido.");
@@ -81,6 +83,22 @@ namespace ZaynBot
             Console.WriteLine("Itens concluido.");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
+        }
+
+        public static Task<int> PrefixResolverCustomizado(DiscordMessage msg)
+        {
+            var gld = msg.Channel.Guild;
+            if (gld == null)
+                return Task.FromResult(-1);
+
+            ServidorCore slv = ModuloBanco.ServidorGet(gld.Id);
+            if (slv == null)
+                return Task.FromResult(-1);
+
+            var pfixLocation = msg.GetStringPrefixLength(slv.Prefix);
+            if (pfixLocation != -1)
+                return Task.FromResult(pfixLocation);
+            return Task.FromResult(-1);
         }
     }
 }

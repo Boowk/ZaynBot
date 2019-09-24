@@ -30,6 +30,7 @@ namespace ZaynBot
 
             
             Comandos.RegisterCommands<AjudaComando>();
+            Comandos.RegisterCommands<PrefixComando>();
            // Comandos.RegisterCommands<ComandosGrupoInfo>();
             Comandos.RegisterCommands<AdmComandos>();
             Comandos.RegisterCommands<ConviteComando>();

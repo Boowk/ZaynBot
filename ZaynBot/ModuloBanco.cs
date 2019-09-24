@@ -4,6 +4,7 @@ using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
+using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 using static ZaynBot.RPG.Entidades.MobRPG;
@@ -16,7 +17,7 @@ namespace ZaynBot
 
         public static IMongoCollection<RegiaoRPG> RegiaoColecao { get; private set; }
         public static IMongoCollection<UsuarioRPG> UsuarioColecao { get; private set; }
-        public static IMongoCollection<RPGGuilda> GuildaColecao { get; private set; }
+        public static IMongoCollection<ServidorCore> ServidorColecao { get; private set; }
 
         public static IMongoCollection<RacaRPG> RacaColecao { get; private set; }
         public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
@@ -62,11 +63,6 @@ namespace ZaynBot
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<RPGGuilda>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
             BsonClassMap.RegisterClassMap<BatalhaRPG>(m =>
             {
                 m.AutoMap();
@@ -76,7 +72,7 @@ namespace ZaynBot
 
             RegiaoColecao = Database.GetCollection<RegiaoRPG>("regioes");
             UsuarioColecao = Database.GetCollection<UsuarioRPG>("usuarios");
-            GuildaColecao = Database.GetCollection<RPGGuilda>("guildas");
+            ServidorColecao = Database.GetCollection<ServidorCore>("servidores");
 
             RacaColecao = Database.GetCollection<RacaRPG>("racas");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
@@ -96,6 +92,16 @@ namespace ZaynBot
 
         public static RegiaoRPG RegiaoGet(int id)
             => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
+
+        #endregion
+
+        #region CRUD Servidor
+
+        public static ServidorCore ServidorGet(ulong id)
+            => ServidorColecao.Find(x => x.Id == id).FirstOrDefault();
+
+        public static void ServidorDel(ulong id)
+            => ServidorColecao.DeleteOne(x => x.Id == id);
 
         #endregion
 
