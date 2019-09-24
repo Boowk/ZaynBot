@@ -19,7 +19,6 @@ namespace ZaynBot.Core.Comandos
         {
             await ctx.TriggerTypingAsync();
             await new DefaultHelpModule().DefaultHelpAsync(ctx, comando);
-            // ctx.CommandsNext.DefaultHelpModule.DefaultHelpAsync(ctx, comando);
         }
     }
 }

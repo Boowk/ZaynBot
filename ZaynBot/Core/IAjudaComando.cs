@@ -15,118 +15,58 @@ namespace ZaynBot.Core
 {
     public class IAjudaComando : BaseHelpFormatter
     {
-        private DiscordEmbedBuilder embedBuilder;
+        private DiscordEmbedBuilder eb;
+        private StringBuilder sr;
+        private StringBuilder srExemplos;
+        private StringBuilder srUsos;
+
         public IAjudaComando(CommandContext ctx) : base(ctx)
         {
-
+            sr = new StringBuilder();
+            srExemplos = new StringBuilder();
+            srUsos = new StringBuilder();
+            eb = new DiscordEmbedBuilder();
         }
-        //private string _nome = null;
-        //private string _uso = null;
-        //private string _descricao = null;
-        //private string _abreviacoes = null;
-
-        //private StringBuilder ComandosBuilder { get; }
-        //private StringBuilder ExemplosBuilder { get; }
-
-        //public IAjudaComando()
-        //{
-        //    ComandosBuilder = new StringBuilder();
-        //    ExemplosBuilder = new StringBuilder();
-        //}
-
-
-        //public IHelpFormatter WithCommandName(string nome)
-        //{
-
-        //    _nome = nome.PrimeiraLetraMaiuscula();
-        //    ModuloComando.Comandos.RegisteredCommands.TryGetValue(nome, out Command comando);
-        //    var atributos = comando.ExecutionChecks;
-        //    foreach (var item in atributos)
-        //    {
-        //        switch (item)
-        //        {
-        //            case ExemploAtributo e:
-        //                ExemplosBuilder.Append($"`z!{e.Exemplo}`\n");
-        //                break;
-        //            case UsoAtributo u:
-        //                _uso = u.Uso;
-        //                break;
-        //        }
-        //    }
-        //    return this;
-        //}
-
-        //public IHelpFormatter WithDescription(string descricao)
-        //{
-        //    _descricao = descricao;
-        //    return this;
-        //}
-
-        //public IHelpFormatter WithGroupExecutable()
-        // => this;
-
-
-        //public IHelpFormatter WithAliases(IEnumerable<string> aliases)
-        //{
-        //    _abreviacoes = string.Join(", ", aliases.Select(Formatter.InlineCode));
-        //    return this;
-        //}
-
-        //public IHelpFormatter WithArguments(IEnumerable<CommandArgument> arguments)
-        //=> this;
-
-        //public IHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
-        //{
-        //    if (_nome == null)
-        //        this.ComandosBuilder.Append("**Comandos:** ");
-        //    ComandosBuilder.AppendLine(string.Join(", ", subcommands.Select(xc => xc.Name)));
-        //    return this;
-        //}
-
-        //public CommandHelpMessage Build()
-        //{
-        //    if (_nome == null)
-        //    {
-        //        StringBuilder str = new StringBuilder();
-        //        str.Append("```css\nLista de comandos```\n" +
-        //            "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n");
-        //        str.Append(ComandosBuilder.ToString());
-        //        str.Append("```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
-
-        //        return new CommandHelpMessage(str.ToString());
-        //    }
-
-        //    _embedBuilder = new DiscordEmbedBuilder();
-        //    _embedBuilder.WithColor(DiscordColor.Cyan);
-        //    _embedBuilder.WithTitle($"**{_nome}**");
-        //    _descricao = $"{_descricao}\n";
-        //    _embedBuilder.WithDescription(_descricao);
-        //    if (_uso != null)
-        //        _embedBuilder.AddField("**Uso**", $"z!{_uso}");
-        //    if (!string.IsNullOrWhiteSpace(ExemplosBuilder.ToString()))
-        //        _embedBuilder.AddField($"**Exemplos**", ExemplosBuilder.ToString());
-        //    if (_abreviacoes != null)
-        //        _embedBuilder.AddField("**Abreviações**", _abreviacoes);
-        //    if (ComandosBuilder.ToString() != "")
-        //        _embedBuilder.AddField("**Subcomandos**", ComandosBuilder.ToString());
-
-        //    return new CommandHelpMessage(embed: _embedBuilder.Build());
-        //}
 
 
         public override BaseHelpFormatter WithCommand(Command command)
         {
-            throw new NotImplementedException();
+            sr.Append($"**{command.Name.PrimeiraLetraMaiuscula()}**\n");
+            sr.Append($"*{command.Description}*\n");
+            foreach (var item in command.ExecutionChecks)
+            {
+                switch (item)
+                {
+                    case ExemploAtributo e:
+                        srExemplos.Append($"`z!{e.Exemplo}`\n");
+                        break;
+                    case UsoAtributo u:
+                        srUsos.Append($"`z!{u.Uso}`\n");
+                        break;
+                }
+            }
+            sr.Append($"**Como usar:**\n {srUsos.ToString()}");
+            sr.Append($"**Exemplos:**\n {srExemplos.ToString()}");
+            return this;
         }
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            throw new NotImplementedException();
+            StringBuilder str = new StringBuilder();
+            str.Append("**Comandos:** ");
+            str.AppendLine(string.Join(", ", subcommands.Select(xc => xc.Name)));
+            sr.Append("```css\nLista de comandos```\n" +
+                "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n");
+            sr.Append(str.ToString());
+            sr.Append("```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
+            return this;
         }
 
         public override CommandHelpMessage Build()
         {
-            throw new NotImplementedException();
+            eb.WithColor(DiscordColor.Cyan);
+            eb.WithDescription(sr.ToString());
+            return new CommandHelpMessage(embed: eb.Build());
         }
     }
 }
