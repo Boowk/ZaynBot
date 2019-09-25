@@ -13,11 +13,11 @@ namespace ZaynBot.RPG.Comandos.Exibir
         [Command("localizacao")]
         [Aliases("local")]
         [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
+        [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task Localizacao(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
             RegiaoRPG localAtual = usuario.RegiaoGet();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Localização", ctx);
             embed.WithTitle(localAtual.Nome);

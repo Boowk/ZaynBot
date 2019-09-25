@@ -10,9 +10,9 @@ namespace ZaynBot.RPG.Comandos.Exibir
     public class InimigosComandos : BaseCommandModule
     {
         [Command("inimigos")]
-        [Aliases("ins")]
-        [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Veja todos os inimigos a sua volta.")]
+        [Cooldown(1, 10, CooldownBucketType.User)]
+
         public async Task VerInimigos(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

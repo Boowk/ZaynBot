@@ -22,7 +22,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [UsoAtributo("atacar [id|]")]
         [ExemploAtributo("atacar")]
         [ExemploAtributo("atacar 3")]
-        [Cooldown(1, 4, CooldownBucketType.User)]
+        [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task AtacarComandoAb(CommandContext ctx, int id = 0)
         {
             await ctx.TriggerTypingAsync();
@@ -90,13 +90,13 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                         // Se tiver
                         if (armadura != null)
                         {
+                            danoInimigo = CalcDano(armadura.DefesaFisica, inimigo.AtaqueFisico);
                             armadura.Durabilidade--;
                             if (armadura.Durabilidade == 0)
                             {
                                 personagem.Inventario.DesequiparItem(armadura, personagem);
                                 await ctx.RespondAsync($"**({armadura.Nome})** quebrou! {ctx.User.Mention}!");
                             }
-                            danoInimigo = CalcDano(armadura.DefesaFisica, inimigo.AtaqueFisico);
                         }
                         else
                             danoInimigo = CalcDano(0, inimigo.AtaqueFisico);

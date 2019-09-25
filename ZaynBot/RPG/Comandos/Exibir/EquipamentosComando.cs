@@ -26,6 +26,8 @@ namespace ZaynBot.RPG.Comandos.Exibir
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Personagem", ctx);
             embed.WithTitle($"**Itens equipados**".Titulo());
             StringBuilder str = new StringBuilder();
+            if (personagem.Inventario.Equipamentos.Count == 0)
+                str.Append("Nem um farelo dentro.");
             foreach (var item in personagem.Inventario.Equipamentos)
             {
                 ItemRPG itemData = ModuloBanco.ItemGet(item.Value.Id);

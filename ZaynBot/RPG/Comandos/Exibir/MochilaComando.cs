@@ -16,31 +16,23 @@ namespace ZaynBot.RPG.Comandos.Exibir
         [UsoAtributo("mochila [pagina|]")]
         [ExemploAtributo("mochila 2")]
         [ExemploAtributo("mochila")]
+        [Cooldown(1, 10, CooldownBucketType.User)]
 
         public async Task ComandoMochilaAb(CommandContext ctx, int pagina = 0)
         {
-            // Avisa que está escrevendo no discord
             await ctx.TriggerTypingAsync();
-            // Recupera os dados do jogador e o armazena na variavel usuario
             UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
-            // Faz uma indicação do persongem do usuario
             PersonagemRPG personagem = usuario.Personagem;
-            // Prepara uma nova mensagem 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Inventário", ctx);
-            //DiscordEmoji mochila = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 590908712324038659);
             embed.WithColor(DiscordColor.Purple);
-            // Se não tiver nenhum 
             if (personagem.Inventario.Itens.Count == 0)
-                // Avisa que não tem nenhum item
                 embed.WithDescription("Nem um farelo dentro.");
             else
             {
-                //  tem capacidade para 10 Itens.
                 StringBuilder str = new StringBuilder();
                 int index = pagina * 10;
                 int quantidades = 0;
 
-                // Recupera 10 itens de uma forma bem complicada
                 for (int i = pagina * 10; i < personagem.Inventario.Itens.Count; i++)
                 {
                     ItemRPG itemData = ModuloBanco.ItemGet(personagem.Inventario.Itens.Values[index].Id);

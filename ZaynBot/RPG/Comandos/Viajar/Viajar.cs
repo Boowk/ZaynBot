@@ -31,7 +31,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     return;
                 }
             }
-            await ctx.RespondAsync($"{ctx.User.Mention}, este caminho não está disponível.");
+            await ctx.RespondAsync($"Este caminho não está disponível! {ctx.User.Mention}.");
         }
     }
 }

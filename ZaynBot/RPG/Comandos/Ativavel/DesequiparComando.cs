@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Description("Permite desequipar algum item.")]
         [UsoAtributo("desequipar [id]")]
         [ExemploAtributo("desequipar 23")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task ComandoDesequiparAb(CommandContext ctx, [RemainingText] string nome)
         {
             await ctx.TriggerTypingAsync();
@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
 
             if (string.IsNullOrWhiteSpace(nome))
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, não tem como desequipar o vento.");
+                await ctx.RespondAsync($"Informe o id do item equipado! {ctx.User.Mention}.");
                 return;
             }
             ItemRPG item = null;
@@ -37,10 +37,10 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             {
                 personagem.Inventario.DesequiparItem(item, personagem);
                 UsuarioRPG.Salvar(usuario);
-                await ctx.RespondAsync($"**({item.Nome})** foi desequipado, {ctx.User.Mention}.");
+                await ctx.RespondAsync($"**({item.Nome})** foi desequipado! {ctx.User.Mention}.");
             }
             else
-                await ctx.RespondAsync($"{ctx.User.Mention}, este item não está equipado.");
+                await ctx.RespondAsync($"Este item não está equipado! {ctx.User.Mention}.");
         }
     }
 }

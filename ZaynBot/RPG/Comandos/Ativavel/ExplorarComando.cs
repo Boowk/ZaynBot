@@ -16,6 +16,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Procura por inimigos na região atual.")]
         [UsoAtributo("explorar")]
+        [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task ExplorarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
@@ -52,7 +53,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 personagem.Batalha.Inimigos.Add(inimigo);
 
                 UsuarioRPG.Salvar(usuario);
-                await ctx.RespondAsync($"{ctx.User.Mention}, {inimigo.Nome} apareceu!");
+                await ctx.RespondAsync($"**({inimigo.Nome})** apareceu! {ctx.User.Mention}.");
             }
             else
                 await ctx.RespondAsync($"{ctx.User.Mention}, mate os inimigos que você já tem.");
