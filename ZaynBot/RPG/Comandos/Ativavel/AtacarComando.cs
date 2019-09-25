@@ -92,11 +92,14 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                         {
                             armadura.Durabilidade--;
                             if (armadura.Durabilidade == 0)
+                            {
                                 personagem.Inventario.DesequiparItem(armadura, personagem);
+                                await ctx.RespondAsync($"**({armadura.Nome})** quebrou! {ctx.User.Mention}!");
+                            }
                             danoInimigo = CalcDano(armadura.DefesaFisica, inimigo.AtaqueFisico);
                         }
                         else
-                            danoInimigo = inimigo.AtaqueFisico;
+                            danoInimigo = CalcDano(0, inimigo.AtaqueFisico);
                         personagem.VidaAtual -= danoInimigo;
                         danoRecebido += danoInimigo;
                     }
@@ -110,15 +113,36 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             double danoJogador = 0;
             if (arma != null)
             {
+                switch (arma.TipoExp)
+                {
+                    case TipoExpEnum.Perfurante:
+                        PerfuranteHabilidade perfuranteHab = (PerfuranteHabilidade)personagem.Habilidades[HabilidadeEnum.Perfurante];
+                        bool evoluiu = perfuranteHab.AdicionarExp();
+                        danoJogador = CalcDano(mobAlvo.Armadura, perfuranteHab.CalcularDano(arma.AtaqueFisico, arma.Durabilidade, ModuloBanco.ItemGet(arma.Id).Durabilidade, personagem.Raca.Forca));
+                        if (evoluiu)
+                            await ctx.RespondAsync($"Habilidade **({perfuranteHab.Nome})** evoluiu! {ctx.User.Mention}.");
+                        break;
+                    case TipoExpEnum.Esmagante:
+                        EsmaganteHabilidade esmaganteHab = (EsmaganteHabilidade)personagem.Habilidades[HabilidadeEnum.Esmagante];
+                        bool evoluiu2 = esmaganteHab.AdicionarExp();
+                        if (evoluiu2)
+                            await ctx.RespondAsync($"Habilidade **({esmaganteHab.Nome})** evoluiu! {ctx.User.Mention}.");
+                        danoJogador = CalcDano(mobAlvo.Armadura, esmaganteHab.CalcularDano(arma.AtaqueFisico, arma.Durabilidade, ModuloBanco.ItemGet(arma.Id).Durabilidade, personagem.Raca.Forca));
+                        break;
+                }
                 arma.Durabilidade -= Convert.ToInt32(0.06 * arma.AtaqueFisico);
                 if (arma.Durabilidade <= 0)
+                {
                     personagem.Inventario.DesequiparItem(arma, personagem);
-                danoJogador = CalcDano(mobAlvo.Armadura, arma.AtaqueFisico);
+                    await ctx.RespondAsync($"**({arma.Nome})** quebrou! {ctx.User.Mention}!");
+                }
             }
             else
             {
                 DesarmadoHabilidade desarmadoHab = (DesarmadoHabilidade)personagem.Habilidades[HabilidadeEnum.Desarmado];
-                desarmadoHab.AdicionarExp();
+                bool evoluiu3 = desarmadoHab.AdicionarExp();
+                if (evoluiu3)
+                    await ctx.RespondAsync($"Habilidade **({desarmadoHab.Nome})** evoluiu! {ctx.User.Mention}.");
                 danoJogador = CalcDano(mobAlvo.Armadura, desarmadoHab.CalcularDano(personagem.Raca.Forca));
             }
             string mensagemMortos = "";
@@ -155,7 +179,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 // Adicionamos a essencia para ser usado quando todos os inimigos forem mortos
                 bool isEvoluiou = personagem.AdicionarExp(mobAlvo.Essencia);
                 if (isEvoluiou)
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você evoluiu para o nível {personagem.NivelAtual}!");
+                    await ctx.RespondAsync($"{ctx.User.Mention}, você evoluiu para o nível {personagem.NivelAtual}! Você tem{personagem.Raca.Pontos} pontos disponíveis.");
 
                 foreach (var i in mobAlvo.ChanceItemUnico)
                 {

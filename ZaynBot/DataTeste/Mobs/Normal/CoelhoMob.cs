@@ -10,12 +10,12 @@ namespace ZaynBot.Data.Mobs.Normal
             MobRPG mob = new MobRPG()
             {
                 Nome = "Coelho",
-                AtaqueFisico = 4,
+                AtaqueFisico = 5,
                 Armadura = 4,
-                PontosDeVida = 100,
+                PontosDeVida = 10,
                 Velocidade = 4,
                 ChanceDeAparecer = 50,
-                Essencia = 500,
+                Essencia = 200,
             };
 
             // Carne de coelho

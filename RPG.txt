@@ -94,7 +94,7 @@ armadura 50
 17,825 de armor
 
 25*0,95*0,215
-BaseWeaponDamage * 0.5 * ( 0.75 + Força ou agilidade * 0.005 ) * ( 0.2 + BladeSkill * 0.015 ) * ( ArmaVida/ArmaVidaMax + 1 )/2)
+BaseWeaponDamage * 0.5 * ( 0.75 + Força ou agilidade * 0.005 ) * ( 0.2 + BladeSkill * 0.015 ) * ( ArmaVida/ArmaVidaMax)
 
 dano 50
 forca 40

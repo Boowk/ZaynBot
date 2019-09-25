@@ -9,16 +9,21 @@ namespace ZaynBot.RPG.Entidades
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public TipoItemEnum TipoItem { get; set; }
+        public TipoExpEnum TipoExp { get; set; }
         public int Durabilidade { get; set; }
-        public float PrecoBase { get; set; } = 0;
+        public double PrecoBase { get; set; } = 0;
 
-        public float AtaqueFisico { get; set; }
-        public float DefesaFisica { get; set; }
+        public double AtaqueFisico { get; set; }
+        public double DefesaFisica { get; set; }
 
-        public ItemRPG(TipoItemEnum tipo, int durabilidade)
+        public ItemRPG(int id, string nome, TipoItemEnum tipo, TipoExpEnum tipoExp, int durabilidade, double preco)
         {
+            Id = id;
+            Nome = nome;
             TipoItem = tipo;
+            TipoExp = tipoExp;
             Durabilidade = durabilidade;
+            PrecoBase = preco;
         }
 
         public ItemRPG Clone()

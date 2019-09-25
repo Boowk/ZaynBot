@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.Data.Itens
 {
@@ -9,23 +10,18 @@ namespace ZaynBot.Data.Itens
     {
         public static ItemRPG MoedaDeCobre()
         {
-            return new ItemRPG(RPG.Entidades.Enuns.TipoItemEnum.Moeda, 0)
+            return new ItemRPG(0, "Moeda de cobre", TipoItemEnum.Moeda, TipoExpEnum.Nenhum, 0, 0)
             {
-                Nome = "Moeda de cobre",
                 Descricao = "Uma moeda de cobre, vale 1 sense",
-                Id = 0,
             };
         }
 
         public static ItemRPG TesteItem()
         {
-            return new ItemRPG(RPG.Entidades.Enuns.TipoItemEnum.Arma, 6)
+            return new ItemRPG(1, "Espada de teste", TipoItemEnum.Arma, TipoExpEnum.Perfurante, 10, 4)
             {
-                Nome = "Espada de teste agora",
                 Descricao = "Espada de teste, não viu?",
-                Id = 1,
-                AtaqueFisico = 100,
-                DefesaFisica = 200,
+                AtaqueFisico = 20,
             };
         }
     }

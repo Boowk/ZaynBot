@@ -32,7 +32,7 @@ namespace ZaynBot.RPG.Entidades
                 if (usuario == null)
                     throw new PersonagemNullException();
             if (mensagem.HasFlag(MensagemAvisoEnum.SemVida))
-                if (usuario.Personagem.MagiaAtual <= 0)
+                if (usuario.Personagem.VidaAtual <= 0)
                     throw new PersonagemNoLifeException();
         }
 
