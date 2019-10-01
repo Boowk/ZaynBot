@@ -152,18 +152,19 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             else
                 danoNoinimigo = mobAlvo.PontosDeVida;
             mobAlvo.PontosDeVida -= danoNoinimigo;
-            embed.AddField("Inimigos atacados".Titulo(), $"{mobAlvo.Nome} recebeu **{danoNoinimigo.Texto2Casas()}** de dano.", true);
+            embed.AddField($"**{"Inimigos atacados".Titulo()}**", $"{mobAlvo.Nome} recebeu {danoNoinimigo.Texto2Casas()} de dano.", true);
             StringBuilder mensagemAtaquesInimigos = new StringBuilder();
             mensagemAtaquesInimigos.Append($"Você recebeu {danoRecebido.Texto2Casas()} de dano.\n");
             // Enviamos a mensagem armazenada se ela não for vazia
             if (danoRecebido != 0)
-                embed.AddField("Dano recebido".Titulo(), mensagemAtaquesInimigos.ToString());
+                embed.AddField($"**{"Dano recebido".Titulo()}**", mensagemAtaquesInimigos.ToString());
             // Adicionamos mais mensagens
             StringBuilder strVida = new StringBuilder();
             strVida.Append($"Vida: {personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMax.Texto2Casas()}\n");
             strVida.Append($"Magia: {personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMax.Texto2Casas()}\n");
             strVida.Append($"Inimigos: {personagem.Batalha.Inimigos.Count}\n");
-            embed.WithTitle($"{personagem.Batalha.Turno}º Turno".Titulo());
+            string t = personagem.Batalha.Turno + "º Turno";
+            embed.WithTitle($"**{t.Titulo()}**");
             embed.WithDescription(strVida.ToString());
             embed.WithColor(DiscordColor.Red);
             if (mobAlvo.PontosDeVida <= 0)
@@ -172,7 +173,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 personagem.Batalha.Inimigos.Remove(mobAlvo);
                 // Enviamos uma mensagem avisando que ele morreu
                 mensagemMortos = $"{mobAlvo.Nome} morreu.";
-                embed.AddField("Inimigos mortos".Titulo(), mensagemMortos.ToString());
+                embed.AddField($"**{"Inimigos mortos".Titulo()}**", mensagemMortos.ToString());
                 // Preparamos uma variavel para guardar a mensagem dos itens que caiu do inimgo
                 StringBuilder mensagemDrops = new StringBuilder();
 
@@ -219,7 +220,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 }
                 // Enviamos a mensagem dos itens que cai-o se não for nulo
                 if (mensagemDrops.ToString() != "")
-                    embed.AddField("Drops".Titulo(), $"**{mensagemDrops.ToString()}**");
+                    embed.AddField($"**{"Drops".Titulo()}**", $"**{mensagemDrops.ToString()}**");
                 // Verificamos se ainda tem inimigos vivo
                 if (personagem.Batalha.Inimigos.Count == 0)
                     personagem.Batalha.Turno = 0;
