@@ -19,10 +19,14 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             UsuarioRPG usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
             if (usuario == null)
             {
-                await ctx.RespondAsync($"Um teto desconhecido… na verdade não. Em primeiro lugar, não há nenhum teto.\n" +
-                $"Onde eu estou ? Ou melhor, que horas são ?\n" +
-                $"… ha. Isto não é bom.\n" +
-                $"Divirta-se no Dragons & Zayn's RPG!");
+                await ctx.RespondAsync($"Após algum tempo desconhecido, {ctx.User.Mention} acorda. " +
+                    $"Ao abrir os olhos, {ctx.User.Mention} enxerga uma escuridão sem fim. A sua cabeça do lateja com dor, " +
+                    $"como se estivesse prestes a explodir. O cheiro de terra e mofo se eleva das grandes " +
+                    $"pedras que revestem o interior dessa minúscula área úmida. Um gotejamento constante ecoa do teto " +
+                    $"baixo do canto ao lado de um caminho estreito, e um único candelabro de ferro se projeta para fora da parede, " +
+                    $"segurando uma vela curta e gorda. Fumaça se enrola no ar enquanto a chama resplandece ruidosamente em seu pavio " +
+                    $"ardente. No canto, uma faca com sangue seco meio congelado, em baixo, respingos de sangue seco meio congelados " +
+                    $"por onde eles deslizaram pelas pedras.");
                 usuario = new UsuarioRPG(ctx.User.Id);
                 ModuloBanco.UsuarioColecao.InsertOne(usuario);
             }

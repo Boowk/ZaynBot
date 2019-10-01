@@ -1,67 +1,96 @@
-﻿using System.Collections.Generic;
-using ZaynBot.Data.Mobs.Normal;
-using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Enuns;
+﻿using ZaynBot.DataTeste.Mobs.Normal;
 using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.RPG.Data.Mundos.Anker
 {
-    public class AreaAnker
+    public static class AreaAnker
     {
-        public RegiaoRPG LugarDesconhecido0()
+        public static RegiaoRPG LugarDesconhecido0()
         {
             RegiaoRPG regiao = new RegiaoRPG
             {
                 Id = 0,
-                Nome = "Lugar desconhecido - 0",
-                Descrição = "Algum lucar",
+                Nome = "Lugar desconhecido",
+                Descrição = "Sinto uma familiaridade com este lugar, mas não consigo lembrar o porque... " +
+                "Uma sala mofada, úmida e pequena, com somente um candelabro no canto da parede para iluminar toda a sala. " +
+                "Ao olhar a faca no canto, acabo me tremendo de arrepio, como se algo ruim acabou de acontecer. " +
+                "Vejo uma pequena luz a *Leste*.",
                 UrlImagem = "https://cdn.discordapp.com/attachments/586204969934389268/587699128063230004/caverna.png"
             };
-
-            #region saidas
-
-            SaidaRPG leste = new SaidaRPG
-            {
-                Direcao = DirecaoEnum.Leste,
-                RegiaoId = 1,
-            };
-
-            #endregion  
+            SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 1);
             regiao.SaidasRegioes.Add(leste);
-
             return regiao;
         }
-
-        public RegiaoRPG LugarDesconhecido1()
+        public static RegiaoRPG LugarDesconhecido1()
         {
 
             RegiaoRPG regiao = new RegiaoRPG
             {
                 Id = 1,
-                Nome = "Lugar desconhecido - 1",
-                Descrição = "Algum lugar estranho",
+                Nome = "Lugar desconhecido",
+                Descrição = "Após chegar aqui, o caminho atrás se fechou, ficando somente uma parede no lugar. " +
+                "A *Leste* vejo uma porta com luzes saindo pelas frestas da porta. " +
+                "Graças a luz consigo também ver um caminho sombrio e escuro a *Norte*, " +
+                "sempre que olho para este caminho sinto um frio penetrar a minha espinha, " +
+                "como se tivesse algo me observando.. O mofo aqui é menor, graças a um vento que " +
+                "passa pela porta limpando todo o ar dentro desta sala. ",
                 UrlImagem = "https://cdn.discordapp.com/attachments/586204969934389268/587699128063230004/caverna.png"
             };
-
-            regiao.Mobs.Add(CoelhoMob.CoelhoMobAb());
-
-            #region saidas
-
-            SaidaRPG leste = new SaidaRPG
+            SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 2);
+            SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 3);
+            regiao.SaidasRegioes.Add(leste);
+            regiao.SaidasRegioes.Add(norte);
+            return regiao;
+        }
+        public static RegiaoRPG LugarDesconhecido2()
+        {
+            RegiaoRPG regiao = new RegiaoRPG
             {
-                Direcao = DirecaoEnum.Leste,
-                RegiaoId = 2,
+                Id = 2,
+                Nome = "Lugar desconhecido",
+                Descrição = "Agora que cheguei aqui, percebo que onde eu sempre estive era em uma caverna, " +
+                "está sala está muito bem iluminada, com candelabros pendurados na parede todos cheios de " +
+                "velas longas e acesas. Mas o que chama mais atenção é o lustre de bolas negras no teto " +
+                "emitindo um frio que acaba iluminando toda a sala de azul. O que torna esta sala mais estranha " +
+                "é este chão grudento... Exergo uma porta a *Sul*.",
             };
-
-            SaidaRPG norte = new SaidaRPG
+            SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 4);
+            SaidaRPG oeste = new SaidaRPG(DirecaoEnum.Oeste, 1);
+            regiao.SaidasRegioes.Add(sul);
+            regiao.SaidasRegioes.Add(oeste);
+            regiao.Mobs.Add(MobsAnker.SlimeMobAb());
+            return regiao;
+        }
+        public static RegiaoRPG LugarDesconhecido3()
+        {
+            RegiaoRPG regiao = new RegiaoRPG
             {
-                Direcao = DirecaoEnum.Norte,
-                RegiaoId = 3,
+                Id = 3,
+                Nome = "Lugar desconhecido",
+                Descrição = "Não consigo enxergar direito neste lugar escuro, mas sempre que dou um passo meu " +
+                "pé afunda em algo frágil, como se fosse galhos.. Agora que peguei um destes 'galhos' " +
+                "para examinar melhor, vejo que é OSSO! Estou em um mar de ossos! Estes ossos e está " +
+                "escuridão sem fim, me deixa com muito medo.. *Sem perceber algo me observa de longe*.",
             };
-
-            #endregion
-            //regiao.SaidasRegioes.Add(leste);
-            //regiao.SaidasRegioes.Add(norte);
+            SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 1);
+            regiao.SaidasRegioes.Add(sul);
+            regiao.Mobs.Add(MobsAnker.EsqueletoMobAb());
+            return regiao;
+        }
+        public static RegiaoRPG SaidaDaCaverna4()
+        {
+            RegiaoRPG regiao = new RegiaoRPG
+            {
+                Id = 4,
+                Nome = "Saída da Caverna",
+                Descrição = "Finalmente um pouco de ar! Está caverna está bem escondida nesta floresta, " +
+                "se eu passa se por aqui nunca teria visto a entrada... Não quero nem pensar como eu vim " +
+                "parar aqui. Acredito que com o tempo minha memória voltara. Até lá acho que devo achar algo " +
+                "para comer nesta floresta.",
+            };
+            SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 2);
+            regiao.SaidasRegioes.Add(norte);
+            regiao.Mobs.Add(MobsAnker.CoelhoMobAb());
             return regiao;
         }
     }

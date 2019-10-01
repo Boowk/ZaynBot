@@ -13,6 +13,12 @@ namespace ZaynBot.RPG.Entidades.Mapa
 
     public class SaidaRPG
     {
+        public SaidaRPG(DirecaoEnum direcao, int regiaoId)
+        {
+            this.Direcao = direcao;
+            this.RegiaoId = regiaoId;
+        }
+
         public DirecaoEnum Direcao { get; set; }
         public int RegiaoId { get; set; }
     }
