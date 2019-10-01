@@ -55,16 +55,6 @@ namespace ZaynBot.RPG.Comandos.Exibir
             }
             await ctx.RespondAsync(embed: embed.Build());
         }
-
-        [Command("testXPHH")]
-        public async Task AddAsync(CommandContext ctx)
-        {
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
-            if (personagem.Habilidades[HabilidadeEnum.Esmagante].AdicionarExp(80))
-                await ctx.RespondAsync("Evoluiu");
-            usuario.Salvar();
-        }
     }
 }
 
