@@ -13,8 +13,6 @@ namespace ZaynBot
 {
     public class Program
     {
-        private ModuloComando _todosOsComandos;
-        private ModuloCliente _cliente;
         private ConfigCore _config;
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
@@ -55,7 +53,7 @@ namespace ZaynBot
 #endif
                 UseInternalLogHandler = true,
             };
-            _cliente = new ModuloCliente(cfg);
+            ModuloCliente cliente = new ModuloCliente(cfg);
 
             string[] prefix = new string[1];
 #if DEBUG
@@ -63,7 +61,7 @@ namespace ZaynBot
 #else
             prefix[0] = _config.Prefix;
 #endif
-            _todosOsComandos = new ModuloComando(new CommandsNextConfiguration
+            ModuloComando todosOsComandos = new ModuloComando(new CommandsNextConfiguration
             {
                 StringPrefixes = prefix,
                 EnableDms = false,

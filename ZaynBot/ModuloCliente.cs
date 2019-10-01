@@ -158,7 +158,7 @@ namespace ZaynBot
         private Task Client_Ready(ReadyEventArgs e)
         {
             e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", "Cliente está pronto para processar eventos.", DateTime.Now);
-            Client.UpdateStatusAsync(new DiscordActivity("z!ajuda", ActivityType.Streaming), UserStatus.DoNotDisturb);
+            Client.UpdateStatusAsync(new DiscordActivity("z!ajuda - V. VINLAND 1.1", ActivityType.Streaming), UserStatus.DoNotDisturb);
             return Task.CompletedTask;
         }
 

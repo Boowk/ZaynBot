@@ -69,8 +69,8 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 Nome = "Lugar desconhecido",
                 Descrição = "Não consigo enxergar direito neste lugar escuro, mas sempre que dou um passo meu " +
                 "pé afunda em algo frágil, como se fosse galhos.. Agora que peguei um destes 'galhos' " +
-                "para examinar melhor, vejo que é OSSO! Estou em um mar de ossos! Estes ossos e está " +
-                "escuridão sem fim, me deixa com muito medo.. *Sem perceber algo me observa de longe*.",
+                "para examinar melhor, vejo que é OSSO! Estou em um mar de ossos! Estes lugar " +
+                "me deixam com muito medo... *Algo me observa de longe*.",
             };
             SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 1);
             regiao.SaidasRegioes.Add(sul);

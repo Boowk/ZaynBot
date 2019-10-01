@@ -2,7 +2,6 @@
 using DSharpPlus.Entities;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Entidades.Mapa;
 
 namespace ZaynBot.RPG.Comandos.Viajar
@@ -24,14 +23,14 @@ namespace ZaynBot.RPG.Comandos.Viajar
                     localAtual = usuario.RegiaoGet();
                     DiscordEmbedBuilder embedViajeNormal = new DiscordEmbedBuilder().Padrao("Viajem", ctx);
                     embedViajeNormal.WithDescription($"Você foi para o {enumDirecao.ToString()}.");
-                    embedViajeNormal.AddField(localAtual.Nome, localAtual.Descrição);
+                    embedViajeNormal.AddField("----", localAtual.Descrição);
                     if (localAtual.UrlImagem != null)
                         embedViajeNormal.WithThumbnailUrl(localAtual.UrlImagem);
                     await ctx.RespondAsync(embed: embedViajeNormal.Build());
                     return;
                 }
             }
-            await ctx.RespondAsync($"Este caminho não está disponível! {ctx.User.Mention}.");
+            await ctx.RespondAsync($"Algo fica no caminho bloqueando a sua passagem! {ctx.User.Mention}.");
         }
     }
 }
