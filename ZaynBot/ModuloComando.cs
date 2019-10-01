@@ -28,10 +28,10 @@ namespace ZaynBot
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<IAjudaComando>();
 
-            
+
             Comandos.RegisterCommands<AjudaComando>();
             Comandos.RegisterCommands<PrefixComando>();
-           // Comandos.RegisterCommands<ComandosGrupoInfo>();
+            Comandos.RegisterCommands<DencansarComando>();
             Comandos.RegisterCommands<AdmComandos>();
             Comandos.RegisterCommands<ConviteComando>();
             Comandos.RegisterCommands<InformacaoComando>();
@@ -55,9 +55,6 @@ namespace ZaynBot
             Comandos.RegisterCommands<EquiparComando>();
             Comandos.RegisterCommands<EquipamentosComando>();
             Comandos.RegisterCommands<DesequiparComando>();
-           // Comandos.RegisterCommands<TrocarEmpregoComando>();
-           // Comandos.RegisterCommands<EmpregoComando>();
-          //  Comandos.RegisterCommands<EmpregosComando>();
             #endregion
         }
 
@@ -71,9 +68,16 @@ namespace ZaynBot
                         return;
                     else
                     {
-                        int tempo = Convert.ToInt32((my.GetRemainingCooldown(ctx).TotalSeconds));
-                        await ctx.RespondAsync($"{ctx.Member.Mention}, você podera usar esse comando em " + tempo + " segundos.");
-                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} deve esperar {tempo} s para usar {ctx.Message.Content}", DateTime.Now);
+                        TimeSpan t = TimeSpan.FromSeconds(my.GetRemainingCooldown(ctx).TotalSeconds);
+                        if (t.Days >= 1)
+                            await ctx.RespondAsync($"Aguarde **({t.Days})** dias e **({t.Hours})** horas para poder usar este comando! {ctx.Member.Mention}.");
+                        else if (t.Hours >= 1)
+                            await ctx.RespondAsync($"Aguarde **({t.Hours})** horas e **({t.Minutes})** minutos para poder usar este comando! {ctx.Member.Mention}.");
+                        else if (t.Minutes >= 1)
+                            await ctx.RespondAsync($"Aguarde **({t.Minutes})** minutos e **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
+                        else
+                            await ctx.RespondAsync($"Agurade **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
+                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} deve esperar {t.TotalSeconds} s para usar {ctx.Message.Content}", DateTime.Now);
                     }
                     return;
                 case ArgumentException ax:

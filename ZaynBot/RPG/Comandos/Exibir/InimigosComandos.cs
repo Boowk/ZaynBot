@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Text;
 using System.Threading.Tasks;
+using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos.Exibir
@@ -11,6 +12,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
     {
         [Command("inimigos")]
         [Description("Veja todos os inimigos a sua volta.")]
+        [UsoAtributo("inimigos")]
         [Cooldown(1, 10, CooldownBucketType.User)]
 
         public async Task VerInimigos(CommandContext ctx)

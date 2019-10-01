@@ -45,6 +45,10 @@ namespace ZaynBot.Core
                         break;
                 }
             }
+            if (string.IsNullOrEmpty(srUsos.ToString()))
+                srUsos.Append($"`z!{command.Name}`");
+            if (string.IsNullOrEmpty(srExemplos.ToString()))
+                srExemplos.Append($"`Não precisa de exemplo.`");
             sr.Append($"**Como usar:**\n {srUsos.ToString()}");
             sr.Append($"**Exemplos:**\n {srExemplos.ToString()}");
             return this;

@@ -83,5 +83,29 @@ namespace ZaynBot.RPG.Entidades
 
         public void ReduzirFome()
             => FomeAtual -= (Raca.Forca * 1.3) / Raca.Resistencia;
+
+        public double RecuperarVida(double quantidade)
+        {
+            if (quantidade + VidaAtual > VidaMax)
+            {
+                double v = VidaMax - VidaAtual;
+                VidaAtual = VidaMax;
+                return v;
+            }
+            VidaAtual += quantidade;
+            return quantidade;
+        }
+
+        public double RecuperarMagia(double quantidade)
+        {
+            if (quantidade + MagiaAtual > MagiaMax)
+            {
+                double v = MagiaMax - MagiaAtual;
+                MagiaAtual = MagiaMax;
+                return v;
+            }
+            MagiaAtual += quantidade;
+            return quantidade;
+        }
     }
 }
