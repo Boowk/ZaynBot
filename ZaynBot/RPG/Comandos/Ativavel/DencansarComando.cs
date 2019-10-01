@@ -25,10 +25,12 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             usuario.Salvar();
             if ((valorRecuperado > 0.0) && (magiaRecuperado > 0.0))
                 await ctx.RespondAsync($"**({valorRecuperado.Texto2Casas()})** de vida e **({magiaRecuperado.Texto2Casas()})** de magia recuperados! {ctx.User.Mention}.");
-            else if (valorCura > 0.0)
+            else if (valorRecuperado > 0.0)
                 await ctx.RespondAsync($"**({valorRecuperado.Texto2Casas()})** de vida recuperada! {ctx.User.Mention}.");
-            else
+            else if (magiaRecuperado > 0.0)
                 await ctx.RespondAsync($"**({magiaRecuperado.Texto2Casas()})** de magia recuperada! {ctx.User.Mention}.");
+            else
+                await ctx.RespondAsync($"Já descansou demasiadamente! {ctx.User.Mention}.");
         }
     }
 }
