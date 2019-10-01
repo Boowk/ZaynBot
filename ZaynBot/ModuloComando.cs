@@ -76,7 +76,7 @@ namespace ZaynBot
                         else if (t.Minutes >= 1)
                             await ctx.RespondAsync($"Aguarde **({t.Minutes})** minutos e **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
                         else
-                            await ctx.RespondAsync($"Agurade **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
                         e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} deve esperar {t.TotalSeconds} s para usar {ctx.Message.Content}", DateTime.Now);
                     }
                     return;
