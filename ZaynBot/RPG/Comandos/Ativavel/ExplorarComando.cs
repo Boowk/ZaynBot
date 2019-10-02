@@ -53,7 +53,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 personagem.Batalha.Inimigos.Add(inimigo);
 
                 UsuarioRPG.Salvar(usuario);
-                await ctx.RespondAsync($"**({inimigo.Nome})** apareceu! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"**<{inimigo.Nome}>** apareceu! {ctx.User.Mention}.");
             }
             else
                 await ctx.RespondAsync($"{ctx.User.Mention}, mate os inimigos que você já tem.");

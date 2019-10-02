@@ -16,17 +16,13 @@ namespace ZaynBot
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed)
         {
             embed.WithFooter("Se estiver com dúvidas, escreva z!ajuda");
-            embed.WithColor(DiscordColor.Green);
             embed.Timestamp = DateTime.Now;
             return embed;
         }
 
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, CommandContext ctx)
-        {
-            embed.Padrao();
-            embed.WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
-            return embed;
-        }
+            => embed.Padrao().WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
+
 
         public static void Add(this Dictionary<string, ItemRPG> inventario, ItemRPG item)
             => inventario.Add(item.Nome.ToLower(), item);
