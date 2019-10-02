@@ -53,8 +53,8 @@ namespace ZaynBot
             Comandos.RegisterCommands<HabilidadeComando>();
             //Comandos.RegisterCommands<ExaminarComando>();
             Comandos.RegisterCommands<EquiparComando>();
-            Comandos.RegisterCommands<EquipamentosComando>();
             Comandos.RegisterCommands<DesequiparComando>();
+            Comandos.RegisterCommands<PersonagemComando>();
             #endregion
         }
 
