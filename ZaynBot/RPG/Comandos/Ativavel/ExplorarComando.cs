@@ -26,7 +26,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
 
             if (localAtual.Mobs.Count == 0)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você procura mas, parece que esta região não tem inimigos.");
+                await ctx.RespondAsync($"{ctx.User.Mention}, você explora mas, parece que esta região não tem inimigos.");
                 return;
             }
 

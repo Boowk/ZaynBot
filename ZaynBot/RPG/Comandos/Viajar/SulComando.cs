@@ -10,8 +10,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
     {
         [Command("sul")]
         [Aliases("s")]
-        [Description("Explora a área ao Sul.")]
-        [UsoAtributo("sul")]
+        [Description("Explora a área Sul.")]
         [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task Sul(CommandContext ctx)
         {

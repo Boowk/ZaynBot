@@ -10,8 +10,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
     {
         [Command("oeste")]
         [Aliases("o")]
-        [Description("Explora a área ao Oeste.")]
-        [UsoAtributo("oeste")]
+        [Description("Explora a área Oeste.")]
         [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task Oeste(CommandContext ctx)
         {
