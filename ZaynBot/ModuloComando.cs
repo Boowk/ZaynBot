@@ -77,12 +77,12 @@ namespace ZaynBot
                             await ctx.RespondAsync($"Aguarde **({t.Minutes})** minutos e **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
                         else
                             await ctx.RespondAsync($"Aguarde **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
-                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{ctx.Message.Author.Id} deve esperar {t.TotalSeconds} s para usar {ctx.Message.Content}", DateTime.Now);
+                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} deve esperar {t.TotalSeconds} s para usar {ctx.Message.Content}", DateTime.Now);
                     }
                     return;
                 case ArgumentException ax:
                     await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
-                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Message.Author.Id} parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
+                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Id.ToString(), $"{ctx.Message.Author.Id} parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
                     return;
                 case UnauthorizedException ux:
                     return;
@@ -94,7 +94,7 @@ namespace ZaynBot
                             DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
                             await ctx.RespondAsync($"{x} | {ctx.User.Mention} o comando{e.Context.RawArgumentString} não existe.*");
                         }
-                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Name, $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
+                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Id.ToString(), $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
                     return;
                 case PersonagemNullException px:
                     await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
@@ -106,7 +106,7 @@ namespace ZaynBot
                     await ctx.RespondAsync($"{ctx.User.Mention}, {pnx.ToString()}");
                     return;
                 default:
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Name, $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
                     DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
                     DiscordChannel CanalRPG = MundoZayn.GetChannel(600736364484493424);
                     await CanalRPG.SendMessageAsync($"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}");
@@ -116,7 +116,7 @@ namespace ZaynBot
 
         private Task ComandoExecutado(CommandExecutionEventArgs e)
         {
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Name, $"{e.Context.User.Id} executou '{e.Command.QualifiedName}'", DateTime.Now);
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} executou '{e.Command.QualifiedName}'", DateTime.Now);
             return Task.CompletedTask;
         }
     }

@@ -16,9 +16,21 @@ namespace ZaynBot.Core.Comandos
     [Group("adm")]
     [Hidden]
     [RequireOwner]
-    [Description("Comandos administrativos. - Somente disponível após doação. Verificar no comando convite.")]
+    [Description("Comandos administrativos do dono do bot.")]
     public class AdmComandos : BaseCommandModule
     {
+        [Command("mp")]
+        [RequireOwner]
+        [Hidden]
+        public async Task MensagemPrivadaComando(CommandContext ctx, DiscordGuild guilda, DiscordUser usuario, [RemainingText] string texto = "")
+        {
+            await ctx.TriggerTypingAsync();
+            DiscordMember membro = await guilda.GetMemberAsync(usuario.Id);
+            await membro.SendMessageAsync(texto);
+            await ctx.RespondAsync("**Enviado.**");
+        }
+
+
         [Command("botjogando")]
         [RequireOwner]
         [Hidden]
