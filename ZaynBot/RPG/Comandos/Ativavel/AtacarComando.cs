@@ -222,6 +222,14 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                         else
                             danoInimigo = CalcDano(0, inimigo.AtaqueFisico);
                         personagem.VidaAtual -= danoInimigo;
+                        if (personagem.VidaAtual <= 0)
+                            try
+                            {
+                                DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
+                                DiscordChannel CanalRPG = MundoZayn.GetChannel(629281618447564810);
+                                await CanalRPG.SendMessageAsync($"*Um {inimigo.Nome} matou o {ctx.User.Username}!*");
+                            }
+                            catch { }
                         danoRecebido += danoInimigo;
                     }
                 }
