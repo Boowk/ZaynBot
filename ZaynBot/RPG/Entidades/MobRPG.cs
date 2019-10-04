@@ -25,6 +25,13 @@ namespace ZaynBot.RPG.Entidades
 
         public class MobItemDropRPG
         {
+            public MobItemDropRPG(int itemId, int quantidadeMaxima, double chanceDeCair)
+            {
+                this.ItemId = itemId;
+                this.QuantidadeMaxima = quantidadeMaxima;
+                this.ChanceDeCair = chanceDeCair;
+            }
+
             public int ItemId { get; set; }
             public int QuantidadeMaxima { get; set; } = 1;
             public double ChanceDeCair { get; set; } = 1; // 100%

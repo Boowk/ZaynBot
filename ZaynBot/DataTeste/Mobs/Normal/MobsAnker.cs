@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ZaynBot.Data.Itens;
 using ZaynBot.RPG.Entidades;
+using static ZaynBot.RPG.Entidades.MobRPG;
 
 namespace ZaynBot.DataTeste.Mobs.Normal
 {
@@ -20,25 +22,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 Essencia = 15,
             };
 
-            // Carne de coelho
-            //mob.ChanceItemTodos.Add(new MobItemDropRPG
-            //{
-            //    ItemId = 0,
-            //    ChanceDeCair = 0.5f,
-            //    QuantidadeMaxima = 1,
-            //});
-            //mob.ChanceItemTodos.Add(new MobItemDropRPG
-            //{
-            //    ItemId = 1,
-            //    ChanceDeCair = 0.5f,
-            //    QuantidadeMaxima = 2,
-            //});
-            //mob.ChanceItemUnico.Add(new MobItemDropRPG
-            //{
-            //    ItemId = 0,
-            //    ChanceDeCair = 1f,
-            //    QuantidadeMaxima = 2,
-            //});
+            mob.ChanceItemTodos.Add(new MobItemDropRPG(2, 1, 1));
             return mob;
         }
 
@@ -54,6 +38,9 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 ChanceDeAparecer = 50,
                 Essencia = 10,
             };
+
+            mob.ChanceItemTodos.Add(new MobItemDropRPG(0, 6, 0.5));
+            mob.ChanceItemTodos.Add(new MobItemDropRPG(3, 1, 1));
             return mob;
         }
 
@@ -69,6 +56,9 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 ChanceDeAparecer = 50,
                 Essencia = 40,
             };
+
+            mob.ChanceItemTodos.Add(new MobItemDropRPG(2, 1, 1));
+            mob.ChanceItemUnico.Add(new MobItemDropRPG(0, 1, 0.2));
             return mob;
         }
     }
