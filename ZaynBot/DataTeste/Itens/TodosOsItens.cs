@@ -13,6 +13,7 @@ namespace ZaynBot.Data.Itens
                ItensRPG.MoedaDeCobreItem(),
                ItensRPG.EspadaEnferrujadaItem(),
                ItensRPG.Ossositem(),
+               ItensRPG.GosmaItem(),
             };
             ModuloBanco.ItemColecao.InsertMany(itens);
         }
