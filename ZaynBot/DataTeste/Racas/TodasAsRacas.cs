@@ -10,10 +10,16 @@ namespace ZaynBot.Data.Racas
             ModuloBanco.Database.DropCollection("racas");
             List<RacaRPG> racas = new List<RacaRPG>()
             {
-                HumanoRaca.Bretoes(),
+                HumanoRaca.Bretao(),
+                HumanoRaca.Bosmorio(),
+                HumanoRaca.Argoniano(),
+                HumanoRaca.Altameriao(),
+                HumanoRaca.Dunmerio(),
+                HumanoRaca.Imperial(),
+                HumanoRaca.Nordico(),
+                HumanoRaca.Orc(),
             };
             ModuloBanco.RacaColecao.InsertMany(racas);
-            racas = null;
         }
     }
 }
