@@ -6,12 +6,6 @@ namespace ZaynBot.Utilidades
 {
     public static class Sortear
     {
-        public static float Atributo(float valor)
-        {
-            float min = valor / 2;
-            return Valor(valor, min);
-        }
-
         public static int Valor(int min, int max)
         {
             Random rd = new Random();
@@ -43,23 +37,18 @@ namespace ZaynBot.Utilidades
         }
 
 
-        public static MobRPG ListaMob(List<MobRPG> mobs)
+        public static MobRPG Mobs(List<MobRPG> mobs)
         {
-            int somaPeso = 0;    //Quantidade Max
+            int somaPeso = 0;
             foreach (var item in mobs)
-            {
                 somaPeso += item.ChanceDeAparecer;
-            }
-
-            int sorteio = Valor(0, somaPeso);     //Soteia um valor aleatorio entre 0 e a quantidade max
+            int sorteio = Valor(0, somaPeso);
             int posicaoEscolhida = -1;
             do
             {
                 posicaoEscolhida++;
                 sorteio -= mobs[posicaoEscolhida].ChanceDeAparecer;
             } while (sorteio > 0);
-
-            //Retorna posiçãoescolhida
             return mobs[posicaoEscolhida];
         }
     }

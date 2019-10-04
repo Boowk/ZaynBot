@@ -13,6 +13,6 @@ namespace ZaynBot.RPG.Habilidades
             => base.AdicionarExp(0.6);
 
         public double CalcularDano(int forcaNivel)
-            => 1 + 10.5 * (forcaNivel / 100) * (NivelAtual / 100);
+            => 1 + (10.5 * (((double)forcaNivel) / 100) * (((double)NivelAtual) / 100));
     }
 }

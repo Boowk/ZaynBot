@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
+using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Comandos.Ativavel
 {
@@ -26,37 +27,32 @@ namespace ZaynBot.RPG.Comandos.Ativavel
 
             if (localAtual.Mobs.Count == 0)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você explora mas, parece que esta região não tem inimigos.");
+                await ctx.RespondAsync($"Você olha em volta, mas não encontra nenhum inimigo! {ctx.User.Mention}");
                 return;
             }
 
             if (personagem.Batalha.Inimigos.Count == 0)
             {
-                List<MobRPG> pesos = localAtual.Mobs;
+               MobRPG mobSorteado =  MobProcurar(localAtual, personagem, ctx);
 
-                int somaPeso = 0;
-                for (int i = 0; i < pesos.Count; i++)
-                {
-                    somaPeso += pesos[i].ChanceDeAparecer;
-                }
-
-                Random r = new Random();
-                int sorteio = r.Next(0, somaPeso);
-                int posicaoEscolhida = -1;
-                do
-                {
-                    posicaoEscolhida++;
-                    sorteio -= pesos[posicaoEscolhida].ChanceDeAparecer;
-                } while (sorteio > 0);
-                MobRPG inimigo = pesos[posicaoEscolhida];
-
-                personagem.Batalha.Inimigos.Add(inimigo);
-
+                await ctx.RespondAsync($"**<{mobSorteado.Nome}>** apareceu! {ctx.User.Mention}.");
                 UsuarioRPG.Salvar(usuario);
-                await ctx.RespondAsync($"**<{inimigo.Nome}>** apareceu! {ctx.User.Mention}.");
             }
             else
-                await ctx.RespondAsync($"{ctx.User.Mention}, mate os inimigos que você já tem.");
+                await ctx.RespondAsync($"Você já está batalhando! {ctx.User.Mention}.");
+        }
+
+        public static MobRPG MobProcurar(RegiaoRPG localAtual, PersonagemRPG personagem, CommandContext ctx)
+        {
+            MobRPG mobSorteado = Sortear.Mobs(localAtual.Mobs);
+            personagem.Batalha.Inimigos.Add(mobSorteado);
+
+            personagem.Batalha.Turno = 0;
+            int velocidadeInimigos = 0;
+            foreach (var inimigo in personagem.Batalha.Inimigos)
+                velocidadeInimigos += inimigo.Velocidade;
+            personagem.Batalha.PontosDeAcaoTotal = personagem.Raca.Agilidade + velocidadeInimigos;
+            return mobSorteado;
         }
     }
 }
