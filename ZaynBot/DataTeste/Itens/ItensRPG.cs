@@ -9,36 +9,51 @@ namespace ZaynBot.Data.Itens
     public class ItensRPG
     {
         public static ItemRPG MoedaDeCobreItem()
-        {
-            return new ItemRPG(0, "Moeda de cobre", TipoItemEnum.Moeda, TipoExpEnum.Nenhum, 0, 0)
+            => new ItemRPG(0, "Moeda de cobre", TipoItemEnum.Moeda)
             {
                 Descricao = "Uma moeda de cobre, vale 1 sense.",
             };
-        }
+
 
         public static ItemRPG EspadaEnferrujadaItem()
-        {
-            return new ItemRPG(1, "Espada enferrujada de bronze", TipoItemEnum.Arma, TipoExpEnum.Perfurante, 64, 2)
+            => new ItemRPG(1, "Espada enferrujada de bronze", TipoItemEnum.Arma, 100, 2, TipoExpEnum.Perfurante)
             {
-                Descricao = "Uma espada de bronze muito degastada, devido ao uso constante.",
+                Descricao = "Uma espada de bronze muito desgastada, devido ao uso constante.",
                 AtaqueFisico = 20,
             };
-        }
 
         public static ItemRPG Ossositem()
-        {
-            return new ItemRPG(2, "Ossos", TipoItemEnum.Recurso, TipoExpEnum.Nenhum, 0, 1)
+            => new ItemRPG(2, "Ossos", TipoItemEnum.Recurso, 1)
             {
                 Descricao = "Ossos.. isso dá um arrepio."
             };
-        }
+
 
         public static ItemRPG GosmaItem()
-        {
-            return new ItemRPG(3, "Gosma", TipoItemEnum.Recurso, TipoExpEnum.Nenhum, 0, 3)
+            => new ItemRPG(3, "Gosma", TipoItemEnum.Recurso, 3)
             {
                 Descricao = "Muito gosmento, onde gruda não sai com facilidade."
             };
-        }
+
+        public static ItemRPG CarneDeCoelhoAssada()
+            => new ItemRPG(4, "Carne de Coelho Assada", TipoItemEnum.Usavel, 4)
+            {
+                Descricao = "Uma carne bem cheirosa!",
+                FomeRestaura = 2,
+                VidaRestaura = 5,
+            };
+
+        public static ItemRPG CarneDeCoelho()
+            => new ItemRPG(5, "Carne de Coelho Cru", TipoItemEnum.Recurso, 2)
+            {
+                Descricao = "Ainda fresco."
+            };
+
+        public static ItemRPG OssoAfiado()
+            => new ItemRPG(6, "Osso afiado", TipoItemEnum.Arma, 50, 0, TipoExpEnum.Perfurante)
+            {
+                Descricao = "Meio nojento, mas é bem afiado.",
+                AtaqueFisico = 10,
+            };
     }
 }

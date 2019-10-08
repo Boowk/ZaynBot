@@ -55,6 +55,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<EquiparComando>();
             Comandos.RegisterCommands<DesequiparComando>();
             Comandos.RegisterCommands<PersonagemComando>();
+            Comandos.RegisterCommands<ReceitaComando>();
             #endregion
         }
 

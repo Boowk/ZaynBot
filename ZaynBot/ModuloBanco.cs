@@ -21,6 +21,7 @@ namespace ZaynBot
 
         public static IMongoCollection<RacaRPG> RacaColecao { get; private set; }
         public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
+        public static IMongoCollection<ReceitaRPG> ReceitaColecao { get; private set; }
 
         public ModuloBanco()
         {
@@ -48,16 +49,6 @@ namespace ZaynBot
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<ItemRPG>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<ItemDataRPG>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
             BsonClassMap.RegisterClassMap<MochilaRPG>(m =>
             {
                 m.AutoMap();
@@ -76,6 +67,7 @@ namespace ZaynBot
 
             RacaColecao = Database.GetCollection<RacaRPG>("racas");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
+            ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
         }
 
         #region CRUD Usuario
@@ -121,6 +113,13 @@ namespace ZaynBot
 
         public static ItemRPG ItemGet(int id)
              => ItemColecao.Find(x => x.Id == id).FirstOrDefault();
+
+        #endregion
+
+        #region CRUD Receita
+
+        public static ReceitaRPG ReceitaGet(int id)
+             => ReceitaColecao.Find(x => x.Id == id).FirstOrDefault();
 
         #endregion
     }

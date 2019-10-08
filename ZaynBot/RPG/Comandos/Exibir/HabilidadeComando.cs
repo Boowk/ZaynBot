@@ -13,12 +13,12 @@ namespace ZaynBot.RPG.Comandos.Exibir
 {
     public class HabilidadeComando : BaseCommandModule
     {
-        [Command("habilidade")]
+        [Command("habilidades")]
         [Cooldown(1, 2, CooldownBucketType.User)]
         [Description("Exibe as informações de uma habilidade ou todas as habilidades de um personagem.")]
-        [UsoAtributo("habilidade [id|]")]
-        [ExemploAtributo("habilidade 2")]
-        [ExemploAtributo("habilidade")]
+        [UsoAtributo("habilidades [id|]")]
+        [ExemploAtributo("habilidades 2")]
+        [ExemploAtributo("habilidades")]
         public async Task HabilidadeComandoAb(CommandContext ctx, string idText = "-1")
         {
             await ctx.TriggerTypingAsync();

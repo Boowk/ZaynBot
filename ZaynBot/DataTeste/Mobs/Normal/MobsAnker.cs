@@ -23,6 +23,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
             };
 
             mob.ChanceItemTodos.Add(new MobItemDropRPG(2, 1, 1));
+            mob.ChanceItemTodos.Add(new MobItemDropRPG(5, 1, 1));
             return mob;
         }
 
