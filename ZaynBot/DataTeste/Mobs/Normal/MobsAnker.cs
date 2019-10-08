@@ -59,7 +59,8 @@ namespace ZaynBot.DataTeste.Mobs.Normal
             };
 
             mob.ChanceItemTodos.Add(new MobItemDropRPG(2, 1, 1));
-            mob.ChanceItemUnico.Add(new MobItemDropRPG(0, 1, 0.2));
+            mob.ChanceItemTodos.Add(new MobItemDropRPG(0, 1, 0.3));
+            mob.ChanceItemUnico.Add(new MobItemDropRPG(1, 1, 0.2));
             return mob;
         }
     }
