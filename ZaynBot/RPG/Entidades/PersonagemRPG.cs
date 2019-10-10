@@ -2,6 +2,7 @@
 using MongoDB.Bson.Serialization.Options;
 using System;
 using System.Collections.Generic;
+using ZaynBot.Data.Racas;
 using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Habilidades;
 using ZaynBot.Utilidades;
@@ -33,7 +34,7 @@ namespace ZaynBot.RPG.Entidades
         {
             Inventario = new MochilaRPG();
             Batalha = new BatalhaRPG();
-            Raca = ModuloBanco.RacaGetRandom();
+            Raca = TodasAsRacas.RacaGetRandom();
             VidaMax = Raca.Resistencia * 2;
             VidaAtual = this.VidaMax;
             MagiaMax = Raca.Inteligencia * 2;

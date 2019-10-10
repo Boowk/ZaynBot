@@ -17,7 +17,7 @@ namespace ZaynBot.RPG.Comandos.Viajar
         public async Task ViajarAbAsync(CommandContext ctx, DirecaoEnum enumDirecao)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
 
             if (personagem.Batalha.Inimigos.Count > 0)

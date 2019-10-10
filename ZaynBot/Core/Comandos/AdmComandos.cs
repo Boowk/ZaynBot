@@ -115,7 +115,7 @@ namespace ZaynBot.Core.Comandos
             if (user == null)
             {
                 await ctx.TriggerTypingAsync();
-                UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+                UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
                 usuario.Estrelas += quantidade;
                 UsuarioRPG.Salvar(usuario);
                 await ctx.RespondAsync($"{ctx.User.Mention}, recebeu {quantidade} estrelas. :star:");

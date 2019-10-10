@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         public async Task ComandoDesequiparAb(CommandContext ctx, [RemainingText] string nome)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
 
             if (string.IsNullOrWhiteSpace(nome))

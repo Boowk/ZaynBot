@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             RacaRPG raca = personagem.Raca;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Personagem", ctx);

@@ -19,7 +19,6 @@ namespace ZaynBot
         public static IMongoCollection<UsuarioRPG> UsuarioColecao { get; private set; }
         public static IMongoCollection<ServidorCore> ServidorColecao { get; private set; }
 
-        public static IMongoCollection<RacaRPG> RacaColecao { get; private set; }
         public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
         public static IMongoCollection<ReceitaRPG> ReceitaColecao { get; private set; }
 
@@ -65,7 +64,6 @@ namespace ZaynBot
             UsuarioColecao = Database.GetCollection<UsuarioRPG>("usuarios");
             ServidorColecao = Database.GetCollection<ServidorCore>("servidores");
 
-            RacaColecao = Database.GetCollection<RacaRPG>("racas");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
             ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
         }
@@ -94,18 +92,6 @@ namespace ZaynBot
 
         public static void ServidorDel(ulong id)
             => ServidorColecao.DeleteOne(x => x.Id == id);
-
-        #endregion
-
-        #region CRUD Raca
-
-        public static RacaRPG RacaGetRandom()
-        {
-            int count = (int)RacaColecao.CountDocuments(FilterDefinition<RacaRPG>.Empty);
-            Random r = new Random();
-            int random = (int)r.Next(0, count);
-            return RacaColecao.Find(FilterDefinition<RacaRPG>.Empty).Skip(random).Limit(1).First();
-        }
 
         #endregion
 

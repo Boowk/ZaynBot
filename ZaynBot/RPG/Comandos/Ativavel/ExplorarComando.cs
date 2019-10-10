@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         public async Task ExplorarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             RegiaoRPG localAtual = usuario.RegiaoGet();
 

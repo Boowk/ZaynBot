@@ -17,7 +17,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         public async Task VerInimigos(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             StringBuilder inimigos = new StringBuilder();
             int quant = 0;

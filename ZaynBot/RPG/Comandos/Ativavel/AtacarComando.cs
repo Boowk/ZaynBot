@@ -26,7 +26,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         public async Task AtacarComandoAb(CommandContext ctx, int id = 0)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             if (personagem.Batalha.Inimigos.Count == 0)
             {

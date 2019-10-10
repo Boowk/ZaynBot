@@ -31,31 +31,35 @@ namespace ZaynBot
 
             Comandos.RegisterCommands<AjudaComando>();
             Comandos.RegisterCommands<PrefixComando>();
-            Comandos.RegisterCommands<DencansarComando>();
-            Comandos.RegisterCommands<AdmComandos>();
-            Comandos.RegisterCommands<ConviteComando>();
-            Comandos.RegisterCommands<InformacaoComando>();
-            Comandos.RegisterCommands<VotarComando>();
+
+            Comandos.RegisterCommands<StatusComando>();
+
+            //Comandos.RegisterCommands<DencansarComando>();
+            //Comandos.RegisterCommands<AdmComandos>();
+            //Comandos.RegisterCommands<ConviteComando>();
+            //Comandos.RegisterCommands<InformacaoComando>();
+            //Comandos.RegisterCommands<VotarComando>();
 
             #region ComandosRPG
-            Comandos.RegisterCommands<StatusComando>();
-            // Comandos.RegisterCommands<GrupoGuilda>();
-            Comandos.RegisterCommands<ReencarnarComando>();
-            Comandos.RegisterCommands<LocalComando>();
-            Comandos.RegisterCommands<ExplorarComando>();
-            Comandos.RegisterCommands<InimigosComandos>();
-            Comandos.RegisterCommands<AtacarComando>();
-            Comandos.RegisterCommands<LesteComando>();
-            Comandos.RegisterCommands<NorteComando>();
-            Comandos.RegisterCommands<OesteComando>();
-            Comandos.RegisterCommands<SulComando>();
-            Comandos.RegisterCommands<MochilaComando>();
-            Comandos.RegisterCommands<HabilidadeComando>();
-            //Comandos.RegisterCommands<ExaminarComando>();
-            Comandos.RegisterCommands<EquiparComando>();
-            Comandos.RegisterCommands<DesequiparComando>();
-            Comandos.RegisterCommands<PersonagemComando>();
-            Comandos.RegisterCommands<ReceitaComando>();
+
+            //Comandos.RegisterCommands<StatusComando>();
+            //// Comandos.RegisterCommands<GrupoGuilda>();
+            //Comandos.RegisterCommands<ReencarnarComando>();
+            //Comandos.RegisterCommands<LocalComando>();
+            //Comandos.RegisterCommands<ExplorarComando>();
+            //Comandos.RegisterCommands<InimigosComandos>();
+            //Comandos.RegisterCommands<AtacarComando>();
+            //Comandos.RegisterCommands<LesteComando>();
+            //Comandos.RegisterCommands<NorteComando>();
+            //Comandos.RegisterCommands<OesteComando>();
+            //Comandos.RegisterCommands<SulComando>();
+            //Comandos.RegisterCommands<MochilaComando>();
+            //Comandos.RegisterCommands<HabilidadeComando>();
+            ////Comandos.RegisterCommands<ExaminarComando>();
+            //Comandos.RegisterCommands<EquiparComando>();
+            //Comandos.RegisterCommands<DesequiparComando>();
+            //Comandos.RegisterCommands<PersonagemComando>();
+            //Comandos.RegisterCommands<ReceitaComando>();
             #endregion
         }
 

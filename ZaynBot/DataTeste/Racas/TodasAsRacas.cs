@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Data.Racas
 {
     public class TodasAsRacas
     {
+        public static List<RacaRPG> Racas { get; set; }
         public TodasAsRacas()
         {
-            ModuloBanco.Database.DropCollection("racas");
-            List<RacaRPG> racas = new List<RacaRPG>()
+            Racas = new List<RacaRPG>()
             {
                 HumanoRaca.Bretao(),
                 HumanoRaca.Bosmorio(),
@@ -19,7 +20,13 @@ namespace ZaynBot.Data.Racas
                 HumanoRaca.Nordico(),
                 HumanoRaca.Orc(),
             };
-            ModuloBanco.RacaColecao.InsertMany(racas);
+        }
+
+        public static RacaRPG RacaGetRandom()
+        {
+            Random r = new Random();
+            int i = r.Next(0, Racas.Count);
+            return Racas[i];
         }
     }
 }

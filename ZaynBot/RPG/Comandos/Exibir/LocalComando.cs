@@ -19,7 +19,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         public async Task Localizacao(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             RegiaoRPG localAtual = usuario.RegiaoGet();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Localização", ctx);
             embed.WithTitle($"**{localAtual.Nome.Titulo()}**");

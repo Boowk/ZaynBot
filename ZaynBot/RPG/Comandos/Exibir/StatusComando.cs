@@ -1,10 +1,8 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using System;
 using System.Text;
 using System.Threading.Tasks;
-using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 
@@ -13,27 +11,36 @@ namespace ZaynBot.RPG.Comandos.Exibir
     public class StatusComando : BaseCommandModule
     {
         [Command("status")]
-        [Description("Exibe os status e os equipamentos do seu personagem.")]
+        [Description("Exibe os status do seu personagem.")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario, false);
+            if (usuario == null)
+            {
+                usuario = new UsuarioRPG(ctx.User.Id);
+                ModuloBanco.UsuarioColecao.InsertOne(usuario);
+                try
+                {
+                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
+                    DiscordChannel CanalRPG = MundoZayn.GetChannel(519176927265947689);
+                    await CanalRPG.SendMessageAsync($"*{ctx.User.Username} nasceu como `{usuario.Personagem.Raca.Nome.PrimeiraLetraMaiuscula()}`.*");
+                }
+                catch { }
+            }
+
             PersonagemRPG personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Status", ctx);
-            embed.WithColor(DiscordColor.Blue);
-
-            StringBuilder sr = new StringBuilder();
-            sr.AppendLine($"**Vida:** {personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMax.Texto2Casas()}");
-            sr.AppendLine($"**Mágia:** {personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMax.Texto2Casas()}");
-            sr.AppendLine($"**Fome:** {personagem.FomeAtual.Texto2Casas()}/{personagem.FomeMax.Texto2Casas()}");
-            GerarEquips(sr, "Arma", TipoItemEnum.Arma, personagem);
-            GerarEquips(sr, "Escudo", TipoItemEnum.Escudo, personagem);
-            GerarEquips(sr, "Helmo", TipoItemEnum.Helmo, personagem);
-            GerarEquips(sr, "Couraça", TipoItemEnum.Couraca, personagem);
-            GerarEquips(sr, "Luvas", TipoItemEnum.Luvas, personagem);
-            GerarEquips(sr, "Botas", TipoItemEnum.Botas, personagem);
-            embed.WithDescription(sr.ToString());
+            embed.WithColor(DiscordColor.PhthaloGreen);
+            DiscordEmoji pv = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
+            DiscordEmoji pp = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
+            DiscordEmoji fo = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691421237288);
+            DiscordEmoji ps = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631915624494399499);
+            embed.AddField($"{pv}**Pontos de Vida**", $"{personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMax.Texto2Casas()}", true);
+            embed.AddField($"{pp}**Pontos de Poder**", $"{personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMax.Texto2Casas()}", true);
+            embed.AddField($"{fo}**Pontos de Fome**", $"{personagem.FomeAtual.Texto2Casas()}/{personagem.FomeMax.Texto2Casas()}", true);
+            embed.AddField($"{ps}**Peso**", $"{personagem.FomeAtual.Texto2Casas()}/{personagem.FomeMax.Texto2Casas()}", true);
             await ctx.RespondAsync(embed: embed.Build());
         }
 

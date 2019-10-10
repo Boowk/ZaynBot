@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         public async Task AtacarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             double valorCura = personagem.VidaMax / 15;
             double valorRecuperado = usuario.Personagem.RecuperarVida(valorCura);

@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         public async Task ComandoMochilaAb(CommandContext ctx, int pagina = 0)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Inventário", ctx);
             embed.WithColor(DiscordColor.Purple);

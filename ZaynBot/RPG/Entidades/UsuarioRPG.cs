@@ -25,15 +25,12 @@ namespace ZaynBot.RPG.Entidades
             Personagem = new PersonagemRPG();
         }
 
-        public static void TryGetPersonagemRPG(CommandContext ctx, out UsuarioRPG usuario, MensagemAvisoEnum mensagem = MensagemAvisoEnum.Todos)
+        public static void GetPersonagem(CommandContext ctx, out UsuarioRPG usuario, bool parar = true)
         {
             usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
-            if (mensagem.HasFlag(MensagemAvisoEnum.PersonagemNull))
-                if (usuario == null)
+            if (usuario == null)
+                if (parar)
                     throw new PersonagemNullException();
-            if (mensagem.HasFlag(MensagemAvisoEnum.SemVida))
-                if (usuario.Personagem.VidaAtual <= 0)
-                    throw new PersonagemNoLifeException();
         }
 
         public static UsuarioRPG UsuarioGet(DiscordUser discordUsuario)

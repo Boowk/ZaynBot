@@ -56,12 +56,10 @@ namespace ZaynBot.Core
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            StringBuilder str = new StringBuilder();
-            str.Append("**Comandos:** ");
-            str.AppendLine(string.Join(", ", subcommands.Select(xc => xc.Name)));
-            sr.Append("```css\nLista de comandos```\n" +
-                "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n\n");
-            sr.Append(str.ToString());
+            sr.AppendLine("```css\nLista de comandos```");
+            sr.AppendLine("Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n");
+            sr.AppendLine("**1. Core -** `ajuda`");
+            sr.AppendLine("**2. RPG -** `status` \n");
             sr.Append("```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
             return this;
         }
