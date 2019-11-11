@@ -56,11 +56,7 @@ namespace ZaynBot.Core
 
         public override BaseHelpFormatter WithSubcommands(IEnumerable<Command> subcommands)
         {
-            sr.AppendLine("```css\nLista de comandos```");
-            sr.AppendLine("Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda`\n");
-            sr.AppendLine("**1. Core -** `ajuda`");
-            sr.AppendLine("**2. RPG -** `status` \n");
-            sr.Append("```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```");
+            sr.AppendLine(MensagemAjuda());
             return this;
         }
 
@@ -69,6 +65,15 @@ namespace ZaynBot.Core
             eb.WithColor(DiscordColor.Cyan);
             eb.WithDescription(sr.ToString());
             return new CommandHelpMessage(embed: eb.Build());
+        }
+
+        public string MensagemAjuda()
+        {
+            return "```css\nLista de comandos``` \n" +
+            "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda` \n\n" +
+            "**1. Core -** `ajuda` \n" +
+            "**2. RPG -** `status` \n" +
+            "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }
     }
 }
