@@ -46,11 +46,11 @@ namespace ZaynBot.Core
                 }
             }
             if (string.IsNullOrEmpty(srUsos.ToString()))
-                srUsos.Append($"`z!{command.Name}`");
+                srUsos.Append($"`z!{command.Name}`\n");
             if (string.IsNullOrEmpty(srExemplos.ToString()))
-                srExemplos.Append($"`Não precisa de exemplo.`");
-            sr.Append($"**Como usar:**\n {srUsos.ToString()}");
-            sr.Append($"**Exemplos:**\n {srExemplos.ToString()}");
+                srExemplos.Append($"`Não precisa de exemplo.`\n");
+            sr.Append($"\n**Como usar:**\n {srUsos.ToString()}");
+            sr.Append($"\n**Exemplos:**\n {srExemplos.ToString()}");
             return this;
         }
 

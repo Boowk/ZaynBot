@@ -10,7 +10,7 @@ namespace ZaynBot.Core.Comandos
     {
         [Command("ajuda")]
         [Aliases("h", "?", "help")]
-        [Description("Explica sobre como usar um comando, suas abreviações e exemplos.")]
+        [Description("Explica como usar um comando, suas abreviações e exemplos.")]
         [UsoAtributo("ajuda [comando|]")]
         [ExemploAtributo("ajuda personagem")]
         [ExemploAtributo("ajuda")]

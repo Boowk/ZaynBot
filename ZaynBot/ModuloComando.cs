@@ -63,6 +63,7 @@ namespace ZaynBot
             #endregion
         }
 
+        // Envia mensagem ao receber um erro no bot
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
             CommandContext ctx = e.Context;
@@ -75,14 +76,14 @@ namespace ZaynBot
                     {
                         TimeSpan t = TimeSpan.FromSeconds(my.GetRemainingCooldown(ctx).TotalSeconds);
                         if (t.Days >= 1)
-                            await ctx.RespondAsync($"Aguarde **({t.Days})** dias e **({t.Hours})** horas para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde {t.Days} dias e ({t.Hours} horas para usar este comando! {ctx.Member.Mention}.");
                         else if (t.Hours >= 1)
-                            await ctx.RespondAsync($"Aguarde **({t.Hours})** horas e **({t.Minutes})** minutos para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde {t.Hours} horas e {t.Minutes} minutos para usar este comando! {ctx.Member.Mention}.");
                         else if (t.Minutes >= 1)
-                            await ctx.RespondAsync($"Aguarde **({t.Minutes})** minutos e **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde {t.Minutes} minutos e {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
                         else
-                            await ctx.RespondAsync($"Aguarde **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
-                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} deve esperar {t.TotalSeconds} s para usar {ctx.Message.Content}", DateTime.Now);
+                            await ctx.RespondAsync($"Aguarde {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
+                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} tentou usar {ctx.Message.Content}: {t.TotalSeconds}", DateTime.Now);
                     }
                     return;
                 case ArgumentException ax:
