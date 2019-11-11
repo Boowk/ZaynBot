@@ -9,7 +9,7 @@ namespace ZaynBot.Core.Comandos
     public class VotarComando : BaseCommandModule
     {
         [Command("votar")]
-        [Description("Exibe um link para poder estar votando no bot. Aumentando assim a visibilidade.")]
+        [Description("Exibe um link, permitindo a votar no bot. (Futuramente terá recompensas)")]
         [UsoAtributo("votar")]
         public async Task VotarComandoAb(CommandContext ctx)
         {

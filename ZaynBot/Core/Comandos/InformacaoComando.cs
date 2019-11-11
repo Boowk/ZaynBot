@@ -10,16 +10,14 @@ namespace ZaynBot.Core.Comandos
 {
     public class InformacaoComando : BaseCommandModule
     {
-        [Command("informacao")]
-        [Aliases("info")]
+        [Command("info")]
         [Description("Exibe uma breve descrição do bot.")]
-        [UsoAtributo("informacao")]
+        [UsoAtributo("info")]
         public async Task InformacaoComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             DiscordUser criador = await ModuloCliente.Client.GetUserAsync(87604980344721408);
             DiscordUser imain = await ModuloCliente.Client.GetUserAsync(383711472221421589);
-            DiscordUser ink = await ModuloCliente.Client.GetUserAsync(477203165641441292);
             DiscordUser yuki = await ModuloCliente.Client.GetUserAsync(459410223480832010);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithColor(DiscordColor.Blue);
@@ -32,7 +30,7 @@ namespace ZaynBot.Core.Comandos
                 .AddField("⌈Tempo ativo⌋", $"**{(DateTime.Now - BotCore.TempoAtivo).Days} dias, " +
                 $"{(DateTime.Now - BotCore.TempoAtivo).Hours} horas e {(DateTime.Now - BotCore.TempoAtivo).Minutes} minutos.**", true)
                 .AddField("⌈Criador⌋", $"{criador.Username}#{criador.Discriminator}", true)
-                .AddField("⌈Testador Beta⌋", $"{imain.Username}#{imain.Discriminator}, {ink.Username}#{ink.Discriminator}, " +
+                .AddField("⌈Testador Beta⌋", $"{imain.Username}#{imain.Discriminator}, " +
                 $"{yuki.Username}#{yuki.Discriminator}", true);
             await ctx.RespondAsync(embed: embed.Build());
         }
