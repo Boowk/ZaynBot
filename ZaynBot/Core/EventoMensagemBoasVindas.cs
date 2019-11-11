@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZaynBot.Core.Eventos
 {
+    //Como enviar uma mensagem de boas vindas. Configurar a parte?
     public static class EventoMensagemBoasVindas
     {
         //public static async Task EventoBemVindoAsync(GuildMemberAddEventArgs e)
