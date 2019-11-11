@@ -9,10 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
-using ZaynBot.RPG.Comandos;
 using ZaynBot.RPG.Comandos.Ativavel;
 using ZaynBot.RPG.Comandos.Exibir;
-using ZaynBot.RPG.Comandos.Viajar;
 using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
@@ -21,6 +19,7 @@ namespace ZaynBot
     {
         public static CommandsNextExtension Comandos { get; private set; }
 
+        //Adicionando comandos ao Bot.
         public ModuloComando(CommandsNextConfiguration ccfg, DiscordClient client)
         {
             Comandos = client.UseCommandsNext(ccfg);
@@ -28,24 +27,21 @@ namespace ZaynBot
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<IAjudaComando>();
 
-
             Comandos.RegisterCommands<AjudaComando>();
             Comandos.RegisterCommands<PrefixComando>();
-
-            Comandos.RegisterCommands<StatusComando>();
+            Comandos.RegisterCommands<AdmComandos>();
+            Comandos.RegisterCommands<ConviteComando>();
+            Comandos.RegisterCommands<InfoComando>();
+            Comandos.RegisterCommands<VotarComando>();
 
             //Comandos.RegisterCommands<DencansarComando>();
-            //Comandos.RegisterCommands<AdmComandos>();
-            //Comandos.RegisterCommands<ConviteComando>();
-            //Comandos.RegisterCommands<InformacaoComando>();
-            //Comandos.RegisterCommands<VotarComando>();
 
             #region ComandosRPG
-            Comandos.RegisterCommands<CriarPersonagemComando>();
 
-            //Comandos.RegisterCommands<StatusComando>();
-            //// Comandos.RegisterCommands<GrupoGuilda>();
-            //Comandos.RegisterCommands<ReencarnarComando>();
+            Comandos.RegisterCommands<CriarPersonagemComando>();
+            Comandos.RegisterCommands<StatusComando>();
+            Comandos.RegisterCommands<HabilidadeComando>();
+
             //Comandos.RegisterCommands<LocalComando>();
             //Comandos.RegisterCommands<ExplorarComando>();
             //Comandos.RegisterCommands<InimigosComandos>();
@@ -55,8 +51,7 @@ namespace ZaynBot
             //Comandos.RegisterCommands<OesteComando>();
             //Comandos.RegisterCommands<SulComando>();
             //Comandos.RegisterCommands<MochilaComando>();
-            //Comandos.RegisterCommands<HabilidadeComando>();
-            ////Comandos.RegisterCommands<ExaminarComando>();
+            //Comandos.RegisterCommands<ExaminarComando>();
             //Comandos.RegisterCommands<EquiparComando>();
             //Comandos.RegisterCommands<DesequiparComando>();
             //Comandos.RegisterCommands<PersonagemComando>();
@@ -64,13 +59,15 @@ namespace ZaynBot
             #endregion
         }
 
-        // Envia mensagem ao receber um erro no bot
+        //Envia mensagem ao receber um erro no bot.
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
             CommandContext ctx = e.Context;
             switch (e.Exception)
             {
+                //Caso tenha tempo de recarga o comando.
                 case ChecksFailedException ex:
+                    //Verifica se o usuario precisa esperar algum tempo antes de usar novamente o comando.
                     if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
                         return;
                     else
@@ -87,6 +84,7 @@ namespace ZaynBot
                         e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} tentou usar {ctx.Message.Content}: {t.TotalSeconds}", DateTime.Now);
                     }
                     return;
+                //Caso tenha colocado algum argumento do comando errado. Exemplo int no lugar de string.
                 case ArgumentException ax:
                     await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
                     ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Id.ToString(), $"{ctx.Message.Author.Id} parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
@@ -94,6 +92,7 @@ namespace ZaynBot
                 case UnauthorizedException ux:
                     return;
                 case InvalidOperationException cff:
+                //Comando  não encontrado ao usar o comando z!ajuda [comando].
                 case CommandNotFoundException cf:
                     if (e.Command != null)
                         if (e.Command.Name == "ajuda")

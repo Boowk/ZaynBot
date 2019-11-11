@@ -12,35 +12,89 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class PersonagemRPG : ProgressoRPG
     {
-        public MochilaRPG Inventario { get; set; }
-        public RacaRPG Raca { get; set; }
+        public double VidaAtual { get; set; }
+        public double VidaMaxima { get; set; }
+
+
+        public double MagiaAtual { get; set; }
+        public double MagiaMaxima { get; set; }
+
+
+        public double AtaqueFisico { get; set; }
+        public double AtaqueMagico { get; set; }
+
+
+        public double DefesaFisica { get; set; }
+        public double DefesaMagica { get; set; }
+
+
+        public double Velocidade { get; set; }
+        public double Sorte { get; set; }
+
+
+        public double FomeAtual { get; set; }
+        public double FomeMaxima { get; set; }
+
+
+        public double SedeAtual { get; set; }
+        public double SedeMaxima { get; set; }
+
+
+        public double EstaminaAtual { get; set; }
+        public double EstaminaMaxima { get; set; }
+
+        public double PesoAtual { get; set; }
+        public double PesoMaximo { get; set; }
+
+
+        public int RegiaoAtualId { get; set; }
+        public int RegiaoCasaId { get; set; }
+        public bool CasaConstruida { get; set; }
+
+        public InventarioRPG Inventario { get; set; }
         public BatalhaRPG Batalha { get; set; }
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<HabilidadeEnum, HabilidadeRPG> Habilidades { get; set; }
 
-        public int LocalAtualId { get; set; } = 0;
 
-
-        public double VidaAtual { get; set; }
-        public double VidaMax { get; set; }
-        public double MagiaAtual { get; set; }
-        public double MagiaMax { get; set; }
-        public double FomeAtual { get; set; }
-        public double FomeMax { get; set; }
-
-        public PersonagemRPG(int nivel = 1, int nivelMax = 0, double expIncremento = 84, double incremento = 1.67)
+        public PersonagemRPG(int nivel = 1, int nivelMax = 0, double expIncremento = 30, double incremento = 1.02)
             : base(nivel, nivelMax, expIncremento, incremento)
         {
-            Inventario = new MochilaRPG();
+            VidaAtual = SortearMetadeValor(50);
+            VidaMaxima = VidaAtual;
+
+            MagiaAtual = SortearMetadeValor(50);
+            MagiaMaxima = MagiaAtual;
+
+            AtaqueFisico = SortearMetadeValor(50);
+            AtaqueMagico = SortearMetadeValor(50);
+
+            DefesaFisica = SortearMetadeValor(50);
+            DefesaMagica = SortearMetadeValor(50);
+
+            Velocidade = SortearMetadeValor(25);
+            Sorte = 0;
+
+            FomeAtual = 100;
+            FomeMaxima = 100;
+
+            SedeAtual = 100;
+            SedeMaxima = 100;
+
+            EstaminaAtual = 100;
+            EstaminaMaxima = 100;
+
+            PesoAtual = 0;
+            PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
+
+            RegiaoAtualId = 0;
+            RegiaoCasaId = 0;
+            CasaConstruida = false;
+
+            Inventario = new InventarioRPG();
             Batalha = new BatalhaRPG();
-            Raca = TodasAsRacas.RacaGetRandom();
-            VidaMax = Raca.Resistencia * 2;
-            VidaAtual = this.VidaMax;
-            MagiaMax = Raca.Inteligencia * 2;
-            MagiaAtual = MagiaMax;
-            FomeMax = Raca.Resistencia * 1.6;
-            FomeAtual = FomeMax;
+
 
             //Populando as habilidades
             Habilidades = new Dictionary<HabilidadeEnum, HabilidadeRPG>
@@ -68,29 +122,12 @@ namespace ZaynBot.RPG.Entidades
             }
         }
 
-        public new bool AdicionarExp(double exp)
-        {
-            int nivelAntigo = NivelAtual;
-            bool isEvoluiu = base.AdicionarExp(exp);
-            if (isEvoluiu)
-            {
-                Raca.Pontos += NivelAtual - nivelAntigo;
-                VidaMax += Raca.Resistencia / 10;
-
-                return true;
-            }
-            return false;
-        }
-
-        public void ReduzirFome()
-            => FomeAtual -= (Raca.Forca * 1.3) / Raca.Resistencia;
-
         public double RecuperarVida(double quantidade)
         {
-            if (quantidade + VidaAtual > VidaMax)
+            if (quantidade + VidaAtual > VidaMaxima)
             {
-                double v = VidaMax - VidaAtual;
-                VidaAtual = VidaMax;
+                double v = VidaMaxima - VidaAtual;
+                VidaAtual = VidaMaxima;
                 return v;
             }
             VidaAtual += quantidade;
@@ -99,14 +136,17 @@ namespace ZaynBot.RPG.Entidades
 
         public double RecuperarMagia(double quantidade)
         {
-            if (quantidade + MagiaAtual > MagiaMax)
+            if (quantidade + MagiaAtual > MagiaMaxima)
             {
-                double v = MagiaMax - MagiaAtual;
-                MagiaAtual = MagiaMax;
+                double v = MagiaMaxima - MagiaAtual;
+                MagiaAtual = MagiaMaxima;
                 return v;
             }
             MagiaAtual += quantidade;
             return quantidade;
         }
+
+        private double SortearMetadeValor(double valor)
+            => Sortear.Valor(valor / 2, valor);
     }
 }

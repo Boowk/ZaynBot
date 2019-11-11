@@ -5,9 +5,10 @@ using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades
 {
-    public class MochilaRPG
+    public class InventarioRPG
     {
-        public SortedList<string, ItemDataRPG> Itens { get; set; } = new SortedList<string, ItemDataRPG>();
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        public Dictionary<string, ItemDataRPG> Itens { get; set; } = new Dictionary<string, ItemDataRPG>();
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<TipoItemEnum, ItemRPG> Equipamentos { get; set; } = new Dictionary<TipoItemEnum, ItemRPG>();
@@ -26,7 +27,7 @@ namespace ZaynBot.RPG.Entidades
                     {
                         try
                         {
-                            Itens.Add($"{item.Id}:{incr}", new ItemDataRPG()
+                            Itens.Add($"{item.Id} {incr}", new ItemDataRPG()
                             {
                                 Id = item.Id,
                                 Durabilidade = item.Durabilidade,
@@ -68,12 +69,6 @@ namespace ZaynBot.RPG.Entidades
 
         public void DesequiparItem(ItemRPG item, PersonagemRPG personagem)
         {
-            // Decrementa-se todos os atributos ganho do item.
-            //personagem.Raca.DefesaFisica -= item.DefesaFisica;
-            //personagem.Raca.DefesaMagica -= item.DefesaMagica;
-            //personagem.Raca.AtaqueFisico -= item.AtaqueFisico;
-            //personagem.Raca.AtaqueMagico -= item.AtaqueMagico;
-            // Remova-o do equipado
             personagem.Inventario.Equipamentos.Remove(item.TipoItem);
 
             // Adiciona-o na mochila

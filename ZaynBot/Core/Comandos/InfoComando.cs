@@ -8,7 +8,7 @@ using ZaynBot.Core.Entidades;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class InformacaoComando : BaseCommandModule
+    public class InfoComando : BaseCommandModule
     {
         [Command("info")]
         [Description("Exibe uma breve descrição do bot.")]

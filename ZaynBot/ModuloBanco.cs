@@ -48,7 +48,7 @@ namespace ZaynBot
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<MochilaRPG>(m =>
+            BsonClassMap.RegisterClassMap<InventarioRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);

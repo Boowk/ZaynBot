@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Text;
 using System.Threading.Tasks;
+using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 
@@ -12,51 +13,33 @@ namespace ZaynBot.RPG.Comandos.Exibir
     {
         [Command("status")]
         [Description("Exibe os status do seu personagem.")]
+        [UsoAtributo("status")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario, false);
-            if (usuario == null)
-            {
-                usuario = new UsuarioRPG(ctx.User.Id);
-                ModuloBanco.UsuarioColecao.InsertOne(usuario);
-                try
-                {
-                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-                    DiscordChannel CanalRPG = MundoZayn.GetChannel(519176927265947689);
-                    await CanalRPG.SendMessageAsync($"*{ctx.User.Username} nasceu como `{usuario.Personagem.Raca.Nome.PrimeiraLetraMaiuscula()}`.*");
-                }
-                catch { }
-            }
-
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Status", ctx);
-            embed.WithColor(DiscordColor.PhthaloGreen);
+
             DiscordEmoji pv = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
             DiscordEmoji pp = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
-            DiscordEmoji fo = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691421237288);
-            DiscordEmoji ps = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631915624494399499);
-            embed.AddField($"{pv}**Pontos de Vida**", $"{personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMax.Texto2Casas()}", true);
-            embed.AddField($"{pp}**Pontos de Poder**", $"{personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMax.Texto2Casas()}", true);
-            embed.AddField($"{fo}**Pontos de Fome**", $"{personagem.FomeAtual.Texto2Casas()}/{personagem.FomeMax.Texto2Casas()}", true);
-            embed.AddField($"{ps}**Peso**", $"{personagem.FomeAtual.Texto2Casas()}/{personagem.FomeMax.Texto2Casas()}", true);
-            await ctx.RespondAsync(embed: embed.Build());
-        }
 
-        public void GerarEquips(StringBuilder sr, string nomeExibicao, TipoItemEnum itemEnum, PersonagemRPG personagem)
-        {
-            sr.Append($"**{nomeExibicao}:** ");
-            bool isItem = personagem.Inventario.Equipamentos.TryGetValue(itemEnum, out ItemRPG item);
-            if (isItem)
-                sr.AppendLine($"{item.Nome}({item.Id}) - *Durab. {item.Durabilidade}/{ModuloBanco.ItemGet(item.Id).Durabilidade}*");
-            else
-                sr.AppendLine("Nenhum");
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Status", ctx);
+            embed.WithColor(DiscordColor.PhthaloGreen);
+            embed.AddField(pv + "**Vida**".Titulo(), $"{personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMaxima.Texto2Casas()}", true);
+            embed.AddField(pp + "**Magia**".Titulo(), $"{personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMaxima.Texto2Casas()}", true);
+            embed.AddField("**Ataque físico**".Titulo(), $"{personagem.AtaqueFisico.Texto2Casas()}", true);
+            embed.AddField("**Ataque mágico**".Titulo(), $"{personagem.AtaqueMagico.Texto2Casas()}", true);
+            embed.AddField("**Defesa física**".Titulo(), $"{personagem.DefesaFisica.Texto2Casas()}", true);
+            embed.AddField("**Defesa mágica**".Titulo(), $"{personagem.DefesaMagica.Texto2Casas()}", true);
+            embed.AddField("**Velocidade**".Titulo(), $"{personagem.Velocidade.Texto2Casas()}", true);
+            embed.AddField("**Sorte**".Titulo(), $"{personagem.Sorte.Texto2Casas()}", true);
+            embed.AddField("**Fome**".Titulo(), $"{(personagem.FomeAtual / personagem.FomeMaxima) * 100}%", true);
+            embed.AddField("**Sede**".Titulo(), $"{(personagem.SedeAtual / personagem.SedeMaxima) * 100}%", true);
+            embed.AddField("**Estamina**".Titulo(), $"{personagem.EstaminaMaxima.Texto2Casas()}", true);
+            embed.AddField("**Peso**".Titulo(), $"{personagem.PesoAtual.Texto2Casas()}/{personagem.PesoMaximo.Texto2Casas()}", true);
+
+            await ctx.RespondAsync(embed: embed.Build());
         }
     }
 }
-
-
-//AddField("Raça".Titulo(), $"{personagem.Raca.Nome.PrimeiraLetraMaiuscula()}", true)
-//            .AddField("Nível".Titulo(), $"Nv.{personagem.NivelAtual}", true)
-//            .AddField("Experiencia".Titulo(), $"{personagem.ExpAtual.Texto2Casas()}/{personagem.ExpMax.Texto2Casas()}", true)

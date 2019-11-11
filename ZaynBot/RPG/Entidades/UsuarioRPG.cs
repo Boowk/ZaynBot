@@ -13,24 +13,21 @@ namespace ZaynBot.RPG.Entidades
     {
         [BsonId]
         public ulong Id { get; set; }
-        public DateTime DataContaCriada { get; set; }
-        public int Estrelas { get; set; }
+        public DateTime CriacaoUsuarioData { get; set; }
         public PersonagemRPG Personagem { get; set; }
 
         public UsuarioRPG(ulong id)
         {
             Id = id;
-            DataContaCriada = DateTime.Now;
-            Estrelas = 0;
+            CriacaoUsuarioData = DateTime.Now;
             Personagem = new PersonagemRPG();
         }
 
-        public static void GetPersonagem(CommandContext ctx, out UsuarioRPG usuario, bool parar = true)
+        public static void GetPersonagem(CommandContext ctx, out UsuarioRPG usuario)
         {
             usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
             if (usuario == null)
-                if (parar)
-                    throw new PersonagemNullException();
+                throw new PersonagemNullException();
         }
 
         public static UsuarioRPG UsuarioGet(DiscordUser discordUsuario)
@@ -42,7 +39,7 @@ namespace ZaynBot.RPG.Entidades
         }
 
         public RegiaoRPG RegiaoGet()
-             => ModuloBanco.RegiaoGet(Personagem.LocalAtualId);
+             => ModuloBanco.RegiaoGet(Personagem.RegiaoAtualId);
 
         public static void Salvar(UsuarioRPG usuario)
             => ModuloBanco.UsuarioEdit(usuario);

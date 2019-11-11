@@ -6,7 +6,7 @@ namespace ZaynBot.RPG.Habilidades
     [BsonIgnoreExtraElements]
     public class PerfuranteHabilidade : HabilidadeRPG
     {
-        public PerfuranteHabilidade(string nome = "Perfurante", int nivel = 1, int nivelMax = 100, double expIncremento = 84, double incremento = 1.104)
+        public PerfuranteHabilidade(string nome = "Perfurante", int nivel = 1, int nivelMax = 100, double expIncremento = 84, double incremento = 1.102)
             : base(nome, nivel, nivelMax, expIncremento, incremento) { }
 
         public bool AdicionarExp()

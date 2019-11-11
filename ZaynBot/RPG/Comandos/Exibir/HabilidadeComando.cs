@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
     public class HabilidadeComando : BaseCommandModule
     {
         [Command("habilidades")]
-        [Cooldown(1, 2, CooldownBucketType.User)]
+        [Cooldown(1, 1, CooldownBucketType.User)]
         [Description("Exibe as informações de uma habilidade ou todas as habilidades de um personagem.")]
         [UsoAtributo("habilidades [id|]")]
         [ExemploAtributo("habilidades 2")]
