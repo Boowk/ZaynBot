@@ -41,6 +41,7 @@ namespace ZaynBot
             //Comandos.RegisterCommands<VotarComando>();
 
             #region ComandosRPG
+            Comandos.RegisterCommands<CriarPersonagemComando>();
 
             //Comandos.RegisterCommands<StatusComando>();
             //// Comandos.RegisterCommands<GrupoGuilda>();

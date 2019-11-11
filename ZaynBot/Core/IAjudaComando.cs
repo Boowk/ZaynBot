@@ -72,7 +72,7 @@ namespace ZaynBot.Core
             return "```css\nLista de comandos``` \n" +
             "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda` \n\n" +
             "**1. Core -** `ajuda` \n" +
-            "**2. RPG -** `status` \n" +
+            "**2. RPG -** `status` `criar-personagem` \n" +
             "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }
     }
