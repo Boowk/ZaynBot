@@ -19,11 +19,24 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             await ctx.TriggerTypingAsync();
             UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
+
+            if (personagem.Batalha.LiderPartyInimiga != 0)
+            {
+                await ctx.RespondAsync($"Termine a batalha contra outros jogadores antes! {ctx.User.Mention}.");
+                return;
+            }
+
+            if (personagem.Batalha.LiderParty == 0)
+            {
+                await ctx.RespondAsync($"Você deve criar uma party antes! {ctx.User.Mention}.");
+                return;
+            }
+
             RegiaoRPG localAtual = usuario.RegiaoGet();
 
             if (localAtual.Dificuldade == 0)
             {
-                await ctx.RespondAsync($"Esta região não tem inimigos! {ctx.User.Mention}");
+                await ctx.RespondAsync($"Esta região não tem inimigos! {ctx.User.Mention}.");
                 return;
             }
 
