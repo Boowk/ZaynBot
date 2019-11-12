@@ -41,8 +41,8 @@ namespace ZaynBot
             Comandos.RegisterCommands<CriarPersonagemComando>();
             Comandos.RegisterCommands<StatusComando>();
             Comandos.RegisterCommands<HabilidadeComando>();
+            Comandos.RegisterCommands<RegiaoComando>();
 
-            //Comandos.RegisterCommands<LocalComando>();
             //Comandos.RegisterCommands<ExplorarComando>();
             //Comandos.RegisterCommands<InimigosComandos>();
             //Comandos.RegisterCommands<AtacarComando>();
