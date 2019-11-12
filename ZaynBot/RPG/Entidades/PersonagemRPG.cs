@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Options;
 using System;
 using System.Collections.Generic;
-using ZaynBot.Data.Racas;
 using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Habilidades;
 using ZaynBot.Utilidades;
