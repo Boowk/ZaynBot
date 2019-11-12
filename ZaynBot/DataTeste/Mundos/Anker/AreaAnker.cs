@@ -56,7 +56,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             SaidaRPG oeste = new SaidaRPG(DirecaoEnum.Oeste, 1);
             regiao.SaidasRegioes.Add(sul);
             regiao.SaidasRegioes.Add(oeste);
-            regiao.Mobs.Add(MobsAnker.SlimeMobAb());
             return regiao;
         }
         public static RegiaoRPG LugarDesconhecido3()
@@ -72,7 +71,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             };
             SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 1);
             regiao.SaidasRegioes.Add(sul);
-            regiao.Mobs.Add(MobsAnker.EsqueletoMobAb());
             return regiao;
         }
         public static RegiaoRPG SaidaDaCaverna4()
@@ -88,7 +86,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             };
             SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 2);
             regiao.SaidasRegioes.Add(norte);
-            regiao.Mobs.Add(MobsAnker.CoelhoMobAb());
             return regiao;
         }
     }

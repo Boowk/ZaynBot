@@ -4,10 +4,12 @@ using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System;
+using System.Collections.Generic;
 using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Mapa;
 using static ZaynBot.RPG.Entidades.MobRPG;
+using MongoDB.Driver.Linq;
 
 namespace ZaynBot
 {
@@ -18,7 +20,7 @@ namespace ZaynBot
         public static IMongoCollection<RegiaoRPG> RegiaoColecao { get; private set; }
         public static IMongoCollection<UsuarioRPG> UsuarioColecao { get; private set; }
         public static IMongoCollection<ServidorCore> ServidorColecao { get; private set; }
-
+        public static IMongoCollection<MobRPG> MobColecao { get; private set; }
         public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
         public static IMongoCollection<ReceitaRPG> ReceitaColecao { get; private set; }
 
@@ -63,7 +65,7 @@ namespace ZaynBot
             RegiaoColecao = Database.GetCollection<RegiaoRPG>("regioes");
             UsuarioColecao = Database.GetCollection<UsuarioRPG>("usuarios");
             ServidorColecao = Database.GetCollection<ServidorCore>("servidores");
-
+            MobColecao = Database.GetCollection<MobRPG>("mobs");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
             ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
         }
@@ -82,6 +84,16 @@ namespace ZaynBot
 
         public static RegiaoRPG RegiaoGet(int id)
             => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
+
+        #endregion
+
+        #region CRUD Mobs
+
+        public static List<MobRPG> MobsGet(int dificuldade)
+        {
+            return MobColecao.Find(x => x.Dificuldade == dificuldade).ToList();
+            //MobColecao.AsQueryable().Where(x => x.Dificuldade == dificuldade).Sample(6);
+        }
 
         #endregion
 
