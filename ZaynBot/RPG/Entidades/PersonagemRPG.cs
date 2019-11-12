@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Habilidades;
-using ZaynBot.Utilidades;
 
 namespace ZaynBot.RPG.Entidades
 {

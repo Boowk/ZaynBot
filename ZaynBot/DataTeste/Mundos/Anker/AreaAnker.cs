@@ -15,6 +15,7 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "Uma sala mofada, úmida e pequena, com somente um candelabro no canto da parede para iluminar toda a sala. " +
                 "Ao olhar a faca no canto, acabo me tremendo de arrepio, como se algo ruim acabou de acontecer. " +
                 "Vejo uma pequena luz a *Leste*.",
+                Dificuldade = 1
             };
             SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 1);
             regiao.SaidasRegioes.Add(leste);

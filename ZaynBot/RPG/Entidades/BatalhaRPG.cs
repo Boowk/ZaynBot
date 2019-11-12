@@ -12,9 +12,10 @@ namespace ZaynBot.RPG.Entidades
         public ulong LiderParty { get; set; }
         public ulong LiderPartyInimiga { get; set; }
 
+        public bool ModoDividir { get; set; }
+
         public List<ulong> Jogadores { get; set; }
 
-        public bool ModoDividir { get; set; }
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<string, MobRPG> Mobs { get; set; }

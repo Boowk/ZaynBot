@@ -38,6 +38,13 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 await ctx.RespondAsync($"Você precisa terminar a batalha atual para fazer isso! {ctx.User.Mention}.");
         }
 
+        /// <summary>
+        /// Sorteia 1 a 6 inimigos com base na dificuldade da zona
+        /// </summary>
+        /// <param name="localAtual"></param>
+        /// <param name="personagem"></param>
+        /// <param name="ctx"></param>
+        /// <returns>Quantiadde de mobs sorteados</returns>
         public static int AparecerMob(RegiaoRPG localAtual, PersonagemRPG personagem, CommandContext ctx)
         {
             List<MobRPG> mobs = ModuloBanco.MobsGet(localAtual.Dificuldade);
