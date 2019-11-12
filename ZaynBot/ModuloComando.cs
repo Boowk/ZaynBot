@@ -11,6 +11,7 @@ using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
 using ZaynBot.RPG.Comandos.Ativavel;
 using ZaynBot.RPG.Comandos.Exibir;
+using ZaynBot.RPG.Comandos.Grupos;
 using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
@@ -45,6 +46,7 @@ namespace ZaynBot
 
             Comandos.RegisterCommands<ExplorarComando>();
             Comandos.RegisterCommands<BatalhaComando>();
+            Comandos.RegisterCommands<GrupoComando>();
             //Comandos.RegisterCommands<InimigosComandos>();
             //Comandos.RegisterCommands<AtacarComando>();
             //Comandos.RegisterCommands<LesteComando>();

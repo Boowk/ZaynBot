@@ -20,15 +20,15 @@ namespace ZaynBot.RPG.Comandos.Ativavel
             UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
 
-            if (personagem.Batalha.LiderPartyInimiga != 0)
+            if (personagem.Batalha.LiderGrupoInimigo != 0)
             {
                 await ctx.RespondAsync($"Termine a batalha contra outros jogadores antes! {ctx.User.Mention}.");
                 return;
             }
 
-            if (personagem.Batalha.LiderParty == 0)
+            if (personagem.Batalha.LiderGrupo == 0)
             {
-                await ctx.RespondAsync($"Você deve criar uma party antes! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}.");
                 return;
             }
 

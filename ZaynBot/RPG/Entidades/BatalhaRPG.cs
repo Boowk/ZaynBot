@@ -4,13 +4,14 @@ using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-    // Quando um mob morre, os itens vai para o lider da party. 
+    // Quando um mob morre, os itens vai para o lider do grupo. 
     // A não ser que esteja ativado o modo compartilhar.
     public class BatalhaRPG
     {
         public int Turno { get; set; }
-        public ulong LiderParty { get; set; }
-        public ulong LiderPartyInimiga { get; set; }
+        public string NomeGrupo { get; set; }
+        public ulong LiderGrupo { get; set; }
+        public ulong LiderGrupoInimigo { get; set; }
 
         public bool ModoDividir { get; set; }
 
@@ -23,8 +24,9 @@ namespace ZaynBot.RPG.Entidades
         public BatalhaRPG()
         {
             Turno = 0;
-            LiderParty = 0;
-            LiderPartyInimiga = 0;
+            NomeGrupo = "";
+            LiderGrupo = 0;
+            LiderGrupoInimigo = 0;
 
 
             ModoDividir = false;

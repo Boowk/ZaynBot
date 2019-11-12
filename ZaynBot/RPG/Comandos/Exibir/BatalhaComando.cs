@@ -23,27 +23,33 @@ namespace ZaynBot.RPG.Comandos.Exibir
             PersonagemRPG personagem = usuario.Personagem;
             BatalhaRPG batalha = new BatalhaRPG();
 
-            //Caso não tenha party
-            if (personagem.Batalha.LiderParty == 0)
+            //Caso não tenha grupo
+            if (personagem.Batalha.LiderGrupo == 0)
             {
-                await ctx.RespondAsync($"Você deve criar uma party antes! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}.");
                 return;
             }
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
-            embed.WithColor(DiscordColor.PhthaloGreen);
-            embed.AddField("**Turno**".Titulo(), batalha.Turno.ToString());
 
-            //Caso o lider da party não seja ele
-            if (personagem.Batalha.LiderParty != ctx.User.Id)
+            //Caso o lider do grupo não seja ele
+            if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                UsuarioRPG user = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderParty);
+                UsuarioRPG user = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
 
             }
 
             //Caso ele seja o lider
-            if (personagem.Batalha.LiderParty == ctx.User.Id)
+            if (personagem.Batalha.LiderGrupo == ctx.User.Id)
                 batalha = personagem.Batalha;
+
+
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
+            embed.WithColor(DiscordColor.PhthaloGreen);
+            embed.WithTitle($"**{batalha.NomeGrupo}**".Titulo());
+            DiscordUser liderUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
+            embed.WithDescription($"**Turno**: {batalha.Turno.ToString()}\n" +
+                $"**Lider:** {liderUser.Mention}");
+
 
             if (batalha.Jogadores.Count != 0)
             {
@@ -63,7 +69,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
                 StringBuilder sr = new StringBuilder();
                 foreach (var item in batalha.Mobs)
                     sr.AppendLine($"*{item.Key} - Vida: {item.Value.PontosDeVida}*");
-                embed.AddField("Mobs".Titulo(), sr.ToString(), true);
+                embed.AddField("**Mobs**".Titulo(), sr.ToString(), true);
             }
 
             ////Caso tenha jogadores inimigos
