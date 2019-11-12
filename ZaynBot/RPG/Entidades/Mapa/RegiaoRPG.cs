@@ -35,7 +35,7 @@ namespace ZaynBot.RPG.Entidades.Mapa
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descrição { get; set; }
-        public string UrlImagem { get; set; }
+
         public List<SaidaRPG> SaidasRegioes { get; set; } = new List<SaidaRPG>();
         public List<MobRPG> Mobs { get; set; } = new List<MobRPG>();
 
