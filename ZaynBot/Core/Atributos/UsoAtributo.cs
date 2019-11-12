@@ -25,9 +25,10 @@ namespace ZaynBot.Core.Atributos
                 return false;
             var pbot = ctx.Channel.PermissionsFor(bot);
 
-            var botok = (pbot & Permissions.Administrator) != 0 || (pbot & Permissions.EmbedLinks) == Permissions.EmbedLinks;
+            var botok = (pbot & Permissions.Administrator) != 0 || (pbot & Permissions.EmbedLinks) == Permissions.EmbedLinks &&
+                (pbot & Permissions.AddReactions) == Permissions.AddReactions;
             if (!botok)
-                await ctx.RespondAsync($"{ctx.User.Mention}, é necessario que a permissão para inserir links esteja ativa para que o bot funcione corretamente.").ConfigureAwait(false);
+                await ctx.RespondAsync($"{ctx.User.Mention}, é necessario que as permissões: **Inserir links** e **Adicionar reação** estejam ativas para que o bot funcione corretamente.").ConfigureAwait(false);
             return botok;
         }
     }

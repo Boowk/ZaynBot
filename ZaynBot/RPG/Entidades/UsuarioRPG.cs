@@ -31,12 +31,11 @@ namespace ZaynBot.RPG.Entidades
                 throw new PersonagemNullException();
         }
 
-        public static UsuarioRPG UsuarioGet(DiscordUser discordUsuario)
+        public static void UsuarioGet(DiscordUser discordUsuario, out UsuarioRPG usuario)
         {
-            UsuarioRPG usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
+            usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
             if (usuario == null)
                 throw new PersonagemNullException($"{discordUsuario.Username}#{discordUsuario.Discriminator} não tem um personagem.");
-            return usuario;
         }
         public static async Task<UsuarioRPG> UsuarioGetAsync(ulong discordUserId)
         {

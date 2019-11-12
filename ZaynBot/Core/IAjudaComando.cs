@@ -73,6 +73,7 @@ namespace ZaynBot.Core
             "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda` \n\n" +
             "**1. Core -** `ajuda` `convite` `info` `prefix` `votar` \n" +
             "**2. RPG -** `status` `criar-personagem` `regiao` `explorar` `batalha` \n" +
+            "**3. Grupo -** `criar` `convidar` `sair`" +
             "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }
     }
