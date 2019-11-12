@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-    // Quando um mob morre, os itens vai parao lider da party. 
+    // Quando um mob morre, os itens vai para o lider da party. 
     // A não ser que esteja ativado o modo compartilhar.
     public class BatalhaRPG
     {

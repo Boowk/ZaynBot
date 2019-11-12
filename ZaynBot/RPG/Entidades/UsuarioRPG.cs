@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using MongoDB.Bson.Serialization.Attributes;
@@ -35,6 +36,16 @@ namespace ZaynBot.RPG.Entidades
             UsuarioRPG usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
             if (usuario == null)
                 throw new PersonagemNullException($"{discordUsuario.Username}#{discordUsuario.Discriminator} não tem um personagem.");
+            return usuario;
+        }
+        public static async Task<UsuarioRPG> UsuarioGetAsync(ulong discordUserId)
+        {
+            UsuarioRPG usuario = ModuloBanco.UsuarioGet(discordUserId);
+            if (usuario == null)
+            {
+                DiscordUser du = await ModuloCliente.Client.GetUserAsync(discordUserId);
+                throw new PersonagemNullException($"{du.Username}#{du.Discriminator} não tem um personagem.");
+            }
             return usuario;
         }
 
