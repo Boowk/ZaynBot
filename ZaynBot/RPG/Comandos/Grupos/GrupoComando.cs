@@ -19,7 +19,7 @@ namespace ZaynBot.RPG.Comandos.Grupos
         [Command("criar")]
         [Description("Permite criar um novo grupo.")]
         [UsoAtributo("grupo [nome]")]
-        [Cooldown(1, 60, CooldownBucketType.User)]
+        [Cooldown(1, 30, CooldownBucketType.User)]
         public async Task GrupoCriar(CommandContext ctx, [RemainingText] string nome = "")
         {
             await ctx.TriggerTypingAsync();
@@ -58,7 +58,7 @@ namespace ZaynBot.RPG.Comandos.Grupos
         [UsoAtributo("convidar [id|menção]")]
         [ExemploAtributo("convidar 53057768")]
         [ExemploAtributo("convidar @Usuario")]
-        [Cooldown(1, 60, CooldownBucketType.User)]
+        [Cooldown(1, 30, CooldownBucketType.User)]
         public async Task GrupoConvidar(CommandContext ctx, DiscordMember userConvidado)
         {
             await ctx.TriggerTypingAsync();
@@ -173,7 +173,7 @@ namespace ZaynBot.RPG.Comandos.Grupos
         [Command("sair")]
         [Description("Permite sair do grupo atual.")]
         [UsoAtributo("sair")]
-        [Cooldown(1, 60, CooldownBucketType.User)]
+        [Cooldown(1, 30, CooldownBucketType.User)]
         public async Task GrupoSair(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
