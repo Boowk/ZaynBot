@@ -52,11 +52,8 @@ namespace ZaynBot.RPG.Comandos.Grupos
             await ctx.RespondAsync($"O Grupo **{nome}** foi criado! {ctx.User.Mention}");
         }
 
-        DiscordEmoji emojiSim;
-        DiscordEmoji emojiNao;
-
         [Command("convidar")]
-        [Description("Permite convidar um novo membro para o grupo.")]
+        [Description("Permite convidar um novo membro para o grupo. Note que precisam estar no mesmo servidor.")]
         [UsoAtributo("convidar [id|menção]")]
         [ExemploAtributo("convidar 53057768")]
         [ExemploAtributo("convidar @Usuario")]
@@ -120,6 +117,8 @@ namespace ZaynBot.RPG.Comandos.Grupos
             await Task.WhenAny(opcoes);
         }
 
+        DiscordEmoji emojiSim;
+        DiscordEmoji emojiNao;
         public async Task GetReacaoMissao(InteractivityResult<MessageReactionAddEventArgs> reacao, DiscordUser discordUserConvidado, CancellationTokenSource token, CommandContext ctx)
         {
             token.Cancel();
@@ -224,7 +223,7 @@ namespace ZaynBot.RPG.Comandos.Grupos
         [Description("Permite remover membros do grupo atual.")]
         [UsoAtributo("remover")]
         [Cooldown(1, 30, CooldownBucketType.User)]
-        public async Task GrupoRemover(CommandContext ctx, DiscordMember userRemovido)
+        public async Task GrupoRemover(CommandContext ctx, DiscordUser userRemovido)
         {
             await ctx.TriggerTypingAsync();
             UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
