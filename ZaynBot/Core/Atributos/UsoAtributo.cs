@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZaynBot.Core.Atributos
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class UsoAtributo : CheckBaseAttribute
     {
 

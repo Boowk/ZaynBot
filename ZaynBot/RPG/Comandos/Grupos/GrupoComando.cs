@@ -14,6 +14,8 @@ using ZaynBot.RPG.Entidades;
 namespace ZaynBot.RPG.Comandos.Grupos
 {
     [Group("grupo")]
+    [Description("Grupo de comandos relacionado ao grupo.")]
+    [UsoAtributo("grupo [comando]")]
     public class GrupoComando : BaseCommandModule
     {
         [Command("criar")]
@@ -107,9 +109,9 @@ namespace ZaynBot.RPG.Comandos.Grupos
             var interacao = ctx.Client.GetInteractivity();
             Task[] opcoes = new Task[2];
             CancellationTokenSource token = new CancellationTokenSource();
-            opcoes[0] = mensagem.WaitForReactionAsync(userConvidado, emojiSim, TimeSpan.FromSeconds(60))
+            opcoes[0] = mensagem.WaitForReactionAsync(userConvidado, emojiSim, TimeSpan.FromSeconds(30))
                 .ContinueWith(async x => await GetReacaoMissao(x.Result, userConvidado, token, ctx), token.Token);
-            opcoes[1] = mensagem.WaitForReactionAsync(userConvidado, emojiNao, TimeSpan.FromSeconds(60))
+            opcoes[1] = mensagem.WaitForReactionAsync(userConvidado, emojiNao, TimeSpan.FromSeconds(30))
                     .ContinueWith(async x => await GetReacaoMissao(x.Result, userConvidado, token, ctx), token.Token);
 
             await mensagem.CreateReactionAsync(emojiSim);
@@ -216,6 +218,49 @@ namespace ZaynBot.RPG.Comandos.Grupos
                 await ctx.RespondAsync($"Você saiu do grupo **{userLider.Personagem.Batalha.NomeGrupo}**! {ctx.User.Mention}.");
                 return;
             }
+        }
+
+        [Command("remover")]
+        [Description("Permite remover membros do grupo atual.")]
+        [UsoAtributo("remover")]
+        [Cooldown(1, 30, CooldownBucketType.User)]
+        public async Task GrupoRemover(CommandContext ctx, DiscordMember userRemovido)
+        {
+            await ctx.TriggerTypingAsync();
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
+            PersonagemRPG personagem = usuario.Personagem;
+
+
+            if (userRemovido.Id == ctx.User.Id)
+            {
+                await ctx.RespondAsync($"Como se remove você mesmo? {ctx.User.Mention}.");
+                return;
+            }
+
+            if (personagem.Batalha.LiderGrupo == 0)
+            {
+                await ctx.RespondAsync($"Você não está em nenhum grupo para remover alguém! {ctx.User.Mention}.");
+                return;
+            }
+
+            if (personagem.Batalha.LiderGrupo != ctx.User.Id)
+            {
+                await ctx.RespondAsync($"Você não é o lider do grupo para remover alguém! {ctx.User.Mention}.");
+                return;
+            }
+
+            UsuarioRPG userJogadorRemovido = await UsuarioRPG.UsuarioGetAsync(userRemovido.Id);
+            if (userJogadorRemovido.Personagem.Batalha.LiderGrupo != ctx.User.Id)
+            {
+                await ctx.RespondAsync($"Não está no mesmo grupo que você! {ctx.User.Mention}.");
+                return;
+            }
+
+            userJogadorRemovido.Personagem.Batalha = new BatalhaRPG();
+            userJogadorRemovido.Salvar();
+            personagem.Batalha.Jogadores.Remove(userJogadorRemovido.Id);
+            usuario.Salvar();
+            await ctx.RespondAsync($"Você removeu {userRemovido.Mention} do grupo! {ctx.User.Mention}.");
         }
     }
 }

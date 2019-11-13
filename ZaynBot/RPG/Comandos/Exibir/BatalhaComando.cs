@@ -30,12 +30,11 @@ namespace ZaynBot.RPG.Comandos.Exibir
                 return;
             }
 
-
             //Caso o lider do grupo não seja ele
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                UsuarioRPG user = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
-
+                UsuarioRPG liderUsuario = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                batalha = liderUsuario.Personagem.Batalha;
             }
 
             //Caso ele seja o lider
