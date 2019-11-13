@@ -45,9 +45,17 @@ namespace ZaynBot.RPG.Comandos.Exibir
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
             embed.WithColor(DiscordColor.PhthaloGreen);
             embed.WithTitle($"**{batalha.NomeGrupo}**".Titulo());
-            DiscordUser liderUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
-            embed.WithDescription($"**Turno**: {batalha.Turno.ToString()}\n" +
-                $"**Lider:** {liderUser.Mention}");
+            if (batalha.LiderGrupo == ctx.User.Id)
+                embed.WithDescription($"**Lider:** {ctx.User.Mention} - {CalcularVez(personagem.EstaminaAtual, personagem.EstaminaMaxima)}\n" +
+                    $"**Turno**: {batalha.Turno.ToString()}\n");
+            if (batalha.LiderGrupo != ctx.User.Id)
+            {
+                DiscordUser liderUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
+                var liderJogador = await UsuarioRPG.UsuarioGetAsync(batalha.LiderGrupo);
+                embed.WithDescription($"**Lider:** {liderUser.Mention} - {CalcularVez(liderJogador.Personagem.EstaminaAtual, liderJogador.Personagem.EstaminaMaxima)}\n" +
+                    $"**Turno**: {batalha.Turno.ToString()}\n");
+            }
+
 
 
             if (batalha.Jogadores.Count != 0)
@@ -57,9 +65,9 @@ namespace ZaynBot.RPG.Comandos.Exibir
                 {
                     DiscordUser user = await ModuloCliente.Client.GetUserAsync(item);
                     UsuarioRPG jog = await UsuarioRPG.UsuarioGetAsync(item);
-                    sr.AppendLine($"*{user.Mention} - Vida: {jog.Personagem.VidaAtual.Texto2Casas()}/{jog.Personagem.VidaMaxima.Texto2Casas()}*");
+                    sr.AppendLine($"{user.Mention} - {CalcularVez(jog.Personagem.EstaminaAtual, jog.Personagem.EstaminaMaxima)}");
                 }
-                embed.AddField("Jogadores".Titulo(), sr.ToString(), true);
+                embed.AddField("**Membros**".Titulo(), sr.ToString(), true);
             }
 
             //Caso tenha mobs
@@ -67,7 +75,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
             {
                 StringBuilder sr = new StringBuilder();
                 foreach (var item in batalha.Mobs)
-                    sr.AppendLine($"*{item.Key} - Vida: {item.Value.PontosDeVida}*");
+                    sr.AppendLine($"{item.Key} - Vida: {item.Value.PontosDeVida}");
                 embed.AddField("**Mobs**".Titulo(), sr.ToString(), true);
             }
 
@@ -79,6 +87,15 @@ namespace ZaynBot.RPG.Comandos.Exibir
             //}
 
             await ctx.RespondAsync(embed: embed.Build());
+        }
+
+        public string CalcularVez(double estaminaAtual, double estaminaMaxima)
+        {
+            if (estaminaAtual >= estaminaMaxima)
+                return "Pronto";
+            if (estaminaAtual != 0)
+                return "Se preparando";
+            return "Já atacou";
         }
     }
 }
