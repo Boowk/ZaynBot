@@ -160,7 +160,7 @@ namespace ZaynBot.RPG.Comandos.Grupos
                 personagem.Batalha.Jogadores.Add(usuarioConvidado.Id);
                 usuario.Salvar();
                 usuarioConvidado.Salvar();
-                await ctx.RespondAsync($"{discordUserConvidado.Mention} aceitou o convite do {ctx.User.Mention}!");
+                await ctx.RespondAsync($"{discordUserConvidado.Mention} aceitou o seu convite {ctx.User.Mention}!");
                 return;
             }
 
@@ -191,9 +191,16 @@ namespace ZaynBot.RPG.Comandos.Grupos
                 await ctx.RespondAsync($"Você precisa remover os membros antes de sair do grupo! {ctx.User.Mention}.");
                 return;
             }
-            else if (personagem.Batalha.LiderGrupo == ctx.User.Id)
+
+            if (personagem.Batalha.LiderGrupo == ctx.User.Id && personagem.Batalha.Mobs.Count >= 1)
             {
-                await ctx.RespondAsync($"Você saiu do grupo! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você precisa terminar a batalha antes de sair do grupo! {ctx.User.Mention}.");
+                return;
+            }
+
+            if (personagem.Batalha.LiderGrupo == ctx.User.Id)
+            {
+                await ctx.RespondAsync($"Você desfez o grupo! {ctx.User.Mention}.");
                 personagem.Batalha = new BatalhaRPG();
                 usuario.Salvar();
                 return;
@@ -204,10 +211,9 @@ namespace ZaynBot.RPG.Comandos.Grupos
                 UsuarioRPG userLider = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
                 userLider.Personagem.Batalha.Jogadores.Remove(ctx.User.Id);
                 userLider.Salvar();
-                await ctx.RespondAsync($"Você saiu do grupo xxxx! {ctx.User.Mention}.");
-
                 personagem.Batalha = new BatalhaRPG();
                 usuario.Salvar();
+                await ctx.RespondAsync($"Você saiu do grupo **{userLider.Personagem.Batalha.NomeGrupo}**! {ctx.User.Mention}.");
                 return;
             }
         }
