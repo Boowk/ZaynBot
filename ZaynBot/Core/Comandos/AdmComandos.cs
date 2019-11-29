@@ -61,8 +61,19 @@ namespace ZaynBot.Core.Comandos
         public async Task Sudo(CommandContext ctx, DiscordUser member, [RemainingText] string command)
         {
             await ctx.TriggerTypingAsync();
-            var cmds = ctx.CommandsNext;
-            //await cmds.SudoAsync(member, ctx.Channel, command);
+
+
+
+            var invocation = command.Substring(2);
+            var cmd = ctx.CommandsNext.FindCommand(invocation, out var args);
+            if (cmd == null)
+            {
+                await ctx.RespondAsync("Comando não encontrado");
+                return;
+            }
+
+            var cfx = ctx.CommandsNext.CreateFakeContext(member, ctx.Channel, "", "!!", cmd, args);
+            await ctx.CommandsNext.ExecuteCommandAsync(cfx);
         }
 
         [Command("resetar")]
