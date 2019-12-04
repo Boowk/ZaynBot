@@ -68,7 +68,18 @@ namespace ZaynBot
             RacaColecao = Database.GetCollection<RacaRPG>("racas");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
             ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
+
+            var notificationLogBuilder = Builders<UsuarioRPG>.IndexKeys;
+            var indexModel = new CreateIndexModel<UsuarioRPG>(notificationLogBuilder.Ascending(x => x.Personagem.NivelAtual));
+            UsuarioColecao.Indexes.CreateOne(indexModel);
+
+            //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
+            //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
+
+
         }
+
+
 
         #region CRUD Usuario
 
