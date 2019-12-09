@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Command("reencarnar")]
         [Description("Cria um novo personagem")]
         [UsoAtributo("reencarnar [sim|]")]
-        [Cooldown(1, 500, CooldownBucketType.User)]
+        [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task ReencarnarComandoAb(CommandContext ctx, string aceitar = "nao")
         {
             await ctx.TriggerTypingAsync();

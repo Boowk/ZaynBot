@@ -22,7 +22,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [UsoAtributo("atacar [id|]")]
         [ExemploAtributo("atacar")]
         [ExemploAtributo("atacar 3")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task AtacarComandoAb(CommandContext ctx, int id = 0)
         {
             await ctx.TriggerTypingAsync();

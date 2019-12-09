@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         [UsoAtributo("mochila [pagina|]")]
         [ExemploAtributo("mochila 2")]
         [ExemploAtributo("mochila")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
 
         public async Task ComandoMochilaAb(CommandContext ctx, int pagina = 0)
         {

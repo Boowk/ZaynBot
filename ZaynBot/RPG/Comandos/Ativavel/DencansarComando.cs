@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Command("descansar")]
         [Description("Permite descansar para recuperar um pouco da energia perdida.")]
         [UsoAtributo("descansar")]
-        [Cooldown(1, 300, CooldownBucketType.User)]
+        [Cooldown(1, 30, CooldownBucketType.User)]
         public async Task AtacarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

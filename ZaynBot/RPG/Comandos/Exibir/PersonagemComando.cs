@@ -11,7 +11,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
     {
         [Command("personagem")]
         [Description("Exibe os atributos e bonus do seu personagem.")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

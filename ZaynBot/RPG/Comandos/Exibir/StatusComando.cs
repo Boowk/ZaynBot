@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
     {
         [Command("status")]
         [Description("Exibe os status e os equipamentos do seu personagem.")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

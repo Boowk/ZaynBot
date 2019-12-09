@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Description("Permite desequipar algum item.")]
         [UsoAtributo("desequipar [id]")]
         [ExemploAtributo("desequipar 23")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task ComandoDesequiparAb(CommandContext ctx, [RemainingText] string nome)
         {
             await ctx.TriggerTypingAsync();

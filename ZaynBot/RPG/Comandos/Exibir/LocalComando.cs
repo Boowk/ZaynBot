@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         [Aliases("local")]
         [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
         [UsoAtributo("localizacao")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task Localizacao(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

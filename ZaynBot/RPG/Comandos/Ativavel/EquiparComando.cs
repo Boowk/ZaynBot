@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Description("Permite equipar itens que tem durabilidade.")]
         [UsoAtributo("equipar [item id]")]
         [ExemploAtributo("equipar 1:1")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task ComandoEquiparAb(CommandContext ctx, [RemainingText] string nome)
         {
             await ctx.TriggerTypingAsync();
