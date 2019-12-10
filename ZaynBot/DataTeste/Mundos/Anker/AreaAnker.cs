@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "Uma sala mofada, úmida e pequena, com somente um candelabro no canto da parede para iluminar toda a sala. " +
                 "Ao olhar a faca no canto, acabo me tremendo de arrepio, como se algo ruim acabou de acontecer. " +
                 "Vejo uma pequena luz a *Leste*.",
-                UrlImagem = "https://cdn.discordapp.com/attachments/586204969934389268/587699128063230004/caverna.png"
+                Dificuldade = 1
             };
             SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 1);
             regiao.SaidasRegioes.Add(leste);
@@ -34,7 +34,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "sempre que olho para este caminho sinto um frio penetrar a minha espinha, " +
                 "como se tivesse algo me observando.. O mofo aqui é menor, graças a um vento que " +
                 "passa pela porta limpando todo o ar dentro desta sala. ",
-                UrlImagem = "https://cdn.discordapp.com/attachments/586204969934389268/587699128063230004/caverna.png"
             };
             SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 2);
             SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 3);
@@ -58,7 +57,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             SaidaRPG oeste = new SaidaRPG(DirecaoEnum.Oeste, 1);
             regiao.SaidasRegioes.Add(sul);
             regiao.SaidasRegioes.Add(oeste);
-            regiao.Mobs.Add(MobsAnker.SlimeMobAb());
             return regiao;
         }
         public static RegiaoRPG LugarDesconhecido3()
@@ -74,7 +72,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             };
             SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 1);
             regiao.SaidasRegioes.Add(sul);
-            regiao.Mobs.Add(MobsAnker.EsqueletoMobAb());
             return regiao;
         }
         public static RegiaoRPG SaidaDaCaverna4()
@@ -90,7 +87,6 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             };
             SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 2);
             regiao.SaidasRegioes.Add(norte);
-            regiao.Mobs.Add(MobsAnker.CoelhoMobAb());
             return regiao;
         }
     }

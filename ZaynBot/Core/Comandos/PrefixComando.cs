@@ -10,8 +10,8 @@ namespace ZaynBot.Core.Comandos
     public class PrefixComando : BaseCommandModule
     {
         [Command("prefix")]
-        [Description("Permite modificar o prefix do bot no servidor atual. Prefix antigo ainda continuará funcionando.")]
-        [UsoAtributo("prefix [pp]")]
+        [Description("Permite modificar o prefix do bot no servidor atual.  Note que o Prefix antigo ainda continuará funcionando.")]
+        [UsoAtributo("prefix [p|]")]
         [ExemploAtributo("prefix !")]
         [RequireUserPermissions(Permissions.Administrator)]
         public async Task PrefixComandoAb(CommandContext ctx, string prefix = null)

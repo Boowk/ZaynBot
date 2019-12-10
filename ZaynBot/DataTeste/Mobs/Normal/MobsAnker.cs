@@ -19,6 +19,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 PontosDeVida = 12,
                 Velocidade = 6,
                 ChanceDeAparecer = 50,
+                Dificuldade = 1,
                 Essencia = 15,
             };
 
@@ -37,6 +38,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 PontosDeVida = 6,
                 Velocidade = 4,
                 ChanceDeAparecer = 50,
+                Dificuldade = 1,
                 Essencia = 10,
             };
 
@@ -55,6 +57,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 PontosDeVida = 10,
                 Velocidade = 4,
                 ChanceDeAparecer = 50,
+                Dificuldade = 1,
                 Essencia = 40,
             };
 

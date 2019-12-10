@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using MongoDB.Bson.Serialization.Attributes;
@@ -13,39 +14,42 @@ namespace ZaynBot.RPG.Entidades
     {
         [BsonId]
         public ulong Id { get; set; }
-        public DateTime DataContaCriada { get; set; }
-        public int Estrelas { get; set; }
+        public DateTime CriacaoUsuarioData { get; set; }
         public PersonagemRPG Personagem { get; set; }
 
         public UsuarioRPG(ulong id)
         {
             Id = id;
-            DataContaCriada = DateTime.Now;
-            Estrelas = 0;
+            CriacaoUsuarioData = DateTime.Now;
             Personagem = new PersonagemRPG();
         }
 
-        public static void TryGetPersonagemRPG(CommandContext ctx, out UsuarioRPG usuario, MensagemAvisoEnum mensagem = MensagemAvisoEnum.Todos)
+        public static void GetPersonagem(CommandContext ctx, out UsuarioRPG usuario)
         {
             usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
-            if (mensagem.HasFlag(MensagemAvisoEnum.PersonagemNull))
-                if (usuario == null)
-                    throw new PersonagemNullException();
-            if (mensagem.HasFlag(MensagemAvisoEnum.SemVida))
-                if (usuario.Personagem.VidaAtual <= 0)
-                    throw new PersonagemNoLifeException();
+            if (usuario == null)
+                throw new PersonagemNullException();
         }
 
-        public static UsuarioRPG UsuarioGet(DiscordUser discordUsuario)
+        public static void UsuarioGet(DiscordUser discordUsuario, out UsuarioRPG usuario)
         {
-            UsuarioRPG usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
+            usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
             if (usuario == null)
                 throw new PersonagemNullException($"{discordUsuario.Username}#{discordUsuario.Discriminator} não tem um personagem.");
+        }
+        public static async Task<UsuarioRPG> UsuarioGetAsync(ulong discordUserId)
+        {
+            UsuarioRPG usuario = ModuloBanco.UsuarioGet(discordUserId);
+            if (usuario == null)
+            {
+                DiscordUser du = await ModuloCliente.Client.GetUserAsync(discordUserId);
+                throw new PersonagemNullException($"{du.Username}#{du.Discriminator} não tem um personagem.");
+            }
             return usuario;
         }
 
         public RegiaoRPG RegiaoGet()
-             => ModuloBanco.RegiaoGet(Personagem.LocalAtualId);
+             => ModuloBanco.RegiaoGet(Personagem.RegiaoAtualId);
 
         public static void Salvar(UsuarioRPG usuario)
             => ModuloBanco.UsuarioEdit(usuario);

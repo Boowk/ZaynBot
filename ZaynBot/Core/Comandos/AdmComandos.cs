@@ -26,6 +26,8 @@ namespace ZaynBot.Core.Comandos
             await membro.SendMessageAsync(texto);
             await ctx.RespondAsync("**Enviado.**");
         }
+<<<<<<< HEAD
+=======
 
         [Command("sudo")]
         public async Task Sudo(CommandContext ctx, DiscordUser member, [RemainingText] string command)
@@ -43,5 +45,6 @@ namespace ZaynBot.Core.Comandos
             var cfx = ctx.CommandsNext.CreateFakeContext(member, ctx.Channel, "", "!!", cmd, args);
             await ctx.CommandsNext.ExecuteCommandAsync(cfx);
         }
+>>>>>>> master
     }
 }

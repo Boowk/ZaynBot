@@ -13,8 +13,13 @@ namespace ZaynBot.RPG.Comandos.Exibir
 {
     public class HabilidadeComando : BaseCommandModule
     {
+<<<<<<< HEAD
+        [Command("habilidades")]
+        [Cooldown(1, 1, CooldownBucketType.User)]
+=======
         [Command("habilidade")]
         [Cooldown(1, 2, CooldownBucketType.User)]
+>>>>>>> master
         [Description("Exibe as informações de uma habilidade ou todas as habilidades de um personagem.")]
         [UsoAtributo("habilidade [nome]")]
         [ExemploAtributo("habilidade perfurante")]
@@ -22,7 +27,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
         public async Task HabilidadeComandoAb(CommandContext ctx, string habNome = "")
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao();
 

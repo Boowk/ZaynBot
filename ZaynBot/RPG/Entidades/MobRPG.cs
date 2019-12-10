@@ -12,6 +12,8 @@ namespace ZaynBot.RPG.Entidades
         public int Velocidade { get; set; }
         public int ChanceDeAparecer { get; set; }
         public double Essencia { get; set; }
+        public int Dificuldade { get; set; }
+
         public List<MobItemDropRPG> ChanceItemUnico { get; set; } = new List<MobItemDropRPG>();
         public List<MobItemDropRPG> ChanceItemTodos { get; set; } = new List<MobItemDropRPG>();
 

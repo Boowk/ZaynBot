@@ -9,10 +9,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
-using ZaynBot.RPG.Comandos;
 using ZaynBot.RPG.Comandos.Ativavel;
 using ZaynBot.RPG.Comandos.Exibir;
-using ZaynBot.RPG.Comandos.Viajar;
+using ZaynBot.RPG.Comandos.Grupos;
 using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
@@ -21,6 +20,7 @@ namespace ZaynBot
     {
         public static CommandsNextExtension Comandos { get; private set; }
 
+        //Adicionando comandos ao Bot.
         public ModuloComando(CommandsNextConfiguration ccfg, DiscordClient client)
         {
             Comandos = client.UseCommandsNext(ccfg);
@@ -28,60 +28,71 @@ namespace ZaynBot
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<IAjudaComando>();
 
-
             Comandos.RegisterCommands<AjudaComando>();
             Comandos.RegisterCommands<PrefixComando>();
-            Comandos.RegisterCommands<DencansarComando>();
             Comandos.RegisterCommands<AdmComandos>();
             Comandos.RegisterCommands<ConviteComando>();
-            Comandos.RegisterCommands<InformacaoComando>();
+            Comandos.RegisterCommands<InfoComando>();
             Comandos.RegisterCommands<VotarComando>();
+<<<<<<< HEAD
+            Comandos.RegisterCommands<UsuarioComando>();
+
+            //Comandos.RegisterCommands<DencansarComando>();
+=======
             Comandos.RegisterCommands<TopComando>();
+>>>>>>> master
 
             #region ComandosRPG
+
+            Comandos.RegisterCommands<CriarPersonagemComando>();
             Comandos.RegisterCommands<StatusComando>();
-            // Comandos.RegisterCommands<GrupoGuilda>();
-            Comandos.RegisterCommands<ReencarnarComando>();
-            Comandos.RegisterCommands<LocalComando>();
-            Comandos.RegisterCommands<ExplorarComando>();
-            Comandos.RegisterCommands<InimigosComandos>();
-            Comandos.RegisterCommands<AtacarComando>();
-            Comandos.RegisterCommands<LesteComando>();
-            Comandos.RegisterCommands<NorteComando>();
-            Comandos.RegisterCommands<OesteComando>();
-            Comandos.RegisterCommands<SulComando>();
-            Comandos.RegisterCommands<MochilaComando>();
             Comandos.RegisterCommands<HabilidadeComando>();
+            Comandos.RegisterCommands<RegiaoComando>();
+
+            Comandos.RegisterCommands<ExplorarComando>();
+            Comandos.RegisterCommands<BatalhaComando>();
+            Comandos.RegisterCommands<GrupoComando>();
+            //Comandos.RegisterCommands<InimigosComandos>();
+            //Comandos.RegisterCommands<AtacarComando>();
+            //Comandos.RegisterCommands<LesteComando>();
+            //Comandos.RegisterCommands<NorteComando>();
+            //Comandos.RegisterCommands<OesteComando>();
+            //Comandos.RegisterCommands<SulComando>();
+            //Comandos.RegisterCommands<MochilaComando>();
             //Comandos.RegisterCommands<ExaminarComando>();
-            Comandos.RegisterCommands<EquiparComando>();
-            Comandos.RegisterCommands<DesequiparComando>();
-            Comandos.RegisterCommands<PersonagemComando>();
-            Comandos.RegisterCommands<ReceitaComando>();
+            //Comandos.RegisterCommands<EquiparComando>();
+            //Comandos.RegisterCommands<DesequiparComando>();
+            //Comandos.RegisterCommands<PersonagemComando>();
+            //Comandos.RegisterCommands<ReceitaComando>();
             #endregion
         }
 
+        //Envia mensagem ao receber um erro no bot.
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
             CommandContext ctx = e.Context;
             switch (e.Exception)
             {
+                //Caso tenha tempo de recarga o comando.
                 case ChecksFailedException ex:
+                    //Verifica se o usuario precisa esperar algum tempo antes de usar novamente o comando.
                     if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
                         return;
                     else
                     {
                         TimeSpan t = TimeSpan.FromSeconds(my.GetRemainingCooldown(ctx).TotalSeconds);
                         if (t.Days >= 1)
-                            await ctx.RespondAsync($"Aguarde **({t.Days})** dias e **({t.Hours})** horas para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde {t.Days} dias e ({t.Hours} horas para usar este comando! {ctx.Member.Mention}.");
                         else if (t.Hours >= 1)
-                            await ctx.RespondAsync($"Aguarde **({t.Hours})** horas e **({t.Minutes})** minutos para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde {t.Hours} horas e {t.Minutes} minutos para usar este comando! {ctx.Member.Mention}.");
                         else if (t.Minutes >= 1)
-                            await ctx.RespondAsync($"Aguarde **({t.Minutes})** minutos e **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
+                            await ctx.RespondAsync($"Aguarde {t.Minutes} minutos e {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
                         else
-                            await ctx.RespondAsync($"Aguarde **({t.Seconds})** segundos para poder usar este comando! {ctx.Member.Mention}.");
-                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} deve esperar {t.TotalSeconds} s para usar {ctx.Message.Content}", DateTime.Now);
+                            await ctx.RespondAsync($"Aguarde {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
+                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} tentou usar {ctx.Message.Content}: {t.TotalSeconds}", DateTime.Now);
                     }
                     return;
+                //Caso tenha colocado algum argumento do comando errado. Exemplo int no lugar de string.
                 case ArgumentException ax:
                     var cmd = ctx.CommandsNext.FindCommand($"ajuda {e.Command.Name}", out var args);
                     var cfx = ctx.CommandsNext.CreateContext(e.Context.Message, "", cmd, args);
@@ -91,6 +102,7 @@ namespace ZaynBot
                 case UnauthorizedException ux:
                     return;
                 case InvalidOperationException cff:
+                //Comando  não encontrado ao usar o comando z!ajuda [comando].
                 case CommandNotFoundException cf:
                     if (e.Command != null)
                         if (e.Command.Name == "ajuda")

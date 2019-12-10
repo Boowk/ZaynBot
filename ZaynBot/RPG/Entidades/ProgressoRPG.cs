@@ -52,7 +52,7 @@ namespace ZaynBot.RPG.Entidades
         /// <returns>Retorna true caso tenha evoluido</returns>
         public bool AdicionarExp(double exp)
         {
-           if (NivelAtual != NivelMax)
+            if (NivelAtual != NivelMax)
             {
                 double expResultante = ExpAtual + exp;
                 if (expResultante >= ExpMax)
@@ -82,7 +82,7 @@ namespace ZaynBot.RPG.Entidades
             {
                 NivelAtual++;
                 ExpIncremento *= MultIncremento;
-                ExpMax += ExpIncremento;
+                ExpMax = ExpIncremento;
             }
             ExpAtual = 0;
         }

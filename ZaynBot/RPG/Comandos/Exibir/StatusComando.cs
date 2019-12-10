@@ -1,7 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using System;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
@@ -13,43 +12,39 @@ namespace ZaynBot.RPG.Comandos.Exibir
     public class StatusComando : BaseCommandModule
     {
         [Command("status")]
+<<<<<<< HEAD
+        [Description("Exibe os status do seu personagem.")]
+        [UsoAtributo("status")]
+        [Cooldown(1, 10, CooldownBucketType.User)]
+=======
         [Description("Exibe os status e os equipamentos do seu personagem.")]
         [Cooldown(1, 3, CooldownBucketType.User)]
+>>>>>>> master
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.TryGetPersonagemRPG(ctx, out UsuarioRPG usuario);
+            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
+
+            DiscordEmoji pv = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
+            DiscordEmoji pp = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
+
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Status", ctx);
-            embed.WithColor(DiscordColor.Blue);
+            embed.WithColor(DiscordColor.PhthaloGreen);
+            embed.AddField(pv + "**Vida**".Titulo(), $"{personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMaxima.Texto2Casas()}", true);
+            embed.AddField(pp + "**Magia**".Titulo(), $"{personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMaxima.Texto2Casas()}", true);
+            embed.AddField("**Ataque físico**".Titulo(), $"{personagem.AtaqueFisico.Texto2Casas()}", true);
+            embed.AddField("**Ataque mágico**".Titulo(), $"{personagem.AtaqueMagico.Texto2Casas()}", true);
+            embed.AddField("**Defesa física**".Titulo(), $"{personagem.DefesaFisica.Texto2Casas()}", true);
+            embed.AddField("**Defesa mágica**".Titulo(), $"{personagem.DefesaMagica.Texto2Casas()}", true);
+            embed.AddField("**Velocidade**".Titulo(), $"{personagem.Velocidade.Texto2Casas()}", true);
+            embed.AddField("**Sorte**".Titulo(), $"{personagem.Sorte.Texto2Casas()}", true);
+            embed.AddField("**Fome**".Titulo(), $"{(personagem.FomeAtual / personagem.FomeMaxima) * 100}%", true);
+            embed.AddField("**Sede**".Titulo(), $"{(personagem.SedeAtual / personagem.SedeMaxima) * 100}%", true);
+            embed.AddField("**Estamina**".Titulo(), $"{personagem.EstaminaMaxima.Texto2Casas()}", true);
+            embed.AddField("**Peso**".Titulo(), $"{personagem.PesoAtual.Texto2Casas()}/{personagem.PesoMaximo.Texto2Casas()}", true);
 
-            StringBuilder sr = new StringBuilder();
-            sr.AppendLine($"**Vida:** {personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMax.Texto2Casas()}");
-            sr.AppendLine($"**Mágia:** {personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMax.Texto2Casas()}");
-            sr.AppendLine($"**Fome:** {personagem.FomeAtual.Texto2Casas()}/{personagem.FomeMax.Texto2Casas()}");
-            GerarEquips(sr, "Arma", TipoItemEnum.Arma, personagem);
-            GerarEquips(sr, "Escudo", TipoItemEnum.Escudo, personagem);
-            GerarEquips(sr, "Helmo", TipoItemEnum.Helmo, personagem);
-            GerarEquips(sr, "Couraça", TipoItemEnum.Couraca, personagem);
-            GerarEquips(sr, "Luvas", TipoItemEnum.Luvas, personagem);
-            GerarEquips(sr, "Botas", TipoItemEnum.Botas, personagem);
-            embed.WithDescription(sr.ToString());
             await ctx.RespondAsync(embed: embed.Build());
-        }
-
-        public void GerarEquips(StringBuilder sr, string nomeExibicao, TipoItemEnum itemEnum, PersonagemRPG personagem)
-        {
-            sr.Append($"**{nomeExibicao}:** ");
-            bool isItem = personagem.Inventario.Equipamentos.TryGetValue(itemEnum, out ItemRPG item);
-            if (isItem)
-                sr.AppendLine($"{item.Nome}({item.Id}) - *Durab. {item.Durabilidade}/{ModuloBanco.ItemGet(item.Id).Durabilidade}*");
-            else
-                sr.AppendLine("Nenhum");
         }
     }
 }
-
-
-//AddField("Raça".Titulo(), $"{personagem.Raca.Nome.PrimeiraLetraMaiuscula()}", true)
-//            .AddField("Nível".Titulo(), $"Nv.{personagem.NivelAtual}", true)
-//            .AddField("Experiencia".Titulo(), $"{personagem.ExpAtual.Texto2Casas()}/{personagem.ExpMax.Texto2Casas()}", true)

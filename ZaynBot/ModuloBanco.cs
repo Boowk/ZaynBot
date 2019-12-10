@@ -3,11 +3,9 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using System;
+using System.Collections.Generic;
 using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Mapa;
-using static ZaynBot.RPG.Entidades.MobRPG;
 
 namespace ZaynBot
 {
@@ -18,8 +16,7 @@ namespace ZaynBot
         public static IMongoCollection<RegiaoRPG> RegiaoColecao { get; private set; }
         public static IMongoCollection<UsuarioRPG> UsuarioColecao { get; private set; }
         public static IMongoCollection<ServidorCore> ServidorColecao { get; private set; }
-
-        public static IMongoCollection<RacaRPG> RacaColecao { get; private set; }
+        public static IMongoCollection<MobRPG> MobColecao { get; private set; }
         public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
         public static IMongoCollection<ReceitaRPG> ReceitaColecao { get; private set; }
 
@@ -44,12 +41,7 @@ namespace ZaynBot
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<MobItemDropRPG>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<MochilaRPG>(m =>
+            BsonClassMap.RegisterClassMap<InventarioRPG>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
@@ -64,8 +56,7 @@ namespace ZaynBot
             RegiaoColecao = Database.GetCollection<RegiaoRPG>("regioes");
             UsuarioColecao = Database.GetCollection<UsuarioRPG>("usuarios");
             ServidorColecao = Database.GetCollection<ServidorCore>("servidores");
-
-            RacaColecao = Database.GetCollection<RacaRPG>("racas");
+            MobColecao = Database.GetCollection<MobRPG>("mobs");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
             ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
 
@@ -98,6 +89,16 @@ namespace ZaynBot
 
         #endregion
 
+        #region CRUD Mobs
+
+        public static List<MobRPG> MobsGet(int dificuldade)
+        {
+            return MobColecao.Find(x => x.Dificuldade == dificuldade).ToList();
+            //MobColecao.AsQueryable().Where(x => x.Dificuldade == dificuldade).Sample(6);
+        }
+
+        #endregion
+
         #region CRUD Servidor
 
         public static ServidorCore ServidorGet(ulong id)
@@ -105,18 +106,6 @@ namespace ZaynBot
 
         public static void ServidorDel(ulong id)
             => ServidorColecao.DeleteOne(x => x.Id == id);
-
-        #endregion
-
-        #region CRUD Raca
-
-        public static RacaRPG RacaGetRandom()
-        {
-            int count = (int)RacaColecao.CountDocuments(FilterDefinition<RacaRPG>.Empty);
-            Random r = new Random();
-            int random = (int)r.Next(0, count);
-            return RacaColecao.Find(FilterDefinition<RacaRPG>.Empty).Skip(random).Limit(1).First();
-        }
 
         #endregion
 

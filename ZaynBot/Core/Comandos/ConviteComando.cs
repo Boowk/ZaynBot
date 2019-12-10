@@ -9,7 +9,7 @@ namespace ZaynBot.Core.Comandos
     public class ConviteComando : BaseCommandModule
     {
         [Command("convite")]
-        [Description("Exibe um link onde permite adicionar o bot no seu servidor")]
+        [Description("Exibe um link, permitindo adicionar o bot no seu servidor")]
         [UsoAtributo("convite")]
         public async Task ConviteComandoAb(CommandContext ctx)
         {

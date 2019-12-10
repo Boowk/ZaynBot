@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
 using ZaynBot.Data.Itens;
-using ZaynBot.Data.Racas;
+using ZaynBot.DataTeste.Mobs;
 using ZaynBot.DataTeste.Receitas;
 using ZaynBot.RPG.Data.Mundos.Anker;
 
@@ -76,12 +76,12 @@ namespace ZaynBot
             Console.WriteLine("Banco concluido.");
             new TodasAsAreas();
             Console.WriteLine("Áreas concluido.");
-            new TodasAsRacas();
-            Console.WriteLine("Raças concluido.");
             new TodosOsItens();
             Console.WriteLine("Itens concluido.");
             new TodasAsReceitas();
             Console.WriteLine("Receitas concluido.");
+            new TodosOsMobs();
+            Console.WriteLine("Mobs concluido.");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }

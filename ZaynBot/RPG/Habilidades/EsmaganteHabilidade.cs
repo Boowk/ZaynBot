@@ -6,7 +6,7 @@ namespace ZaynBot.RPG.Habilidades
     [BsonIgnoreExtraElements]
     public class EsmaganteHabilidade : HabilidadeRPG
     {
-        public EsmaganteHabilidade(string nome = "Esmagante", int nivel = 1, int nivelMax = 100, double expIncremento = 84, double incremento = 1.104)
+        public EsmaganteHabilidade(string nome = "Esmagante", int nivel = 1, int nivelMax = 100, double expIncremento = 84, double incremento = 1.102)
             : base(nome, nivel, nivelMax, expIncremento, incremento) { }
 
         public bool AdicionarExp()
