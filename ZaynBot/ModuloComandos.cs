@@ -43,7 +43,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<StatusComando>();
             Comandos.RegisterCommands<HabilidadeComando>();
             Comandos.RegisterCommands<RegiaoComando>();
-
+            Comandos.RegisterCommands<ComandoProximoTurno>();
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoBatalha>();
             Comandos.RegisterCommands<ComandoGrupo>();

@@ -37,7 +37,7 @@ namespace ZaynBot.RPG.Comandos
             embed.AddField("**Sorte**".Titulo(), $"{personagem.Sorte.Texto2Casas()}", true);
             embed.AddField("**Fome**".Titulo(), $"{(personagem.FomeAtual / personagem.FomeMaxima) * 100}%", true);
             embed.AddField("**Sede**".Titulo(), $"{(personagem.SedeAtual / personagem.SedeMaxima) * 100}%", true);
-            embed.AddField("**Estamina**".Titulo(), $"{personagem.EstaminaMaxima.Texto2Casas()}", true);
+            embed.AddField("**Estamina**".Titulo(), $"{personagem.EstaminaAtual.Texto2Casas()}/{personagem.EstaminaMaxima.Texto2Casas()}", true);
             embed.AddField("**Peso**".Titulo(), $"{personagem.PesoAtual.Texto2Casas()}/{personagem.PesoMaximo.Texto2Casas()}", true);
 
             await ctx.RespondAsync(embed: embed.Build());

@@ -45,30 +45,7 @@ namespace ZaynBot.RPG.Comandos
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
             embed.WithColor(DiscordColor.PhthaloGreen);
             embed.WithTitle($"**{batalha.NomeGrupo}**".Titulo());
-            if (batalha.LiderGrupo == ctx.User.Id)
-                embed.WithDescription($"**Lider:** {ctx.User.Mention} - {CalcularVez(personagem.EstaminaAtual, personagem.EstaminaMaxima)}\n" +
-                    $"**Turno**: {batalha.Turno.ToString()}\n");
-            if (batalha.LiderGrupo != ctx.User.Id)
-            {
-                DiscordUser liderUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
-                var liderJogador = await RPGUsuario.UsuarioGetAsync(batalha.LiderGrupo);
-                embed.WithDescription($"**Lider:** {liderUser.Mention} - {CalcularVez(liderJogador.Personagem.EstaminaAtual, liderJogador.Personagem.EstaminaMaxima)}\n" +
-                    $"**Turno**: {batalha.Turno.ToString()}\n");
-            }
-
-
-
-            if (batalha.Jogadores.Count != 0)
-            {
-                StringBuilder sr = new StringBuilder();
-                foreach (var item in batalha.Jogadores)
-                {
-                    DiscordUser user = await ModuloCliente.Client.GetUserAsync(item);
-                    RPGUsuario jog = await RPGUsuario.UsuarioGetAsync(item);
-                    sr.AppendLine($"{user.Mention} - {CalcularVez(jog.Personagem.EstaminaAtual, jog.Personagem.EstaminaMaxima)}");
-                }
-                embed.AddField("**Membros**".Titulo(), sr.ToString(), true);
-            }
+            embed.WithDescription($"**Turno**: {batalha.Turno.ToString()}\n");
 
             //Caso tenha mobs
             if (batalha.Mobs.Count != 0)

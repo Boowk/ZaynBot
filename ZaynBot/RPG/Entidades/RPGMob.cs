@@ -6,8 +6,8 @@ namespace ZaynBot.RPG.Entidades
     public class RPGMob
     {
 
-        public double EstaminaAtual { get; set; }
-        public double EstaminaMaxima { get; set; }
+        public double EstaminaAtual { get; set; } = 100;
+        public double EstaminaMaxima { get; set; } = 100;
 
 
         public string Nome { get; set; }
@@ -22,13 +22,6 @@ namespace ZaynBot.RPG.Entidades
         public List<MobItemDropRPG> ChanceItemUnico { get; set; } = new List<MobItemDropRPG>();
         public List<MobItemDropRPG> ChanceItemTodos { get; set; } = new List<MobItemDropRPG>();
 
-        #region Calculos feitos em outras áreas 
-        [BsonIgnore]
-        public double DanoFeito { get; set; } = 0;
-
-        public double PontosDeAcao { get; set; } //Determina se ataca ou não.
-
-        #endregion
 
         public class MobItemDropRPG
         {

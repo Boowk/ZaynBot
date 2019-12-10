@@ -52,6 +52,9 @@ namespace ZaynBot.RPG.Entidades
         public RPGMochila Inventario { get; set; }
         public RPGBatalha Batalha { get; set; }
 
+        [BsonIgnore]
+        public double DanoRecebido { get; set; }
+
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<HabilidadeEnum, RPGHabilidade> Habilidades { get; set; }
 

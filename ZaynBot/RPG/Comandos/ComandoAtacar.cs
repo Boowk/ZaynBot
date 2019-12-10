@@ -148,7 +148,7 @@ namespace ZaynBot.RPG.Comandos
             if (mob.PontosDeVida <= 0)
             {
                 //Removemos o inimigo
-                batalha.Mobs.Remove(mob.Nome);
+                batalha.Mobs.Remove(mob.Nome.ToLower());
                 mensagemMortos = $"{mob.Nome} morreu.";
                 embed.AddField($"**{"Inimigos abatidos".Titulo()}**", mensagemMortos.ToString());
 
