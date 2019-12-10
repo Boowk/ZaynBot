@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using ZaynBot.RPG.Entidades.Enuns;
 
-namespace ZaynBot.RPG.Entidades.Mapa
+namespace ZaynBot.RPG.Entidades
 {
     public enum DirecaoEnum
     {
