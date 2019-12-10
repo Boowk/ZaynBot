@@ -9,7 +9,6 @@ namespace ZaynBot.RPG.Comandos.Ativavel
 {
     public class EquiparComando : BaseCommandModule
     {
-
         //[Command("equipar")]
         //[Aliases("eq")]
         //[Description("Permite equipar itens que tem durabilidade.")]
@@ -34,7 +33,6 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         //        return;
         //    }
         //    item = ModuloBanco.ItemGet(itemData.Id);
-
         //    switch (item.TipoItem)
         //    {
         //        case TipoItemEnum.Arma:

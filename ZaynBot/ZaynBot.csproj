@@ -49,4 +49,8 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RPG\Entidades\Mapa\" />
+  </ItemGroup>
+
 </Project>

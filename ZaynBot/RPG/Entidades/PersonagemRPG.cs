@@ -103,21 +103,17 @@ namespace ZaynBot.RPG.Entidades
             };
         }
 
-        public bool TryGetHabilidade(int idHabilidade, out HabilidadeRPG habilidade)
+        public bool TryGetHabilidade(string hab, out HabilidadeRPG habilidade)
         {
-            HabilidadeEnum habilidadeEnum = HabilidadeEnum.Nenhum;
-            if (Enum.IsDefined(typeof(HabilidadeEnum), idHabilidade))
-                habilidadeEnum = (HabilidadeEnum)idHabilidade;
-            if (habilidadeEnum == HabilidadeEnum.Nenhum)
+            var h = hab.ToLower();
+            h = h.PrimeiraLetraMaiuscula();
+            if (Enum.IsDefined(typeof(HabilidadeEnum), h))
             {
-                habilidade = null;
-                return false;
-            }
-            else
-            {
-                habilidade = Habilidades[habilidadeEnum];
+                habilidade = Habilidades[Enum.Parse<HabilidadeEnum>(h)];
                 return true;
             }
+            habilidade = null;
+            return false;
         }
 
         public double RecuperarVida(double quantidade)

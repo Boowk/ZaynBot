@@ -12,9 +12,14 @@ namespace ZaynBot.RPG.Comandos.Exibir
     public class StatusComando : BaseCommandModule
     {
         [Command("status")]
+<<<<<<< HEAD
         [Description("Exibe os status do seu personagem.")]
         [UsoAtributo("status")]
         [Cooldown(1, 10, CooldownBucketType.User)]
+=======
+        [Description("Exibe os status e os equipamentos do seu personagem.")]
+        [Cooldown(1, 3, CooldownBucketType.User)]
+>>>>>>> master
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

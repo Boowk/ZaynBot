@@ -13,37 +13,36 @@ namespace ZaynBot.RPG.Comandos.Exibir
 {
     public class HabilidadeComando : BaseCommandModule
     {
+<<<<<<< HEAD
         [Command("habilidades")]
         [Cooldown(1, 1, CooldownBucketType.User)]
+=======
+        [Command("habilidade")]
+        [Cooldown(1, 2, CooldownBucketType.User)]
+>>>>>>> master
         [Description("Exibe as informações de uma habilidade ou todas as habilidades de um personagem.")]
-        [UsoAtributo("habilidades [id|]")]
-        [ExemploAtributo("habilidades 2")]
-        [ExemploAtributo("habilidades")]
-        public async Task HabilidadeComandoAb(CommandContext ctx, string idText = "-1")
+        [UsoAtributo("habilidade [nome]")]
+        [ExemploAtributo("habilidade perfurante")]
+        [ExemploAtributo("habilidade")]
+        public async Task HabilidadeComandoAb(CommandContext ctx, string habNome = "")
         {
             await ctx.TriggerTypingAsync();
             UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             PersonagemRPG personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao();
-            int id = -1;
-            try
-            {
-                id = Convert.ToInt32(idText);
-            }
-            catch { }
 
-            if (id < 0)
+            if (string.IsNullOrWhiteSpace(habNome))
             {
                 StringBuilder str = new StringBuilder();
                 foreach (var item in personagem.Habilidades)
                 {
-                    str.Append($"`{item.Value.Nome.PrimeiraLetraMaiuscula()}(ID {(int)item.Key})`, ");
+                    str.Append($"`{item.Value.Nome.PrimeiraLetraMaiuscula()}`, ");
                 }
                 embed.AddField("Habilidades".Titulo(), str.ToString());
             }
             else
             {
-                bool isAchou = personagem.TryGetHabilidade(id, out HabilidadeRPG habilidade);
+                bool isAchou = personagem.TryGetHabilidade(habNome, out HabilidadeRPG habilidade);
                 if (!isAchou)
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention}, habilidade não encontrada!");

@@ -14,6 +14,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
         [Cooldown(1, 10, CooldownBucketType.User)]
         [Description("Procura por inimigos na região atual.")]
         [UsoAtributo("explorar")]
+        [Cooldown(1, 3, CooldownBucketType.User)]
         public async Task ExplorarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

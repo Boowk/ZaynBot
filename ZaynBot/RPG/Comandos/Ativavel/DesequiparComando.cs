@@ -18,7 +18,6 @@ namespace ZaynBot.RPG.Comandos.Ativavel
     //        await ctx.TriggerTypingAsync();
     //        UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
     //        PersonagemRPG personagem = usuario.Personagem;
-
     //        if (string.IsNullOrWhiteSpace(nome))
     //        {
     //            await ctx.RespondAsync($"Informe o id do item equipado! {ctx.User.Mention}.");

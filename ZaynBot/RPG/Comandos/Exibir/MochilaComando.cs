@@ -10,6 +10,7 @@ namespace ZaynBot.RPG.Comandos.Exibir
 {
     public class MochilaComando : BaseCommandModule
     {
+<<<<<<< HEAD
         //[Command("mochila")]
         //[Aliases("m")]
         //[Description("Exibe o que tem dentro da mochila do seu personagem e a capacidade.")]
@@ -17,6 +18,15 @@ namespace ZaynBot.RPG.Comandos.Exibir
         //[ExemploAtributo("mochila 2")]
         //[ExemploAtributo("mochila")]
         //[Cooldown(1, 10, CooldownBucketType.User)]
+=======
+        [Command("mochila")]
+        [Aliases("m")]
+        [Description("Exibe o que tem dentro da mochila do seu personagem e a capacidade.")]
+        [UsoAtributo("mochila [pagina|]")]
+        [ExemploAtributo("mochila 2")]
+        [ExemploAtributo("mochila")]
+        [Cooldown(1, 3, CooldownBucketType.User)]
+>>>>>>> master
 
         //public async Task ComandoMochilaAb(CommandContext ctx, int pagina = 0)
         //{

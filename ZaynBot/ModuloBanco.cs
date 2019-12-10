@@ -3,13 +3,9 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Mapa;
-using static ZaynBot.RPG.Entidades.MobRPG;
-using MongoDB.Driver.Linq;
 
 namespace ZaynBot
 {
@@ -45,11 +41,6 @@ namespace ZaynBot
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<MobItemDropRPG>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
             BsonClassMap.RegisterClassMap<InventarioRPG>(m =>
             {
                 m.AutoMap();
@@ -68,7 +59,18 @@ namespace ZaynBot
             MobColecao = Database.GetCollection<MobRPG>("mobs");
             ItemColecao = Database.GetCollection<ItemRPG>("itens");
             ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
+
+            var notificationLogBuilder = Builders<UsuarioRPG>.IndexKeys;
+            var indexModel = new CreateIndexModel<UsuarioRPG>(notificationLogBuilder.Ascending(x => x.Personagem.NivelAtual));
+            UsuarioColecao.Indexes.CreateOne(indexModel);
+
+            //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
+            //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
+
+
         }
+
+
 
         #region CRUD Usuario
 

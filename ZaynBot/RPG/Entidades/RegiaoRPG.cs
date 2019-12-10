@@ -2,7 +2,7 @@
 using MongoDB.Bson.Serialization.Attributes;
 using System.Collections.Generic;
 
-namespace ZaynBot.RPG.Entidades.Mapa
+namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     public class RegiaoRPG

@@ -10,9 +10,15 @@ namespace ZaynBot.RPG.Comandos.Exibir
 {
     public class InimigosComandos : BaseCommandModule
     {
+<<<<<<< HEAD
         //[Command("inimigos")]
         //[Description("Mostra os inimigos e a vida dos que você está batalhando com.")]
         //[Cooldown(1, 10, CooldownBucketType.User)]
+=======
+        [Command("inimigos")]
+        [Description("Mostra os inimigos e a vida dos que você está batalhando com.")]
+        [Cooldown(1, 3, CooldownBucketType.User)]
+>>>>>>> master
 
         //public async Task VerInimigos(CommandContext ctx)
         //{

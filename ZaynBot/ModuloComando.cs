@@ -34,9 +34,13 @@ namespace ZaynBot
             Comandos.RegisterCommands<ConviteComando>();
             Comandos.RegisterCommands<InfoComando>();
             Comandos.RegisterCommands<VotarComando>();
+<<<<<<< HEAD
             Comandos.RegisterCommands<UsuarioComando>();
 
             //Comandos.RegisterCommands<DencansarComando>();
+=======
+            Comandos.RegisterCommands<TopComando>();
+>>>>>>> master
 
             #region ComandosRPG
 
@@ -90,7 +94,9 @@ namespace ZaynBot
                     return;
                 //Caso tenha colocado algum argumento do comando errado. Exemplo int no lugar de string.
                 case ArgumentException ax:
-                    await ctx.RespondAsync($"{ctx.Member.Mention}, você está colocando algum parâmetro errado. Utilize z!ajuda {e.Command?.QualifiedName ?? "comando digitado"}.");
+                    var cmd = ctx.CommandsNext.FindCommand($"ajuda {e.Command.Name}", out var args);
+                    var cfx = ctx.CommandsNext.CreateContext(e.Context.Message, "", cmd, args);
+                    await ctx.CommandsNext.ExecuteCommandAsync(cfx);
                     ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Id.ToString(), $"{ctx.Message.Author.Id} parâmetros errados no comando {e.Command?.QualifiedName}.", DateTime.Now);
                     return;
                 case UnauthorizedException ux:
