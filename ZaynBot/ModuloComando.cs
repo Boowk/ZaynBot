@@ -53,7 +53,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<BatalhaComando>();
             Comandos.RegisterCommands<GrupoComando>();
             //Comandos.RegisterCommands<InimigosComandos>();
-            //Comandos.RegisterCommands<AtacarComando>();
+            Comandos.RegisterCommands<AtacarComando>();
             //Comandos.RegisterCommands<LesteComando>();
             //Comandos.RegisterCommands<NorteComando>();
             //Comandos.RegisterCommands<OesteComando>();

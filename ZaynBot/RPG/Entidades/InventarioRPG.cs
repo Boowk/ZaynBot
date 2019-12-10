@@ -16,7 +16,7 @@ namespace ZaynBot.RPG.Entidades
         public bool AdicionarItem(ItemRPG item, int quantidade = 1)
         {
             // Verifica se o item tem durabilidade
-            if (item.Durabilidade > 0)
+            if (item.DurabilidadeMax > 0)
             {
                 // Se tiver, só precisa adiciona-lo
                 int incr = 1;
@@ -30,7 +30,7 @@ namespace ZaynBot.RPG.Entidades
                             Itens.Add($"{item.Id} {incr}", new ItemDataRPG()
                             {
                                 Id = item.Id,
-                                Durabilidade = item.Durabilidade,
+                                DurabilidadeAtual = item.DurabilidadeMax,
                                 Quantidade = 1,
                             });
                             naoAdicionou = false;
@@ -62,7 +62,7 @@ namespace ZaynBot.RPG.Entidades
             {
                 Id = item.Id,
                 Quantidade = quantidade,
-                Durabilidade = 0,
+                DurabilidadeAtual = 0,
             });
             return true;
         }

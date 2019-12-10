@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Entidades
         public string Descricao { get; set; }
         public TipoItemEnum TipoItem { get; set; }
         public TipoExpEnum TipoExp { get; set; }
-        public int Durabilidade { get; set; }
+        public int DurabilidadeMax { get; set; }
         public double PrecoBase { get; set; }
 
         public double AtaqueFisico { get; set; }
@@ -28,14 +28,14 @@ namespace ZaynBot.RPG.Entidades
             Nome = nome;
             TipoItem = tipo;
             PrecoBase = preco;
-            Durabilidade = 0;
+            DurabilidadeMax = 0;
             TipoExp = TipoExpEnum.Nenhum;
         }
 
         public ItemRPG(int id, string nome, TipoItemEnum tipo, int durabilidade, double preco, TipoExpEnum tipoExp) : this(id, nome, tipo, preco)
         {
             TipoExp = tipoExp;
-            Durabilidade = durabilidade;
+            DurabilidadeMax = durabilidade;
         }
     }
 
@@ -43,7 +43,7 @@ namespace ZaynBot.RPG.Entidades
     public class ItemDataRPG
     {
         public int Id { get; set; }
-        public int Durabilidade { get; set; }
+        public int DurabilidadeAtual { get; set; }
         public int Quantidade { get; set; }
     }
 }

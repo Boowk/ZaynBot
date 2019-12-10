@@ -1,4 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿        using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 using System.Collections.Generic;
 
@@ -13,6 +13,7 @@ namespace ZaynBot.RPG.Entidades
         public ulong LiderGrupo { get; set; }
         public ulong LiderGrupoInimigo { get; set; }
 
+        public bool Atacou { get; set; }
         public bool ModoDividir { get; set; }
 
         public List<ulong> Jogadores { get; set; }

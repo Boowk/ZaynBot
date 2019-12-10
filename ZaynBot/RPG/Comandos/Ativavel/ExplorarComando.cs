@@ -84,7 +84,7 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 {
                     try
                     {
-                        personagem.Batalha.Mobs.Add($"{mobSorteado.Nome} {incr}", mobSorteado);
+                        personagem.Batalha.Mobs.Add($"{mobSorteado.Nome.ToLower()} {incr}", mobSorteado);
                         naoAdicionou = false;
                     }
                     catch

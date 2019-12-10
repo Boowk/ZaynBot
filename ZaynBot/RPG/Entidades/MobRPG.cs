@@ -5,6 +5,11 @@ namespace ZaynBot.RPG.Entidades
 {
     public class MobRPG
     {
+
+        public double EstaminaAtual { get; set; }
+        public double EstaminaMaxima { get; set; }
+
+
         public string Nome { get; set; }
         public double PontosDeVida { get; set; }
         public double AtaqueFisico { get; set; }
