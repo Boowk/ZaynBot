@@ -37,7 +37,7 @@ namespace ZaynBot.Utilidades
         }
 
 
-        public static MobRPG Mobs(List<MobRPG> mobs)
+        public static RPGMob Mobs(List<RPGMob> mobs)
         {
             int somaPeso = 0;
             foreach (var item in mobs)

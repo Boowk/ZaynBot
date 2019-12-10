@@ -17,10 +17,10 @@ namespace ZaynBot.RPG.Comandos
         public async Task ReencarnarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
+            RPGUsuario usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
             if (usuario == null)
             {
-                usuario = new UsuarioRPG(ctx.User.Id);
+                usuario = new RPGUsuario(ctx.User.Id);
                 ModuloBanco.UsuarioColecao.InsertOne(usuario);
                 DiscordEmbedBuilder de = new DiscordEmbedBuilder();
                 de.WithDescription($"Parabéns {ctx.User.Mention}, você concluiu a criação do personagem.\n" +

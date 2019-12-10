@@ -17,8 +17,8 @@ namespace ZaynBot.RPG.Comandos
         public async Task RegiaoComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            RegiaoRPG localAtual = usuario.RegiaoGet();
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGRegiao localAtual = usuario.RegiaoGet();
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
             embed.WithTitle($"**{localAtual.Nome.Titulo()}**");
@@ -26,7 +26,7 @@ namespace ZaynBot.RPG.Comandos
 
             StringBuilder conexoesDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
-                conexoesDisponiveis.Append($"**{reg.Direcao.ToString()}** - {RegiaoRPG.GetRPGRegiao(reg.RegiaoId).Nome}\n");
+                conexoesDisponiveis.Append($"**{reg.Direcao.ToString()}** - {RPGRegiao.GetRPGRegiao(reg.RegiaoId).Nome}\n");
 
             if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
                 embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());

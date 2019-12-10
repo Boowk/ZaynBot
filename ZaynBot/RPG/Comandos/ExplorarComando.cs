@@ -18,8 +18,8 @@ namespace ZaynBot.RPG.Comandos
         public async Task ExplorarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupoInimigo != 0)
             {
@@ -33,7 +33,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RegiaoRPG localAtual = usuario.RegiaoGet();
+            RPGRegiao localAtual = usuario.RegiaoGet();
 
             if (localAtual.Dificuldade == 0)
             {
@@ -46,7 +46,7 @@ namespace ZaynBot.RPG.Comandos
                 int mobSorteado = AparecerMob(localAtual, personagem, ctx);
 
                 await ctx.RespondAsync($"**<{mobSorteado}>** mobs apareceu! {ctx.User.Mention}.");
-                UsuarioRPG.Salvar(usuario);
+                RPGUsuario.Salvar(usuario);
             }
             else
                 await ctx.RespondAsync($"Você precisa terminar a batalha atual para fazer isso! {ctx.User.Mention}.");
@@ -59,9 +59,9 @@ namespace ZaynBot.RPG.Comandos
         /// <param name="personagem"></param>
         /// <param name="ctx"></param>
         /// <returns>Quantiadde de mobs sorteados</returns>
-        public static int AparecerMob(RegiaoRPG localAtual, PersonagemRPG personagem, CommandContext ctx)
+        public static int AparecerMob(RPGRegiao localAtual, RPGPersonagem personagem, CommandContext ctx)
         {
-            List<MobRPG> mobs = ModuloBanco.MobsGet(localAtual.Dificuldade);
+            List<RPGMob> mobs = ModuloBanco.MobsGet(localAtual.Dificuldade);
             int quantidadeMob = Sortear.Valor(1, 6);
 
             int somaPeso = 0;
@@ -76,7 +76,7 @@ namespace ZaynBot.RPG.Comandos
                     posicaoEscolhida++;
                     sorteio -= mobs[posicaoEscolhida].ChanceDeAparecer;
                 } while (sorteio > 0);
-                MobRPG mobSorteado = mobs[posicaoEscolhida];
+                RPGMob mobSorteado = mobs[posicaoEscolhida];
 
                 int incr = 1;
                 bool naoAdicionou = true;

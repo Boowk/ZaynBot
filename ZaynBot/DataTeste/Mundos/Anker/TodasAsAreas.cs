@@ -8,7 +8,7 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
         public TodasAsAreas()
         {
             ModuloBanco.Database.DropCollection("regioes");
-            List<RegiaoRPG> regioes = new List<RegiaoRPG>()
+            List<RPGRegiao> regioes = new List<RPGRegiao>()
             {
                AreaAnker.LugarDesconhecido0(),
                 AreaAnker.LugarDesconhecido1(),

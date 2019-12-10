@@ -19,9 +19,9 @@ namespace ZaynBot.RPG.Comandos
         public async Task BatalhaComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
-            BatalhaRPG batalha = new BatalhaRPG();
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
+            RPGBatalha batalha = new RPGBatalha();
 
             //Caso não tenha grupo
             if (personagem.Batalha.LiderGrupo == 0)
@@ -33,7 +33,7 @@ namespace ZaynBot.RPG.Comandos
             //Caso o lider do grupo não seja ele
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                UsuarioRPG liderUsuario = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                RPGUsuario liderUsuario = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
                 batalha = liderUsuario.Personagem.Batalha;
             }
 
@@ -51,7 +51,7 @@ namespace ZaynBot.RPG.Comandos
             if (batalha.LiderGrupo != ctx.User.Id)
             {
                 DiscordUser liderUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
-                var liderJogador = await UsuarioRPG.UsuarioGetAsync(batalha.LiderGrupo);
+                var liderJogador = await RPGUsuario.UsuarioGetAsync(batalha.LiderGrupo);
                 embed.WithDescription($"**Lider:** {liderUser.Mention} - {CalcularVez(liderJogador.Personagem.EstaminaAtual, liderJogador.Personagem.EstaminaMaxima)}\n" +
                     $"**Turno**: {batalha.Turno.ToString()}\n");
             }
@@ -64,7 +64,7 @@ namespace ZaynBot.RPG.Comandos
                 foreach (var item in batalha.Jogadores)
                 {
                     DiscordUser user = await ModuloCliente.Client.GetUserAsync(item);
-                    UsuarioRPG jog = await UsuarioRPG.UsuarioGetAsync(item);
+                    RPGUsuario jog = await RPGUsuario.UsuarioGetAsync(item);
                     sr.AppendLine($"{user.Mention} - {CalcularVez(jog.Personagem.EstaminaAtual, jog.Personagem.EstaminaMaxima)}");
                 }
                 embed.AddField("**Membros**".Titulo(), sr.ToString(), true);

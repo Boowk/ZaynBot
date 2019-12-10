@@ -25,8 +25,8 @@ namespace ZaynBot.RPG.Comandos
         public async Task GrupoCriar(CommandContext ctx, [RemainingText] string nome = "")
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupo != 0)
             {
@@ -68,8 +68,8 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupo == 0)
             {
@@ -135,16 +135,16 @@ namespace ZaynBot.RPG.Comandos
             var rec = reacao.Result;
             if (rec.Emoji.Equals(emojiSim))
             {
-                UsuarioRPG.UsuarioGet(discordUserConvidado, out UsuarioRPG usuarioConvidado);
-                PersonagemRPG personagemConvidado = usuarioConvidado.Personagem;
+                RPGUsuario.UsuarioGet(discordUserConvidado, out RPGUsuario usuarioConvidado);
+                RPGPersonagem personagemConvidado = usuarioConvidado.Personagem;
                 if (personagemConvidado.Batalha.LiderGrupo != 0)
                 {
                     await ctx.RespondAsync($"Você precisa sair do grupo atual para entrar em outro! {discordUserConvidado.Mention}.");
                     return;
                 }
 
-                UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-                PersonagemRPG personagem = usuario.Personagem;
+                RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+                RPGPersonagem personagem = usuario.Personagem;
                 if (personagem.Batalha.LiderGrupo == 0 || personagem.Batalha.LiderGrupo != ctx.User.Id)
                 {
                     await ctx.RespondAsync($"O grupo foi desfeito, não é possível entrar! {discordUserConvidado.Mention}.");
@@ -178,8 +178,8 @@ namespace ZaynBot.RPG.Comandos
         public async Task GrupoSair(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupo == 0)
             {
@@ -202,17 +202,17 @@ namespace ZaynBot.RPG.Comandos
             if (personagem.Batalha.LiderGrupo == ctx.User.Id)
             {
                 await ctx.RespondAsync($"Você desfez o grupo! {ctx.User.Mention}.");
-                personagem.Batalha = new BatalhaRPG();
+                personagem.Batalha = new RPGBatalha();
                 usuario.Salvar();
                 return;
             }
 
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                UsuarioRPG userLider = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                RPGUsuario userLider = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
                 userLider.Personagem.Batalha.Jogadores.Remove(ctx.User.Id);
                 userLider.Salvar();
-                personagem.Batalha = new BatalhaRPG();
+                personagem.Batalha = new RPGBatalha();
                 usuario.Salvar();
                 await ctx.RespondAsync($"Você saiu do grupo **{userLider.Personagem.Batalha.NomeGrupo}**! {ctx.User.Mention}.");
                 return;
@@ -226,8 +226,8 @@ namespace ZaynBot.RPG.Comandos
         public async Task GrupoRemover(CommandContext ctx, DiscordUser userRemovido)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
 
 
             if (userRemovido.Id == ctx.User.Id)
@@ -248,14 +248,14 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            UsuarioRPG userJogadorRemovido = await UsuarioRPG.UsuarioGetAsync(userRemovido.Id);
+            RPGUsuario userJogadorRemovido = await RPGUsuario.UsuarioGetAsync(userRemovido.Id);
             if (userJogadorRemovido.Personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
                 await ctx.RespondAsync($"Não está no mesmo grupo que você! {ctx.User.Mention}.");
                 return;
             }
 
-            userJogadorRemovido.Personagem.Batalha = new BatalhaRPG();
+            userJogadorRemovido.Personagem.Batalha = new RPGBatalha();
             userJogadorRemovido.Salvar();
             personagem.Batalha.Jogadores.Remove(userJogadorRemovido.Id);
             usuario.Salvar();

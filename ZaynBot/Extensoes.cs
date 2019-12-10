@@ -24,7 +24,7 @@ namespace ZaynBot
             => embed.Padrao().WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
 
 
-        public static void Add(this Dictionary<string, ItemRPG> inventario, ItemRPG item)
+        public static void Add(this Dictionary<string, RPGItem> inventario, RPGItem item)
             => inventario.Add(item.Nome.ToLower(), item);
 
         public static bool IsNullOrEmpty(this Array array)

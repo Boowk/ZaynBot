@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-    public class MobRPG
+    public class RPGMob
     {
 
         public double EstaminaAtual { get; set; }

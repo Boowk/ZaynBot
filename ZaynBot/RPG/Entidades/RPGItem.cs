@@ -4,7 +4,7 @@ using ZaynBot.RPG.Entidades.Enuns;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class ItemRPG
+    public class RPGItem
     {
         [BsonId]
         public int Id { get; set; }
@@ -22,7 +22,7 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaRestaura { get; set; }
         public double FomeRestaura { get; set; }
 
-        public ItemRPG(int id, string nome, TipoItemEnum tipo, double preco = 1)
+        public RPGItem(int id, string nome, TipoItemEnum tipo, double preco = 1)
         {
             Id = id;
             Nome = nome;
@@ -32,7 +32,7 @@ namespace ZaynBot.RPG.Entidades
             TipoExp = TipoExpEnum.Nenhum;
         }
 
-        public ItemRPG(int id, string nome, TipoItemEnum tipo, int durabilidade, double preco, TipoExpEnum tipoExp) : this(id, nome, tipo, preco)
+        public RPGItem(int id, string nome, TipoItemEnum tipo, int durabilidade, double preco, TipoExpEnum tipoExp) : this(id, nome, tipo, preco)
         {
             TipoExp = tipoExp;
             DurabilidadeMax = durabilidade;

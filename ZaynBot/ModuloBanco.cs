@@ -13,12 +13,12 @@ namespace ZaynBot
     {
         public static IMongoDatabase Database { get; private set; }
 
-        public static IMongoCollection<RegiaoRPG> RegiaoColecao { get; private set; }
-        public static IMongoCollection<UsuarioRPG> UsuarioColecao { get; private set; }
+        public static IMongoCollection<RPGRegiao> RegiaoColecao { get; private set; }
+        public static IMongoCollection<RPGUsuario> UsuarioColecao { get; private set; }
         public static IMongoCollection<ServidorCore> ServidorColecao { get; private set; }
-        public static IMongoCollection<MobRPG> MobColecao { get; private set; }
-        public static IMongoCollection<ItemRPG> ItemColecao { get; private set; }
-        public static IMongoCollection<ReceitaRPG> ReceitaColecao { get; private set; }
+        public static IMongoCollection<RPGMob> MobColecao { get; private set; }
+        public static IMongoCollection<RPGItem> ItemColecao { get; private set; }
+        public static IMongoCollection<RPGReceita> ReceitaColecao { get; private set; }
 
         public ModuloBanco()
         {
@@ -31,37 +31,37 @@ namespace ZaynBot
                 true, //allow truncation
                 true // allow overflow, return decimal.MinValue or decimal.MaxValue instead
             )));
-            BsonClassMap.RegisterClassMap<PersonagemRPG>(m =>
+            BsonClassMap.RegisterClassMap<RPGPersonagem>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<MobRPG>(m =>
+            BsonClassMap.RegisterClassMap<RPGMob>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<InventarioRPG>(m =>
+            BsonClassMap.RegisterClassMap<RPGMochila>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
-            BsonClassMap.RegisterClassMap<BatalhaRPG>(m =>
+            BsonClassMap.RegisterClassMap<RPGBatalha>(m =>
             {
                 m.AutoMap();
                 m.SetIgnoreExtraElements(true);
             });
             #endregion
 
-            RegiaoColecao = Database.GetCollection<RegiaoRPG>("regioes");
-            UsuarioColecao = Database.GetCollection<UsuarioRPG>("usuarios");
+            RegiaoColecao = Database.GetCollection<RPGRegiao>("regioes");
+            UsuarioColecao = Database.GetCollection<RPGUsuario>("usuarios");
             ServidorColecao = Database.GetCollection<ServidorCore>("servidores");
-            MobColecao = Database.GetCollection<MobRPG>("mobs");
-            ItemColecao = Database.GetCollection<ItemRPG>("itens");
-            ReceitaColecao = Database.GetCollection<ReceitaRPG>("receitas");
+            MobColecao = Database.GetCollection<RPGMob>("mobs");
+            ItemColecao = Database.GetCollection<RPGItem>("itens");
+            ReceitaColecao = Database.GetCollection<RPGReceita>("receitas");
 
-            var notificationLogBuilder = Builders<UsuarioRPG>.IndexKeys;
-            var indexModel = new CreateIndexModel<UsuarioRPG>(notificationLogBuilder.Ascending(x => x.Personagem.NivelAtual));
+            var notificationLogBuilder = Builders<RPGUsuario>.IndexKeys;
+            var indexModel = new CreateIndexModel<RPGUsuario>(notificationLogBuilder.Ascending(x => x.Personagem.NivelAtual));
             UsuarioColecao.Indexes.CreateOne(indexModel);
 
             //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
@@ -74,24 +74,24 @@ namespace ZaynBot
 
         #region CRUD Usuario
 
-        public static UsuarioRPG UsuarioGet(ulong id)
+        public static RPGUsuario UsuarioGet(ulong id)
             => UsuarioColecao.Find(x => x.Id == id).FirstOrDefault();
 
-        public static void UsuarioEdit(UsuarioRPG usuario)
+        public static void UsuarioEdit(RPGUsuario usuario)
             => UsuarioColecao.ReplaceOne(x => x.Id == usuario.Id, usuario);
 
         #endregion
 
         #region CRUD Regiao
 
-        public static RegiaoRPG RegiaoGet(int id)
+        public static RPGRegiao RegiaoGet(int id)
             => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
 
         #endregion
 
         #region CRUD Mobs
 
-        public static List<MobRPG> MobsGet(int dificuldade)
+        public static List<RPGMob> MobsGet(int dificuldade)
         {
             return MobColecao.Find(x => x.Dificuldade == dificuldade).ToList();
             //MobColecao.AsQueryable().Where(x => x.Dificuldade == dificuldade).Sample(6);
@@ -111,14 +111,14 @@ namespace ZaynBot
 
         #region CRUD Item
 
-        public static ItemRPG ItemGet(int id)
+        public static RPGItem ItemGet(int id)
              => ItemColecao.Find(x => x.Id == id).FirstOrDefault();
 
         #endregion
 
         #region CRUD Receita
 
-        public static ReceitaRPG ReceitaGet(int id)
+        public static RPGReceita ReceitaGet(int id)
              => ReceitaColecao.Find(x => x.Id == id).FirstOrDefault();
 
         #endregion

@@ -8,36 +8,36 @@ using ZaynBot.RPG.Exceptions;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class UsuarioRPG
+    public class RPGUsuario
     {
         [BsonId]
         public ulong Id { get; set; }
         public DateTime CriacaoUsuarioData { get; set; }
-        public PersonagemRPG Personagem { get; set; }
+        public RPGPersonagem Personagem { get; set; }
 
-        public UsuarioRPG(ulong id)
+        public RPGUsuario(ulong id)
         {
             Id = id;
             CriacaoUsuarioData = DateTime.Now;
-            Personagem = new PersonagemRPG();
+            Personagem = new RPGPersonagem();
         }
 
-        public static void GetPersonagem(CommandContext ctx, out UsuarioRPG usuario)
+        public static void GetPersonagem(CommandContext ctx, out RPGUsuario usuario)
         {
             usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
             if (usuario == null)
                 throw new PersonagemNullException();
         }
 
-        public static void UsuarioGet(DiscordUser discordUsuario, out UsuarioRPG usuario)
+        public static void UsuarioGet(DiscordUser discordUsuario, out RPGUsuario usuario)
         {
             usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
             if (usuario == null)
                 throw new PersonagemNullException($"{discordUsuario.Username}#{discordUsuario.Discriminator} não tem um personagem.");
         }
-        public static async Task<UsuarioRPG> UsuarioGetAsync(ulong discordUserId)
+        public static async Task<RPGUsuario> UsuarioGetAsync(ulong discordUserId)
         {
-            UsuarioRPG usuario = ModuloBanco.UsuarioGet(discordUserId);
+            RPGUsuario usuario = ModuloBanco.UsuarioGet(discordUserId);
             if (usuario == null)
             {
                 DiscordUser du = await ModuloCliente.Client.GetUserAsync(discordUserId);
@@ -46,10 +46,10 @@ namespace ZaynBot.RPG.Entidades
             return usuario;
         }
 
-        public RegiaoRPG RegiaoGet()
+        public RPGRegiao RegiaoGet()
              => ModuloBanco.RegiaoGet(Personagem.RegiaoAtualId);
 
-        public static void Salvar(UsuarioRPG usuario)
+        public static void Salvar(RPGUsuario usuario)
             => ModuloBanco.UsuarioEdit(usuario);
 
         public void Salvar()

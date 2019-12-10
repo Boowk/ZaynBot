@@ -6,7 +6,7 @@ using System.Text;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class ProgressoRPG
+    public class RPGProgresso
     {
         public int NivelAtual { get; set; }
         public int NivelMax { get; set; }
@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Entidades
         public double ExpIncremento { get; set; }
         public double MultIncremento { get; set; }
 
-        private ProgressoRPG()
+        private RPGProgresso()
         {
             ExpAtual = 0;
         }
@@ -27,7 +27,7 @@ namespace ZaynBot.RPG.Entidades
         /// <param name="nivelMax"></param>
         /// <param name="expIncremento"></param>
         /// <param name="multIncremento"></param>
-        public ProgressoRPG(int nivel, int nivelMax, double expIncremento, double multIncremento) : this()
+        public RPGProgresso(int nivel, int nivelMax, double expIncremento, double multIncremento) : this()
         {
             this.NivelAtual = nivel;
             this.NivelMax = nivelMax;
@@ -36,7 +36,7 @@ namespace ZaynBot.RPG.Entidades
             this.MultIncremento = multIncremento;
         }
 
-        public ProgressoRPG(double expIncremento, double incremento) : this()
+        public RPGProgresso(double expIncremento, double incremento) : this()
         {
             this.NivelAtual = 1;
             this.NivelMax = 0;

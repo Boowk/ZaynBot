@@ -11,7 +11,7 @@ namespace ZaynBot.DataTeste.Mobs
         public TodosOsMobs()
         {
             ModuloBanco.Database.DropCollection("mobs");
-            List<MobRPG> mobs = new List<MobRPG>()
+            List<RPGMob> mobs = new List<RPGMob>()
             {
              MobsAnker.CoelhoMobAb(),
              MobsAnker.EsqueletoMobAb(),

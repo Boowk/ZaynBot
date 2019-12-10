@@ -40,7 +40,7 @@ namespace ZaynBot.Core.Comandos
             embed.WithDescription(srb.ToString());
             StringBuilder srd = new StringBuilder();
             srd.AppendLine($"Online por: **{(DateTime.Now - BotCore.TempoAtivo).Days} dias, {(DateTime.Now - BotCore.TempoAtivo).Hours} horas e {(DateTime.Now - BotCore.TempoAtivo).Minutes} minutos.**")
-                .AppendLine($"Contas criadas: {ModuloBanco.UsuarioColecao.CountDocuments(FilterDefinition<UsuarioRPG>.Empty)}")
+                .AppendLine($"Contas criadas: {ModuloBanco.UsuarioColecao.CountDocuments(FilterDefinition<RPGUsuario>.Empty)}")
                 .AppendLine($"Ping: {ctx.Client.Ping} pong")
                 .AppendLine($"Memoria: {(GC.GetTotalMemory(false) / 1024) / 1024} Mb")
                 .AppendLine($"Banco: {((ModuloBanco.Database.RunCommand<TamanhoResultado>("{dbstats: 1}").Tamanho / 1024) / 1024).Texto2Casas()} Mb");

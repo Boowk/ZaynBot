@@ -27,10 +27,10 @@ namespace ZaynBot.RPG.Comandos
         public async Task AtacarComandoAb(CommandContext ctx, [RemainingText] string inimigoNome = "")
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
-            BatalhaRPG batalha = new BatalhaRPG();
-            UsuarioRPG liderUsuario = null;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
+            RPGBatalha batalha = new RPGBatalha();
+            RPGUsuario liderUsuario = null;
 
             //Caso não tenha grupo
             if (personagem.Batalha.LiderGrupo == 0)
@@ -43,7 +43,7 @@ namespace ZaynBot.RPG.Comandos
             //Caso o lider do grupo não seja ele
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                liderUsuario = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                liderUsuario = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
                 batalha = liderUsuario.Personagem.Batalha;
             }
 
@@ -66,7 +66,7 @@ namespace ZaynBot.RPG.Comandos
             }
 
 
-            MobRPG mob = null;
+            RPGMob mob = null;
             //Procura o inimigo
             if (string.IsNullOrWhiteSpace(inimigoNome))
             {
@@ -88,21 +88,21 @@ namespace ZaynBot.RPG.Comandos
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Combate", ctx);
 
             //Verifica - se se está com arma equipado
-            personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Arma, out ItemRPG arma);
+            personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Arma, out RPGItem arma);
             double danoJogador = 0;
             if (arma != null)
             {
                 switch (arma.TipoExp)
                 {
                     case TipoExpEnum.Perfurante:
-                        PerfuranteHabilidade perfuranteHab = (PerfuranteHabilidade)personagem.Habilidades[HabilidadeEnum.Perfurante];
+                        HabilidadePerfurante perfuranteHab = (HabilidadePerfurante)personagem.Habilidades[HabilidadeEnum.Perfurante];
                         bool evoluiu = perfuranteHab.AdicionarExp();
                         danoJogador = CalcDano(mob.Armadura, perfuranteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.ItemGet(arma.Id).DurabilidadeMax));
                         if (evoluiu)
                             await ctx.RespondAsync($"Habilidade **({perfuranteHab.Nome})** evoluiu! {ctx.User.Mention}.");
                         break;
                     case TipoExpEnum.Esmagante:
-                        EsmaganteHabilidade esmaganteHab = (EsmaganteHabilidade)personagem.Habilidades[HabilidadeEnum.Esmagante];
+                        HabilidadeEsmagante esmaganteHab = (HabilidadeEsmagante)personagem.Habilidades[HabilidadeEnum.Esmagante];
                         bool evoluiu2 = esmaganteHab.AdicionarExp();
                         if (evoluiu2)
                             await ctx.RespondAsync($"Habilidade **({esmaganteHab.Nome})** evoluiu! {ctx.User.Mention}.");
@@ -118,7 +118,7 @@ namespace ZaynBot.RPG.Comandos
             }
             else
             {
-                DesarmadoHabilidade desarmadoHab = (DesarmadoHabilidade)personagem.Habilidades[HabilidadeEnum.Desarmado];
+                HabilidadeDesarmado desarmadoHab = (HabilidadeDesarmado)personagem.Habilidades[HabilidadeEnum.Desarmado];
                 bool evoluiu3 = desarmadoHab.AdicionarExp();
                 if (evoluiu3)
                     await ctx.RespondAsync($"Habilidade **({desarmadoHab.Nome})** evoluiu! {ctx.User.Mention}.");
@@ -196,8 +196,8 @@ namespace ZaynBot.RPG.Comandos
             }
 
             // Salvamos o usuario
-            UsuarioRPG.Salvar(usuario);
-            if (liderUsuario != null) UsuarioRPG.Salvar(liderUsuario);
+            RPGUsuario.Salvar(usuario);
+            if (liderUsuario != null) RPGUsuario.Salvar(liderUsuario);
 
             // Retornamos toda a mensagem preparada para ser enviada
             await ctx.RespondAsync(embed: embed.Build());

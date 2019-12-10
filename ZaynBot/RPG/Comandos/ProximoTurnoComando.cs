@@ -20,9 +20,9 @@ namespace ZaynBot.RPG.Comandos
         public async Task ProximoTurnoComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
-            BatalhaRPG batalha = null;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
+            RPGBatalha batalha = null;
 
 
             //Caso não tenha grupo
@@ -33,12 +33,12 @@ namespace ZaynBot.RPG.Comandos
             }
 
 
-            List<UsuarioRPG> jogadores = new List<UsuarioRPG>();
+            List<RPGUsuario> jogadores = new List<RPGUsuario>();
             #region Defini a Party
             //Caso o lider do grupo não seja ele
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                UsuarioRPG liderUsuario = await UsuarioRPG.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                RPGUsuario liderUsuario = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
                 jogadores.Add(liderUsuario);
                 batalha = liderUsuario.Personagem.Batalha;
             }
@@ -55,11 +55,11 @@ namespace ZaynBot.RPG.Comandos
 
             foreach (var item in batalha.Jogadores)
             {
-                jogadores.Add(await UsuarioRPG.UsuarioGetAsync(item));
+                jogadores.Add(await RPGUsuario.UsuarioGetAsync(item));
             }
 
             bool vezJogador = false;
-            UsuarioRPG user = null;
+            RPGUsuario user = null;
             StringBuilder mensagemAtaque = new StringBuilder();
             do
             {
@@ -81,14 +81,14 @@ namespace ZaynBot.RPG.Comandos
                             var u = await ModuloCliente.Client.GetUserAsync(jogadores[v].Id);
                             await ctx.RespondAsync($"{u.Mention} morreu!");
                         }
-                        UsuarioRPG.Salvar(jogadores[v]);
+                        RPGUsuario.Salvar(jogadores[v]);
                     }
                 }
 
 
                 foreach (var item in jogadores)
                 {
-                    PersonagemRPG p = item.Personagem;
+                    RPGPersonagem p = item.Personagem;
                     if (p.Batalha.Atacou)
                         continue;
                     p.EstaminaAtual += Sortear.Valor(1, 10);
@@ -176,7 +176,7 @@ namespace ZaynBot.RPG.Comandos
             if (batalha.LiderGrupo != ctx.User.Id)
             {
                 DiscordUser liderUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
-                var liderJogador = await UsuarioRPG.UsuarioGetAsync(batalha.LiderGrupo);
+                var liderJogador = await RPGUsuario.UsuarioGetAsync(batalha.LiderGrupo);
                 embed.WithDescription($"**Lider:** {liderUser.Mention} - {CalcularVez(liderJogador.Personagem.EstaminaAtual, liderJogador.Personagem.EstaminaMaxima)}\n" +
                     $"**Turno**: {batalha.Turno.ToString()}\n");
             }

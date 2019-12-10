@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class RegiaoRPG
+    public class RPGRegiao
     {
         //CIDADE               |   1  | 
         //CAMPO                |   2  | 
@@ -37,10 +37,10 @@ namespace ZaynBot.RPG.Entidades
         public string Descrição { get; set; }
         public int Dificuldade { get; set; }
 
-        public List<SaidaRPG> SaidasRegioes { get; set; } = new List<SaidaRPG>();
+        public List<RPGSaida> SaidasRegioes { get; set; } = new List<RPGSaida>();
 
 
-        public static RegiaoRPG GetRPGRegiao(int id)
+        public static RPGRegiao GetRPGRegiao(int id)
             => ModuloBanco.RegiaoGet(id);
 
     }

@@ -11,9 +11,9 @@ namespace ZaynBot.RPG.Entidades
         Leste,
     }
 
-    public class SaidaRPG
+    public class RPGSaida
     {
-        public SaidaRPG(DirecaoEnum direcao, int regiaoId)
+        public RPGSaida(DirecaoEnum direcao, int regiaoId)
         {
             this.Direcao = direcao;
             this.RegiaoId = regiaoId;

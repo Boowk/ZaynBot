@@ -8,7 +8,7 @@ using ZaynBot.RPG.Habilidades;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class PersonagemRPG : ProgressoRPG
+    public class RPGPersonagem : RPGProgresso
     {
         public double VidaAtual { get; set; }
         public double VidaMaxima { get; set; }
@@ -49,14 +49,14 @@ namespace ZaynBot.RPG.Entidades
         public int RegiaoCasaId { get; set; }
         public bool CasaConstruida { get; set; }
 
-        public InventarioRPG Inventario { get; set; }
-        public BatalhaRPG Batalha { get; set; }
+        public RPGMochila Inventario { get; set; }
+        public RPGBatalha Batalha { get; set; }
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<HabilidadeEnum, HabilidadeRPG> Habilidades { get; set; }
+        public Dictionary<HabilidadeEnum, RPGHabilidade> Habilidades { get; set; }
 
 
-        public PersonagemRPG(int nivel = 1, int nivelMax = 0, double expIncremento = 30, double incremento = 1.02)
+        public RPGPersonagem(int nivel = 1, int nivelMax = 0, double expIncremento = 30, double incremento = 1.02)
             : base(nivel, nivelMax, expIncremento, incremento)
         {
             VidaAtual = SortearMetadeValor(50);
@@ -90,20 +90,20 @@ namespace ZaynBot.RPG.Entidades
             RegiaoCasaId = 0;
             CasaConstruida = false;
 
-            Inventario = new InventarioRPG();
-            Batalha = new BatalhaRPG();
+            Inventario = new RPGMochila();
+            Batalha = new RPGBatalha();
 
 
             //Populando as habilidades
-            Habilidades = new Dictionary<HabilidadeEnum, HabilidadeRPG>
+            Habilidades = new Dictionary<HabilidadeEnum, RPGHabilidade>
             {
-                { HabilidadeEnum.Perfurante, new PerfuranteHabilidade() },
-                { HabilidadeEnum.Esmagante, new EsmaganteHabilidade() },
-                { HabilidadeEnum.Desarmado, new DesarmadoHabilidade() }
+                { HabilidadeEnum.Perfurante, new HabilidadePerfurante() },
+                { HabilidadeEnum.Esmagante, new HabilidadeEsmagante() },
+                { HabilidadeEnum.Desarmado, new HabilidadeDesarmado() }
             };
         }
 
-        public bool TryGetHabilidade(string hab, out HabilidadeRPG habilidade)
+        public bool TryGetHabilidade(string hab, out RPGHabilidade habilidade)
         {
             var h = hab.ToLower();
             h = h.PrimeiraLetraMaiuscula();

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ZaynBot.RPG.Entidades
 {
-    public class EmpregoRPG
+    public class RPGEmprego
     {
         //public string Nome { get; set; }
         //public string Descrição { get; set; }

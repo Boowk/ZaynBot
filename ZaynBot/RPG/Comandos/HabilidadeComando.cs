@@ -22,8 +22,8 @@ namespace ZaynBot.RPG.Comandos
         public async Task HabilidadeComandoAb(CommandContext ctx, string habNome = "")
         {
             await ctx.TriggerTypingAsync();
-            UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-            PersonagemRPG personagem = usuario.Personagem;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGPersonagem personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao();
 
             if (string.IsNullOrWhiteSpace(habNome))
@@ -37,7 +37,7 @@ namespace ZaynBot.RPG.Comandos
             }
             else
             {
-                bool isAchou = personagem.TryGetHabilidade(habNome, out HabilidadeRPG habilidade);
+                bool isAchou = personagem.TryGetHabilidade(habNome, out RPGHabilidade habilidade);
                 if (!isAchou)
                 {
                     await ctx.RespondAsync($"{ctx.User.Mention}, habilidade não encontrada!");

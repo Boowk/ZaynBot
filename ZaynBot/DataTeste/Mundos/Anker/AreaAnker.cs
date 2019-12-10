@@ -4,9 +4,9 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
 {
     public static class AreaAnker
     {
-        public static RegiaoRPG LugarDesconhecido0()
+        public static RPGRegiao LugarDesconhecido0()
         {
-            RegiaoRPG regiao = new RegiaoRPG
+            RPGRegiao regiao = new RPGRegiao
             {
                 Id = 0,
                 Nome = "Lugar desconhecido",
@@ -16,14 +16,14 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "Vejo uma pequena luz a *Leste*.",
                 Dificuldade = 1
             };
-            SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 1);
+            RPGSaida leste = new RPGSaida(DirecaoEnum.Leste, 1);
             regiao.SaidasRegioes.Add(leste);
             return regiao;
         }
-        public static RegiaoRPG LugarDesconhecido1()
+        public static RPGRegiao LugarDesconhecido1()
         {
 
-            RegiaoRPG regiao = new RegiaoRPG
+            RPGRegiao regiao = new RPGRegiao
             {
                 Id = 1,
                 Nome = "Lugar desconhecido",
@@ -34,15 +34,15 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "como se tivesse algo me observando.. O mofo aqui é menor, graças a um vento que " +
                 "passa pela porta limpando todo o ar dentro desta sala. ",
             };
-            SaidaRPG leste = new SaidaRPG(DirecaoEnum.Leste, 2);
-            SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 3);
+            RPGSaida leste = new RPGSaida(DirecaoEnum.Leste, 2);
+            RPGSaida norte = new RPGSaida(DirecaoEnum.Norte, 3);
             regiao.SaidasRegioes.Add(leste);
             regiao.SaidasRegioes.Add(norte);
             return regiao;
         }
-        public static RegiaoRPG LugarDesconhecido2()
+        public static RPGRegiao LugarDesconhecido2()
         {
-            RegiaoRPG regiao = new RegiaoRPG
+            RPGRegiao regiao = new RPGRegiao
             {
                 Id = 2,
                 Nome = "Lugar desconhecido",
@@ -52,15 +52,15 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "emitindo um frio que acaba iluminando toda a sala de azul. O que torna esta sala mais estranha " +
                 "é este chão grudento... Exergo uma porta a *Sul*.",
             };
-            SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 4);
-            SaidaRPG oeste = new SaidaRPG(DirecaoEnum.Oeste, 1);
+            RPGSaida sul = new RPGSaida(DirecaoEnum.Sul, 4);
+            RPGSaida oeste = new RPGSaida(DirecaoEnum.Oeste, 1);
             regiao.SaidasRegioes.Add(sul);
             regiao.SaidasRegioes.Add(oeste);
             return regiao;
         }
-        public static RegiaoRPG LugarDesconhecido3()
+        public static RPGRegiao LugarDesconhecido3()
         {
-            RegiaoRPG regiao = new RegiaoRPG
+            RPGRegiao regiao = new RPGRegiao
             {
                 Id = 3,
                 Nome = "Lugar desconhecido",
@@ -69,13 +69,13 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "para examinar melhor, vejo que é OSSO! Estou em um mar de ossos! Estes lugar " +
                 "me deixam com muito medo... *Algo me observa de longe*.",
             };
-            SaidaRPG sul = new SaidaRPG(DirecaoEnum.Sul, 1);
+            RPGSaida sul = new RPGSaida(DirecaoEnum.Sul, 1);
             regiao.SaidasRegioes.Add(sul);
             return regiao;
         }
-        public static RegiaoRPG SaidaDaCaverna4()
+        public static RPGRegiao SaidaDaCaverna4()
         {
-            RegiaoRPG regiao = new RegiaoRPG
+            RPGRegiao regiao = new RPGRegiao
             {
                 Id = 4,
                 Nome = "Saída da Caverna",
@@ -84,7 +84,7 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
                 "parar aqui. Acredito que com o tempo minha memória voltara. Até lá acho que devo achar algo " +
                 "para comer nesta floresta.",
             };
-            SaidaRPG norte = new SaidaRPG(DirecaoEnum.Norte, 2);
+            RPGSaida norte = new RPGSaida(DirecaoEnum.Norte, 2);
             regiao.SaidasRegioes.Add(norte);
             return regiao;
         }

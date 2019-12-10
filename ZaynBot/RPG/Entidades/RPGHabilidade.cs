@@ -6,12 +6,12 @@ namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("Hab")]
-    [BsonKnownTypes(typeof(DesarmadoHabilidade), typeof(EsmaganteHabilidade), typeof(PerfuranteHabilidade))]
-    public class HabilidadeRPG : ProgressoRPG
+    [BsonKnownTypes(typeof(HabilidadeDesarmado), typeof(HabilidadeEsmagante), typeof(HabilidadePerfurante))]
+    public class RPGHabilidade : RPGProgresso
     {
         public string Nome { get; set; }
 
-        public HabilidadeRPG(string nome, int nivel, int nivelMax, double expIncremento, double incremento) : base(nivel, nivelMax, expIncremento, incremento)
+        public RPGHabilidade(string nome, int nivel, int nivelMax, double expIncremento, double incremento) : base(nivel, nivelMax, expIncremento, incremento)
         {
             Nome = nome;
         }

@@ -5,15 +5,15 @@ using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades
 {
-    public class InventarioRPG
+    public class RPGMochila
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<string, ItemDataRPG> Itens { get; set; } = new Dictionary<string, ItemDataRPG>();
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<TipoItemEnum, ItemRPG> Equipamentos { get; set; } = new Dictionary<TipoItemEnum, ItemRPG>();
+        public Dictionary<TipoItemEnum, RPGItem> Equipamentos { get; set; } = new Dictionary<TipoItemEnum, RPGItem>();
 
-        public bool AdicionarItem(ItemRPG item, int quantidade = 1)
+        public bool AdicionarItem(RPGItem item, int quantidade = 1)
         {
             // Verifica se o item tem durabilidade
             if (item.DurabilidadeMax > 0)
@@ -67,7 +67,7 @@ namespace ZaynBot.RPG.Entidades
             return true;
         }
 
-        public void DesequiparItem(ItemRPG item, PersonagemRPG personagem)
+        public void DesequiparItem(RPGItem item, RPGPersonagem personagem)
         {
             personagem.Inventario.Equipamentos.Remove(item.TipoItem);
 

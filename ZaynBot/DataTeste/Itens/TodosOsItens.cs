@@ -8,7 +8,7 @@ namespace ZaynBot.Data.Itens
         public TodosOsItens()
         {
             ModuloBanco.Database.DropCollection("itens");
-            List<ItemRPG> itens = new List<ItemRPG>()
+            List<RPGItem> itens = new List<RPGItem>()
             {
                ItensRPG.MoedaDeCobreItem(),
                ItensRPG.EspadaEnferrujadaItem(),

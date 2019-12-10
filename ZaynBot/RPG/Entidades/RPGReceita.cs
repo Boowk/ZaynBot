@@ -7,7 +7,7 @@ using System.Text;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class ReceitaRPG
+    public class RPGReceita
     {
         [BsonId]
         public int Id { get; set; }
@@ -18,7 +18,7 @@ namespace ZaynBot.RPG.Entidades
         public Dictionary<int, int> Ingredientes { get; set; }
 
 
-        public ReceitaRPG(int id, string nome, int resultado, int quantidade = 1)
+        public RPGReceita(int id, string nome, int resultado, int quantidade = 1)
         {
             Id = id;
             Nome = nome;

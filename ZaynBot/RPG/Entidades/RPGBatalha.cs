@@ -6,7 +6,7 @@ namespace ZaynBot.RPG.Entidades
 {
     // Quando um mob morre, os itens vai para o lider do grupo. 
     // A não ser que esteja ativado o modo compartilhar.
-    public class BatalhaRPG
+    public class RPGBatalha
     {
         public int Turno { get; set; }
         public string NomeGrupo { get; set; }
@@ -20,9 +20,9 @@ namespace ZaynBot.RPG.Entidades
 
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<string, MobRPG> Mobs { get; set; }
+        public Dictionary<string, RPGMob> Mobs { get; set; }
 
-        public BatalhaRPG()
+        public RPGBatalha()
         {
             Turno = 0;
             NomeGrupo = "";
@@ -36,7 +36,7 @@ namespace ZaynBot.RPG.Entidades
             Jogadores = new List<ulong>();
 
 
-            Mobs = new Dictionary<string, MobRPG>();
+            Mobs = new Dictionary<string, RPGMob>();
         }
     }
 }

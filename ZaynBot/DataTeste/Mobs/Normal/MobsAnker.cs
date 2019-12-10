@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using ZaynBot.Data.Itens;
 using ZaynBot.RPG.Entidades;
-using static ZaynBot.RPG.Entidades.MobRPG;
+using static ZaynBot.RPG.Entidades.RPGMob;
 
 namespace ZaynBot.DataTeste.Mobs.Normal
 {
     public static class MobsAnker
     {
-        public static MobRPG CoelhoMobAb()
+        public static RPGMob CoelhoMobAb()
         {
-            MobRPG mob = new MobRPG()
+            RPGMob mob = new RPGMob()
             {
                 Nome = "Coelho",
                 AtaqueFisico = 6,
@@ -28,9 +28,9 @@ namespace ZaynBot.DataTeste.Mobs.Normal
             return mob;
         }
 
-        public static MobRPG SlimeMobAb()
+        public static RPGMob SlimeMobAb()
         {
-            MobRPG mob = new MobRPG()
+            RPGMob mob = new RPGMob()
             {
                 Nome = "Slime",
                 AtaqueFisico = 5,
@@ -47,9 +47,9 @@ namespace ZaynBot.DataTeste.Mobs.Normal
             return mob;
         }
 
-        public static MobRPG EsqueletoMobAb()
+        public static RPGMob EsqueletoMobAb()
         {
-            MobRPG mob = new MobRPG()
+            RPGMob mob = new RPGMob()
             {
                 Nome = "Esqueleto",
                 AtaqueFisico = 10,

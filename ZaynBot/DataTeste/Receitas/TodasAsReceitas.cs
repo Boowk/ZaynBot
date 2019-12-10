@@ -8,7 +8,7 @@ namespace ZaynBot.DataTeste.Receitas
         public TodasAsReceitas()
         {
             ModuloBanco.Database.DropCollection("receitas");
-            List<ReceitaRPG> receitas = new List<ReceitaRPG>()
+            List<RPGReceita> receitas = new List<RPGReceita>()
             {
                 ReceitasReceita.CarneDeCoelho(),
                 ReceitasReceita.OssoAfiado(),
