@@ -7,7 +7,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class DencansarComando : BaseCommandModule
+    public class ComandoDescansar : BaseCommandModule
     {
         //[Command("descansar")]
         //[Description("Permite descansar para recuperar um pouco da energia perdida.")]

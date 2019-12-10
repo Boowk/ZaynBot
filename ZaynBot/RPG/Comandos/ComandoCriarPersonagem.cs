@@ -7,7 +7,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class CriarPersonagemComando : BaseCommandModule
+    public class ComandoCriarPersonagem : BaseCommandModule
     {
         [Command("criar-personagem")]
         [Aliases("cp")]

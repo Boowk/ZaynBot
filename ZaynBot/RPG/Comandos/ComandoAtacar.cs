@@ -15,7 +15,7 @@ using ZaynBot.Utilidades;
 namespace ZaynBot.RPG.Comandos
 {
 
-    public class AtacarComando : BaseCommandModule
+    public class ComandoAtacar : BaseCommandModule
     {
         [Command("atacar")]
         [Aliases("at")]

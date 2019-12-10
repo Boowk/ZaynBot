@@ -10,7 +10,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class BatalhaComando : BaseCommandModule
+    public class ComandoBatalha : BaseCommandModule
     {
         [Command("batalha")]
         [Description("Exibe o status da batalha atual.")]
