@@ -75,7 +75,8 @@ namespace ZaynBot.RPG.Comandos
             {
                 StringBuilder sr = new StringBuilder();
                 foreach (var item in batalha.Mobs)
-                    sr.AppendLine($"{item.Key} - Vida: {item.Value.PontosDeVida}");
+                    sr.AppendLine($"{item.Key.PrimeiraLetraMaiuscula()} - Vida: {item.Value.PontosDeVida.Texto2Casas()}" +
+                        $"");
                 embed.AddField("**Mobs**".Titulo(), sr.ToString(), true);
             }
 

@@ -8,10 +8,9 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class ExplorarComando : BaseCommandModule
+    public class ComandoExplorar : BaseCommandModule
     {
         [Command("explorar")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
         [Description("Procura por inimigos na região atual.")]
         [UsoAtributo("explorar")]
         [Cooldown(1, 3, CooldownBucketType.User)]

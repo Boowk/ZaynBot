@@ -20,9 +20,9 @@ namespace ZaynBot.RPG.Comandos
         [Command("atacar")]
         [Aliases("at")]
         [Description("Ataca o primeiro inimigo que está na sua frente.")]
-        [UsoAtributo("atacar [id|]")]
+        [UsoAtributo("atacar [nome id|]")]
         [ExemploAtributo("atacar")]
-        [ExemploAtributo("atacar 3")]
+        [ExemploAtributo("atacar coelho 1")]
         [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task AtacarComandoAb(CommandContext ctx, [RemainingText] string inimigoNome = "")
         {
@@ -61,7 +61,7 @@ namespace ZaynBot.RPG.Comandos
 
             if (personagem.EstaminaAtual < personagem.EstaminaMaxima)
             {
-                await ctx.RespondAsync($"Ainda não está pronto para atacar! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você não tem estamina o suficiente para atacar! {ctx.User.Mention}.");
                 return;
             }
 
@@ -72,7 +72,7 @@ namespace ZaynBot.RPG.Comandos
             {
                 var v = batalha.Mobs.First();
                 mob = v.Value;
-                mob.Nome = v.Key;
+                mob.Nome = v.Key.PrimeiraLetraMaiuscula();
             }
             else
             {
@@ -82,6 +82,7 @@ namespace ZaynBot.RPG.Comandos
                     await ctx.RespondAsync($"Alvo {inimigoNome} não encontrado! {ctx.User.Mention}.");
                     return;
                 }
+                mob.Nome = mob.Nome.PrimeiraLetraMaiuscula();
             }
 
             personagem.EstaminaAtual = 0;
@@ -211,6 +212,6 @@ namespace ZaynBot.RPG.Comandos
             return (Sortear.Valor((dano / 2), dano)) * porcentagemFinal;
         }
 
-        
+
     }
 }
