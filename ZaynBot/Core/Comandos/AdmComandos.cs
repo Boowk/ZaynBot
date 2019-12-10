@@ -32,7 +32,7 @@ namespace ZaynBot.Core.Comandos
                 return;
             }
 
-            var cfx = ctx.CommandsNext.CreateFakeContext(member, ctx.Channel, "", "!!", cmd, args);
+            var cfx = ctx.CommandsNext.CreateFakeContext(member, ctx.Channel, "", "z!", cmd, args);
             await ctx.CommandsNext.ExecuteCommandAsync(cfx);
         }
     }

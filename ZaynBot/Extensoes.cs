@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot
@@ -12,6 +13,13 @@ namespace ZaynBot
     {
         public static string Titulo(this string titulo)
             => "⌈" + titulo + "⌋";
+
+        public static async Task ExecutarComandoAsync(this CommandContext ctx, string comando)
+        {
+            var cmd = ctx.CommandsNext.FindCommand(comando, out var args);
+            var cfx = ctx.CommandsNext.CreateContext(ctx.Message, "z!", cmd, args);
+            await ctx.CommandsNext.ExecuteCommandAsync(cfx);
+        }
 
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed)
         {

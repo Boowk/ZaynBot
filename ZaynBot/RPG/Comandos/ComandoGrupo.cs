@@ -10,14 +10,23 @@ using System.Threading;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
+using static DSharpPlus.CommandsNext.CommandsNextExtension;
 
 namespace ZaynBot.RPG.Comandos
 {
     [Group("grupo")]
     [Description("Grupo de comandos relacionado ao grupo.")]
     [UsoAtributo("grupo [comando]")]
-    public class GrupoComando : BaseCommandModule
+
+    public class ComandoGrupo : BaseCommandModule
     {
+        [GroupCommand]
+        public async Task GroupCommandAsync(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            await ctx.ExecutarComandoAsync("ajuda grupo");
+        }
+
         [Command("criar")]
         [Description("Permite criar um novo grupo.")]
         [UsoAtributo("grupo [nome]")]
