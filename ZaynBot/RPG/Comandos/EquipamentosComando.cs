@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZaynBot.RPG.Comandos.Exibir
+namespace ZaynBot.RPG.Comandos
 {
     class EquipamentosComando
     {

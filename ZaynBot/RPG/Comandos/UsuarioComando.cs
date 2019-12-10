@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.RPG.Comandos.Exibir
+namespace ZaynBot.RPG.Comandos
 {
     public class UsuarioComando : BaseCommandModule
     {

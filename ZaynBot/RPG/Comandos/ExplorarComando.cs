@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Mapa;
+using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.RPG.Comandos.Ativavel
+namespace ZaynBot.RPG.Comandos
 {
     public class ExplorarComando : BaseCommandModule
     {

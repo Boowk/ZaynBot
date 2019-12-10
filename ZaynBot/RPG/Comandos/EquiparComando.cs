@@ -5,7 +5,7 @@ using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 
-namespace ZaynBot.RPG.Comandos.Ativavel
+namespace ZaynBot.RPG.Comandos
 {
     public class EquiparComando : BaseCommandModule
     {

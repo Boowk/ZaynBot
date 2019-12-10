@@ -9,7 +9,7 @@ using ZaynBot.Data.Itens;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 
-namespace ZaynBot.RPG.Comandos.Exibir
+namespace ZaynBot.RPG.Comandos
 {
     public class ExaminarComando : BaseCommandModule
     {

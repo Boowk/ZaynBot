@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using MongoDB.Bson.Serialization.Attributes;
-using ZaynBot.RPG.Entidades.Enuns;
-using ZaynBot.RPG.Entidades.Mapa;
 using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot.RPG.Entidades

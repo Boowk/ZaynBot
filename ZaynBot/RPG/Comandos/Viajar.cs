@@ -10,7 +10,7 @@
 //using ZaynBot.RPG.Entidades.Mapa;
 //using ZaynBot.Utilidades;
 
-//namespace ZaynBot.RPG.Comandos.Viajar
+//namespace ZaynBot.RPG.Comandos
 //{
 //    public class Viajar : BaseCommandModule
 //    {

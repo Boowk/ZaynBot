@@ -6,27 +6,18 @@ using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.RPG.Comandos.Exibir
+namespace ZaynBot.RPG.Comandos
 {
     public class MochilaComando : BaseCommandModule
     {
-<<<<<<< HEAD
+
         //[Command("mochila")]
         //[Aliases("m")]
         //[Description("Exibe o que tem dentro da mochila do seu personagem e a capacidade.")]
         //[UsoAtributo("mochila [pagina|]")]
         //[ExemploAtributo("mochila 2")]
         //[ExemploAtributo("mochila")]
-        //[Cooldown(1, 10, CooldownBucketType.User)]
-=======
-        [Command("mochila")]
-        [Aliases("m")]
-        [Description("Exibe o que tem dentro da mochila do seu personagem e a capacidade.")]
-        [UsoAtributo("mochila [pagina|]")]
-        [ExemploAtributo("mochila 2")]
-        [ExemploAtributo("mochila")]
-        [Cooldown(1, 3, CooldownBucketType.User)]
->>>>>>> master
+        //[Cooldown(1, 3, CooldownBucketType.User)]
 
         //public async Task ComandoMochilaAb(CommandContext ctx, int pagina = 0)
         //{

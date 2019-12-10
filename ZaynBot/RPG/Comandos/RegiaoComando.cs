@@ -5,32 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Mapa;
 
-namespace ZaynBot.RPG.Comandos.Exibir
+namespace ZaynBot.RPG.Comandos
 {
     public class RegiaoComando : BaseCommandModule
     {
-<<<<<<< HEAD:ZaynBot/RPG/Comandos/Exibir/RegiaoComando.cs
         [Command("regiao")]
-        [Description("Mostra a descrição da região atual")]
+        [Description("Permite visualizar a região atual melhor.")]
         [UsoAtributo("regiao")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task RegiaoComandoAb(CommandContext ctx)
-=======
-        [Command("localizacao")]
-        [Aliases("local")]
-        [Description("Mostra a sua localização atual e possíveis regiões para explorar.")]
-        [UsoAtributo("localizacao")]
-        [Cooldown(1, 3, CooldownBucketType.User)]
-        public async Task Localizacao(CommandContext ctx)
->>>>>>> master:ZaynBot/RPG/Comandos/Exibir/LocalComando.cs
         {
             await ctx.TriggerTypingAsync();
             UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
             RegiaoRPG localAtual = usuario.RegiaoGet();
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Localização", ctx);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
             embed.WithTitle($"**{localAtual.Nome.Titulo()}**");
             embed.WithDescription(localAtual.Descrição);
 

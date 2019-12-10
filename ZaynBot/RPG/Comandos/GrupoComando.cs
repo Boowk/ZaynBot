@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.RPG.Comandos.Grupos
+namespace ZaynBot.RPG.Comandos
 {
     [Group("grupo")]
     [Description("Grupo de comandos relacionado ao grupo.")]

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
-namespace ZaynBot.RPG.Comandos.Ativavel
+namespace ZaynBot.RPG.Comandos
 {
     public class CriarPersonagemComando : BaseCommandModule
     {
@@ -23,21 +23,19 @@ namespace ZaynBot.RPG.Comandos.Ativavel
                 usuario = new UsuarioRPG(ctx.User.Id);
                 ModuloBanco.UsuarioColecao.InsertOne(usuario);
                 DiscordEmbedBuilder de = new DiscordEmbedBuilder();
-                de.WithDescription($"Após algum tempo desconhecido, você acorda. " +
-                    $"Ao abrir os olhos, você enxerga uma escuridão sem fim. A sua cabeça do lateja com dor, " +
-                    $"como se estivesse prestes a explodir.\n O cheiro de terra e mofo se eleva das grandes " +
-                    $"pedras que revestem o interior dessa minúscula área úmida.\n Um gotejamento constante ecoa do teto " +
-                    $"baixo do canto ao lado de um caminho estreito, e um único candelabro de ferro se projeta para fora da parede, " +
-                    $"segurando uma vela curta e gorda.\n Fumaça se enrola no ar enquanto a chama resplandece ruidosamente em seu pavio " +
-                    $"ardente.\n No canto, uma faca com sangue seco meio congelado, em baixo, respingos de sangue seco meio congelados " +
-                    $"por onde eles deslizaram pelas pedras.");
-                await ctx.RespondAsync($"Bem-vindo {ctx.User.Mention}!");
+                de.WithDescription($"Parabéns {ctx.User.Mention}, você concluiu a criação do personagem.\n" +
+                    $"Agora você está prestes a entrar na Academia Brasileira de RPG Hideki, onde aprenderá a jogar Zayn.\n" +
+                    $"Mesmo se você for um jogador experiente, vale a pena concluir a academia, já que os formandos são recompensados com moedas de ouro, equipamentos, experiência e pontos de missão.\n" +
+                    $"Você pode sair da academia a qualquer minuto e retornar as lições mais tarde, você não precisa completar tudo de uma vez.\n" +
+                    $"Se você é um jogador com problemas de interpretação, nosso servidor tem pessoas dedicadas a resolver a sua dúvida, como também temos mapas especiais que você pode achar úteis.\n" +
+                    $"Escreva ajuda para mais detalhes.\n" +
+                    $"   Aproveite as aventuras e seja bem - vindo ao Zayn.");
                 await ctx.RespondAsync(embed: de);
                 try
                 {
                     DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
                     DiscordChannel CanalRPG = MundoZayn.GetChannel(519176927265947689);
-                    await CanalRPG.SendMessageAsync($"*{ctx.User.Username} agora está jogando ZaynRPG.*");
+                    await CanalRPG.SendMessageAsync($"*{ctx.User.Username}#{ctx.User.Discriminator} criou um personagem!*");
                 }
                 catch { }
             }

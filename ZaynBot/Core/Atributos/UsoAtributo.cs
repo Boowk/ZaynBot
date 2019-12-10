@@ -9,7 +9,6 @@ namespace ZaynBot.Core.Atributos
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
     public class UsoAtributo : CheckBaseAttribute
     {
-
         public string Uso { get; }
 
         public UsoAtributo(string uso)
@@ -28,7 +27,7 @@ namespace ZaynBot.Core.Atributos
             var botok = (pbot & Permissions.Administrator) != 0 || (pbot & Permissions.EmbedLinks) == Permissions.EmbedLinks &&
                 (pbot & Permissions.AddReactions) == Permissions.AddReactions;
             if (!botok)
-                await ctx.RespondAsync($"{ctx.User.Mention}, é necessario que as permissões: **Inserir links** e **Adicionar reação** estejam ativas para que o bot funcione corretamente.").ConfigureAwait(false);
+                await ctx.RespondAsync($"{ctx.User.Mention}, é necessario que as permissões: **Inserir links** e **Adicionar reações** estejam ativas para que o bot funcione corretamente.").ConfigureAwait(false);
             return botok;
         }
     }

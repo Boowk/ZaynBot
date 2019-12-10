@@ -9,19 +9,17 @@ using System.Linq;
 using System.Threading.Tasks;
 using ZaynBot.Core;
 using ZaynBot.Core.Comandos;
-using ZaynBot.RPG.Comandos.Ativavel;
-using ZaynBot.RPG.Comandos.Exibir;
-using ZaynBot.RPG.Comandos.Grupos;
+using ZaynBot.RPG.Comandos;
 using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
 {
-    public class ModuloComando
+    public class ModuloComandos
     {
         public static CommandsNextExtension Comandos { get; private set; }
 
         //Adicionando comandos ao Bot.
-        public ModuloComando(CommandsNextConfiguration ccfg, DiscordClient client)
+        public ModuloComandos(CommandsNextConfiguration ccfg, DiscordClient client)
         {
             Comandos = client.UseCommandsNext(ccfg);
             Comandos.CommandExecuted += ComandoExecutado;
@@ -34,13 +32,10 @@ namespace ZaynBot
             Comandos.RegisterCommands<ConviteComando>();
             Comandos.RegisterCommands<InfoComando>();
             Comandos.RegisterCommands<VotarComando>();
-<<<<<<< HEAD
             Comandos.RegisterCommands<UsuarioComando>();
 
             //Comandos.RegisterCommands<DencansarComando>();
-=======
             Comandos.RegisterCommands<TopComando>();
->>>>>>> master
 
             #region ComandosRPG
 

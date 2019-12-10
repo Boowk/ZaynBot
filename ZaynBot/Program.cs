@@ -62,7 +62,7 @@ namespace ZaynBot
 #else
             prefix[0] = _config.Prefix;
 #endif
-            ModuloComando todosOsComandos = new ModuloComando(new CommandsNextConfiguration
+            ModuloComandos todosOsComandos = new ModuloComandos(new CommandsNextConfiguration
             {
                 StringPrefixes = prefix,
                 EnableDms = false,

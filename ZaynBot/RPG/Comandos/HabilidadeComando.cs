@@ -9,17 +9,12 @@ using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 using ZaynBot.RPG.Habilidades;
 
-namespace ZaynBot.RPG.Comandos.Exibir
+namespace ZaynBot.RPG.Comandos
 {
     public class HabilidadeComando : BaseCommandModule
     {
-<<<<<<< HEAD
-        [Command("habilidades")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
-=======
         [Command("habilidade")]
         [Cooldown(1, 2, CooldownBucketType.User)]
->>>>>>> master
         [Description("Exibe as informações de uma habilidade ou todas as habilidades de um personagem.")]
         [UsoAtributo("habilidade [nome]")]
         [ExemploAtributo("habilidade perfurante")]

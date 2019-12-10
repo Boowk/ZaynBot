@@ -7,8 +7,11 @@
 
   <ItemGroup>
     <Compile Remove="Data\Mobs\Boss\**" />
+    <Compile Remove="RPG\Entidades\Mapa\**" />
     <EmbeddedResource Remove="Data\Mobs\Boss\**" />
+    <EmbeddedResource Remove="RPG\Entidades\Mapa\**" />
     <None Remove="Data\Mobs\Boss\**" />
+    <None Remove="RPG\Entidades\Mapa\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -47,10 +50,6 @@
     <Reference Include="System.Xml">
       <HintPath>System.Xml</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="RPG\Entidades\Mapa\" />
   </ItemGroup>
 
 </Project>

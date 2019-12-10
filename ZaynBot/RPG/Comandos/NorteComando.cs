@@ -4,7 +4,7 @@
 //using ZaynBot.Core.Atributos;
 //using ZaynBot.RPG.Entidades.Mapa;
 
-//namespace ZaynBot.RPG.Comandos.Viajar
+//namespace ZaynBot.RPG.Comandos
 //{
 //    public class NorteComando : BaseCommandModule
 //    {

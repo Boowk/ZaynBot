@@ -12,7 +12,7 @@ using ZaynBot.RPG.Habilidades;
 using ZaynBot.Utilidades;
 
 
-namespace ZaynBot.RPG.Comandos.Ativavel
+namespace ZaynBot.RPG.Comandos
 {
 
     public class AtacarComando : BaseCommandModule
