@@ -108,7 +108,7 @@ namespace ZaynBot
                     ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Id.ToString(), $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
                     return;
                 case PersonagemNullException px:
-                    await ctx.RespondAsync($"{ctx.User.Mention}, {px.ToString()}");
+                    await ctx.RespondAsync(px.ToString());
                     return;
                 case NotFoundException nx:
                     await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");

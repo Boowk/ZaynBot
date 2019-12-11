@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,12 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
-            RPGBatalha batalha = new RPGBatalha();
-            RPGUsuario liderUsuario = null;
+
+            if (personagem.VidaAtual <= 0)
+            {
+                await ctx.RespondAsync($"Você está morto {ctx.User.Mention}!");
+                return;
+            }
 
             //Caso não tenha grupo
             if (personagem.Batalha.LiderGrupo == 0)
@@ -39,6 +44,9 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
+
+            RPGBatalha batalha = new RPGBatalha();
+            RPGUsuario liderUsuario = null;
             #region Defini a Party
             //Caso o lider do grupo não seja ele
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
@@ -137,25 +145,29 @@ namespace ZaynBot.RPG.Comandos
             embed.WithColor(DiscordColor.Red);
 
 
-            //mensagemAtaquesInimigos.Append($"Você perdeu -{danoRecebido.Texto2Casas()} de vida.\n");
-            //Enviamos a mensagem armazenada se ela não for vazia
-            //    if (danoRecebido != 0)
-            //        embed.AddField($"**{"Danos recebidos".Titulo()}**", mensagemAtaquesInimigos.ToString());
-            //Adicionamos mais mensagens
-            //    string t = personagem.Batalha.Turno + "º Turno";
-            //embed.WithTitle($"**{t.Titulo()}**");
-
             if (mob.PontosDeVida <= 0)
             {
+                mob.Morto = true;
                 //Removemos o inimigo
-                batalha.Mobs.Remove(mob.Nome.ToLower());
                 mensagemMortos = $"{mob.Nome} morreu.";
                 embed.AddField($"**{"Inimigos abatidos".Titulo()}**", mensagemMortos.ToString());
 
+                //List<RPGUsuario> l = new List<RPGUsuario>();
+                //l.Add(await RPGUsuario.UsuarioGetAsync(batalha.LiderGrupo));
+                //foreach (var item in batalha.Jogadores)
+                //    l.Add(await RPGUsuario.UsuarioGetAsync(item));
 
-                bool isEvoluiou = personagem.AdicionarExp(mob.Essencia);
-                if (isEvoluiou)
-                    await ctx.RespondAsync($"{ctx.User.Mention}, você evoluiu para o nível {personagem.NivelAtual}! Seus atributos aumentarão em 20%!");
+
+                //foreach (var item in l)
+                //{
+                //    bool isEvoluiou = personagem.AdicionarExp(mob.Essencia / l.Count);
+                //    if (isEvoluiou)
+                //    {
+                //        DiscordUser g = await ctx.Client.GetUserAsync(item.Id);
+                //        await ctx.RespondAsync($"{g.Mention}, evoluiu para o nível {item.Personagem.NivelAtual}! Seus atributos aumentarão em 2%!");
+                //    }
+                //}
+
 
                 //foreach (var i in mob.ChanceItemUnico)
                 //{

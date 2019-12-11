@@ -25,7 +25,7 @@ namespace ZaynBot.RPG.Comandos
             DiscordEmoji pv = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
             DiscordEmoji pp = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Status", ctx);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao($"Nível {personagem.NivelAtual}| Exp: {personagem.ExpAtual}/{personagem.ExpMax}", ctx);
             embed.WithColor(DiscordColor.PhthaloGreen);
             embed.AddField(pv + "**Vida**".Titulo(), $"{personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMaxima.Texto2Casas()}", true);
             embed.AddField(pp + "**Magia**".Titulo(), $"{personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMaxima.Texto2Casas()}", true);
@@ -35,8 +35,8 @@ namespace ZaynBot.RPG.Comandos
             embed.AddField("**Defesa mágica**".Titulo(), $"{personagem.DefesaMagica.Texto2Casas()}", true);
             embed.AddField("**Velocidade**".Titulo(), $"{personagem.Velocidade.Texto2Casas()}", true);
             embed.AddField("**Sorte**".Titulo(), $"{personagem.Sorte.Texto2Casas()}", true);
-            embed.AddField("**Fome**".Titulo(), $"{(personagem.FomeAtual / personagem.FomeMaxima) * 100}%", true);
-            embed.AddField("**Sede**".Titulo(), $"{(personagem.SedeAtual / personagem.SedeMaxima) * 100}%", true);
+            embed.AddField("**Fome**".Titulo(), $"{((personagem.FomeAtual / personagem.FomeMaxima) * 100).Texto2Casas()}%", true);
+            embed.AddField("**Sede**".Titulo(), $"{((personagem.SedeAtual / personagem.SedeMaxima) * 100).Texto2Casas()}%", true);
             embed.AddField("**Estamina**".Titulo(), $"{personagem.EstaminaAtual.Texto2Casas()}/{personagem.EstaminaMaxima.Texto2Casas()}", true);
             embed.AddField("**Peso**".Titulo(), $"{personagem.PesoAtual.Texto2Casas()}/{personagem.PesoMaximo.Texto2Casas()}", true);
 

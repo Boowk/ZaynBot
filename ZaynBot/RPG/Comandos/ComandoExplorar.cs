@@ -20,35 +20,39 @@ namespace ZaynBot.RPG.Comandos
             RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
-            if (personagem.Batalha.LiderGrupoInimigo != 0)
+
+            if (personagem.VidaAtual <= 0)
             {
-                await ctx.RespondAsync($"Termine a batalha contra outros jogadores antes! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você está morto {ctx.User.Mention}!");
                 return;
             }
-
             if (personagem.Batalha.LiderGrupo == 0)
             {
-                await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você deve criar um Grupo antes, {ctx.User.Mention}!");
                 return;
             }
-
+            if (personagem.Batalha.LiderGrupo != ctx.User.Id)
+            {
+                await ctx.RespondAsync($"Somente o lider do grupo pode usar este comando, {ctx.User.Mention}!");
+                return;
+            }
+            if (personagem.Batalha.Mobs.Count > 0)
+            {
+                await ctx.RespondAsync($"Você precisa terminar a batalha atual antes de fazer isso, {ctx.User.Mention}!");
+                return;
+            }
             RPGRegiao localAtual = usuario.RegiaoGet();
-
             if (localAtual.Dificuldade == 0)
             {
-                await ctx.RespondAsync($"Esta região não tem inimigos! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Esta região não tem inimigos! {ctx.User.Mention}!");
                 return;
             }
 
-            if (personagem.Batalha.Mobs.Count == 0)
-            {
-                int mobSorteado = AparecerMob(localAtual, personagem, ctx);
+            int mobSorteado = AparecerMob(localAtual, personagem, ctx);
+            RPGUsuario.Salvar(usuario);
 
-                await ctx.RespondAsync($"**<{mobSorteado}>** mobs apareceu! {ctx.User.Mention}.");
-                RPGUsuario.Salvar(usuario);
-            }
-            else
-                await ctx.RespondAsync($"Você precisa terminar a batalha atual para fazer isso! {ctx.User.Mention}.");
+            await new ComandoBatalha().BatalhaComandoAb(ctx);
+            // await ctx.RespondAsync($"**<{mobSorteado}>** mobs apareceu! {ctx.User.Mention}.");
         }
 
         /// <summary>

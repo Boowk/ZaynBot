@@ -33,7 +33,7 @@ namespace ZaynBot.RPG.Entidades
         {
             usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
             if (usuario == null)
-                throw new PersonagemNullException($"{discordUsuario.Username}#{discordUsuario.Discriminator} não tem um personagem.");
+                throw new PersonagemNullException($"{discordUsuario.Mention} não tem um personagem para ser convidado!");
         }
         public static async Task<RPGUsuario> UsuarioGetAsync(ulong discordUserId)
         {
@@ -41,7 +41,7 @@ namespace ZaynBot.RPG.Entidades
             if (usuario == null)
             {
                 DiscordUser du = await ModuloCliente.Client.GetUserAsync(discordUserId);
-                throw new PersonagemNullException($"{du.Username}#{du.Discriminator} não tem um personagem.");
+                throw new PersonagemNullException($"{du.Mention} não tem um personagem para ser convidado!");
             }
             return usuario;
         }

@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Entidades
 
         public bool ModoDividir { get; set; }
 
-        public List<ulong> Jogadores { get; set; }
+        public List<ulong> Membros { get; set; }
 
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
@@ -32,7 +32,7 @@ namespace ZaynBot.RPG.Entidades
             ModoDividir = false;
 
 
-            Jogadores = new List<ulong>();
+            Membros = new List<ulong>();
 
 
             Mobs = new Dictionary<string, RPGMob>();

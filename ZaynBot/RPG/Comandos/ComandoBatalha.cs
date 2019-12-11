@@ -41,6 +41,12 @@ namespace ZaynBot.RPG.Comandos
             if (personagem.Batalha.LiderGrupo == ctx.User.Id)
                 batalha = personagem.Batalha;
 
+            if(batalha.Mobs.Count == 0)
+            {
+                await ctx.RespondAsync($"Você não tem nenhuma batalha em andamento, {ctx.User.Mention}!");
+                return;
+            }
+
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
             embed.WithColor(DiscordColor.PhthaloGreen);

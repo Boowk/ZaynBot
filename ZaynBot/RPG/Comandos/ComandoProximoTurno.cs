@@ -20,189 +20,224 @@ namespace ZaynBot.RPG.Comandos
         public async Task ProximoTurno(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
-            RPGPersonagem personagem = usuario.Personagem;
-            RPGBatalha batalha = personagem.Batalha;
+            RPGUsuario.GetPersonagem(ctx, out RPGUsuario lider);
 
 
-            //Caso não tenha grupo
-            if (batalha.LiderGrupo == 0)
+            if (lider.Personagem.Batalha.LiderGrupo == 0)
             {
-                await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}!");
                 return;
             }
 
-            if (batalha.LiderGrupo != ctx.User.Id)
+            if (lider.Personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
                 await ctx.RespondAsync($"Somente o lider do grupo pode usar este comando, {ctx.User.Mention}!");
                 return;
             }
 
-            List<RPGUsuario> jogadores = new List<RPGUsuario>();
-            jogadores.Add(usuario);
-            foreach (var item in batalha.Jogadores)
-                jogadores.Add(ModuloBanco.UsuarioGet(item));
-            foreach (var item in jogadores)
+            if (lider.Personagem.Batalha.Mobs.Count == 0)
             {
-                if (item.Personagem.EstaminaAtual >= item.Personagem.EstaminaMaxima)
+                await ctx.RespondAsync($"Você não tem nenhuma batalha em andamento para iniciar outro turno! {ctx.User.Mention}.");
+                return;
+            }
+
+            int quantMobsVivos = lider.Personagem.Batalha.Mobs.Count;
+            foreach (var mobs in lider.Personagem.Batalha.Mobs)
+            {
+                if (mobs.Value.Morto)
+                    quantMobsVivos--;
+            }
+            if (quantMobsVivos == 0)
+            {
+                //Temporario
+                await ctx.RespondAsync("Todos os inimigos foram mortos.");
+                lider.Personagem.Batalha.Mobs = new Dictionary<string, RPGMob>();
+                RPGUsuario.Salvar(lider);
+                // Faz a distribuição de recompensas
+                return;
+            }
+            else
+            {
+                List<RPGUsuario> membros = new List<RPGUsuario>();
+                List<DiscordUser> membrosUsers = new List<DiscordUser>();
+                foreach (var m in lider.Personagem.Batalha.Membros)
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, todos devem efetuar uma ação para se iniciar o proximo turno!");
+                    var u = ModuloBanco.UsuarioGet(m);
+                    var du = await ctx.Client.GetUserAsync(m);
+                    if (u.Personagem.EstaminaAtual >= u.Personagem.EstaminaMaxima)
+                    {
+                        if (u.Personagem.VidaAtual > 0)
+                        {
+                            await ctx.RespondAsync($"{du.Mention} ainda não fez um movimento, para se iniciar o proximo turno!");
+                            return;
+                        }
+                    }
+                    membros.Add(u);
+                    membrosUsers.Add(du);
+                }
+                //Verifica o lider após
+                var _u = lider;
+                var _du = await ctx.Client.GetUserAsync(_u.Id);
+                if (_u.Personagem.EstaminaAtual >= _u.Personagem.EstaminaMaxima)
+                {
+                    if (_u.Personagem.VidaAtual > 0)
+                    {
+                        await ctx.RespondAsync($"{_du.Mention} ainda não fez um movimento, para se iniciar o proximo turno!");
+                        return;
+                    }
+                }
+                membros.Add(_u);
+                membrosUsers.Add(_du);
+
+
+                //Quando todos morrem
+                int quantMembroVivos = membros.Count;
+                foreach (var membro in membros)
+                {
+                    if (membro.Personagem.VidaAtual <= 0)
+                        quantMembroVivos--;
+                }
+                if (quantMembroVivos == 0)
+                {
+                    await ctx.RespondAsync($"O grupo {lider.Personagem.Batalha.NomeGrupo} foi dizimado!");
+                    lider.Personagem.Batalha.Mobs = new Dictionary<string, RPGMob>();
+                    lider.Personagem.Batalha.Turno = 0;
+                    RPGUsuario.Salvar(lider);
                     return;
                 }
-            }
 
+                #region inicio turno
 
-            bool vezJogador = false;
-            do
-            {
-                foreach (var item in batalha.Mobs)
+                lider.Personagem.Batalha.Turno++;
+                bool vezJogador = false;
+                StringBuilder strVezJog = new StringBuilder();
+                do
                 {
-                    var m = item.Value;
-                    if (m.PontosDeVida > 0)
-                        m.EstaminaAtual += Sortear.Valor(1, 10);
-                    #region turno mob
-                    if (m.EstaminaAtual >= m.EstaminaMaxima)
+                    foreach (var mob in lider.Personagem.Batalha.Mobs)
                     {
-                        Random r = new Random();
-                        int v = r.Next(0, jogadores.Count);
-                        double danoInimigo = CalcDano(jogadores[v].Personagem.DefesaFisica, m.AtaqueFisico);
-                        jogadores[v].Personagem.DanoRecebido += danoInimigo;
-                        jogadores[v].Personagem.VidaAtual -= danoInimigo;
-                        m.EstaminaAtual = 0;
+                        if (mob.Value.Morto)
+                            continue;
+                        mob.Value.EstaminaAtual += Sortear.Valor(1, 10);
+
+
+                        #region vez mob
+
+
+                        if (mob.Value.EstaminaAtual >= mob.Value.EstaminaMaxima)
+                        {
+                            RPGUsuario alvo;
+                            do
+                            {
+                                alvo = membros[Sortear.Valor(0, membros.Count)];
+                            } while (alvo.Personagem.VidaAtual <= 0);
+                            //Ataque dos mobs
+                            double danoInimigo = CalcDano(alvo.Personagem.DefesaFisica, mob.Value.AtaqueFisico);
+                            alvo.Personagem.DanoRecebido += danoInimigo;
+                            alvo.Personagem.VidaAtual -= danoInimigo;
+
+                            if (alvo.Personagem.VidaAtual <= 0)
+                            {
+                                alvo.Personagem.EstaminaAtual = 0;
+                                try
+                                {
+                                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
+                                    DiscordChannel CanalRPG = MundoZayn.GetChannel(629281618447564810);
+                                    await CanalRPG.SendMessageAsync($"*Um {mob.Value.Nome} matou o {ctx.User.Username}#{ctx.User.Discriminator}!*");
+                                }
+                                catch { }
+                            }
+                            //switch (sorteioAtaque)
+                            //            {
+                            //                case 1:
+                            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Botas, out armadura);
+                            //                    break;
+                            //                case 2:
+                            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Couraca, out armadura);
+                            //                    break;
+                            //                case 3:
+                            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Helmo, out armadura);
+                            //                    break;
+                            //                case 4:
+                            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Luvas, out armadura);
+                            //                    break;
+                            //            }
+
+                            //            Se tiver
+                            //                if (armadura != null)
+                            //            {
+                            //                danoInimigo = CalcDano(armadura.DefesaFisica, inimigo.AtaqueFisico);
+                            //                armadura.DurabilidadeMax--;
+                            //                if (armadura.DurabilidadeMax == 0)
+                            //                {
+                            //                    personagem.Inventario.DesequiparItem(armadura, personagem);
+                            //                    await ctx.RespondAsync($"**({armadura.Nome})** quebrou! {ctx.User.Mention}!");
+                            //                }
+
+
+                            //Reinicia a estamina
+                            mob.Value.EstaminaAtual = 0;
+                        }
+                        #endregion
                     }
-                    #endregion
-                }
 
-                int f = 0;
-                foreach (var item in jogadores)
-                {
-                    RPGPersonagem p = item.Personagem;
-                    p.EstaminaAtual += Sortear.Valor(1, 10);
-
-                    #region Turno Jogador
-                    if (p.EstaminaAtual >= p.EstaminaMaxima)
+                    for (int ind = 0; ind < membros.Count; ind++)
                     {
-                        vezJogador = true;
+                        membros[ind].Personagem.EstaminaAtual += Sortear.Valor(1, 10);
+
+
+                        #region vez jogador
+
+                        if (membros[ind].Personagem.VidaAtual > 0)
+                            if (membros[ind].Personagem.EstaminaAtual >= membros[ind].Personagem.EstaminaMaxima)
+                            {
+                                vezJogador = true;
+                                strVezJog.AppendLine($"{membrosUsers[ind].Mention} Pronto");
+                            }
+
+
+                        #endregion
                     }
-                    #endregion
-                    f++;
-                }
 
-            } while (vezJogador == false);
+                } while (vezJogador == false);
+                foreach (var item in membros)
+                    RPGUsuario.Salvar(item);
 
-            //double danoRecebido = 0;
-            //while (personagem.Batalha.PontosDeAcao < personagem.Batalha.PontosDeAcaoTotal)
-            //{
-            //    personagem.Batalha.PontosDeAcao += personagem.Raca.Agilidade / 4 + Sortear.Valor(1, 10);
-            //    foreach (var inimigo in personagem.Batalha.Inimigos)
-            //    {
-            //        inimigo.PontosDeAcao += (inimigo.Velocidade / 4) + Sortear.Valor(1, 10);
+                #endregion
+                //Salvamos e exibimos o relatório da batalha.
 
-            //        if (inimigo.PontosDeAcao >= personagem.Batalha.PontosDeAcaoTotal)
-            //        {
-            //            personagem.Batalha.Turno++;
-            //            inimigo.PontosDeAcao = 0;
-
-            //            double danoInimigo = 0;
-            //            Random r = new Random();
-            //            int sorteioAtaque = r.Next(0, 5);
-            //            ItemRPG armadura = null;
-            //            switch (sorteioAtaque)
-            //            {
-            //                case 1:
-            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Botas, out armadura);
-            //                    break;
-            //                case 2:
-            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Couraca, out armadura);
-            //                    break;
-            //                case 3:
-            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Helmo, out armadura);
-            //                    break;
-            //                case 4:
-            //                    personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Luvas, out armadura);
-            //                    break;
-            //            }
-
-            //            Se tiver
-            //                if (armadura != null)
-            //            {
-            //                danoInimigo = CalcDano(armadura.DefesaFisica, inimigo.AtaqueFisico);
-            //                armadura.DurabilidadeMax--;
-            //                if (armadura.DurabilidadeMax == 0)
-            //                {
-            //                    personagem.Inventario.DesequiparItem(armadura, personagem);
-            //                    await ctx.RespondAsync($"**({armadura.Nome})** quebrou! {ctx.User.Mention}!");
-            //                }
-            //            }
-            //            else
-            //                danoInimigo = CalcDano(0, inimigo.AtaqueFisico);
-            //            personagem.VidaAtual -= danoInimigo;
-            //            if (personagem.VidaAtual <= 0)
-            //                try
-            //                {
-            //                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-            //                    DiscordChannel CanalRPG = MundoZayn.GetChannel(629281618447564810);
-            //                    await CanalRPG.SendMessageAsync($"*Um {inimigo.Nome} matou o {ctx.User.Username}!*");
-            //                }
-            //                catch { }
-            //            danoRecebido += danoInimigo;
-            //        }
-            //    }
-            //}
-            //personagem.Batalha.Turno++;
-            //personagem.Batalha.PontosDeAcao = 0;
-            //return danoRecebido;
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Proximo turno", ctx);
+                embed.WithColor(DiscordColor.IndianRed);
+                embed.WithTitle($"**{lider.Personagem.Batalha.NomeGrupo}**".Titulo());
+                embed.WithDescription($"**Turno**: {lider.Personagem.Batalha.Turno}");
 
 
+                StringBuilder strVida = new StringBuilder();
+                for (int ind = 0; ind < membros.Count; ind++)
+                    if (membros[ind].Personagem.VidaAtual <= 0)
+                        strVida.AppendLine($"{membrosUsers[ind].Mention} - Morto");
+                    else
+                        strVida.AppendLine($"{membrosUsers[ind].Mention} - {membros[ind].Personagem.VidaAtual}/{membros[ind].Personagem.VidaMaxima}");
+                embed.AddField("Membros".Titulo(), strVida.ToString(), true);
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Proximo turno", ctx);
-            embed.WithColor(DiscordColor.PhthaloGreen);
-            embed.WithTitle($"**{batalha.NomeGrupo}**".Titulo());
+
+                //Colocar bolinhas e trocar por porcentagem
+                StringBuilder strMob = new StringBuilder();
+                foreach (var mob in lider.Personagem.Batalha.Mobs)
+                    strMob.AppendLine($"{mob.Key.PrimeiraLetraMaiuscula()} - Vida: {mob.Value.PontosDeVida.Texto2Casas()}");
+                embed.AddField("Mobs".Titulo(), strMob.ToString(), true);
 
 
-            List<DiscordUser> users = new List<DiscordUser>();
-            StringBuilder str = new StringBuilder();
-            foreach (var item in jogadores)
-            {
-                var jog = await ctx.Client.GetUserAsync(item.Id);
-                users.Add(jog);
-                str.AppendLine($"{jog.Mention} - {CalcularVez(item.Personagem.EstaminaAtual, item.Personagem.EstaminaMaxima)}");
+                StringBuilder strAtaquesRecebidos = new StringBuilder();
+                for (int i = 0; i < membros.Count; i++)
+                    if (membros[i].Personagem.DanoRecebido > 0)
+                        strAtaquesRecebidos.AppendLine($"{membrosUsers[i].Mention} **recebeu {membros[i].Personagem.DanoRecebido.Texto2Casas()} de dano.**");
+                if (!string.IsNullOrEmpty(strAtaquesRecebidos.ToString()))
+                    embed.AddField("Relatório".Titulo(), strAtaquesRecebidos.ToString());
+                embed.AddField("Pronto".Titulo(), strVezJog.ToString(), false);
+
+
+                await ctx.RespondAsync(embed: embed);
             }
-            embed.WithDescription($"**Turno**: {batalha.Turno.ToString()}");
-            embed.AddField("Membros".Titulo(), str.ToString(), true);
-
-
-            StringBuilder stf = new StringBuilder();
-            foreach (var item in batalha.Mobs)
-            {
-                stf.AppendLine($"{item.Key.PrimeiraLetraMaiuscula()} - Vida: {item.Value.PontosDeVida.Texto2Casas()}");
-            }
-            if (!string.IsNullOrEmpty(stf.ToString()))
-                embed.AddField("Mobs".Titulo(), stf.ToString(), true);
-
-
-            StringBuilder mensagemAtaque = new StringBuilder();
-            int i = 0;
-            foreach (var item in jogadores)
-            {
-                if (item.Personagem.DanoRecebido > 0)
-                    mensagemAtaque.AppendLine($"{users[i].Mention} perdeu -{item.Personagem.DanoRecebido.Texto2Casas()} de vida.");
-                i++;
-            }
-            if (!string.IsNullOrEmpty(mensagemAtaque.ToString()))
-                embed.AddField("Danos recebidos".Titulo(), mensagemAtaque.ToString(), false);
-            foreach (var item in jogadores)
-            {
-                RPGUsuario.Salvar(item);
-            }
-            await ctx.RespondAsync(embed: embed);
-        }
-
-        public string CalcularVez(double estaminaAtual, double estaminaMaxima)
-        {
-            if (estaminaAtual >= estaminaMaxima)
-                return "Pronto";
-            return "Se preparando";
         }
 
         public static double CalcDano(double resistencia, double dano)
@@ -213,3 +248,4 @@ namespace ZaynBot.RPG.Comandos
         }
     }
 }
+

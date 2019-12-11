@@ -86,5 +86,10 @@ namespace ZaynBot.RPG.Entidades
             }
             ExpAtual = 0;
         }
+
+        public double Evoluir(double valor)
+        {
+            return valor * 1.02;
+        }
     }
 }

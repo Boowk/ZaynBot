@@ -24,8 +24,67 @@ namespace ZaynBot.RPG.Comandos
         public async Task GroupCommandAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            await ctx.ExecutarComandoAsync("ajuda grupo");
+            RPGUsuario usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
+            if (usuario == null)
+            {
+                await ctx.ExecutarComandoAsync("ajuda grupo");
+                return;
+            }
+            else if (usuario.Personagem.Batalha.LiderGrupo == 0)
+            {
+                await ctx.ExecutarComandoAsync("ajuda grupo");
+                return;
+            }
+            else
+            {
+                RPGBatalha batalha = new RPGBatalha();
+                RPGPersonagem personagem = usuario.Personagem;
+
+                //Caso o lider do grupo não seja ele
+                if (personagem.Batalha.LiderGrupo != ctx.User.Id)
+                {
+                    RPGUsuario liderUsuario = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                    batalha = liderUsuario.Personagem.Batalha;
+                }
+
+                //Caso ele seja o lider
+                if (personagem.Batalha.LiderGrupo == ctx.User.Id)
+                    batalha = personagem.Batalha;
+
+
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
+                embed.WithColor(DiscordColor.PhthaloGreen);
+                embed.WithTitle($"**{batalha.NomeGrupo}**".Titulo());
+                DiscordUser ul = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
+                embed.WithDescription($"**Turno**: {batalha.Turno.ToString()}\n" +
+                    $"**Lider:** {ul.Mention}");
+
+                //Caso tenha mobs
+                if (batalha.Membros.Count != 0)
+                {
+                    StringBuilder sr = new StringBuilder();
+                    foreach (var item in batalha.Membros)
+                    {
+                        DiscordUser g = await ctx.Client.GetUserAsync(item);
+                        RPGUsuario u = await RPGUsuario.UsuarioGetAsync(item);
+                        sr.AppendLine($"{g.Mention} - Vida: {u.Personagem.VidaAtual.Texto2Casas()}/{u.Personagem.VidaMaxima.Texto2Casas()}\n");
+                    }
+                    embed.AddField("**Membros**".Titulo(), sr.ToString(), true);
+                }
+
+                await ctx.RespondAsync(embed: embed.Build());
+            }
         }
+
+        public string CalcularVez(double estaminaAtual, double estaminaMaxima)
+        {
+            if (estaminaAtual >= estaminaMaxima)
+                return "Pronto";
+            if (estaminaAtual != 0)
+                return "Se preparando";
+            return "Já atacou";
+        }
+
 
         [Command("criar")]
         [Description("Permite criar um novo grupo.")]
@@ -66,7 +125,7 @@ namespace ZaynBot.RPG.Comandos
         [UsoAtributo("convidar [id|menção]")]
         [ExemploAtributo("convidar 53057768")]
         [ExemploAtributo("convidar @Usuario")]
-        [Cooldown(1, 30, CooldownBucketType.User)]
+        [Cooldown(1, 5, CooldownBucketType.User)]
         public async Task GrupoConvidar(CommandContext ctx, DiscordMember userConvidado)
         {
             await ctx.TriggerTypingAsync();
@@ -92,7 +151,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            foreach (var item in personagem.Batalha.Jogadores)
+            foreach (var item in personagem.Batalha.Membros)
             {
                 if (item == userConvidado.Id)
                 {
@@ -100,6 +159,8 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
             }
+
+            RPGUsuario.UsuarioGet(userConvidado, out RPGUsuario u);
 
             emojiSim = DiscordEmoji.FromName(ctx.Client, ":regional_indicator_s:");
             emojiNao = DiscordEmoji.FromName(ctx.Client, ":regional_indicator_n:");
@@ -115,9 +176,9 @@ namespace ZaynBot.RPG.Comandos
             var interacao = ctx.Client.GetInteractivity();
             Task[] opcoes = new Task[2];
             CancellationTokenSource token = new CancellationTokenSource();
-            opcoes[0] = mensagem.WaitForReactionAsync(userConvidado, emojiSim, TimeSpan.FromSeconds(30))
+            opcoes[0] = mensagem.WaitForReactionAsync(userConvidado, emojiSim, TimeSpan.FromSeconds(10))
                 .ContinueWith(async x => await GetReacaoMissao(x.Result, userConvidado, token, ctx), token.Token);
-            opcoes[1] = mensagem.WaitForReactionAsync(userConvidado, emojiNao, TimeSpan.FromSeconds(30))
+            opcoes[1] = mensagem.WaitForReactionAsync(userConvidado, emojiNao, TimeSpan.FromSeconds(10))
                     .ContinueWith(async x => await GetReacaoMissao(x.Result, userConvidado, token, ctx), token.Token);
 
             await mensagem.CreateReactionAsync(emojiSim);
@@ -159,7 +220,7 @@ namespace ZaynBot.RPG.Comandos
                     await ctx.RespondAsync($"O grupo foi desfeito, não é possível entrar! {discordUserConvidado.Mention}.");
                     return;
                 }
-                if (personagem.Batalha.Jogadores.Count > 5)
+                if (personagem.Batalha.Membros.Count > 5)
                 {
 
                     await ctx.RespondAsync($"A quantidade máxima do grupo foi alcançada, não é possível entrar! {discordUserConvidado.Mention}.");
@@ -167,7 +228,7 @@ namespace ZaynBot.RPG.Comandos
                 }
 
                 personagemConvidado.Batalha.LiderGrupo = usuario.Id;
-                personagem.Batalha.Jogadores.Add(usuarioConvidado.Id);
+                personagem.Batalha.Membros.Add(usuarioConvidado.Id);
                 usuario.Salvar();
                 usuarioConvidado.Salvar();
                 await ctx.RespondAsync($"{discordUserConvidado.Mention} aceitou o seu convite {ctx.User.Mention}!");
@@ -196,7 +257,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            if (personagem.Batalha.LiderGrupo == ctx.User.Id && personagem.Batalha.Jogadores.Count >= 1)
+            if (personagem.Batalha.LiderGrupo == ctx.User.Id && personagem.Batalha.Membros.Count >= 1)
             {
                 await ctx.RespondAsync($"Você precisa remover os membros antes de sair do grupo! {ctx.User.Mention}.");
                 return;
@@ -219,7 +280,7 @@ namespace ZaynBot.RPG.Comandos
             if (personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
                 RPGUsuario userLider = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
-                userLider.Personagem.Batalha.Jogadores.Remove(ctx.User.Id);
+                userLider.Personagem.Batalha.Membros.Remove(ctx.User.Id);
                 userLider.Salvar();
                 personagem.Batalha = new RPGBatalha();
                 usuario.Salvar();
@@ -266,7 +327,7 @@ namespace ZaynBot.RPG.Comandos
 
             userJogadorRemovido.Personagem.Batalha = new RPGBatalha();
             userJogadorRemovido.Salvar();
-            personagem.Batalha.Jogadores.Remove(userJogadorRemovido.Id);
+            personagem.Batalha.Membros.Remove(userJogadorRemovido.Id);
             usuario.Salvar();
             await ctx.RespondAsync($"Você removeu {userRemovido.Mention} do grupo! {ctx.User.Mention}.");
         }

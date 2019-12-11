@@ -106,6 +106,29 @@ namespace ZaynBot.RPG.Entidades
             };
         }
 
+
+        public new bool AdicionarExp(double exp)
+        {
+            bool evoluiu = base.AdicionarExp(exp);
+            if (evoluiu)
+            {
+                VidaMaxima = Evoluir(VidaMaxima);
+                MagiaMaxima = Evoluir(MagiaMaxima);
+                AtaqueFisico = Evoluir(AtaqueFisico);
+                AtaqueMagico = Evoluir(AtaqueMagico);
+                DefesaFisica = Evoluir(DefesaFisica);
+                DefesaMagica = Evoluir(DefesaMagica);
+                Velocidade = Evoluir(Velocidade);
+                FomeMaxima *= Evoluir(FomeMaxima);
+                SedeMaxima *= Evoluir(SedeMaxima);
+                PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
+
+                return true;
+            }
+            return false;
+        }
+
+
         public bool TryGetHabilidade(string hab, out RPGHabilidade habilidade)
         {
             var h = hab.ToLower();

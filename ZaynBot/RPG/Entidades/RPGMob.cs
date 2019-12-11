@@ -18,6 +18,7 @@ namespace ZaynBot.RPG.Entidades
         public int ChanceDeAparecer { get; set; }
         public double Essencia { get; set; }
         public int Dificuldade { get; set; }
+        public bool Morto { get; set; }
 
         public List<MobItemDropRPG> ChanceItemUnico { get; set; } = new List<MobItemDropRPG>();
         public List<MobItemDropRPG> ChanceItemTodos { get; set; } = new List<MobItemDropRPG>();
