@@ -17,7 +17,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task ExplorarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
 
@@ -36,7 +36,7 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"Somente o lider do grupo pode usar este comando, {ctx.User.Mention}!");
                 return;
             }
-            if (personagem.Batalha.Mobs.Count > 0)
+            if (personagem.Batalha.MobsVivos.Count > 0)
             {
                 await ctx.RespondAsync($"Você precisa terminar a batalha atual antes de fazer isso, {ctx.User.Mention}!");
                 return;
@@ -87,7 +87,7 @@ namespace ZaynBot.RPG.Comandos
                 {
                     try
                     {
-                        personagem.Batalha.Mobs.Add($"{mobSorteado.Nome.ToLower()} {incr}", mobSorteado);
+                        personagem.Batalha.MobsVivos.Add($"{mobSorteado.Nome.ToLower()} {incr}", mobSorteado);
                         naoAdicionou = false;
                     }
                     catch
@@ -100,7 +100,7 @@ namespace ZaynBot.RPG.Comandos
 
             personagem.Batalha.Turno = 0;
 
-            return personagem.Batalha.Mobs.Count;
+            return personagem.Batalha.MobsVivos.Count;
         }
     }
 }

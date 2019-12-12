@@ -15,6 +15,11 @@ namespace ZaynBot.RPG.Entidades
         public DateTime CriacaoUsuarioData { get; set; }
         public RPGPersonagem Personagem { get; set; }
 
+        #region Usado em outra areas
+        [BsonIgnore]
+        public DiscordUser DiscordUser { get; set; }
+        #endregion
+
         public RPGUsuario(ulong id)
         {
             Id = id;
@@ -22,22 +27,22 @@ namespace ZaynBot.RPG.Entidades
             Personagem = new RPGPersonagem();
         }
 
-        public static void GetPersonagem(CommandContext ctx, out RPGUsuario usuario)
+        public static void GetUsuario(CommandContext ctx, out RPGUsuario usuario)
         {
-            usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
+            usuario = ModuloBanco.GetUsuario(ctx.User.Id);
             if (usuario == null)
                 throw new PersonagemNullException();
         }
 
         public static void UsuarioGet(DiscordUser discordUsuario, out RPGUsuario usuario)
         {
-            usuario = ModuloBanco.UsuarioGet(discordUsuario.Id);
+            usuario = ModuloBanco.GetUsuario(discordUsuario.Id);
             if (usuario == null)
                 throw new PersonagemNullException($"{discordUsuario.Mention} não tem um personagem para ser convidado!");
         }
         public static async Task<RPGUsuario> UsuarioGetAsync(ulong discordUserId)
         {
-            RPGUsuario usuario = ModuloBanco.UsuarioGet(discordUserId);
+            RPGUsuario usuario = ModuloBanco.GetUsuario(discordUserId);
             if (usuario == null)
             {
                 DiscordUser du = await ModuloCliente.Client.GetUserAsync(discordUserId);

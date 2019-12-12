@@ -20,12 +20,12 @@ namespace ZaynBot.RPG.Comandos
         public async Task ProximoTurno(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario lider);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario lider);
 
 
             if (lider.Personagem.Batalha.LiderGrupo == 0)
             {
-                await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}!");
+                await ctx.RespondAsync($"{ctx.User.Mention}, você deve criar um grupo ou entrar em um antes de iniciar outro turno!");
                 return;
             }
 
@@ -35,76 +35,52 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            if (lider.Personagem.Batalha.Mobs.Count == 0)
+            if (lider.Personagem.Batalha.MobsVivos.Count == 0 && lider.Personagem.Batalha.MobsMortos.Count != 0)
             {
-                await ctx.RespondAsync($"Você não tem nenhuma batalha em andamento para iniciar outro turno! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"Todos os inimigos já estão mortos! O lider do grupo deve usar `saquear` para finalizar a batalha, {ctx.User.Mention}!");
                 return;
             }
-
-            int quantMobsVivos = lider.Personagem.Batalha.Mobs.Count;
-            foreach (var mobs in lider.Personagem.Batalha.Mobs)
+            else if (lider.Personagem.Batalha.MobsVivos.Count == 0)
             {
-                if (mobs.Value.Morto)
-                    quantMobsVivos--;
-            }
-            if (quantMobsVivos == 0)
-            {
-                //Temporario
-                await ctx.RespondAsync("Todos os inimigos foram mortos.");
-                lider.Personagem.Batalha.Mobs = new Dictionary<string, RPGMob>();
-                RPGUsuario.Salvar(lider);
-                // Faz a distribuição de recompensas
+                await ctx.RespondAsync($"{ctx.User.Mention}, seu grupo não tem nenhuma batalha em andamento para iniciar outro turno!");
                 return;
             }
             else
             {
-                List<RPGUsuario> membros = new List<RPGUsuario>();
-                List<DiscordUser> membrosUsers = new List<DiscordUser>();
-                foreach (var m in lider.Personagem.Batalha.Membros)
+                List<RPGUsuario> membrosVivos = new List<RPGUsuario>();
+                List<RPGUsuario> membrosMortos = new List<RPGUsuario>();
+                foreach (var usuario in lider.Personagem.Batalha.Membros)
                 {
-                    var u = ModuloBanco.UsuarioGet(m);
-                    var du = await ctx.Client.GetUserAsync(m);
+                    var u = ModuloBanco.GetUsuario(usuario);
+                    u.DiscordUser = await ctx.Client.GetUserAsync(usuario);
                     if (u.Personagem.EstaminaAtual >= u.Personagem.EstaminaMaxima)
                     {
                         if (u.Personagem.VidaAtual > 0)
                         {
-                            await ctx.RespondAsync($"{du.Mention} ainda não fez um movimento, para se iniciar o proximo turno!");
+                            await ctx.RespondAsync($"{u.DiscordUser.Mention} ainda não fez um movimento, para se iniciar o proximo turno!");
                             return;
                         }
                     }
-                    membros.Add(u);
-                    membrosUsers.Add(du);
+                    if (u.Personagem.VidaAtual > 0)
+                        membrosVivos.Add(u);
+                    else
+                        membrosMortos.Add(u);
                 }
+
                 //Verifica o lider após
-                var _u = lider;
-                var _du = await ctx.Client.GetUserAsync(_u.Id);
-                if (_u.Personagem.EstaminaAtual >= _u.Personagem.EstaminaMaxima)
+                lider.DiscordUser = await ctx.Client.GetUserAsync(lider.Id);
+                if (lider.Personagem.EstaminaAtual >= lider.Personagem.EstaminaMaxima)
                 {
-                    if (_u.Personagem.VidaAtual > 0)
+                    if (lider.Personagem.VidaAtual > 0)
                     {
-                        await ctx.RespondAsync($"{_du.Mention} ainda não fez um movimento, para se iniciar o proximo turno!");
+                        await ctx.RespondAsync($"{lider.DiscordUser.Mention} ainda não fez um movimento, para se iniciar o proximo turno!");
                         return;
                     }
                 }
-                membros.Add(_u);
-                membrosUsers.Add(_du);
-
-
-                //Quando todos morrem
-                int quantMembroVivos = membros.Count;
-                foreach (var membro in membros)
-                {
-                    if (membro.Personagem.VidaAtual <= 0)
-                        quantMembroVivos--;
-                }
-                if (quantMembroVivos == 0)
-                {
-                    await ctx.RespondAsync($"O grupo {lider.Personagem.Batalha.NomeGrupo} foi dizimado!");
-                    lider.Personagem.Batalha.Mobs = new Dictionary<string, RPGMob>();
-                    lider.Personagem.Batalha.Turno = 0;
-                    RPGUsuario.Salvar(lider);
-                    return;
-                }
+                if (lider.Personagem.VidaAtual > 0)
+                    membrosVivos.Add(lider);
+                else
+                    membrosMortos.Add(lider);
 
                 #region inicio turno
 
@@ -113,36 +89,43 @@ namespace ZaynBot.RPG.Comandos
                 StringBuilder strVezJog = new StringBuilder();
                 do
                 {
-                    foreach (var mob in lider.Personagem.Batalha.Mobs)
+                    foreach (var mob in lider.Personagem.Batalha.MobsVivos)
                     {
-                        if (mob.Value.Morto)
-                            continue;
                         mob.Value.EstaminaAtual += Sortear.Valor(1, 10);
-
 
                         #region vez mob
 
 
                         if (mob.Value.EstaminaAtual >= mob.Value.EstaminaMaxima)
                         {
-                            RPGUsuario alvo;
-                            do
+                            //Quando todos morrem
+                            if (membrosVivos.Count == 0)
                             {
-                                alvo = membros[Sortear.Valor(0, membros.Count)];
-                            } while (alvo.Personagem.VidaAtual <= 0);
+                                await ctx.RespondAsync($"O grupo {lider.Personagem.Batalha.NomeGrupo} foi dizimado! {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}");
+                                lider.Personagem.Batalha.MobsVivos = new Dictionary<string, RPGMob>();
+                                lider.Personagem.Batalha.Turno = 0;
+                                RPGUsuario.Salvar(lider);
+                                return;
+                            }
+                            mob.Value.EstaminaAtual = 0;
+
+                            RPGUsuario alvo = membrosVivos[Sortear.Valor(0, membrosVivos.Count)];
+
                             //Ataque dos mobs
                             double danoInimigo = CalcDano(alvo.Personagem.DefesaFisica, mob.Value.AtaqueFisico);
                             alvo.Personagem.DanoRecebido += danoInimigo;
                             alvo.Personagem.VidaAtual -= danoInimigo;
-
                             if (alvo.Personagem.VidaAtual <= 0)
                             {
                                 alvo.Personagem.EstaminaAtual = 0;
+                                RPGUsuario.Salvar(alvo);
+                                membrosVivos.Remove(alvo);
+                                membrosMortos.Add(alvo);
                                 try
                                 {
                                     DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
                                     DiscordChannel CanalRPG = MundoZayn.GetChannel(629281618447564810);
-                                    await CanalRPG.SendMessageAsync($"*Um {mob.Value.Nome} matou o {ctx.User.Username}#{ctx.User.Discriminator}!*");
+                                    await CanalRPG.SendMessageAsync($"*Um {mob.Value.Nome.RemoverUltimaLetra()} matou o {ctx.User.Username}#{ctx.User.Discriminator}!*");
                                 }
                                 catch { }
                             }
@@ -172,34 +155,27 @@ namespace ZaynBot.RPG.Comandos
                             //                    personagem.Inventario.DesequiparItem(armadura, personagem);
                             //                    await ctx.RespondAsync($"**({armadura.Nome})** quebrou! {ctx.User.Mention}!");
                             //                }
-
-
-                            //Reinicia a estamina
-                            mob.Value.EstaminaAtual = 0;
                         }
                         #endregion
                     }
 
-                    for (int ind = 0; ind < membros.Count; ind++)
+                    for (int ind = 0; ind < membrosVivos.Count; ind++)
                     {
-                        membros[ind].Personagem.EstaminaAtual += Sortear.Valor(1, 10);
+                        membrosVivos[ind].Personagem.EstaminaAtual += Sortear.Valor(1, 10);
 
 
                         #region vez jogador
 
-                        if (membros[ind].Personagem.VidaAtual > 0)
-                            if (membros[ind].Personagem.EstaminaAtual >= membros[ind].Personagem.EstaminaMaxima)
-                            {
-                                vezJogador = true;
-                                strVezJog.AppendLine($"{membrosUsers[ind].Mention} Pronto");
-                            }
-
-
+                        if (membrosVivos[ind].Personagem.EstaminaAtual >= membrosVivos[ind].Personagem.EstaminaMaxima)
+                        {
+                            vezJogador = true;
+                            strVezJog.AppendLine($"{membrosVivos[ind].DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":white_check_mark:")}");
+                        }
                         #endregion
                     }
 
                 } while (vezJogador == false);
-                foreach (var item in membros)
+                foreach (var item in membrosVivos)
                     RPGUsuario.Salvar(item);
 
                 #endregion
@@ -212,27 +188,29 @@ namespace ZaynBot.RPG.Comandos
 
 
                 StringBuilder strVida = new StringBuilder();
-                for (int ind = 0; ind < membros.Count; ind++)
-                    if (membros[ind].Personagem.VidaAtual <= 0)
-                        strVida.AppendLine($"{membrosUsers[ind].Mention} - Morto");
-                    else
-                        strVida.AppendLine($"{membrosUsers[ind].Mention} - {membros[ind].Personagem.VidaAtual}/{membros[ind].Personagem.VidaMaxima}");
+                foreach (var members in membrosVivos)
+                    strVida.AppendLine($"**{members.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {members.Personagem.VidaAtual.Texto2Casas()}/{members.Personagem.VidaMaxima.Texto2Casas()}**");
+                foreach (var members in membrosMortos)
+                    strVida.AppendLine($"{members.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}");
                 embed.AddField("Membros".Titulo(), strVida.ToString(), true);
 
 
                 //Colocar bolinhas e trocar por porcentagem
                 StringBuilder strMob = new StringBuilder();
-                foreach (var mob in lider.Personagem.Batalha.Mobs)
-                    strMob.AppendLine($"{mob.Key.PrimeiraLetraMaiuscula()} - Vida: {mob.Value.PontosDeVida.Texto2Casas()}");
+                foreach (var mob in lider.Personagem.Batalha.MobsVivos)
+                    if (mob.Value.PontosDeVida > 0)
+                        strMob.AppendLine($"{mob.Key.PrimeiraLetraMaiuscula()} {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {mob.Value.PontosDeVida.Texto2Casas()}");
+                    else
+                        strMob.AppendLine($"{mob.Value.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}");
                 embed.AddField("Mobs".Titulo(), strMob.ToString(), true);
 
 
                 StringBuilder strAtaquesRecebidos = new StringBuilder();
-                for (int i = 0; i < membros.Count; i++)
-                    if (membros[i].Personagem.DanoRecebido > 0)
-                        strAtaquesRecebidos.AppendLine($"{membrosUsers[i].Mention} **recebeu {membros[i].Personagem.DanoRecebido.Texto2Casas()} de dano.**");
+                foreach (var mVivo in membrosVivos)
+                    if (mVivo.Personagem.DanoRecebido > 0)
+                        strAtaquesRecebidos.AppendLine($"**{mVivo.DiscordUser.Mention} perdeu -{mVivo.Personagem.DanoRecebido.Texto2Casas()} de vida.**");
                 if (!string.IsNullOrEmpty(strAtaquesRecebidos.ToString()))
-                    embed.AddField("Relatório".Titulo(), strAtaquesRecebidos.ToString());
+                    embed.AddField("Danos".Titulo(), strAtaquesRecebidos.ToString());
                 embed.AddField("Pronto".Titulo(), strVezJog.ToString(), false);
 
 

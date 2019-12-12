@@ -19,67 +19,78 @@ namespace ZaynBot.RPG.Comandos
         public async Task BatalhaComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
-            RPGPersonagem personagem = usuario.Personagem;
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGBatalha batalha = new RPGBatalha();
 
             //Caso não tenha grupo
-            if (personagem.Batalha.LiderGrupo == 0)
+            if (usuario.Personagem.Batalha.LiderGrupo == 0)
             {
                 await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}.");
                 return;
             }
 
             //Caso o lider do grupo não seja ele
-            if (personagem.Batalha.LiderGrupo != ctx.User.Id)
+            if (usuario.Personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                RPGUsuario liderUsuario = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
+                RPGUsuario liderUsuario = await RPGUsuario.UsuarioGetAsync(usuario.Personagem.Batalha.LiderGrupo);
                 batalha = liderUsuario.Personagem.Batalha;
             }
 
             //Caso ele seja o lider
-            if (personagem.Batalha.LiderGrupo == ctx.User.Id)
-                batalha = personagem.Batalha;
+            if (usuario.Personagem.Batalha.LiderGrupo == ctx.User.Id)
+                batalha = usuario.Personagem.Batalha;
 
-            if(batalha.Mobs.Count == 0)
+            if (batalha.MobsVivos.Count == 0 && batalha.MobsMortos.Count == 0)
             {
-                await ctx.RespondAsync($"Você não tem nenhuma batalha em andamento, {ctx.User.Mention}!");
+                await ctx.RespondAsync($"{ctx.User.Mention}, seu grupo não tem nenhuma batalha em andamento!");
                 return;
             }
 
-
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Batalha", ctx);
-            embed.WithColor(DiscordColor.PhthaloGreen);
-            embed.WithTitle($"**{batalha.NomeGrupo}**".Titulo());
-            embed.WithDescription($"**Turno**: {batalha.Turno.ToString()}\n");
+            embed.WithColor(DiscordColor.Green);
+            embed.WithTitle(batalha.NomeGrupo.Titulo());
+            embed.WithDescription($"**Turno: {batalha.Turno.ToString()}**");
 
-            //Caso tenha mobs
-            if (batalha.Mobs.Count != 0)
+
+            StringBuilder strPronto = new StringBuilder();
+            foreach (var users in batalha.Membros)
             {
-                StringBuilder sr = new StringBuilder();
-                foreach (var item in batalha.Mobs)
-                    sr.AppendLine($"{item.Key.PrimeiraLetraMaiuscula()} - Vida: {item.Value.PontosDeVida.Texto2Casas()}" +
-                        $"");
-                embed.AddField("**Mobs**".Titulo(), sr.ToString(), true);
+                var u = ModuloBanco.GetUsuario(users);
+                u.DiscordUser = await ctx.Client.GetUserAsync(users);
+
+                if (u.Personagem.VidaAtual > 0)
+                    if (u.Personagem.EstaminaAtual >= u.Personagem.EstaminaMaxima)
+                        strPronto.AppendLine($"**{u.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":white_check_mark:")} {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {u.Personagem.VidaAtual.Texto2Casas()}/{u.Personagem.VidaMaxima.Texto2Casas()}**");
+                    else
+                        strPronto.AppendLine($"**{u.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":stopwatch:")}  {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {u.Personagem.VidaAtual.Texto2Casas()}/{u.Personagem.VidaMaxima.Texto2Casas()}**");
+                else
+                    strPronto.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {u.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
             }
 
-            ////Caso tenha jogadores inimigos
-            //if (personagem.Batalha.LiderPartyInimiga != 0)
-            //{
+            var uf = ModuloBanco.GetUsuario(batalha.LiderGrupo);
+            uf.DiscordUser = await ctx.Client.GetUserAsync(batalha.LiderGrupo);
+            if (uf.Personagem.VidaAtual > 0)
+                if (uf.Personagem.EstaminaAtual >= uf.Personagem.EstaminaMaxima)
+                    strPronto.AppendLine($"**{uf.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":white_check_mark:")} {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {uf.Personagem.VidaAtual.Texto2Casas()}/{uf.Personagem.VidaMaxima.Texto2Casas()}**");
+                else
+                    strPronto.AppendLine($"**{uf.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":stopwatch:")}  {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {uf.Personagem.VidaAtual.Texto2Casas()}/{uf.Personagem.VidaMaxima.Texto2Casas()}**");
+            else
+                strPronto.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {uf.DiscordUser.Mention} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
+            embed.AddField("Membros".Titulo(), strPronto.ToString(), true);
 
-            //    return;
-            //}
+
+            //Colocar bolinhas e trocar por porcentagem
+            StringBuilder strMobs = new StringBuilder();
+            foreach (var mob in batalha.MobsVivos)
+                strMobs.AppendLine($"{mob.Key.PrimeiraLetraMaiuscula()} {DiscordEmoji.FromName(ctx.Client, ":hearts:")} {mob.Value.PontosDeVida.Texto2Casas()}");
+
+
+            foreach (var mob in batalha.MobsMortos)
+                strMobs.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} **{mob.Value.Nome.PrimeiraLetraMaiuscula()}** {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}");
+            embed.AddField("Mobs".Titulo(), strMobs.ToString(), true);
+
 
             await ctx.RespondAsync(embed: embed.Build());
-        }
-
-        public string CalcularVez(double estaminaAtual, double estaminaMaxima)
-        {
-            if (estaminaAtual >= estaminaMaxima)
-                return "Pronto";
-            if (estaminaAtual != 0)
-                return "Se preparando";
-            return "Já atacou";
         }
     }
 }

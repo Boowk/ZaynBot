@@ -1,4 +1,4 @@
-﻿        using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 using System.Collections.Generic;
 
@@ -19,7 +19,10 @@ namespace ZaynBot.RPG.Entidades
 
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<string, RPGMob> Mobs { get; set; }
+        public Dictionary<string, RPGMob> MobsVivos { get; set; }
+
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        public Dictionary<string, RPGMob> MobsMortos { get; set; }
 
         public RPGBatalha()
         {
@@ -35,7 +38,8 @@ namespace ZaynBot.RPG.Entidades
             Membros = new List<ulong>();
 
 
-            Mobs = new Dictionary<string, RPGMob>();
+            MobsVivos = new Dictionary<string, RPGMob>();
+            MobsMortos = new Dictionary<string, RPGMob>();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task RegiaoComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGRegiao localAtual = usuario.RegiaoGet();
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);

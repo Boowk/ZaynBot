@@ -22,7 +22,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task HabilidadeComandoAb(CommandContext ctx, string habNome = "")
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao();
 

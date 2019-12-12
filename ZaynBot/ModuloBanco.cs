@@ -74,7 +74,7 @@ namespace ZaynBot
 
         #region CRUD Usuario
 
-        public static RPGUsuario UsuarioGet(ulong id)
+        public static RPGUsuario GetUsuario(ulong id)
             => UsuarioColecao.Find(x => x.Id == id).FirstOrDefault();
 
         public static void UsuarioEdit(RPGUsuario usuario)

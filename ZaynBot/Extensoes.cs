@@ -12,7 +12,7 @@ namespace ZaynBot
     public static class Extensoes
     {
         public static string Titulo(this string titulo)
-            => "⌈" + titulo + "⌋";
+            => "**⌈" + titulo + "⌋**";
 
         public static async Task ExecutarComandoAsync(this CommandContext ctx, string comando)
         {
@@ -40,6 +40,9 @@ namespace ZaynBot
 
         public static string PrimeiraLetraMaiuscula(this string texto)
             => texto.First().ToString().ToUpper() + texto.Substring(1);
+
+        public static string RemoverUltimaLetra(this string texto)
+            => texto.Remove(texto.Length - 1);
 
         public static string Texto2Casas(this float numero)
             => string.Format("{0:N2}", numero);

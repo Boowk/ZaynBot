@@ -17,7 +17,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task ReencarnarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
+            RPGUsuario usuario = ModuloBanco.GetUsuario(ctx.User.Id);
             if (usuario == null)
             {
                 usuario = new RPGUsuario(ctx.User.Id);

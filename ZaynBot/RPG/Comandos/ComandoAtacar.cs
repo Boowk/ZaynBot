@@ -28,17 +28,16 @@ namespace ZaynBot.RPG.Comandos
         public async Task AtacarComandoAb(CommandContext ctx, [RemainingText] string inimigoNome = "")
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
-            RPGPersonagem personagem = usuario.Personagem;
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
-            if (personagem.VidaAtual <= 0)
+            if (usuario.Personagem.VidaAtual <= 0)
             {
                 await ctx.RespondAsync($"Você está morto {ctx.User.Mention}!");
                 return;
             }
 
-            //Caso não tenha grupo
-            if (personagem.Batalha.LiderGrupo == 0)
+
+            if (usuario.Personagem.Batalha.LiderGrupo == 0)
             {
                 await ctx.RespondAsync($"Você deve criar um Grupo antes! {ctx.User.Mention}.");
                 return;
@@ -46,30 +45,35 @@ namespace ZaynBot.RPG.Comandos
 
 
             RPGBatalha batalha = new RPGBatalha();
-            RPGUsuario liderUsuario = null;
+            RPGUsuario liderBatalha = null;
+
             #region Defini a Party
             //Caso o lider do grupo não seja ele
-            if (personagem.Batalha.LiderGrupo != ctx.User.Id)
+            if (usuario.Personagem.Batalha.LiderGrupo != ctx.User.Id)
             {
-                liderUsuario = await RPGUsuario.UsuarioGetAsync(personagem.Batalha.LiderGrupo);
-                batalha = liderUsuario.Personagem.Batalha;
+                liderBatalha = ModuloBanco.GetUsuario(usuario.Personagem.Batalha.LiderGrupo);
+                batalha = liderBatalha.Personagem.Batalha;
             }
+            else
+                batalha = usuario.Personagem.Batalha;
 
-            //Caso ele seja o lider
-            if (personagem.Batalha.LiderGrupo == ctx.User.Id)
-                batalha = personagem.Batalha;
             #endregion
 
 
-            if (batalha.Mobs.Count == 0)
+            if (batalha.MobsVivos.Count == 0 && batalha.MobsMortos.Count != 0)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, não tem nenhum inimigo para você atacar.");
+                await ctx.RespondAsync($"Todos os inimigos já estão mortos! O lider do grupo deve usar `saquear` para finalizar a batalha, {ctx.User.Mention}!");
+                return;
+            }
+            else if (batalha.MobsVivos.Count == 0)
+            {
+                await ctx.RespondAsync($"{ctx.User.Mention}, o seu grupo não tem nenhum inimigo para atacar!");
                 return;
             }
 
-            if (personagem.EstaminaAtual < personagem.EstaminaMaxima)
+            if (usuario.Personagem.EstaminaAtual < usuario.Personagem.EstaminaMaxima)
             {
-                await ctx.RespondAsync($"Você não tem estamina o suficiente para atacar! {ctx.User.Mention}.");
+                await ctx.RespondAsync($"{ctx.User.Mention}, você não tem estamina o suficiente para atacar!");
                 return;
             }
 
@@ -78,40 +82,41 @@ namespace ZaynBot.RPG.Comandos
             //Procura o inimigo
             if (string.IsNullOrWhiteSpace(inimigoNome))
             {
-                var v = batalha.Mobs.First();
+                var v = batalha.MobsVivos.First();
                 mob = v.Value;
-                mob.Nome = v.Key.PrimeiraLetraMaiuscula();
+                mob.Nome = v.Key;
+
             }
             else
             {
-                bool achou = batalha.Mobs.TryGetValue(inimigoNome, out mob);
+                bool achou = batalha.MobsVivos.TryGetValue(inimigoNome, out mob);
                 if (!achou)
                 {
-                    await ctx.RespondAsync($"Alvo {inimigoNome} não encontrado! {ctx.User.Mention}.");
+                    await ctx.RespondAsync($"Alvo **{inimigoNome}** não encontrado! {ctx.User.Mention}.");
                     return;
                 }
-                mob.Nome = mob.Nome.PrimeiraLetraMaiuscula();
+                mob.Nome = inimigoNome.ToLower().PrimeiraLetraMaiuscula();
             }
 
-            personagem.EstaminaAtual = 0;
+            usuario.Personagem.EstaminaAtual = 0;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Combate", ctx);
 
             //Verifica - se se está com arma equipado
-            personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Arma, out RPGItem arma);
+            usuario.Personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Arma, out RPGItem arma);
             double danoJogador = 0;
             if (arma != null)
             {
                 switch (arma.TipoExp)
                 {
                     case TipoExpEnum.Perfurante:
-                        HabilidadePerfurante perfuranteHab = (HabilidadePerfurante)personagem.Habilidades[HabilidadeEnum.Perfurante];
+                        HabilidadePerfurante perfuranteHab = (HabilidadePerfurante)usuario.Personagem.Habilidades[HabilidadeEnum.Perfurante];
                         bool evoluiu = perfuranteHab.AdicionarExp();
                         danoJogador = CalcDano(mob.Armadura, perfuranteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.ItemGet(arma.Id).DurabilidadeMax));
                         if (evoluiu)
                             await ctx.RespondAsync($"Habilidade **({perfuranteHab.Nome})** evoluiu! {ctx.User.Mention}.");
                         break;
                     case TipoExpEnum.Esmagante:
-                        HabilidadeEsmagante esmaganteHab = (HabilidadeEsmagante)personagem.Habilidades[HabilidadeEnum.Esmagante];
+                        HabilidadeEsmagante esmaganteHab = (HabilidadeEsmagante)usuario.Personagem.Habilidades[HabilidadeEnum.Esmagante];
                         bool evoluiu2 = esmaganteHab.AdicionarExp();
                         if (evoluiu2)
                             await ctx.RespondAsync($"Habilidade **({esmaganteHab.Nome})** evoluiu! {ctx.User.Mention}.");
@@ -121,17 +126,17 @@ namespace ZaynBot.RPG.Comandos
                 arma.DurabilidadeMax -= Convert.ToInt32(0.06 * arma.AtaqueFisico);
                 if (arma.DurabilidadeMax <= 0)
                 {
-                    personagem.Inventario.DesequiparItem(arma, personagem);
+                    usuario.Personagem.Inventario.DesequiparItem(arma, usuario.Personagem);
                     await ctx.RespondAsync($"**({arma.Nome})** quebrou! {ctx.User.Mention}!");
                 }
             }
             else
             {
-                HabilidadeDesarmado desarmadoHab = (HabilidadeDesarmado)personagem.Habilidades[HabilidadeEnum.Desarmado];
+                HabilidadeDesarmado desarmadoHab = (HabilidadeDesarmado)usuario.Personagem.Habilidades[HabilidadeEnum.Desarmado];
                 bool evoluiu3 = desarmadoHab.AdicionarExp();
                 if (evoluiu3)
                     await ctx.RespondAsync($"Habilidade **({desarmadoHab.Nome})** evoluiu! {ctx.User.Mention}.");
-                danoJogador = CalcDano(mob.Armadura, desarmadoHab.CalcularDano(personagem.AtaqueFisico));
+                danoJogador = CalcDano(mob.Armadura, desarmadoHab.CalcularDano(usuario.Personagem.AtaqueFisico));
             }
             string mensagemMortos = "";
             double danoNoinimigo = 0;
@@ -140,17 +145,19 @@ namespace ZaynBot.RPG.Comandos
             else
                 danoNoinimigo = mob.PontosDeVida;
             mob.PontosDeVida -= danoNoinimigo;
-            embed.WithDescription($"{mob.Nome} perdeu -{danoNoinimigo.Texto2Casas()} de vida.");
+            embed.WithTitle(batalha.NomeGrupo.Titulo());
+            embed.WithDescription($"**{mob.Nome.PrimeiraLetraMaiuscula()} perdeu -{danoNoinimigo.Texto2Casas()} de vida.**");
             StringBuilder mensagemAtaquesInimigos = new StringBuilder();
             embed.WithColor(DiscordColor.Red);
 
 
             if (mob.PontosDeVida <= 0)
             {
-                mob.Morto = true;
                 //Removemos o inimigo
-                mensagemMortos = $"{mob.Nome} morreu.";
+                mensagemMortos = $"**{mob.Nome.PrimeiraLetraMaiuscula()} morreu.**";
                 embed.AddField($"**{"Inimigos abatidos".Titulo()}**", mensagemMortos.ToString());
+                batalha.MobsVivos.Remove(mob.Nome);
+                batalha.MobsMortos.Add(mob.Nome, mob);
 
                 //List<RPGUsuario> l = new List<RPGUsuario>();
                 //l.Add(await RPGUsuario.UsuarioGetAsync(batalha.LiderGrupo));
@@ -210,7 +217,7 @@ namespace ZaynBot.RPG.Comandos
 
             // Salvamos o usuario
             RPGUsuario.Salvar(usuario);
-            if (liderUsuario != null) RPGUsuario.Salvar(liderUsuario);
+            if (liderBatalha != null) RPGUsuario.Salvar(liderBatalha);
 
             // Retornamos toda a mensagem preparada para ser enviada
             await ctx.RespondAsync(embed: embed.Build());

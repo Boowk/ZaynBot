@@ -24,7 +24,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task GroupCommandAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario usuario = ModuloBanco.UsuarioGet(ctx.User.Id);
+            RPGUsuario usuario = ModuloBanco.GetUsuario(ctx.User.Id);
             if (usuario == null)
             {
                 await ctx.ExecutarComandoAsync("ajuda grupo");
@@ -93,7 +93,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task GrupoCriar(CommandContext ctx, [RemainingText] string nome = "")
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupo != 0)
@@ -136,7 +136,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupo == 0)
@@ -213,7 +213,7 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
 
-                RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+                RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
                 RPGPersonagem personagem = usuario.Personagem;
                 if (personagem.Batalha.LiderGrupo == 0 || personagem.Batalha.LiderGrupo != ctx.User.Id)
                 {
@@ -248,7 +248,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task GrupoSair(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
             if (personagem.Batalha.LiderGrupo == 0)
@@ -263,7 +263,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            if (personagem.Batalha.LiderGrupo == ctx.User.Id && personagem.Batalha.Mobs.Count >= 1)
+            if (personagem.Batalha.LiderGrupo == ctx.User.Id && personagem.Batalha.MobsVivos.Count >= 1)
             {
                 await ctx.RespondAsync($"Você precisa terminar a batalha antes de sair do grupo! {ctx.User.Mention}.");
                 return;
@@ -296,7 +296,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task GrupoRemover(CommandContext ctx, DiscordUser userRemovido)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
 

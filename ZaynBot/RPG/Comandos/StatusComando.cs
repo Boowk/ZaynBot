@@ -19,7 +19,7 @@ namespace ZaynBot.RPG.Comandos
         public async Task StatusComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetPersonagem(ctx, out RPGUsuario usuario);
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             RPGPersonagem personagem = usuario.Personagem;
 
             DiscordEmoji pv = DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
