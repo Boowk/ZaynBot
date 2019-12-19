@@ -166,7 +166,7 @@ namespace ZaynBot.RPG.Comandos
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Ataque", ctx);
             embed.WithColor(DiscordColor.IndianRed);
-            strRelatorio.AppendLine($"**`{mob.Nome.PrimeiraLetraMaiuscula()}` perdeu -{danoJogador.Text()} vida.**");
+            strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{danoJogador.Text()} vida.**");
 
 
             embed.AddField(ctx.User.Username.Titulo(), $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {usuario.Personagem.VidaAtual.Text()}/{usuario.Personagem.VidaMaxima.Text()}", true);
@@ -196,14 +196,15 @@ namespace ZaynBot.RPG.Comandos
             else
             {
                 double porcentagem = mob.VidaAtual / mob.VidaMax;
+                string porcentagemText = (porcentagem * 100).Text() + "%";
                 string vidaMob = "";
                 if (porcentagem > 0.7)
-                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":green_heart:")}";
+                    vidaMob = $"{DiscordEmoji.FromName(ctx.Client, ":green_heart:")} {porcentagemText}";
                 else if (porcentagem > 0.4)
-                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":yellow_heart:")}";
+                    vidaMob = $"{DiscordEmoji.FromName(ctx.Client, ":yellow_heart:")} {porcentagemText}";
                 else if (porcentagem > 0)
-                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":heart:")}";
-                embed.AddField("mob".Titulo(), vidaMob, true);
+                    vidaMob = $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {porcentagemText}";
+                embed.AddField("< " + mob.Nome.Underline().Bold() + " >", vidaMob, true);
             }
             embed.WithDescription(strRelatorio.ToString());
             #endregion

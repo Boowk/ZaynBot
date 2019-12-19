@@ -44,10 +44,18 @@ namespace ZaynBot
         public static string RemoverUltimaLetra(this string texto)
             => texto.Remove(texto.Length - 1);
 
+
+
         public static string Text(this float numero)
             => string.Format("{0:N2}", numero);
 
         public static string Text(this double numero)
           => string.Format("{0:N2}", numero);
+
+        public static string Underline(this string texto)
+            => $"__{texto}__";
+
+        public static string Bold(this string texto)
+            => $"**{texto}**";
     }
 }
