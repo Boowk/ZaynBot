@@ -35,21 +35,5 @@ namespace ZaynBot.Utilidades
             Random rd = new Random();
             return rd.NextDouble() < probabilidade;
         }
-
-
-        public static RPGMob Mobs(List<RPGMob> mobs)
-        {
-            int somaPeso = 0;
-            foreach (var item in mobs)
-                somaPeso += item.ChanceDeAparecer;
-            int sorteio = Valor(0, somaPeso);
-            int posicaoEscolhida = -1;
-            do
-            {
-                posicaoEscolhida++;
-                sorteio -= mobs[posicaoEscolhida].ChanceDeAparecer;
-            } while (sorteio > 0);
-            return mobs[posicaoEscolhida];
-        }
     }
 }

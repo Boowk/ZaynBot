@@ -42,7 +42,7 @@ namespace ZaynBot.RPG.Comandos
             }
 
             RPGMob mob = usuario.Personagem.Batalha.Mob;
-            double danoInimigo = 0;
+            StringBuilder strRelatorio = new StringBuilder();
             bool vezJogador = false;
             do
             {
@@ -52,13 +52,15 @@ namespace ZaynBot.RPG.Comandos
                 //Ataque
                 if (mob.EstaminaAtual >= mob.EstaminaMaxima)
                 {
-                    mob.EstaminaAtual = 0;
 
-                    danoInimigo += CalcDano(usuario.Personagem.DefesaFisica, mob.AtaqueFisico);
+                    mob.EstaminaAtual = 0;
+                    double danoInimigo = CalcDano(usuario.Personagem.DefesaFisica, mob.AtaqueFisico);
                     usuario.Personagem.VidaAtual -= danoInimigo;
                     if (usuario.Personagem.VidaAtual <= 0)
                     {
-                        await ctx.RespondAsync("Você morreu");
+                        await ctx.RespondAsync("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n" +
+                            $"{ctx.User.Mention}");
+                        usuario.Personagem.VidaAtual = usuario.Personagem.VidaMaxima / 3;
                         RPGUsuario.Salvar(usuario);
                         try
                         {
@@ -69,6 +71,9 @@ namespace ZaynBot.RPG.Comandos
                         catch { }
                         return;
                     }
+                    usuario.Personagem.Batalha.Turno++;
+                    strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
+                    strRelatorio.AppendLine($"**{ctx.User.Mention} perdeu -{danoInimigo.Text()} vida.**");
 
                     //switch (sorteioAtaque)
                     //{
@@ -105,6 +110,8 @@ namespace ZaynBot.RPG.Comandos
                 if (usuario.Personagem.EstaminaAtual >= usuario.Personagem.EstaminaMaxima)
                 {
                     vezJogador = true;
+                    usuario.Personagem.Batalha.Turno++;
+                    strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
                     usuario.Personagem.EstaminaAtual = 0;
                 }
             } while (vezJogador == false);
@@ -153,18 +160,14 @@ namespace ZaynBot.RPG.Comandos
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Ataque", ctx);
             embed.WithColor(DiscordColor.IndianRed);
-            embed.WithTitle($"**Turno**: {usuario.Personagem.Batalha.Turno}");
-            StringBuilder strRelatorio = new StringBuilder();
-            if (danoInimigo != 0)
-                strRelatorio.AppendLine($"**{ctx.User.Mention} perdeu -{danoInimigo.Text()} vida**");
-            strRelatorio.AppendLine($"**`{mob.Nome.PrimeiraLetraMaiuscula()}` perdeu -{danoJogador.Text()} vida**");
+            strRelatorio.AppendLine($"**`{mob.Nome.PrimeiraLetraMaiuscula()}` perdeu -{danoJogador.Text()} vida.**");
 
 
-            embed.AddField(ctx.User.Mention, $"{usuario.Personagem.VidaAtual.Text()}/{usuario.Personagem.VidaMaxima.Text()}", true);
+            embed.AddField(ctx.User.Username.Titulo(), $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {usuario.Personagem.VidaAtual.Text()}/{usuario.Personagem.VidaMaxima.Text()}", true);
 
             if (mob.VidaAtual <= 0)
             {
-                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}");
+                strRelatorio.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
                 //if (mensagemDrops.ToString() != "")
                 //    embed.AddField($"**{"Recompensas".Titulo()}**", $"**{mensagemDrops.ToString()}**");
                 ////Pega a data do item no Banco de dados
@@ -188,13 +191,13 @@ namespace ZaynBot.RPG.Comandos
             {
                 double porcentagem = mob.VidaAtual / mob.VidaMax;
                 string vidaMob = "";
-                if (porcentagem > 7)
-                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}";
-                if (porcentagem > 4)
-                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}";
-                if (porcentagem > 0)
-                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}";
-                embed.AddField("Mob", vidaMob, true);
+                if (porcentagem > 0.7)
+                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":green_heart:")}";
+                else if (porcentagem > 0.4)
+                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":yellow_heart:")}";
+                else if (porcentagem > 0)
+                    vidaMob = $"{mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":heart:")}";
+                embed.AddField("mob".Titulo(), vidaMob, true);
             }
             embed.WithDescription(strRelatorio.ToString());
             #endregion

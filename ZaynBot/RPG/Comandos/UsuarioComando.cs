@@ -18,9 +18,11 @@ namespace ZaynBot.RPG.Comandos
         [Description("Exibe o perfil de um usuario do discord")]
         [ComoUsar("usuario [id|menção]")]
         [Cooldown(1, 10, CooldownBucketType.User)]
-        public async Task UsuarioComandoAb(CommandContext ctx, DiscordUser usuario)
+        public async Task UsuarioComandoAb(CommandContext ctx, DiscordUser usuario = null)
         {
             await ctx.TriggerTypingAsync();
+            if (usuario == null)
+                usuario = ctx.User;
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithColor(DiscordColor.Red);
             embed.WithAuthor($"{usuario.Username}#{usuario.Discriminator}", iconUrl: usuario.AvatarUrl);
