@@ -35,6 +35,12 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
+            if (usuario.Personagem.Batalha.Mob == null)
+            {
+                await ctx.RespondAsync($"**{ctx.User.Mention} você não tem nenhum mob para atacar! use `z!explorar` para encontrar algum mob!");
+                return;
+            }
+
             if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
             {
                 await ctx.RespondAsync($"**{usuario.Personagem.Batalha.Mob.Nome}** já está morto! {ctx.User.Mention} use `z!explorar` para encontrar novos mobs!");
@@ -59,7 +65,7 @@ namespace ZaynBot.RPG.Comandos
                     if (usuario.Personagem.VidaAtual <= 0)
                     {
                         await ctx.RespondAsync("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n" +
-                            $"{ctx.User.Mention}"); 
+                            $"{ctx.User.Mention}");
                         usuario.Personagem.VidaAtual = usuario.Personagem.VidaMaxima / 3;
                         RPGUsuario.Salvar(usuario);
                         try
