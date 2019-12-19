@@ -43,7 +43,7 @@ namespace ZaynBot.RPG.Comandos
 
             if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
             {
-                await ctx.RespondAsync($"**{usuario.Personagem.Batalha.Mob.Nome}** já está morto! {ctx.User.Mention} use `z!explorar` para encontrar novos mobs!");
+                await ctx.RespondAsync($"**{usuario.Personagem.Batalha.Mob.Nome}** já está morto! {ctx.User.Mention} use `z!explorar` para encontrar novos mobs!**");
                 return;
             }
 
