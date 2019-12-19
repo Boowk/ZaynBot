@@ -59,7 +59,7 @@ namespace ZaynBot.RPG.Comandos
                     if (usuario.Personagem.VidaAtual <= 0)
                     {
                         await ctx.RespondAsync("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n" +
-                            $"{ctx.User.Mention}");
+                            $"{ctx.User.Mention}"); 
                         usuario.Personagem.VidaAtual = usuario.Personagem.VidaMaxima / 3;
                         RPGUsuario.Salvar(usuario);
                         try

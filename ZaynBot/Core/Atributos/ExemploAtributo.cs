@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ZaynBot.Core.Atributos
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class Exemplo : CheckBaseAttribute
     {
         public string ExemploMsg { get; }
