@@ -9,10 +9,10 @@ namespace ZaynBot.Core.Comandos
 {
     public class PrefixComando : BaseCommandModule
     {
-        [Command("prefix")]
-        [Description("Permite modificar o prefix do bot no servidor atual.  Note que o Prefix antigo ainda continuará funcionando.")]
-        [UsoAtributo("prefix [p|]")]
-        [ExemploAtributo("prefix !")]
+        [Command("prefixo")]
+        [Description("Permite modificar o prefixo do bot no servidor atual.  Note que o Prefix antigo ainda continuará funcionando")]
+        [ComoUsar("prefixo [p|]")]
+        [Exemplo("prefixo !")]
         [RequireUserPermissions(Permissions.Administrator)]
         public async Task PrefixComandoAb(CommandContext ctx, string prefix = null)
         {
@@ -25,7 +25,7 @@ namespace ZaynBot.Core.Comandos
             {
                 if (prefix.Length > 3)
                 {
-                    await ctx.RespondAsync("O prefix não pode passar de 3 caracteres!").ConfigureAwait(false);
+                    await ctx.RespondAsync("O prefixo não pode passar de 3 caracteres!").ConfigureAwait(false);
                     return;
                 }
                 ModuloBanco.ServidorDel(ctx.Guild.Id);
@@ -34,7 +34,7 @@ namespace ZaynBot.Core.Comandos
                     Id = ctx.Guild.Id,
                     Prefix = prefix,
                 });
-                await ctx.RespondAsync("Prefix alterado!").ConfigureAwait(false);
+                await ctx.RespondAsync("Prefixo alterado!").ConfigureAwait(false);
             }
         }
     }

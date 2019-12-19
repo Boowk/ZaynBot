@@ -15,8 +15,8 @@ namespace ZaynBot.RPG.Comandos
 
 
         [Command("usuario")]
-        [Description("Exibe o perfil de um usuario do discord.")]
-        [UsoAtributo("usuario [id|menção]")]
+        [Description("Exibe o perfil de um usuario do discord")]
+        [ComoUsar("usuario [id|menção]")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task UsuarioComandoAb(CommandContext ctx, DiscordUser usuario)
         {

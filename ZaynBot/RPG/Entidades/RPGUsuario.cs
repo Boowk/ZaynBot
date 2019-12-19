@@ -51,9 +51,6 @@ namespace ZaynBot.RPG.Entidades
             return usuario;
         }
 
-        public RPGRegiao RegiaoGet()
-             => ModuloBanco.RegiaoGet(Personagem.RegiaoAtualId);
-
         public static void Salvar(RPGUsuario usuario)
             => ModuloBanco.UsuarioEdit(usuario);
 

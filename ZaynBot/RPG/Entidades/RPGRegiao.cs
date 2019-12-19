@@ -41,7 +41,7 @@ namespace ZaynBot.RPG.Entidades
 
 
         public static RPGRegiao GetRPGRegiao(int id)
-            => ModuloBanco.RegiaoGet(id);
+            => ModuloBanco.GetRegiaoData(id);
 
     }
 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 namespace ZaynBot.Core.Atributos
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public class ExemploAtributo : CheckBaseAttribute
+    public class Exemplo : CheckBaseAttribute
     {
-        public string Exemplo { get; }
+        public string ExemploMsg { get; }
 
-        public ExemploAtributo(string exemplo) => Exemplo = exemplo;
+        public Exemplo(string exemplo) => ExemploMsg = exemplo;
 
         public override Task<bool> ExecuteCheckAsync(CommandContext ctx, bool help) => Task.FromResult(true);
     }

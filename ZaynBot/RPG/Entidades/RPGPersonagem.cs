@@ -46,21 +46,19 @@ namespace ZaynBot.RPG.Entidades
 
 
         public int RegiaoAtualId { get; set; }
-        public int RegiaoCasaId { get; set; }
-        public bool CasaConstruida { get; set; }
+        //public int RegiaoCasaId { get; set; }
+        //public bool CasaConstruida { get; set; }
+
 
         public RPGMochila Inventario { get; set; }
         public RPGBatalha Batalha { get; set; }
 
-        [BsonIgnore]
-        public double DanoRecebido { get; set; }
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<HabilidadeEnum, RPGHabilidade> Habilidades { get; set; }
+        public Dictionary<ProficienciaEnum, RPGProficiencia> Proficiencias { get; set; }
 
 
-        public RPGPersonagem(int nivel = 1, int nivelMax = 0, double expIncremento = 30, double incremento = 1.02)
-            : base(nivel, nivelMax, expIncremento, incremento)
+        public RPGPersonagem(double expMax = 50) : base(expMax)
         {
             VidaAtual = SortearMetadeValor(50);
             VidaMaxima = VidaAtual;
@@ -90,19 +88,19 @@ namespace ZaynBot.RPG.Entidades
             PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
 
             RegiaoAtualId = 0;
-            RegiaoCasaId = 0;
-            CasaConstruida = false;
+           // RegiaoCasaId = 0;
+            //CasaConstruida = false;
 
             Inventario = new RPGMochila();
             Batalha = new RPGBatalha();
 
 
             //Populando as habilidades
-            Habilidades = new Dictionary<HabilidadeEnum, RPGHabilidade>
+            Proficiencias = new Dictionary<ProficienciaEnum, RPGProficiencia>
             {
-                { HabilidadeEnum.Perfurante, new HabilidadePerfurante() },
-                { HabilidadeEnum.Esmagante, new HabilidadeEsmagante() },
-                { HabilidadeEnum.Desarmado, new HabilidadeDesarmado() }
+                { ProficienciaEnum.Perfurante, new ProficienciaPerfurante() },
+                { ProficienciaEnum.Esmagante, new ProficienciaEsmagante() },
+                { ProficienciaEnum.Desarmado, new ProficienciaDesarmado() }
             };
         }
 
@@ -119,23 +117,22 @@ namespace ZaynBot.RPG.Entidades
                 DefesaFisica = Evoluir(DefesaFisica);
                 DefesaMagica = Evoluir(DefesaMagica);
                 Velocidade = Evoluir(Velocidade);
-                FomeMaxima *= Evoluir(FomeMaxima);
-                SedeMaxima *= Evoluir(SedeMaxima);
+                FomeMaxima = Evoluir(FomeMaxima);
+                SedeMaxima = Evoluir(SedeMaxima);
                 PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
-
                 return true;
             }
             return false;
         }
 
 
-        public bool TryGetHabilidade(string hab, out RPGHabilidade habilidade)
+        public bool TryGetHabilidade(string hab, out RPGProficiencia habilidade)
         {
             var h = hab.ToLower();
             h = h.PrimeiraLetraMaiuscula();
-            if (Enum.IsDefined(typeof(HabilidadeEnum), h))
+            if (Enum.IsDefined(typeof(ProficienciaEnum), h))
             {
-                habilidade = Habilidades[Enum.Parse<HabilidadeEnum>(h)];
+                habilidade = Proficiencias[Enum.Parse<ProficienciaEnum>(h)];
                 return true;
             }
             habilidade = null;

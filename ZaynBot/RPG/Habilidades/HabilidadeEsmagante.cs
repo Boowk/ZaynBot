@@ -4,10 +4,10 @@ using ZaynBot.RPG.Entidades;
 namespace ZaynBot.RPG.Habilidades
 {
     [BsonIgnoreExtraElements]
-    public class HabilidadeEsmagante : RPGHabilidade
+    public class ProficienciaEsmagante : RPGProficiencia
     {
-        public HabilidadeEsmagante(string nome = "Esmagante", int nivel = 1, int nivelMax = 100, double expIncremento = 84, double incremento = 1.102)
-            : base(nome, nivel, nivelMax, expIncremento, incremento) { }
+        public ProficienciaEsmagante(string nome = "Esmagante", double expIncremento = 84)
+            : base(nome,expIncremento) { }
 
         public bool AdicionarExp()
             => base.AdicionarExp(0.5);

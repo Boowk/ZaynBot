@@ -11,14 +11,14 @@ using ZaynBot.RPG.Habilidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class HabilidadeComando : BaseCommandModule
+    public class ComandoProficiencia : BaseCommandModule
     {
-        [Command("habilidade")]
+        [Command("proficiencia")]
         [Cooldown(1, 2, CooldownBucketType.User)]
-        [Description("Exibe as informações de uma habilidade ou todas as habilidades de um personagem.")]
-        [UsoAtributo("habilidade [nome]")]
-        [ExemploAtributo("habilidade perfurante")]
-        [ExemploAtributo("habilidade")]
+        [Description("Exibe todas as proficiencia de um personagem ou mais detalhes sobre uma em especifico")]
+        [ComoUsar("proficiencia [nome]")]
+        [Exemplo("proficiencia perfurante")]
+        [Exemplo("proficiencia")]
         public async Task HabilidadeComandoAb(CommandContext ctx, string habNome = "")
         {
             await ctx.TriggerTypingAsync();
@@ -29,23 +29,23 @@ namespace ZaynBot.RPG.Comandos
             if (string.IsNullOrWhiteSpace(habNome))
             {
                 StringBuilder str = new StringBuilder();
-                foreach (var item in personagem.Habilidades)
+                foreach (var item in personagem.Proficiencias)
                 {
                     str.Append($"`{item.Value.Nome.PrimeiraLetraMaiuscula()}`, ");
                 }
-                embed.AddField("Habilidades".Titulo(), str.ToString());
+                embed.AddField("Proficiencia".Titulo(), str.ToString());
             }
             else
             {
-                bool isAchou = personagem.TryGetHabilidade(habNome, out RPGHabilidade habilidade);
+                bool isAchou = personagem.TryGetHabilidade(habNome, out RPGProficiencia habilidade);
                 if (!isAchou)
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, habilidade não encontrada!");
+                    await ctx.RespondAsync($"{ctx.User.Mention}, proficiencia não encontrada!");
                     return;
                 }
                 embed.WithTitle(habilidade.Nome.Titulo())
-                .AddField("Nível".Titulo(), $"Nv.{habilidade.NivelAtual}/{habilidade.NivelMax}", true)
-                .AddField("Experiencia".Titulo(), $"{habilidade.ExpAtual.Texto2Casas()}/{habilidade.ExpMax.Texto2Casas()}", true);
+                .AddField("Nível".Titulo(), $"Nv.{habilidade.NivelAtual}", true)
+                .AddField("Experiencia".Titulo(), $"{Extensoes.Text(habilidade.ExpAtual)}/{Extensoes.Text(habilidade.ExpMax)}", true);
             }
             await ctx.RespondAsync(embed: embed.Build());
         }

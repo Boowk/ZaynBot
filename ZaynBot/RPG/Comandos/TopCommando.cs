@@ -14,8 +14,8 @@ namespace ZaynBot.RPG.Comandos
     class TopComando : BaseCommandModule
     {
         [Command("top")]
-        [Description("Exibe os 10 personagens mais evoluidos.")]
-        [UsoAtributo("top")]
+        [Description("Exibe os 10 personagens mais evoluidos")]
+        [ComoUsar("top")]
         [Cooldown(1, 60, CooldownBucketType.User)]
         public async Task TopComandoAb(CommandContext ctx)
         {
@@ -35,8 +35,5 @@ namespace ZaynBot.RPG.Comandos
 
             await ctx.RespondAsync(embed: embed.Build());
         }
-
-
-
     }
 }

@@ -10,7 +10,7 @@ namespace ZaynBot.Core.Comandos
     {
         [Command("votar")]
         [Description("Exibe um link, permitindo a votar no bot. (Futuramente terá recompensas)")]
-        [UsoAtributo("votar")]
+        [ComoUsar("votar")]
         public async Task VotarComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

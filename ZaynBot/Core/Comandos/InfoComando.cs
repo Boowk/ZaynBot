@@ -25,7 +25,7 @@ namespace ZaynBot.Core.Comandos
     {
         [Command("info")]
         [Description("Exibe uma breve descrição do bot.")]
-        [UsoAtributo("info")]
+        [ComoUsar("info")]
         public async Task InformacaoComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
@@ -43,7 +43,7 @@ namespace ZaynBot.Core.Comandos
                 .AppendLine($"Contas criadas: {ModuloBanco.UsuarioColecao.CountDocuments(FilterDefinition<RPGUsuario>.Empty)}")
                 .AppendLine($"Ping: {ctx.Client.Ping} pong")
                 .AppendLine($"Memoria: {(GC.GetTotalMemory(false) / 1024) / 1024} Mb")
-                .AppendLine($"Banco: {((ModuloBanco.Database.RunCommand<TamanhoResultado>("{dbstats: 1}").Tamanho / 1024) / 1024).Texto2Casas()} Mb");
+                .AppendLine($"Banco: {Extensoes.Text(((ModuloBanco.Database.RunCommand<TamanhoResultado>("{dbstats: 1}").Tamanho / 1024) / 1024))} Mb");
             embed.AddField("Bot".Titulo(), srd.ToString(), true);
             StringBuilder srf = new StringBuilder();
             srf.AppendLine($"Guildas: {BotCore.QuantidadeServidores}");

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 namespace ZaynBot.Core.Atributos
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = false)]
-    public class UsoAtributo : CheckBaseAttribute
+    public class ComoUsar : CheckBaseAttribute
     {
         public string Uso { get; }
 
-        public UsoAtributo(string uso)
+        public ComoUsar(string uso)
             => Uso = uso;
 
         public override async Task<bool> ExecuteCheckAsync(CommandContext ctx, bool help)

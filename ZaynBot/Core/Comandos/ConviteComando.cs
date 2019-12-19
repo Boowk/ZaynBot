@@ -10,7 +10,7 @@ namespace ZaynBot.Core.Comandos
     {
         [Command("convite")]
         [Description("Exibe um link, permitindo adicionar o bot no seu servidor")]
-        [UsoAtributo("convite")]
+        [ComoUsar("convite")]
         public async Task ConviteComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

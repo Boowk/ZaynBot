@@ -1,6 +1,6 @@
 ﻿namespace ZaynBot.RPG.Entidades.Enuns
 {
-    public enum HabilidadeEnum
+    public enum ProficienciaEnum
     {
         Nenhum = -1,
         Perfurante,

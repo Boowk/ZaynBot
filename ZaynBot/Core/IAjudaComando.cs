@@ -44,10 +44,10 @@ namespace ZaynBot.Core
                 {
                     switch (item)
                     {
-                        case ExemploAtributo e:
-                            _srExemplos.Append($"`z!{e.Exemplo}`\n");
+                        case Exemplo e:
+                            _srExemplos.Append($"`z!{e.ExemploMsg}`\n");
                             break;
-                        case UsoAtributo u:
+                        case ComoUsar u:
                             _srUsos.Append($"`z!{u.Uso}`\n");
                             break;
                     }

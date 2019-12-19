@@ -11,9 +11,9 @@ namespace ZaynBot.Core.Comandos
         [Command("ajuda")]
         [Aliases("h", "?", "help")]
         [Description("Explica como usar um comando, suas abreviações e exemplos.")]
-        [UsoAtributo("ajuda [comando|]")]
-        [ExemploAtributo("ajuda personagem")]
-        [ExemploAtributo("ajuda")]
+        [ComoUsar("ajuda [comando|]")]
+        [Exemplo("ajuda personagem")]
+        [Exemplo("ajuda")]
 
         public async Task AjudaComandoAb(CommandContext ctx, params string[] comando)
         {

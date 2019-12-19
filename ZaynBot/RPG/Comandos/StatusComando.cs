@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos
     {
         [Command("status")]
         [Description("Exibe os status do seu personagem.")]
-        [UsoAtributo("status")]
+        [ComoUsar("status")]
         [Cooldown(1, 10, CooldownBucketType.User)]
 
         public async Task StatusComandoAb(CommandContext ctx)
@@ -27,18 +27,18 @@ namespace ZaynBot.RPG.Comandos
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao($"Nível {personagem.NivelAtual}| Exp: {personagem.ExpAtual}/{personagem.ExpMax}", ctx);
             embed.WithColor(DiscordColor.PhthaloGreen);
-            embed.AddField(pv + "**Vida**".Titulo(), $"{personagem.VidaAtual.Texto2Casas()}/{personagem.VidaMaxima.Texto2Casas()}", true);
-            embed.AddField(pp + "**Magia**".Titulo(), $"{personagem.MagiaAtual.Texto2Casas()}/{personagem.MagiaMaxima.Texto2Casas()}", true);
-            embed.AddField("**Ataque físico**".Titulo(), $"{personagem.AtaqueFisico.Texto2Casas()}", true);
-            embed.AddField("**Ataque mágico**".Titulo(), $"{personagem.AtaqueMagico.Texto2Casas()}", true);
-            embed.AddField("**Defesa física**".Titulo(), $"{personagem.DefesaFisica.Texto2Casas()}", true);
-            embed.AddField("**Defesa mágica**".Titulo(), $"{personagem.DefesaMagica.Texto2Casas()}", true);
-            embed.AddField("**Velocidade**".Titulo(), $"{personagem.Velocidade.Texto2Casas()}", true);
-            embed.AddField("**Sorte**".Titulo(), $"{personagem.Sorte.Texto2Casas()}", true);
-            embed.AddField("**Fome**".Titulo(), $"{((personagem.FomeAtual / personagem.FomeMaxima) * 100).Texto2Casas()}%", true);
-            embed.AddField("**Sede**".Titulo(), $"{((personagem.SedeAtual / personagem.SedeMaxima) * 100).Texto2Casas()}%", true);
-            embed.AddField("**Estamina**".Titulo(), $"{personagem.EstaminaAtual.Texto2Casas()}/{personagem.EstaminaMaxima.Texto2Casas()}", true);
-            embed.AddField("**Peso**".Titulo(), $"{personagem.PesoAtual.Texto2Casas()}/{personagem.PesoMaximo.Texto2Casas()}", true);
+            embed.AddField(pv + "**Vida**".Titulo(), $"{Extensoes.Text(personagem.VidaAtual)}/{Extensoes.Text(personagem.VidaMaxima)}", true);
+            embed.AddField(pp + "**Magia**".Titulo(), $"{Extensoes.Text(personagem.MagiaAtual)}/{Extensoes.Text(personagem.MagiaMaxima)}", true);
+            embed.AddField("**Ataque físico**".Titulo(), $"{Extensoes.Text(personagem.AtaqueFisico)}", true);
+            embed.AddField("**Ataque mágico**".Titulo(), $"{Extensoes.Text(personagem.AtaqueMagico)}", true);
+            embed.AddField("**Defesa física**".Titulo(), $"{Extensoes.Text(personagem.DefesaFisica)}", true);
+            embed.AddField("**Defesa mágica**".Titulo(), $"{Extensoes.Text(personagem.DefesaMagica)}", true);
+            embed.AddField("**Velocidade**".Titulo(), $"{Extensoes.Text(personagem.Velocidade)}", true);
+            embed.AddField("**Sorte**".Titulo(), $"{Extensoes.Text(personagem.Sorte)}", true);
+            embed.AddField("**Fome**".Titulo(), $"{Extensoes.Text(((personagem.FomeAtual / personagem.FomeMaxima) * 100))}%", true);
+            embed.AddField("**Sede**".Titulo(), $"{Extensoes.Text(((personagem.SedeAtual / personagem.SedeMaxima) * 100))}%", true);
+            embed.AddField("**Estamina**".Titulo(), $"{Extensoes.Text(personagem.EstaminaAtual)}/{Extensoes.Text(personagem.EstaminaMaxima)}", true);
+            embed.AddField("**Peso**".Titulo(), $"{Extensoes.Text(personagem.PesoAtual)}/{Extensoes.Text(personagem.PesoMaximo)}", true);
 
             await ctx.RespondAsync(embed: embed.Build());
         }

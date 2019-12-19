@@ -5,13 +5,13 @@ using ZaynBot.RPG.Habilidades;
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    [BsonDiscriminator("Hab")]
-    [BsonKnownTypes(typeof(HabilidadeDesarmado), typeof(HabilidadeEsmagante), typeof(HabilidadePerfurante))]
-    public class RPGHabilidade : RPGProgresso
+    [BsonDiscriminator("Pro")]
+    [BsonKnownTypes(typeof(ProficienciaDesarmado), typeof(ProficienciaEsmagante), typeof(ProficienciaPerfurante))]
+    public class RPGProficiencia : RPGProgresso
     {
         public string Nome { get; set; }
 
-        public RPGHabilidade(string nome, int nivel, int nivelMax, double expIncremento, double incremento) : base(nivel, nivelMax, expIncremento, incremento)
+        public RPGProficiencia(string nome, double expMax) : base(expMax)
         {
             Nome = nome;
         }

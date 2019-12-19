@@ -41,13 +41,12 @@ namespace ZaynBot
 
             Comandos.RegisterCommands<ComandoCriarPersonagem>();
             Comandos.RegisterCommands<StatusComando>();
-            Comandos.RegisterCommands<HabilidadeComando>();
+            Comandos.RegisterCommands<ComandoProficiencia>();
             Comandos.RegisterCommands<RegiaoComando>();
             Comandos.RegisterCommands<ComandoProximoTurno>();
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoBatalha>();
             Comandos.RegisterCommands<ComandoGrupo>();
-            Comandos.RegisterCommands<ComandoSaquear>();
             //Comandos.RegisterCommands<InimigosComandos>();
             Comandos.RegisterCommands<ComandoAtacar>();
             //Comandos.RegisterCommands<LesteComando>();
@@ -117,6 +116,9 @@ namespace ZaynBot
                 case PersonagemNoLifeException pnx:
                     await ctx.RespondAsync($"{ctx.User.Mention}, {pnx.ToString()}");
                     return;
+                case MensagemException mx:
+                    await ctx.RespondAsync(mx.Message);
+                    break;
                 default:
                     e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
                     DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);

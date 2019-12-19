@@ -11,7 +11,8 @@ namespace ZaynBot.RPG.Entidades
 
 
         public string Nome { get; set; }
-        public double PontosDeVida { get; set; }
+        public double VidaAtual { get; set; }
+        public double VidaMax { get; set; }
         public double AtaqueFisico { get; set; }
         public double Armadura { get; set; }
         public int Velocidade { get; set; }

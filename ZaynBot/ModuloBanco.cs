@@ -4,8 +4,10 @@ using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using System.Collections.Generic;
+using System.Linq;
 using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
+using MongoDB.Driver.Linq;
 
 namespace ZaynBot
 {
@@ -70,32 +72,21 @@ namespace ZaynBot
 
         }
 
-
-
-        #region CRUD Usuario
-
         public static RPGUsuario GetUsuario(ulong id)
             => UsuarioColecao.Find(x => x.Id == id).FirstOrDefault();
 
         public static void UsuarioEdit(RPGUsuario usuario)
             => UsuarioColecao.ReplaceOne(x => x.Id == usuario.Id, usuario);
 
-        #endregion
-
-        #region CRUD Regiao
-
-        public static RPGRegiao RegiaoGet(int id)
+        public static RPGRegiao GetRegiaoData(int id)
             => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
 
-        #endregion
 
         #region CRUD Mobs
 
-        public static List<RPGMob> MobsGet(int dificuldade)
-        {
-            return MobColecao.Find(x => x.Dificuldade == dificuldade).ToList();
-            //MobColecao.AsQueryable().Where(x => x.Dificuldade == dificuldade).Sample(6);
-        }
+        public static RPGMob GetMob(RPGRegiao regiao)
+            => MobColecao.AsQueryable().Where(x => x.Dificuldade == regiao.Dificuldade).Sample(1).FirstOrDefault();
+
 
         #endregion
 
