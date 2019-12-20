@@ -14,11 +14,9 @@ namespace ZaynBot.RPG.Entidades
         public ulong Id { get; set; }
         public DateTime CriacaoUsuarioData { get; set; }
         public RPGPersonagem Personagem { get; set; }
-
-        #region Usado em outra areas
-        [BsonIgnore]
-        public DiscordUser DiscordUser { get; set; }
-        #endregion
+        public int Rip { get; set; }
+        public int RipMobs { get; set; }
+        public int RipJogadores { get; set; }
 
         public RPGUsuario(ulong id)
         {
@@ -32,23 +30,6 @@ namespace ZaynBot.RPG.Entidades
             usuario = ModuloBanco.GetUsuario(ctx.User.Id);
             if (usuario == null)
                 throw new PersonagemNullException();
-        }
-
-        public static void UsuarioGet(DiscordUser discordUsuario, out RPGUsuario usuario)
-        {
-            usuario = ModuloBanco.GetUsuario(discordUsuario.Id);
-            if (usuario == null)
-                throw new PersonagemNullException($"{discordUsuario.Mention} não tem um personagem para ser convidado!");
-        }
-        public static async Task<RPGUsuario> UsuarioGetAsync(ulong discordUserId)
-        {
-            RPGUsuario usuario = ModuloBanco.GetUsuario(discordUserId);
-            if (usuario == null)
-            {
-                DiscordUser du = await ModuloCliente.Client.GetUserAsync(discordUserId);
-                throw new PersonagemNullException($"{du.Mention} não tem um personagem para ser convidado!");
-            }
-            return usuario;
         }
 
         public double RecuperarVida(double quantidade)
@@ -86,7 +67,6 @@ namespace ZaynBot.RPG.Entidades
 
         public static void Salvar(RPGUsuario usuario)
             => ModuloBanco.UsuarioEdit(usuario);
-
         public void Salvar()
             => ModuloBanco.UsuarioEdit(this);
     }

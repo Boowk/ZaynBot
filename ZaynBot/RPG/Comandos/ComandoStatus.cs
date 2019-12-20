@@ -35,6 +35,8 @@ namespace ZaynBot.RPG.Comandos
             embed.AddField("Sorte".Titulo(), $"{personagem.Sorte.Text()}", true);
             embed.AddField("Fome".Titulo(), $"{((personagem.FomeAtual / personagem.FomeMaxima) * 100).Text()}%", true);
             embed.AddField("Sede".Titulo(), $"{((personagem.SedeAtual / personagem.SedeMaxima) * 100).Text()}%", true);
+            embed.AddField("Rip".Titulo(), $"{usuario.Rip}", true);
+            embed.AddField("Rip Mobs".Titulo(), $"{usuario.RipMobs}", true);
             await ctx.RespondAsync(embed: embed.Build());
         }
     }
