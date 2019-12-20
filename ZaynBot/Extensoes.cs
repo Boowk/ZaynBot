@@ -31,20 +31,8 @@ namespace ZaynBot
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, CommandContext ctx)
             => embed.Padrao().WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
 
-
-        public static void Add(this Dictionary<string, RPGItem> inventario, RPGItem item)
-            => inventario.Add(item.Nome.ToLower(), item);
-
-        public static bool IsNullOrEmpty(this Array array)
-            => array == null || array.Length == 0;
-
         public static string PrimeiraLetraMaiuscula(this string texto)
             => texto.First().ToString().ToUpper() + texto.Substring(1);
-
-        public static string RemoverUltimaLetra(this string texto)
-            => texto.Remove(texto.Length - 1);
-
-
 
         public static string Text(this float numero)
             => string.Format("{0:N2}", numero);

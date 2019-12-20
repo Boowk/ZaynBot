@@ -40,7 +40,7 @@ namespace ZaynBot
             #region ComandosRPG
 
             Comandos.RegisterCommands<ComandoCriarPersonagem>();
-            Comandos.RegisterCommands<StatusComando>();
+            Comandos.RegisterCommands<ComandoStatus>();
             Comandos.RegisterCommands<ComandoProficiencia>();
             Comandos.RegisterCommands<RegiaoComando>();
             Comandos.RegisterCommands<ComandoProximoTurno>();
