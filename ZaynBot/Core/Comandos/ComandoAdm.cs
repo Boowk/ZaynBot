@@ -1,17 +1,18 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using MongoDB.Driver;
 using System.Threading.Tasks;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Core.Comandos
 {
     [Group("adm")]
-    [Hidden]
     [RequireOwner]
-    public class AdmComandos : BaseCommandModule
+    public class ComandoAdm : BaseCommandModule
     {
         [Command("mp")]
-        public async Task MensagemPrivadaComando(CommandContext ctx, DiscordGuild guilda, DiscordUser usuario, [RemainingText] string texto = "")
+        public async Task Mp(CommandContext ctx, DiscordGuild guilda, DiscordUser usuario, [RemainingText] string texto = "")
         {
             await ctx.TriggerTypingAsync();
             DiscordMember membro = await guilda.GetMemberAsync(usuario.Id);
@@ -23,7 +24,6 @@ namespace ZaynBot.Core.Comandos
         public async Task Sudo(CommandContext ctx, DiscordUser member, [RemainingText] string command)
         {
             await ctx.TriggerTypingAsync();
-
             var invocation = command.Substring(2);
             var cmd = ctx.CommandsNext.FindCommand(invocation, out var args);
             if (cmd == null)
@@ -34,6 +34,16 @@ namespace ZaynBot.Core.Comandos
 
             var cfx = ctx.CommandsNext.CreateFakeContext(member, ctx.Channel, "", "z!", cmd, args);
             await ctx.CommandsNext.ExecuteCommandAsync(cfx);
+        }
+
+        [Command("deletar")]
+        public async Task Remover(CommandContext ctx, DiscordUser user = null)
+        {
+            if (user == null)
+                user = ctx.User;
+            await ctx.TriggerTypingAsync();
+            ModuloBanco.UsuarioColecao.DeleteOne(x => x.Id == user.Id);
+            await ctx.RespondAsync("Deletado!");
         }
     }
 }

@@ -28,7 +28,7 @@ namespace ZaynBot
 
             Comandos.RegisterCommands<AjudaComando>();
             Comandos.RegisterCommands<PrefixComando>();
-            Comandos.RegisterCommands<AdmComandos>();
+            Comandos.RegisterCommands<ComandoAdm>();
             Comandos.RegisterCommands<ConviteComando>();
             Comandos.RegisterCommands<InfoComando>();
             Comandos.RegisterCommands<VotarComando>();
