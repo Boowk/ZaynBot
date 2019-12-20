@@ -53,7 +53,7 @@ namespace ZaynBot.Core
                     }
                 }
 
-                _embed.WithTitle($"**{command.Name.PrimeiraLetraMaiuscula()}**");
+                _embed.WithTitle($"**{command.Name.FirstUpper()}**");
                 _embed.WithDescription(command.Description);
                 if (_srUsos.Length != 0)
                     _embed.AddField("**Como usar**", _srUsos.ToString());

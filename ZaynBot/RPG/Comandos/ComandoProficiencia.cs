@@ -28,7 +28,7 @@ namespace ZaynBot.RPG.Comandos
                 StringBuilder str = new StringBuilder();
                 foreach (var item in personagem.Proficiencias)
                 {
-                    str.Append($"`{item.Value.Nome.PrimeiraLetraMaiuscula()}`, ");
+                    str.Append($"`{item.Value.Nome.FirstUpper()}`, ");
                 }
                 embed.AddField("Proficiencia".Titulo(), str.ToString());
             }

@@ -33,22 +33,22 @@ namespace ZaynBot.Core.Comandos
             DiscordUser yuki = await ModuloCliente.Client.GetUserAsync(459410223480832010);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             StringBuilder srb = new StringBuilder();
-            srb.AppendLine("ZaynBot V. Vinland 1.4")
+            srb.AppendLine($"ZaynBot V.{ModuloCliente.Bot.VersaoMaior}.{ModuloCliente.Bot.VersaoMinor}.{ModuloCliente.Bot.VersaoRevisao}\n".Bold())
                 .AppendLine("[Servidor oficial](https://discord.gg/GGRnMQu)")
                 .AppendLine("[Vote no bot](https://discordbots.org/bot/459873132975620134/vote)")
                 .AppendLine("[Código fonte](https://github.com/ZaynBot/ZaynBot)");
             embed.WithDescription(srb.ToString());
             StringBuilder srd = new StringBuilder();
-            srd.AppendLine($"Online por: **{(DateTime.Now - BotCore.TempoAtivo).Days} dias, {(DateTime.Now - BotCore.TempoAtivo).Hours} horas e {(DateTime.Now - BotCore.TempoAtivo).Minutes} minutos.**")
+            srd.AppendLine($"Online por: **{(DateTime.Now - ModuloCliente.Bot.TempoAtivo).Days} dias, {(DateTime.Now - ModuloCliente.Bot.TempoAtivo).Hours} horas e {(DateTime.Now - ModuloCliente.Bot.TempoAtivo).Minutes} minutos.**")
                 .AppendLine($"Contas criadas: {ModuloBanco.UsuarioColecao.CountDocuments(FilterDefinition<RPGUsuario>.Empty)}")
                 .AppendLine($"Ping: {ctx.Client.Ping} pong")
                 .AppendLine($"Memoria: {(GC.GetTotalMemory(false) / 1024) / 1024} Mb")
                 .AppendLine($"Banco: {Extensoes.Text(((ModuloBanco.Database.RunCommand<TamanhoResultado>("{dbstats: 1}").Tamanho / 1024) / 1024))} Mb");
             embed.AddField("Bot".Titulo(), srd.ToString(), true);
             StringBuilder srf = new StringBuilder();
-            srf.AppendLine($"Guildas: {BotCore.QuantidadeServidores}");
-            srf.AppendLine($"Canais: {BotCore.QuantidadeCanais}");
-            srf.AppendLine($"Usuarios: {BotCore.QuantidadeMembros}");
+            srf.AppendLine($"Guildas: {ModuloCliente.Bot.QuantidadeServidores}");
+            srf.AppendLine($"Canais: {ModuloCliente.Bot.QuantidadeCanais}");
+            srf.AppendLine($"Usuarios: {ModuloCliente.Bot.QuantidadeMembros}");
             embed.AddField("Discord".Titulo(), srf.ToString(), true);
             embed.AddField("Testadores".Titulo(), $"{imain.Username}#{imain.Discriminator}\n{yuki.Username}#{yuki.Discriminator}", true);
             embed.WithColor(DiscordColor.Blue);

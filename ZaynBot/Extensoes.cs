@@ -11,13 +11,6 @@ namespace ZaynBot
         public static string Titulo(this string titulo)
             => "**⌈" + titulo + "⌋**";
 
-        public static async Task ExecutarComandoAsync(this CommandContext ctx, string comando)
-        {
-            var cmd = ctx.CommandsNext.FindCommand(comando, out var args);
-            var cfx = ctx.CommandsNext.CreateContext(ctx.Message, "z!", cmd, args);
-            await ctx.CommandsNext.ExecuteCommandAsync(cfx);
-        }
-
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed)
         {
             embed.WithFooter("Se estiver com dúvidas, escreva z!ajuda");
@@ -28,11 +21,8 @@ namespace ZaynBot
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, CommandContext ctx)
             => embed.Padrao().WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
 
-        public static string PrimeiraLetraMaiuscula(this string texto)
+        public static string FirstUpper(this string texto)
             => texto.First().ToString().ToUpper() + texto.Substring(1);
-
-        public static string Text(this float numero)
-            => string.Format("{0:N2}", numero);
 
         public static string Text(this double numero)
           => string.Format("{0:N2}", numero);

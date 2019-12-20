@@ -83,7 +83,7 @@ namespace ZaynBot.RPG.Entidades
         public bool TryGetHabilidade(string hab, out RPGProficiencia habilidade)
         {
             var h = hab.ToLower();
-            h = h.PrimeiraLetraMaiuscula();
+            h = h.FirstUpper();
             if (Enum.IsDefined(typeof(ProficienciaEnum), h))
             {
                 habilidade = Proficiencias[Enum.Parse<ProficienciaEnum>(h)];

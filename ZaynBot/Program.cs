@@ -14,7 +14,7 @@ namespace ZaynBot
 {
     public class Program
     {
-        private ConfigCore _config;
+        public static ConfigCore _config;
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
         public async Task RodarOBotAsync()
@@ -34,8 +34,6 @@ namespace ZaynBot
                 Console.ReadKey();
                 Environment.Exit(0);
             }
-            BotCore.DiscordBotsApiKey = _config.DiscordBotsKey;
-
             DiscordConfiguration cfg = new DiscordConfiguration
             {
 #if DEBUG

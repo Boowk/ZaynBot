@@ -9,6 +9,7 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoExplorar : BaseCommandModule
     {
         [Command("explorar")]
+        [Aliases("ex")]
         [Description("Explora mais detalhadamente a região, encontrando novos inimigos, mais minérios e mais arvores")]
         [ComoUsar("explorar")]
         [Cooldown(1, 60, CooldownBucketType.User)]

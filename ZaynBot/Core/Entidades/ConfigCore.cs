@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ZaynBot.Core.Entidades
 {
-    internal class ConfigCore
+    public class ConfigCore
     {
         /// <summary>
         /// O token do seu bot

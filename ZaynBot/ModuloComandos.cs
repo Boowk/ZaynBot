@@ -18,7 +18,6 @@ namespace ZaynBot
     {
         public static CommandsNextExtension Comandos { get; private set; }
 
-        //Adicionando comandos ao Bot.
         public ModuloComandos(CommandsNextConfiguration ccfg, DiscordClient client)
         {
             Comandos = client.UseCommandsNext(ccfg);
@@ -36,8 +35,7 @@ namespace ZaynBot
 
             //Comandos.RegisterCommands<DencansarComando>();
             Comandos.RegisterCommands<TopComando>();
-
-            #region ComandosRPG
+            
 
             Comandos.RegisterCommands<ComandoCriarPersonagem>();
             Comandos.RegisterCommands<ComandoStatus>();
@@ -57,7 +55,6 @@ namespace ZaynBot
             //Comandos.RegisterCommands<DesequiparComando>();
             //Comandos.RegisterCommands<PersonagemComando>();
             //Comandos.RegisterCommands<ReceitaComando>();
-            #endregion
         }
 
         //Envia mensagem ao receber um erro no bot.
@@ -66,9 +63,7 @@ namespace ZaynBot
             CommandContext ctx = e.Context;
             switch (e.Exception)
             {
-                //Caso tenha tempo de recarga o comando.
                 case ChecksFailedException ex:
-                    //Verifica se o usuario precisa esperar algum tempo antes de usar novamente o comando.
                     if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
                         return;
                     else
@@ -82,25 +77,18 @@ namespace ZaynBot
                             await ctx.RespondAsync($"Aguarde {t.Minutes} minutos e {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
                         else
                             await ctx.RespondAsync($"Aguarde {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
-                        e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{ctx.Message.Author.Id} tentou usar {ctx.Message.Content}: {t.TotalSeconds}", DateTime.Now);
                     }
                     return;
-                //Caso tenha colocado algum argumento do comando errado. Exemplo int no lugar de string.
                 case ArgumentException ax:
                     await ctx.RespondAsync($"**Aconteceu um erro:** {ax.ToString()}");
                     return;
-                case UnauthorizedException ux:
-                    return;
-                case InvalidOperationException cff:
-                //Comando  não encontrado ao usar o comando z!ajuda [comando].
                 case CommandNotFoundException cf:
                     if (e.Command != null)
                         if (e.Command.Name == "ajuda")
                         {
                             DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
-                            await ctx.RespondAsync($"{x} | {ctx.User.Mention} o comando{e.Context.RawArgumentString} não existe.*");
+                            await ctx.RespondAsync($"{x} | {ctx.User.Mention} o comando {e.Context.RawArgumentString} não existe.*");
                         }
-                    ctx.Client.DebugLogger.LogMessage(LogLevel.Info, ctx.Guild.Id.ToString(), $"{ctx.Member.Id} tentou o comando não existente {ctx.Message.Content}.", DateTime.Now);
                     return;
                 case PersonagemNullException px:
                     await ctx.RespondAsync(px.ToString());

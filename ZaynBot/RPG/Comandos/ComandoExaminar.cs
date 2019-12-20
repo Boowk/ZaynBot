@@ -27,7 +27,7 @@ namespace ZaynBot.RPG.Comandos
             {
                 RPGItem item = ModuloBanco.ItemGet(itemData.Id);
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Item", ctx);
-                embed.WithTitle($"**{item.Nome.PrimeiraLetraMaiuscula()}**");
+                embed.WithTitle($"**{item.Nome.FirstUpper()}**");
                 embed.WithDescription((item.Descricao) != "" ? item.Descricao : "Sem descrição");
                 embed.AddField("Tipo".Titulo(), item.TipoItem.ToString(), true);
                 //if (item.TipoItem == TipoItemEnum.Arma  || item.TipoItem == TipoItemEnum.Armadura
