@@ -170,14 +170,13 @@ namespace ZaynBot.RPG.Comandos
             if (mob.VidaAtual <= 0)
             {
                 strRelatorio.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
-
+                usuario.RipMobs++;
                 //Pega a data do item no Banco de dados
                 RPGItem itemData = ModuloBanco.ItemGet(mob.Drop.ItemId);
                 int quantidade = Sortear.Valor(1, mob.Drop.QuantMax);
                 usuario.Personagem.Mochila.AdicionarItem(itemData, quantidade);
                 // Enviamos uma mensagem
                 strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome.PrimeiraLetraMaiuscula()}]!".Bold());
-
                 if (usuario.Personagem.AdicionarExp(mob.Essencia))
                     strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")}!".Bold());
             }
