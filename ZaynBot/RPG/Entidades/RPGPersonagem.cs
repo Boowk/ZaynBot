@@ -41,9 +41,6 @@ namespace ZaynBot.RPG.Entidades
         public double EstaminaAtual { get; set; }
         public double EstaminaMaxima { get; set; }
 
-        public double PesoAtual { get; set; }
-        public double PesoMaximo { get; set; }
-
 
         public int RegiaoAtualId { get; set; }
         //public int RegiaoCasaId { get; set; }
@@ -84,14 +81,14 @@ namespace ZaynBot.RPG.Entidades
             EstaminaAtual = 100;
             EstaminaMaxima = 100;
 
-            PesoAtual = 0;
-            PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
-
             RegiaoAtualId = 0;
-           // RegiaoCasaId = 0;
+            // RegiaoCasaId = 0;
             //CasaConstruida = false;
 
             Inventario = new RPGMochila();
+            Inventario.PesoAtual = 0;
+            Inventario.PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
+
             Batalha = new RPGBatalha();
 
 
@@ -119,7 +116,7 @@ namespace ZaynBot.RPG.Entidades
                 Velocidade = Evoluir(Velocidade);
                 FomeMaxima = Evoluir(FomeMaxima);
                 SedeMaxima = Evoluir(SedeMaxima);
-                PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
+                Inventario.PesoMaximo = (AtaqueFisico / 2) + (DefesaFisica / 2);
                 return true;
             }
             return false;

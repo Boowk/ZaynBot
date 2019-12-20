@@ -36,7 +36,7 @@ namespace ZaynBot.RPG.Comandos
             embed.AddField("Fome".Titulo(), $"{Extensoes.Text(((personagem.FomeAtual / personagem.FomeMaxima) * 100))}%", true);
             embed.AddField("Sede".Titulo(), $"{Extensoes.Text(((personagem.SedeAtual / personagem.SedeMaxima) * 100))}%", true);
             embed.AddField("Estamina".Titulo(), $"{Extensoes.Text(personagem.EstaminaAtual)}/{Extensoes.Text(personagem.EstaminaMaxima)}", true);
-            embed.AddField("Peso".Titulo(), $"{Extensoes.Text(personagem.PesoAtual)}/{Extensoes.Text(personagem.PesoMaximo)}", true);
+            embed.AddField("Peso".Titulo(), $"{Extensoes.Text(personagem.Inventario.PesoAtual)}/{Extensoes.Text(personagem.Inventario.PesoMaximo)}", true);
 
             await ctx.RespondAsync(embed: embed.Build());
         }
