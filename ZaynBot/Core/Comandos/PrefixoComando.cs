@@ -7,7 +7,7 @@ using ZaynBot.Core.Entidades;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class PrefixComando : BaseCommandModule
+    public class PrefixoComando : BaseCommandModule
     {
         [Command("prefixo")]
         [Description("Permite modificar o prefixo do bot no servidor atual.  Note que o Prefix antigo ainda continuará funcionando")]

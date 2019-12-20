@@ -6,7 +6,7 @@ using static DSharpPlus.CommandsNext.CommandsNextExtension;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class AjudaComando : BaseCommandModule
+    public class ComandoAjuda : BaseCommandModule
     {
         [Command("ajuda")]
         [Aliases("h", "?", "help")]

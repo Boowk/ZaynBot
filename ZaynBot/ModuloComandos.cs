@@ -26,13 +26,13 @@ namespace ZaynBot
             Comandos.CommandErrored += ComandoAconteceuErro;
             Comandos.SetHelpFormatter<IAjudaComando>();
 
-            Comandos.RegisterCommands<AjudaComando>();
-            Comandos.RegisterCommands<PrefixComando>();
-            Comandos.RegisterCommands<ComandoAdm>();
+            Comandos.RegisterCommands<ComandoAjuda>();
             Comandos.RegisterCommands<ConviteComando>();
             Comandos.RegisterCommands<InfoComando>();
+            Comandos.RegisterCommands<PrefixoComando>();
             Comandos.RegisterCommands<VotarComando>();
             Comandos.RegisterCommands<UsuarioComando>();
+            Comandos.RegisterCommands<ComandoAdm>();
 
             //Comandos.RegisterCommands<DencansarComando>();
             Comandos.RegisterCommands<TopComando>();
@@ -43,18 +43,14 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoStatus>();
             Comandos.RegisterCommands<ComandoProficiencia>();
             Comandos.RegisterCommands<RegiaoComando>();
-            Comandos.RegisterCommands<ComandoProximoTurno>();
             Comandos.RegisterCommands<ComandoExplorar>();
-            Comandos.RegisterCommands<ComandoBatalha>();
-            Comandos.RegisterCommands<ComandoGrupo>();
             Comandos.RegisterCommands<ComandoTutorial>();
-            //Comandos.RegisterCommands<InimigosComandos>();
             Comandos.RegisterCommands<ComandoAtacar>();
+            Comandos.RegisterCommands<ComandoMochila>();
             //Comandos.RegisterCommands<LesteComando>();
             //Comandos.RegisterCommands<NorteComando>();
             //Comandos.RegisterCommands<OesteComando>();
             //Comandos.RegisterCommands<SulComando>();
-            Comandos.RegisterCommands<ComandoMochila>();
             //Comandos.RegisterCommands<ExaminarComando>();
             //Comandos.RegisterCommands<EquiparComando>();
             //Comandos.RegisterCommands<DesequiparComando>();
