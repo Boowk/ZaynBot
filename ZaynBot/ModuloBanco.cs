@@ -3,7 +3,6 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Options;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
-using System.Collections.Generic;
 using System.Linq;
 using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
@@ -14,7 +13,6 @@ namespace ZaynBot
     public class ModuloBanco
     {
         public static IMongoDatabase Database { get; private set; }
-
         public static IMongoCollection<RPGRegiao> RegiaoColecao { get; private set; }
         public static IMongoCollection<RPGUsuario> UsuarioColecao { get; private set; }
         public static IMongoCollection<ServidorCore> ServidorColecao { get; private set; }
@@ -33,26 +31,6 @@ namespace ZaynBot
                 true, //allow truncation
                 true // allow overflow, return decimal.MinValue or decimal.MaxValue instead
             )));
-            BsonClassMap.RegisterClassMap<RPGPersonagem>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGMob>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGMochila>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
-            BsonClassMap.RegisterClassMap<RPGBatalha>(m =>
-            {
-                m.AutoMap();
-                m.SetIgnoreExtraElements(true);
-            });
             #endregion
 
             RegiaoColecao = Database.GetCollection<RPGRegiao>("regioes");
@@ -65,11 +43,6 @@ namespace ZaynBot
             var notificationLogBuilder = Builders<RPGUsuario>.IndexKeys;
             var indexModel = new CreateIndexModel<RPGUsuario>(notificationLogBuilder.Ascending(x => x.Personagem.NivelAtual));
             UsuarioColecao.Indexes.CreateOne(indexModel);
-
-            //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
-            //UsuarioColecao.Indexes.CreateOne(Builders<UsuarioRPG>.IndexKeys.Ascending(_ => _.Personagem.NivelAtual));
-
-
         }
 
         public static RPGUsuario GetUsuario(ulong id)
@@ -81,16 +54,8 @@ namespace ZaynBot
         public static RPGRegiao GetRegiaoData(int id)
             => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
 
-
-        #region CRUD Mobs
-
         public static RPGMob GetMob(RPGRegiao regiao)
-            => MobColecao.AsQueryable().Where(x => x.Dificuldade == regiao.Dificuldade).Sample(1).FirstOrDefault();
-
-
-        #endregion
-
-        #region CRUD Servidor
+    => MobColecao.AsQueryable().Where(x => x.Dificuldade == regiao.Dificuldade).Sample(1).FirstOrDefault();
 
         public static ServidorCore ServidorGet(ulong id)
             => ServidorColecao.Find(x => x.Id == id).FirstOrDefault();
@@ -98,20 +63,10 @@ namespace ZaynBot
         public static void ServidorDel(ulong id)
             => ServidorColecao.DeleteOne(x => x.Id == id);
 
-        #endregion
-
-        #region CRUD Item
-
         public static RPGItem ItemGet(int id)
              => ItemColecao.Find(x => x.Id == id).FirstOrDefault();
 
-        #endregion
-
-        #region CRUD Receita
-
         public static RPGReceita ReceitaGet(int id)
              => ReceitaColecao.Find(x => x.Id == id).FirstOrDefault();
-
-        #endregion
     }
 }

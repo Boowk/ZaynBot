@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
+
+
+    [BsonIgnoreExtraElements]
     public class RPGMob
     {
         public RPGMob(double vida)
@@ -23,17 +26,18 @@ namespace ZaynBot.RPG.Entidades
         public int Dificuldade { get; set; }
 
         public MobItemDropRPG Drop { get; set; }
+    }
 
-        public class MobItemDropRPG
+    [BsonIgnoreExtraElements]
+    public class MobItemDropRPG
+    {
+        public MobItemDropRPG(int itemId, int quantidadeMaxima)
         {
-            public MobItemDropRPG(int itemId, int quantidadeMaxima)
-            {
-                this.ItemId = itemId;
-                this.QuantidadeMaxima = quantidadeMaxima;
-            }
-
-            public int ItemId { get; set; }
-            public int QuantidadeMaxima { get; set; } = 1;
+            this.ItemId = itemId;
+            this.QuantMax = quantidadeMaxima;
         }
+
+        public int ItemId { get; set; }
+        public int QuantMax { get; set; } = 1;
     }
 }

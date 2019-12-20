@@ -5,6 +5,7 @@ using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades
 {
+    [BsonIgnoreExtraElements]
     public class RPGMochila
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
@@ -13,55 +14,45 @@ namespace ZaynBot.RPG.Entidades
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<TipoItemEnum, RPGItem> Equipamentos { get; set; } = new Dictionary<TipoItemEnum, RPGItem>();
 
-        public double PesoAtual { get; set; }
-        public double PesoMaximo { get; set; }
-
         public bool AdicionarItem(RPGItem item, int quantidade = 1)
         {
             // Verifica se o item tem durabilidade
             if (item.DurabilidadeMax > 0)
             {
                 // Se tiver, só precisa adiciona-lo
+                ItemDataRPG itemData = new ItemDataRPG()
+                {
+                    Id = item.Id,
+                    DurabilidadeAtual = item.DurabilidadeMax,
+                    Quantidade = 1,
+                };
+
                 int incr = 1;
                 for (int i = 0; i < quantidade; i++)
                 {
-                    bool naoAdicionou = true;
                     do
                     {
-                        try
-                        {
-                            Itens.Add($"{item.Id} {incr}", new ItemDataRPG()
-                            {
-                                Id = item.Id,
-                                DurabilidadeAtual = item.DurabilidadeMax,
-                                Quantidade = 1,
-                            });
-                            naoAdicionou = false;
-                        }
-                        catch
-                        {
+                        if (Itens.TryAdd($"{item.Nome} {incr}", itemData))
+                            break;
+                        else
                             incr++;
-                            naoAdicionou = true;
-                        }
-                    } while (naoAdicionou);
+
+                    } while (true);
                 }
                 return true;
             }
 
             // Se não tiver
             // Verificar se já está na mochila
-            bool achou = Itens.TryGetValue(item.Id.ToString(), out ItemDataRPG itemEncontrado);
-
             // Se o encontrar, incrementa-se a quantidade
-            if (achou)
+            if (Itens.TryGetValue(item.Nome, out ItemDataRPG itemEncontrado))
             {
                 itemEncontrado.Quantidade += quantidade;
                 return true;
             }
 
-
             // Se não está na mochila, o adiciona
-            Itens.Add(item.Id.ToString(), new ItemDataRPG()
+            Itens.Add(item.Nome, new ItemDataRPG()
             {
                 Id = item.Id,
                 Quantidade = quantidade,
@@ -72,9 +63,7 @@ namespace ZaynBot.RPG.Entidades
 
         public void DesequiparItem(RPGItem item, RPGPersonagem personagem)
         {
-            personagem.Inventario.Equipamentos.Remove(item.TipoItem);
-
-            // Adiciona-o na mochila
+            personagem.Mochila.Equipamentos.Remove(item.TipoItem);
             AdicionarItem(item);
         }
     }

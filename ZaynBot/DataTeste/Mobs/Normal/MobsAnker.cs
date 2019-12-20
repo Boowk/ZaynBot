@@ -11,7 +11,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
     {
         public static RPGMob CoelhoMobAb()
         {
-            RPGMob mob = new RPGMob(60)
+            RPGMob mob = new RPGMob(5)
             {
                 Nome = "Coelho",
                 AtaqueFisico = 6,
@@ -27,7 +27,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob SlimeMobAb()
         {
-            RPGMob mob = new RPGMob(60)
+            RPGMob mob = new RPGMob(5)
             {
                 Nome = "Slime",
                 AtaqueFisico = 5,
@@ -43,7 +43,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob EsqueletoMobAb()
         {
-            RPGMob mob = new RPGMob(60)
+            RPGMob mob = new RPGMob(5)
             {
                 Nome = "Esqueleto",
                 AtaqueFisico = 10,

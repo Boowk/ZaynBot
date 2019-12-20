@@ -8,7 +8,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class MochilaComando : BaseCommandModule
+    public class ComandoMochila : BaseCommandModule
     {
 
         [Command("mochila")]
@@ -23,9 +23,9 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Inventário", ctx);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Mochila", ctx);
             embed.WithColor(DiscordColor.Purple);
-            if (usuario.Personagem.Inventario.Itens.Count == 0)
+            if (usuario.Personagem.Mochila.Itens.Count == 0)
                 embed.WithDescription("Nem um farelo dentro.");
             else
             {
@@ -33,11 +33,11 @@ namespace ZaynBot.RPG.Comandos
                 int index = pagina * 10;
                 int quantidades = 0;
 
-                for (int i = pagina * 10; i < usuario.Personagem.Inventario.Itens.Count; i++)
+                for (int i = pagina * 10; i < usuario.Personagem.Mochila.Itens.Count; i++)
                 {
-                    RPGItem itemData = ModuloBanco.ItemGet(usuario.Personagem.Inventario.Itens.Values[index].Id);
-                    ItemDataRPG item = usuario.Personagem.Inventario.Itens.Values[index];
-                    str.Append($"**{item.Quantidade} - {itemData.Nome.PrimeiraLetraMaiuscula()}**(ID {usuario.Personagem.Inventario.Itens.Keys[index]})");
+                    RPGItem itemData = ModuloBanco.ItemGet(usuario.Personagem.Mochila.Itens.Values[index].Id);
+                    ItemDataRPG item = usuario.Personagem.Mochila.Itens.Values[index];
+                    str.Append($"**{item.Quantidade} - {itemData.Nome}**");
                     if (item.DurabilidadeAtual > 0)
                         str.Append($" - *Durab. {item.DurabilidadeAtual}/{itemData.DurabilidadeMax}*");
                     str.Append("\n");
@@ -47,7 +47,7 @@ namespace ZaynBot.RPG.Comandos
                         break;
                 }
                 embed.WithDescription(str.ToString());
-                embed.WithFooter($"Página {pagina} | {usuario.Personagem.Inventario.Itens.Count} Itens diferentes");
+                embed.WithFooter($"Página {pagina} | {usuario.Personagem.Mochila.Itens.Count} Itens diferentes");
             }
             await ctx.RespondAsync(embed: embed.Build());
         }

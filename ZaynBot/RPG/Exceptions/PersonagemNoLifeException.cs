@@ -1,10 +1,8 @@
-﻿namespace ZaynBot.RPG.Exceptions
-{
-    public class PersonagemNoLifeException : MensagemException
-    {
-        public PersonagemNoLifeException()
-            => Mensagem = "você está sem vida para efetuar ações.";
+﻿using System;
 
-        public PersonagemNoLifeException(string mensagem) : base(mensagem) { }
+namespace ZaynBot.RPG.Exceptions
+{
+    public class PersonagemNoLifeException : Exception
+    {
     }
 }

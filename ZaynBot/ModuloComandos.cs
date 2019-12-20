@@ -54,7 +54,7 @@ namespace ZaynBot
             //Comandos.RegisterCommands<NorteComando>();
             //Comandos.RegisterCommands<OesteComando>();
             //Comandos.RegisterCommands<SulComando>();
-            //Comandos.RegisterCommands<MochilaComando>();
+            Comandos.RegisterCommands<ComandoMochila>();
             //Comandos.RegisterCommands<ExaminarComando>();
             //Comandos.RegisterCommands<EquiparComando>();
             //Comandos.RegisterCommands<DesequiparComando>();
@@ -112,7 +112,11 @@ namespace ZaynBot
                     await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
                     return;
                 case PersonagemNoLifeException pnx:
-                    await ctx.RespondAsync($"{ctx.User.Mention}, {pnx.ToString()}");
+                    DiscordEmbedBuilder emb = new DiscordEmbedBuilder();
+                    emb.WithDescription($"{ctx.User.Mention} acabou de morrer!\n" +
+                        $"Você perdeu um pouco de experiencia e moedas.");
+                    emb.WithImageUrl("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n");
+                    await ctx.RespondAsync(ctx.User.Mention, embed: emb.Build());
                     return;
                 case MensagemException mx:
                     await ctx.RespondAsync(mx.Message);

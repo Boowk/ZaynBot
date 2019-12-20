@@ -29,7 +29,7 @@ namespace ZaynBot.RPG.Comandos
         [Aliases("at")]
         [Description("Ataca o mob que você encontrou explorando")]
         [ComoUsar("atacar")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 4, CooldownBucketType.User)]
         public async Task ComandoAtacarAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
@@ -37,13 +37,13 @@ namespace ZaynBot.RPG.Comandos
 
             if (usuario.Personagem.Batalha.Mob == null)
             {
-                await ctx.RespondAsync($"**{ctx.User.Mention} você não tem nenhum mob para atacar! use `z!explorar` para encontrar algum mob!");
+                await ctx.RespondAsync($"{ctx.User.Mention} você não tem nenhum mob para atacar! use `z!explorar` para encontrar algum mob!".Bold());
                 return;
             }
 
             if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
             {
-                await ctx.RespondAsync($"**{usuario.Personagem.Batalha.Mob.Nome}** já está morto! {ctx.User.Mention} use `z!explorar` para encontrar novos mobs!**");
+                await ctx.RespondAsync($"{usuario.Personagem.Batalha.Mob.Nome} já está morto! {ctx.User.Mention} use `z!explorar` para encontrar novos mobs!".Bold());
                 return;
             }
 
@@ -61,22 +61,7 @@ namespace ZaynBot.RPG.Comandos
 
                     mob.EstaminaAtual = 0;
                     double danoInimigo = CalcDano(usuario.Personagem.DefesaFisica, mob.AtaqueFisico);
-                    usuario.Personagem.VidaAtual -= danoInimigo;
-                    if (usuario.Personagem.VidaAtual <= 0)
-                    {
-                        await ctx.RespondAsync("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n" +
-                            $"{ctx.User.Mention}");
-                        usuario.Personagem.VidaAtual = usuario.Personagem.VidaMaxima / 3;
-                        RPGUsuario.Salvar(usuario);
-                        try
-                        {
-                            DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-                            DiscordChannel CanalRPG = MundoZayn.GetChannel(629281618447564810);
-                            await CanalRPG.SendMessageAsync($"*Um {mob.Nome} matou o {ctx.User.Username}#{ctx.User.Discriminator}!*");
-                        }
-                        catch { }
-                        return;
-                    }
+                    usuario.RemoverVida(danoInimigo);
                     usuario.Personagem.Batalha.Turno++;
                     strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
                     strRelatorio.AppendLine($"**{ctx.User.Mention} perdeu -{danoInimigo.Text()} vida.**");
@@ -118,13 +103,28 @@ namespace ZaynBot.RPG.Comandos
                     vezJogador = true;
                     usuario.Personagem.Batalha.Turno++;
                     strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
+                    if (usuario.Personagem.FomeAtual < 0)
+                    {
+                        double fome = usuario.Personagem.VidaMaxima / 0.02;
+                        usuario.RemoverVida(fome);
+                        strRelatorio.AppendLine($"Faminto! -{fome} vida.".Bold());
+                    }
+                    if (usuario.Personagem.SedeAtual < 0)
+                    {
+                        double sede = usuario.Personagem.VidaMaxima / 0.08;
+                        usuario.RemoverVida(sede);
+                        strRelatorio.AppendLine($"Desidratado! -{sede} vida.".Bold());
+                    }
+
                     usuario.Personagem.EstaminaAtual = 0;
                 }
             } while (vezJogador == false);
 
 
+            if (usuario.Personagem.Mochila == null)
+                usuario.Personagem.Mochila = new RPGMochila();
             //Pega a arma que ele esta usando e já fz o calculo de proficiencia
-            usuario.Personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Arma, out RPGItem arma);
+            usuario.Personagem.Mochila.Equipamentos.TryGetValue(TipoItemEnum.Arma, out RPGItem arma);
             double danoJogador = 0;
             if (arma != null)
             {
@@ -146,7 +146,7 @@ namespace ZaynBot.RPG.Comandos
                 arma.DurabilidadeMax -= Convert.ToInt32(0.06 * arma.AtaqueFisico);
                 if (arma.DurabilidadeMax <= 0)
                 {
-                    usuario.Personagem.Inventario.DesequiparItem(arma, usuario.Personagem);
+                    usuario.Personagem.Mochila.DesequiparItem(arma, usuario.Personagem);
                     await ctx.RespondAsync($"**({arma.Nome})** quebrou! {ctx.User.Mention}!");
                 }
             }
@@ -174,24 +174,16 @@ namespace ZaynBot.RPG.Comandos
             if (mob.VidaAtual <= 0)
             {
                 strRelatorio.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
-                //if (mensagemDrops.ToString() != "")
-                //    embed.AddField($"**{"Recompensas".Titulo()}**", $"**{mensagemDrops.ToString()}**");
-                ////Pega a data do item no Banco de dados
-                //ItensRPG itemData = ModuloBanco.ItemGet(i.ItemId);
-                //// Sorteia - se a quantidade
-                //int quantidade = Sortear.Valor(1, i.QuantidadeMaxima);
-                //// Adiciona no inventario o item conforme a quantidade sorteada
-                //usuario.Personagem.Inventario.AdicionarItem(itemData, quantidade);
-                //// Enviamos uma mensagem avisando a quantidade sorteada e o item que foi sorteado
-                //mensagemDrops.Append($"{quantidade} {itemData.Nome.PrimeiraLetraMaiuscula()}.\n");
-                //// Finalizamos o sorteio de itens.
-                //break;
 
-                bool isEvoluiou = usuario.Personagem.AdicionarExp(mob.Essencia);
-                if (isEvoluiou)
-                {
-                    await ctx.RespondAsync($"{ctx.User.Mention}, evoluiu para o nível {usuario.Personagem.NivelAtual}! Seus atributos aumentarão em 2%!");
-                }
+                //Pega a data do item no Banco de dados
+                RPGItem itemData = ModuloBanco.ItemGet(mob.Drop.ItemId);
+                int quantidade = Sortear.Valor(1, mob.Drop.QuantMax);
+                usuario.Personagem.Mochila.AdicionarItem(itemData, quantidade);
+                // Enviamos uma mensagem
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome}]!".Bold());
+
+                if (usuario.Personagem.AdicionarExp(mob.Essencia))
+                    strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")}!".Bold());
             }
             else
             {

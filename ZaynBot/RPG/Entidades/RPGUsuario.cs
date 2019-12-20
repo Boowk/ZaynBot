@@ -51,6 +51,39 @@ namespace ZaynBot.RPG.Entidades
             return usuario;
         }
 
+        public double RecuperarVida(double quantidade)
+        {
+            if (quantidade + Personagem.VidaAtual > Personagem.VidaMaxima)
+            {
+                double v = Personagem.VidaMaxima - Personagem.VidaAtual;
+                Personagem.VidaAtual = Personagem.VidaMaxima;
+                return v;
+            }
+            Personagem.VidaAtual += quantidade;
+            return quantidade;
+        }
+        public double RecuperarMagia(double quantidade)
+        {
+            if (quantidade + Personagem.MagiaAtual > Personagem.MagiaMaxima)
+            {
+                double v = Personagem.MagiaMaxima - Personagem.MagiaAtual;
+                Personagem.MagiaAtual = Personagem.MagiaMaxima;
+                return v;
+            }
+            Personagem.MagiaAtual += quantidade;
+            return quantidade;
+        }
+        public void RemoverVida(double quantidade)
+        {
+            Personagem.VidaAtual -= quantidade;
+            if (Personagem.VidaAtual <= 0)
+            {
+                Personagem.VidaAtual = Personagem.VidaMaxima / 3;
+                Salvar(this);
+                throw new PersonagemNoLifeException();
+            }
+        }
+
         public static void Salvar(RPGUsuario usuario)
             => ModuloBanco.UsuarioEdit(usuario);
 

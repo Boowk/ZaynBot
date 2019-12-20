@@ -23,7 +23,7 @@ namespace ZaynBot.Data.Itens
             };
 
         public static RPGItem Ossositem()
-            => new RPGItem(2, "Ossos", TipoItemEnum.Recurso, 1)
+            => new RPGItem(2, "Osso", TipoItemEnum.Recurso, 1)
             {
                 Descricao = "Ossos.. isso dá um arrepio."
             };

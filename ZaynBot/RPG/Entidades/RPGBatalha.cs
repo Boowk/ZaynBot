@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
+    [BsonIgnoreExtraElements]
     public class RPGBatalha
     {
         public int Turno { get; set; }
 
         public RPGMob Mob { get; set; }
-
 
         public RPGBatalha()
         {
