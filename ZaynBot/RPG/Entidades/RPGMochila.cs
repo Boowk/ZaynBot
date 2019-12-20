@@ -17,6 +17,7 @@ namespace ZaynBot.RPG.Entidades
         public bool AdicionarItem(RPGItem item, int quantidade = 1)
         {
             // Verifica se o item tem durabilidade
+            item.Nome = item.Nome.ToLower();
             if (item.DurabilidadeMax > 0)
             {
                 // Se tiver, só precisa adiciona-lo

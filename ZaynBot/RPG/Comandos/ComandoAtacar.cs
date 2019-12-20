@@ -180,7 +180,7 @@ namespace ZaynBot.RPG.Comandos
                 int quantidade = Sortear.Valor(1, mob.Drop.QuantMax);
                 usuario.Personagem.Mochila.AdicionarItem(itemData, quantidade);
                 // Enviamos uma mensagem
-                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome}]!".Bold());
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome.PrimeiraLetraMaiuscula()}]!".Bold());
 
                 if (usuario.Personagem.AdicionarExp(mob.Essencia))
                     strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")}!".Bold());
