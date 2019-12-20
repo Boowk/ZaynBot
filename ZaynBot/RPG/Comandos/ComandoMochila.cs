@@ -10,7 +10,6 @@ namespace ZaynBot.RPG.Comandos
 {
     public class ComandoMochila : BaseCommandModule
     {
-
         [Command("mochila")]
         [Aliases("m")]
         [Description("Exibe o que tem dentro da mochila do seu personagem e a capacidade atual/max.")]
@@ -25,6 +24,8 @@ namespace ZaynBot.RPG.Comandos
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Mochila", ctx);
             embed.WithColor(DiscordColor.Purple);
+            if (usuario.Personagem.Mochila == null)
+                usuario.Personagem.Mochila = new RPGMochila();
             if (usuario.Personagem.Mochila.Itens.Count == 0)
                 embed.WithDescription("Nem um farelo dentro.");
             else
