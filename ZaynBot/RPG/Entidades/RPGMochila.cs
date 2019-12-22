@@ -9,7 +9,7 @@ namespace ZaynBot.RPG.Entidades
     public class RPGMochila
     {
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public SortedList<string, ItemDataRPG> Itens { get; set; } = new SortedList<string, ItemDataRPG>();
+        public SortedList<string, RPGMochilaItemData> Itens { get; set; } = new SortedList<string, RPGMochilaItemData>();
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<TipoItemEnum, RPGItem> Equipamentos { get; set; } = new Dictionary<TipoItemEnum, RPGItem>();
@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Entidades
             if (item.DurabilidadeMax > 0)
             {
                 // Se tiver, só precisa adiciona-lo
-                ItemDataRPG itemData = new ItemDataRPG()
+                RPGMochilaItemData itemData = new RPGMochilaItemData()
                 {
                     Id = item.Id,
                     DurabilidadeAtual = item.DurabilidadeMax,
@@ -46,14 +46,14 @@ namespace ZaynBot.RPG.Entidades
             // Se não tiver
             // Verificar se já está na mochila
             // Se o encontrar, incrementa-se a quantidade
-            if (Itens.TryGetValue(item.Nome, out ItemDataRPG itemEncontrado))
+            if (Itens.TryGetValue(item.Nome, out RPGMochilaItemData itemEncontrado))
             {
                 itemEncontrado.Quantidade += quantidade;
                 return true;
             }
 
             // Se não está na mochila, o adiciona
-            Itens.Add(item.Nome, new ItemDataRPG()
+            Itens.Add(item.Nome, new RPGMochilaItemData()
             {
                 Id = item.Id,
                 Quantidade = quantidade,
@@ -67,5 +67,13 @@ namespace ZaynBot.RPG.Entidades
             personagem.Mochila.Equipamentos.Remove(item.TipoItem);
             AdicionarItem(item);
         }
+    }
+
+    [BsonIgnoreExtraElements]
+    public class RPGMochilaItemData
+    {
+        public int Id { get; set; }
+        public int DurabilidadeAtual { get; set; }
+        public int Quantidade { get; set; }
     }
 }

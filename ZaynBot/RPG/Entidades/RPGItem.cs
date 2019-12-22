@@ -38,12 +38,4 @@ namespace ZaynBot.RPG.Entidades
             DurabilidadeMax = durabilidade;
         }
     }
-
-    [BsonIgnoreExtraElements]
-    public class ItemDataRPG
-    {
-        public int Id { get; set; }
-        public int DurabilidadeAtual { get; set; }
-        public int Quantidade { get; set; }
-    }
 }

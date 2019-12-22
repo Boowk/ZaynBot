@@ -23,7 +23,7 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"{ctx.User.Mention}, você precisa informar um [item] para examinar!".Bold());
                 return;
             }
-            if (usuario.Personagem.Mochila.Itens.TryGetValue(nomeItem.ToLower(), out ItemDataRPG itemData))
+            if (usuario.Personagem.Mochila.Itens.TryGetValue(nomeItem.ToLower(), out RPGMochilaItemData itemData))
             {
                 RPGItem item = ModuloBanco.ItemGet(itemData.Id);
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Item", ctx);
