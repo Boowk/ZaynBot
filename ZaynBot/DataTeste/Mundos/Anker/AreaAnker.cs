@@ -18,6 +18,9 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             };
             RPGSaida leste = new RPGSaida(DirecaoEnum.Leste, 1);
             regiao.SaidasRegioes.Add(leste);
+
+            regiao.LojaItensId.Add(4);
+            regiao.LojaItensId.Add(1);
             return regiao;
         }
         public static RPGRegiao LugarDesconhecido1()

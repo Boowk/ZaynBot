@@ -13,7 +13,8 @@ namespace ZaynBot.RPG.Entidades
         public TipoItemEnum TipoItem { get; set; }
         public TipoExpEnum TipoExp { get; set; }
         public int DurabilidadeMax { get; set; }
-        public double PrecoBase { get; set; }
+        public double PrecoCompra { get; set; }
+        public double PrecoVenda { get; set; }
 
         public double AtaqueFisico { get; set; }
         public double DefesaFisica { get; set; }
@@ -27,7 +28,7 @@ namespace ZaynBot.RPG.Entidades
             Id = id;
             Nome = nome;
             TipoItem = tipo;
-            PrecoBase = preco;
+            PrecoCompra = preco;
             DurabilidadeMax = 0;
             TipoExp = TipoExpEnum.Nenhum;
         }

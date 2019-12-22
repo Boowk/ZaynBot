@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace ZaynBot.RPG.Comandos
-{
-    class EquipamentosComando
-    {
-    }
-}
-
-
-//public void GerarEquips(StringBuilder sr, string nomeExibicao, TipoItemEnum itemEnum, PersonagemRPG personagem)
+//namespace ZaynBot.RPG.Comandos
 //{
-//    sr.Append($"**{nomeExibicao}:** ");
-//    bool isItem = personagem.Inventario.Equipamentos.TryGetValue(itemEnum, out ItemRPG item);
-//    if (isItem)
-//        sr.AppendLine($"{item.Nome}({item.Id}) - *Durab. {item.Durabilidade}/{ModuloBanco.ItemGet(item.Id).Durabilidade}*");
-//    else
-//        sr.AppendLine("Nenhum");
+//    class EquipamentosComando
+//    {
+//    }
 //}
+
+
+////public void GerarEquips(StringBuilder sr, string nomeExibicao, TipoItemEnum itemEnum, PersonagemRPG personagem)
+////{
+////    sr.Append($"**{nomeExibicao}:** ");
+////    bool isItem = personagem.Inventario.Equipamentos.TryGetValue(itemEnum, out ItemRPG item);
+////    if (isItem)
+////        sr.AppendLine($"{item.Nome}({item.Id}) - *Durab. {item.Durabilidade}/{ModuloBanco.ItemGet(item.Id).Durabilidade}*");
+////    else
+////        sr.AppendLine("Nenhum");
+////}

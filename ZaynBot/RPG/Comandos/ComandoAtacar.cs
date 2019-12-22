@@ -129,14 +129,14 @@ namespace ZaynBot.RPG.Comandos
                     case TipoExpEnum.Perfurante:
                         ProficienciaPerfurante perfuranteHab = (ProficienciaPerfurante)usuario.Personagem.Proficiencias[ProficienciaEnum.Perfurante];
                         bool evoluiu = perfuranteHab.AdicionarExp();
-                        danoJogador = CalcDano(mob.Armadura, perfuranteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.ItemGet(arma.Id).DurabilidadeMax));
+                        danoJogador = CalcDano(mob.Armadura, perfuranteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.GetItem(arma.Id).DurabilidadeMax));
                         break;
                     case TipoExpEnum.Esmagante:
                         ProficienciaEsmagante esmaganteHab = (ProficienciaEsmagante)usuario.Personagem.Proficiencias[ProficienciaEnum.Esmagante];
                         bool evoluiu2 = esmaganteHab.AdicionarExp();
                         //if (evoluiu2)
                         //    await ctx.RespondAsync($"Habilidade **({esmaganteHab.Nome})** evoluiu! {ctx.User.Mention}.");
-                        danoJogador = CalcDano(mob.Armadura, esmaganteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.ItemGet(arma.Id).DurabilidadeMax));
+                        danoJogador = CalcDano(mob.Armadura, esmaganteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.GetItem(arma.Id).DurabilidadeMax));
                         break;
                 }
                 arma.DurabilidadeMax -= Convert.ToInt32(0.06 * arma.AtaqueFisico);
@@ -172,7 +172,7 @@ namespace ZaynBot.RPG.Comandos
                 strRelatorio.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
                 usuario.RipMobs++;
                 //Pega a data do item no Banco de dados
-                RPGItem itemData = ModuloBanco.ItemGet(mob.Drop.ItemId);
+                RPGItem itemData = ModuloBanco.GetItem(mob.Drop.ItemId);
                 int quantidade = Sortear.Valor(1, mob.Drop.QuantMax);
                 usuario.Personagem.Mochila.AdicionarItem(itemData, quantidade);
                 // Enviamos uma mensagem

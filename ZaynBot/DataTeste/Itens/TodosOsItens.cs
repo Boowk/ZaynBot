@@ -10,13 +10,13 @@ namespace ZaynBot.Data.Itens
             ModuloBanco.Database.DropCollection("itens");
             List<RPGItem> itens = new List<RPGItem>()
             {
-               ItensRPG.MoedaDeCobreItem(),
+               ItensRPG.MoedaDeZeoinItem(),
                ItensRPG.EspadaEnferrujadaItem(),
-               ItensRPG.Ossositem(),
+               ItensRPG.OssosItem(),
                ItensRPG.GosmaItem(),
-               ItensRPG.CarneDeCoelhoAssada(),
-               ItensRPG.CarneDeCoelho(),
-               ItensRPG.OssoAfiado()
+               ItensRPG.CarneDeCoelhoAssadaItem(),
+               ItensRPG.CarneDeCoelhoItem(),
+               ItensRPG.OssoAfiadoItem()
             };
             ModuloBanco.ItemColecao.InsertMany(itens);
         }

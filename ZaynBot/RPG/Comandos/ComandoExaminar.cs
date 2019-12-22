@@ -25,7 +25,7 @@ namespace ZaynBot.RPG.Comandos
             }
             if (usuario.Personagem.Mochila.Itens.TryGetValue(nomeItem.ToLower(), out RPGMochilaItemData itemData))
             {
-                RPGItem item = ModuloBanco.ItemGet(itemData.Id);
+                RPGItem item = ModuloBanco.GetItem(itemData.Id);
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Item", ctx);
                 embed.WithTitle($"**{item.Nome.FirstUpper()}**");
                 embed.WithDescription((item.Descricao) != "" ? item.Descricao : "Sem descrição");

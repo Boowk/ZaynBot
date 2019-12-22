@@ -63,7 +63,7 @@ namespace ZaynBot
         public static void ServidorDel(ulong id)
             => ServidorColecao.DeleteOne(x => x.Id == id);
 
-        public static RPGItem ItemGet(int id)
+        public static RPGItem GetItem(int id)
              => ItemColecao.Find(x => x.Id == id).FirstOrDefault();
 
         public static RPGReceita ReceitaGet(int id)
