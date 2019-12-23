@@ -29,6 +29,13 @@ namespace ZaynBot
             if (server.BemVindoCanalId != 0)
             {
                 DiscordChannel bemVindoCanal = e.Guild.GetChannel(server.BemVindoCanalId);
+                if (bemVindoCanal == null)
+                {
+                    server.BemVindoCanalId = 0;
+                    server.BemVindoMensagem = "";
+                    server.Salvar();
+                    return Task.CompletedTask;
+                }
                 StringBuilder str = new StringBuilder(server.BemVindoMensagem);
                 str.Replace("#Menção", $"{e.Member.Mention}");
                 str.Replace("#Quantidade", $"{e.Guild.MemberCount}");
