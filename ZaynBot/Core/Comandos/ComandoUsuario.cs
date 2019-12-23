@@ -4,15 +4,16 @@ using DSharpPlus.Entities;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 
-namespace ZaynBot.RPG.Comandos
+namespace ZaynBot.Core.Comandos
 {
-    public class UsuarioComando : BaseCommandModule
+    public class ComandoUsuario : BaseCommandModule
     {
         [Command("usuario")]
         [Description("Exibe o perfil de um usuario do discord")]
         [ComoUsar("usuario [id|menção]")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
-        public async Task UsuarioComandoAb(CommandContext ctx, DiscordUser usuario = null)
+        [Cooldown(1, 4, CooldownBucketType.User)]
+        [Priority(0)]
+        public async Task ComandoUsuarioAb(CommandContext ctx, DiscordUser usuario = null)
         {
             await ctx.TriggerTypingAsync();
             if (usuario == null)
@@ -25,6 +26,25 @@ namespace ZaynBot.RPG.Comandos
             embed.AddField("Nome no Discord", usuario.Username, true);
             embed.AddField("ID", $"```css\n{usuario.Id}```");
             await ctx.RespondAsync(embed: embed.Build());
+        }
+
+        [Command("usuario")]
+        [Cooldown(1, 4, CooldownBucketType.User)]
+        public async Task ComandoUsuarioAb(CommandContext ctx, int usuarioId = 0)
+        {
+            if (usuarioId.ToString().Length < 17)
+            {
+                await ctx.TriggerTypingAsync();
+                await ctx.ExecutarComandoAsync("ajuda usuario");
+            }
+        }
+
+        [Command("usuario")]
+        [Cooldown(1, 4, CooldownBucketType.User)]
+        public async Task ComandoUsuarioAb(CommandContext ctx, string usuarioId)
+        {
+            await ctx.TriggerTypingAsync();
+            await ctx.ExecutarComandoAsync("ajuda usuario");
         }
     }
 }

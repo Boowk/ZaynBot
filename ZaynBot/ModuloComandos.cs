@@ -30,7 +30,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<InfoComando>();
             Comandos.RegisterCommands<PrefixoComando>();
             Comandos.RegisterCommands<VotarComando>();
-            Comandos.RegisterCommands<UsuarioComando>();
+            Comandos.RegisterCommands<ComandoUsuario>();
             Comandos.RegisterCommands<ComandoAdm>();
 
             //Comandos.RegisterCommands<DencansarComando>();
