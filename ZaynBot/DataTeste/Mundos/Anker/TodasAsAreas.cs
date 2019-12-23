@@ -10,11 +10,7 @@ namespace ZaynBot.RPG.Data.Mundos.Anker
             ModuloBanco.Database.DropCollection("regioes");
             List<RPGRegiao> regioes = new List<RPGRegiao>()
             {
-               AreaAnker.LugarDesconhecido0(),
-                AreaAnker.LugarDesconhecido1(),
-                AreaAnker.LugarDesconhecido2(),
-                AreaAnker.LugarDesconhecido3(),
-                AreaAnker.SaidaDaCaverna4(),
+               AreaAnker.CidadePrincipal(),
             };
             ModuloBanco.RegiaoColecao.InsertMany(regioes);
         }

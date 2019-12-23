@@ -16,7 +16,8 @@ namespace ZaynBot.Data.Itens
                ItensRPG.GosmaItem(),
                ItensRPG.CarneDeCoelhoAssadaItem(),
                ItensRPG.CarneDeCoelhoItem(),
-               ItensRPG.OssoAfiadoItem()
+               ItensRPG.OssoAfiadoItem(),
+               ItensRPG.FrascoVermelhoItem()
             };
             ModuloBanco.ItemColecao.InsertMany(itens);
         }

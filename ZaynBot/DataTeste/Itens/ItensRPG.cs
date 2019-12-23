@@ -52,5 +52,12 @@ namespace ZaynBot.Data.Itens
                 Descricao = "Meio nojento, mas é bem afiado para uma arma.",
                 AtaqueFisico = 10,
             };
+
+        public static RPGItem FrascoVermelhoItem()
+            => new RPGItem(7, "Frasco vermelho", TipoItemEnum.Usavel, 2)
+            {
+                Descricao = "Um frasco com um liquido vermelho..",
+                VidaRestaura = 25
+            };
     }
 }

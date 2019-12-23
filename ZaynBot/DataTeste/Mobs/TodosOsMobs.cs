@@ -13,9 +13,7 @@ namespace ZaynBot.DataTeste.Mobs
             ModuloBanco.Database.DropCollection("mobs");
             List<RPGMob> mobs = new List<RPGMob>()
             {
-             MobsAnker.CoelhoMobAb(),
-             MobsAnker.EsqueletoMobAb(),
-             MobsAnker.SlimeMobAb(),
+             MobsAnker.LadraoMob(),
             };
             ModuloBanco.MobColecao.InsertMany(mobs);
         }
