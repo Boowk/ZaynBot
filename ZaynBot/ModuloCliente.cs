@@ -32,8 +32,10 @@ namespace ZaynBot
             Bot = BotCore.LoadFromFile(projetoRaiz);
             if (Bot == null)
                 Bot = new BotCore();
+#if DEBUG
             Bot.VersaoRevisao++;
             Bot.SaveToFile(projetoRaiz);
+#endif
             Client.UpdateStatusAsync(new DiscordActivity($"z!ajuda", ActivityType.Playing), UserStatus.Online);
             return Task.CompletedTask;
         }
