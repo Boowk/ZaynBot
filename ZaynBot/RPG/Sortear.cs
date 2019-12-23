@@ -9,7 +9,7 @@ namespace ZaynBot.RPG
         public static int Valor(int min, int max)
         {
             Random rd = new Random();
-            return rd.Next(min, max);
+            return rd.Next(min, 1 + max);
         }
 
         public static long Valor(long min, long max)
