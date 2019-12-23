@@ -1,9 +1,5 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
@@ -14,10 +10,9 @@ namespace ZaynBot.RPG.Comandos
     {
         [Command("comprar")]
         [Description("Permite comprar os itens que estão sendo vendido na região atual.")]
-        [ComoUsar("comprar [quantidade|] [nome]")]
+        [ComoUsar("comprar [+quantidade|] [nome]")]
         [Exemplo("comprar 1 frasco vermelho")]
-        [Exemplo("comprar frasco vermelho")]
-        [Cooldown(1, 2, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoComprarAb(CommandContext ctx, int quantidade = 1, [RemainingText] string nomeItem = "")
         {
             await ctx.TriggerTypingAsync();
@@ -32,28 +27,55 @@ namespace ZaynBot.RPG.Comandos
 
             if (string.IsNullOrEmpty(nomeItem))
             {
-                await ctx.RespondAsync($"{ctx.User.Mention} você não pode comprar o vento!");
+                await ctx.ExecutarComandoAsync("ajuda comprar");
                 return;
             }
 
-            StringBuilder str = new StringBuilder();
+            if (quantidade <= 0)
+            {
+                await ctx.ExecutarComandoAsync("ajuda comprar");
+                return;
+            }
+            nomeItem = nomeItem.ToLower();
+
+            RPGItem item = null;
             foreach (var i in regiaoAtual.LojaItensId)
             {
-                RPGItem item = ModuloBanco.GetItem(i);
-                str.AppendLine($"[{item.Nome}] - {item.PrecoCompra} Zeoin".Bold());
+                item = ModuloBanco.GetItem(i);
+                if (item.Nome.ToLower() == nomeItem)
+                    break;
+                else
+                    item = null;
             }
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Loja", ctx);
-            embed.WithDescription(str.ToString());
-            await ctx.RespondAsync(embed: embed.Build());
+            if (item == null)
+            {
+                await ctx.RespondAsync($"O item [{nomeItem.FirstUpper()}] não está sendo vendido {ctx.User.Mention}!".Bold());
+                return;
+            }
+
+            if (usuario.Personagem.Mochila.Itens.TryGetValue("moeda de zeoin", out RPGMochilaItemData moedasUsuario))
+            {
+                int precoTotal = quantidade * item.PrecoCompra;
+                if (precoTotal > moedasUsuario.Quantidade)
+                    await ctx.RespondAsync($"{ctx.User.Mention} você não tem Zeoin o suficiente para comprar essa quantidade!".Bold());
+                else
+                {
+                    usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
+                    moedasUsuario.Quantidade -= precoTotal;
+                    await ctx.RespondAsync($"{ctx.User.Mention} você acabou de comprar {quantidade} [{item.Nome}]!".Bold());
+                    usuario.Salvar();
+                }
+            }
+            else
+                await ctx.RespondAsync($"{ctx.User.Mention} você não tem Zeoin para estar comprando!".Bold());
         }
 
         [Command("comprar")]
-        [Cooldown(1, 2, CooldownBucketType.User)]
+        [ComoUsar("comprar [nome]")]
+        [Exemplo("comprar frasco vermelho")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoComprarErroAb(CommandContext ctx, [RemainingText] string nomeItem = "")
-        {
-            await ctx.TriggerTypingAsync();
-            await ctx.RespondAsync($"Você está usando o comando de forma errada {ctx.User.Mention}!".Bold());
-        }
+            => await ComandoComprarAb(ctx, 1, nomeItem);
     }
 }

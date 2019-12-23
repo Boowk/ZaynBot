@@ -32,6 +32,13 @@ namespace ZaynBot.RPG.Entidades
                 throw new PersonagemNullException();
         }
 
+        public static void GetUsuario(DiscordUser usuarioDiscord, out RPGUsuario usuario)
+        {
+            usuario = ModuloBanco.GetUsuario(usuarioDiscord.Id);
+            if (usuario == null)
+                throw new PersonagemNullException($"{usuarioDiscord.Mention} precisa criar um personagem com o comando `z!cp`!");
+        }
+
         public double RecuperarVida(double quantidade)
         {
             if (quantidade + Personagem.VidaAtual > Personagem.VidaMaxima)

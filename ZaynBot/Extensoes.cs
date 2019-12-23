@@ -32,5 +32,12 @@ namespace ZaynBot
 
         public static string Bold(this string texto)
             => $"**{texto}**";
+
+        public static async Task ExecutarComandoAsync(this CommandContext ctx, string comando)
+        {
+            var cmd = ctx.CommandsNext.FindCommand(comando, out var args);
+            var cfx = ctx.CommandsNext.CreateContext(ctx.Message, "z!", cmd, args);
+            await ctx.CommandsNext.ExecuteCommandAsync(cfx);
+        }
     }
 }

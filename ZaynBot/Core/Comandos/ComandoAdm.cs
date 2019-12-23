@@ -45,5 +45,24 @@ namespace ZaynBot.Core.Comandos
             ModuloBanco.UsuarioColecao.DeleteOne(x => x.Id == user.Id);
             await ctx.RespondAsync("Deletado!");
         }
+
+        [Command("adicionar-item")]
+        [Aliases("ai")]
+        public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)
+        {
+            if (discordUser == null)
+                discordUser = ctx.User;
+            await ctx.TriggerTypingAsync();
+            RPGItem item = ModuloBanco.GetItem(id);
+            if (item == null)
+            {
+                await ctx.RespondAsync("Item não encontrado!");
+                return;
+            }
+            RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
+            usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
+            usuario.Salvar();
+            await ctx.RespondAsync($"Adicionado {quantidade} [{item.Nome}] para {discordUser.Mention}!");
+        }
     }
 }
