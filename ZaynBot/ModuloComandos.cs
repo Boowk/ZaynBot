@@ -108,6 +108,8 @@ namespace ZaynBot
                 case MensagemException mx:
                     await ctx.RespondAsync(mx.Message);
                     break;
+                case UnauthorizedException ux:
+                    break;
                 default:
                     e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
                     DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
