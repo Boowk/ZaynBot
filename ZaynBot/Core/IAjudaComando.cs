@@ -90,10 +90,12 @@ namespace ZaynBot.Core
         {
             return "```css\nLista de comandos``` \n" +
             "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda` \n\n" +
-            "**1. Core -** `ajuda` , `convite` , `info` , `prefixo` , `votar` , `usuario` , `tutorial`\n" +
+            "**1. Core -** `ajuda` , `info` , `votar` , `tutorial`\n" +
             "**2. RPG -** `status` , `criar-personagem` , `proficiencia` , `mochila` , `examinar`\n" +
             "**3. Combate -** `atacar` , `explorar`\n" +
-            "**4. Outros -** `top`\n" +
+            "**4. Compras -** `loja` , `comprar`\n" +
+            "**5. Administrativos -** `prefixo`\n" +
+            "**6. Outros -** `top` , `convite` , `usuario`\n" +
             "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }
     }
