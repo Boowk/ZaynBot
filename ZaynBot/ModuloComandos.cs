@@ -26,10 +26,10 @@ namespace ZaynBot
             Comandos.SetHelpFormatter<IAjudaComando>();
 
             Comandos.RegisterCommands<ComandoAjuda>();
-            Comandos.RegisterCommands<ConviteComando>();
-            Comandos.RegisterCommands<InfoComando>();
-            Comandos.RegisterCommands<PrefixoComando>();
-            Comandos.RegisterCommands<VotarComando>();
+            Comandos.RegisterCommands<ComandoConvite>();
+            Comandos.RegisterCommands<ComandoInfo>();
+            Comandos.RegisterCommands<ComandoPrefixo>();
+            Comandos.RegisterCommands<ComandoVotar>();
             Comandos.RegisterCommands<ComandoUsuario>();
             Comandos.RegisterCommands<ComandoAdm>();
 

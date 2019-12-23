@@ -8,7 +8,6 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
-using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Core.Comandos
@@ -21,12 +20,12 @@ namespace ZaynBot.Core.Comandos
         public double Tamanho { get; set; }
     }
 
-    public class InfoComando : BaseCommandModule
+    public class ComandoInfo : BaseCommandModule
     {
         [Command("info")]
         [Description("Exibe uma breve descrição do bot.")]
         [ComoUsar("info")]
-        public async Task InformacaoComandoAb(CommandContext ctx)
+        public async Task ComandoInfoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             DiscordUser imain = await ModuloCliente.Client.GetUserAsync(383711472221421589);

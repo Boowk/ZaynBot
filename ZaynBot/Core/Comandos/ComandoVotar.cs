@@ -6,12 +6,12 @@ using ZaynBot.Core.Atributos;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class VotarComando : BaseCommandModule
+    public class ComandoVotar : BaseCommandModule
     {
         [Command("votar")]
         [Description("Exibe um link, permitindo a votar no bot. (Futuramente terá recompensas)")]
         [ComoUsar("votar")]
-        public async Task VotarComandoAb(CommandContext ctx)
+        public async Task ComandoVotarAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

@@ -7,14 +7,14 @@ using ZaynBot.Core.Entidades;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class PrefixoComando : BaseCommandModule
+    public class ComandoPrefixo : BaseCommandModule
     {
         [Command("prefixo")]
         [Description("Permite modificar o prefixo do bot no servidor atual.  Note que o Prefix antigo ainda continuará funcionando")]
         [ComoUsar("prefixo [p|]")]
         [Exemplo("prefixo !")]
         [RequireUserPermissions(Permissions.Administrator)]
-        public async Task PrefixComandoAb(CommandContext ctx, string prefix = null)
+        public async Task ComandoPrefixoAb(CommandContext ctx, string prefix = null)
         {
             if (string.IsNullOrWhiteSpace(prefix))
             {

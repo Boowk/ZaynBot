@@ -6,12 +6,12 @@ using ZaynBot.Core.Atributos;
 
 namespace ZaynBot.Core.Comandos
 {
-    public class ConviteComando : BaseCommandModule
+    public class ComandoConvite : BaseCommandModule
     {
         [Command("convite")]
         [Description("Exibe um link, permitindo adicionar o bot no seu servidor")]
         [ComoUsar("convite")]
-        public async Task ConviteComandoAb(CommandContext ctx)
+        public async Task ComandoConviteAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
