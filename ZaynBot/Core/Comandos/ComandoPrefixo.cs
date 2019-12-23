@@ -16,9 +16,11 @@ namespace ZaynBot.Core.Comandos
         [RequireUserPermissions(Permissions.Administrator)]
         public async Task ComandoPrefixoAb(CommandContext ctx, string prefix = null)
         {
+            ServidorCore server = ModuloBanco.GetServidor(ctx.Guild.Id);
             if (string.IsNullOrWhiteSpace(prefix))
             {
-                ModuloBanco.ServidorDel(ctx.Guild.Id);
+                server.Prefix = "";
+                server.Salvar();
                 await ctx.RespondAsync("Prefix removido!").ConfigureAwait(false);
             }
             else
@@ -28,12 +30,8 @@ namespace ZaynBot.Core.Comandos
                     await ctx.RespondAsync("O prefixo não pode passar de 3 caracteres!").ConfigureAwait(false);
                     return;
                 }
-                ModuloBanco.ServidorDel(ctx.Guild.Id);
-                ModuloBanco.ServidorColecao.InsertOne(new ServidorCore()
-                {
-                    Id = ctx.Guild.Id,
-                    Prefix = prefix,
-                });
+                server.Prefix = prefix;
+                server.Salvar();
                 await ctx.RespondAsync("Prefixo alterado!").ConfigureAwait(false);
             }
         }

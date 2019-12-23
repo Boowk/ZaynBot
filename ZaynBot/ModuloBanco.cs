@@ -55,13 +55,24 @@ namespace ZaynBot
             => RegiaoColecao.Find(x => x.Id == id).FirstOrDefault();
 
         public static RPGMob GetMob(RPGRegiao regiao)
-    => MobColecao.AsQueryable().Where(x => x.Dificuldade == regiao.Dificuldade).Sample(1).FirstOrDefault();
+          => MobColecao.AsQueryable().Where(x => x.Dificuldade == regiao.Dificuldade).Sample(1).FirstOrDefault();
 
-        public static ServidorCore ServidorGet(ulong id)
-            => ServidorColecao.Find(x => x.Id == id).FirstOrDefault();
+        public static ServidorCore GetServidor(ulong id)
+        {
+            ServidorCore server = ServidorColecao.Find(x => x.Id == id).FirstOrDefault();
+            if (server == null)
+            {
+                server = new ServidorCore()
+                {
+                    Id = id,
+                };
+                ServidorColecao.InsertOne(server);
+            }
+            return server;
+        }
 
-        public static void ServidorDel(ulong id)
-            => ServidorColecao.DeleteOne(x => x.Id == id);
+        public static void EditServidor(ServidorCore server)
+             => ServidorColecao.ReplaceOne(x => x.Id == server.Id, server);
 
         public static RPGItem GetItem(int id)
              => ItemColecao.Find(x => x.Id == id).FirstOrDefault();

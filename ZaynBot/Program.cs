@@ -90,8 +90,8 @@ namespace ZaynBot
             if (gld == null)
                 return Task.FromResult(-1);
 
-            ServidorCore slv = ModuloBanco.ServidorGet(gld.Id);
-            if (slv == null)
+            ServidorCore slv = ModuloBanco.GetServidor(gld.Id);
+            if (string.IsNullOrEmpty(slv.Prefix))
                 return Task.FromResult(-1);
 
             var pfixLocation = msg.GetStringPrefixLength(slv.Prefix);

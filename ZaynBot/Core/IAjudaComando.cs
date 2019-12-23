@@ -94,7 +94,7 @@ namespace ZaynBot.Core
             "**2. RPG -** `status` , `criar-personagem` , `proficiencia` , `mochila` , `examinar`\n" +
             "**3. Combate -** `atacar` , `explorar`\n" +
             "**4. Compras -** `loja` , `comprar`\n" +
-            "**5. Administrativos -** `prefixo`\n" +
+            "**5. Administrativos -** `prefixo` `mod`\n" +
             "**6. Outros -** `top` , `convite` , `usuario`\n" +
             "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }

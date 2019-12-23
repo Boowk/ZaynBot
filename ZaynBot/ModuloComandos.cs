@@ -32,6 +32,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoVotar>();
             Comandos.RegisterCommands<ComandoUsuario>();
             Comandos.RegisterCommands<ComandoAdm>();
+            Comandos.RegisterCommands<ComandoMod>();
 
             //Comandos.RegisterCommands<DencansarComando>();
             Comandos.RegisterCommands<TopComando>();
