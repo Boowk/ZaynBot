@@ -40,4 +40,12 @@ namespace ZaynBot
             await ctx.CommandsNext.ExecuteCommandAsync(cfx);
         }
     }
+
+    public static class Emojis
+    {
+        public static DiscordEmoji PontosVida()
+            => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
+        public static DiscordEmoji PontosPoder()
+            => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
+    }
 }

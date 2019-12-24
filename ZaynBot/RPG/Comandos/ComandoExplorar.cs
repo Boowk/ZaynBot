@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos
         [Aliases("ex")]
         [Description("Explora mais detalhadamente a região, encontrando novos inimigos, mais minérios e mais arvores")]
         [ComoUsar("explorar")]
-        [Cooldown(1, 30, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoExplorarAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

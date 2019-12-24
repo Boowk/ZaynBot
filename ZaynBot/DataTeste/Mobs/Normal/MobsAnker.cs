@@ -9,7 +9,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
             RPGMob mob = new RPGMob(25)
             {
                 Nome = "Ladrão",
-                AtaqueFisico = 5,
+                AtaqueFisico = 4,
                 Armadura = 0,
                 Velocidade = 4,
                 Dificuldade = 1,

@@ -53,6 +53,11 @@ namespace ZaynBot.Core
                     }
                 }
 
+                StringBuilder strAliases = new StringBuilder();
+                foreach (var al in command.Aliases)
+                    strAliases.Append($"`{al}` ,");
+                if (strAliases.Length != 0)
+                    _embed.AddField($"**Atalhos**", strAliases.ToString());
                 _embed.WithTitle($"**{command.Name.FirstUpper()}**");
                 _embed.WithDescription(command.Description);
                 if (_srUsos.Length != 0)

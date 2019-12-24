@@ -33,7 +33,7 @@ namespace ZaynBot.Data.Itens
             };
 
         public static RPGItem CarneDeCoelhoAssadaItem()
-            => new RPGItem(4, "Carne de Coelho assada", TipoItemEnum.Usavel, 4)
+            => new RPGItem(4, "Carne de Coelho assada", TipoItemEnum.Comida, 4)
             {
                 Descricao = "Uma carne bem cheirosa!",
                 FomeRestaura = 2,
@@ -54,7 +54,7 @@ namespace ZaynBot.Data.Itens
             };
 
         public static RPGItem FrascoVermelhoItem()
-            => new RPGItem(7, "Frasco vermelho", TipoItemEnum.Usavel, 2)
+            => new RPGItem(7, "Frasco vermelho", TipoItemEnum.Pocao, 2)
             {
                 Descricao = "Um frasco com um liquido vermelho..",
                 VidaRestaura = 25

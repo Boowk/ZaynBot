@@ -10,6 +10,7 @@
         Luvas,
         Helmo,
         Moeda,
-        Usavel,
+        Comida,
+        Pocao,
     }
 }

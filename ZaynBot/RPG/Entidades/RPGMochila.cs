@@ -62,6 +62,14 @@ namespace ZaynBot.RPG.Entidades
             return true;
         }
 
+        public void RemoverItem(string itemNome, int quantidade = 1)
+        {
+            RPGMochilaItemData item = Itens[itemNome];
+            item.Quantidade -= quantidade;
+            if (item.Quantidade == 0)
+                Itens.Remove(itemNome);
+        }
+
         public void DesequiparItem(RPGItem item, RPGPersonagem personagem)
         {
             personagem.Mochila.Equipamentos.Remove(item.TipoItem);
