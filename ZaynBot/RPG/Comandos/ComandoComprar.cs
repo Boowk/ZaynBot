@@ -65,7 +65,7 @@ namespace ZaynBot.RPG.Comandos
                     moedasUsuario.Quantidade -= precoTotal;
                     if (moedasUsuario.Quantidade == 0)
                         usuario.Personagem.Mochila.Itens.Remove("moeda de zeoin");
-                    await ctx.RespondAsync($"{ctx.User.Mention} você acabou de comprar {quantidade} [{item.Nome}]!".Bold());
+                    await ctx.RespondAsync($"{ctx.User.Mention} você acabou de comprar {quantidade} [{item.Nome.FirstUpper()}]!".Bold());
                     usuario.Salvar();
                 }
             }
