@@ -5,59 +5,61 @@ namespace ZaynBot.Data.Itens
 {
     public class ItensRPG
     {
-        public static RPGItem MoedaDeZeoinItem()
+        public static RPGItem ItemMoedaDeZeoin()
             => new RPGItem(0, "Moeda de Zeoin", TipoItemEnum.Moeda)
             {
-                Descricao = "Uma moeda de Zeoin, vale 1 sense.",
+                Descricao = "Uma moeda de Zeoin, troque por itens.",
             };
 
 
-        public static RPGItem EspadaEnferrujadaItem()
-            => new RPGItem(1, "Espada enferrujada de Bronze", TipoItemEnum.Arma, 100, 20, TipoExpEnum.Perfurante)
+        public static RPGItem ItemEspadaEnferrujada()
+            => new RPGItem(1, "Espada enferrujada de Bronze", TipoItemEnum.Arma, 100, TipoExpEnum.Perfurante)
             {
                 Descricao = "Uma espada de bronze muito desgastada devido ao uso constante.",
                 AtaqueFisico = 20,
             };
 
-        public static RPGItem OssosItem()
-            => new RPGItem(2, "Osso", TipoItemEnum.Recurso, 1)
+        public static RPGItem ItemOssos()
+            => new RPGItem(2, "Ossos", TipoItemEnum.Recurso)
             {
-                Descricao = "Ossos.. isso dá um arrepio."
+                Descricao = "Ossos são para enterrar."
             };
 
-
-        public static RPGItem GosmaItem()
-            => new RPGItem(3, "Gosma de Slime", TipoItemEnum.Recurso, 3)
+        public static RPGItem ItemCarneDeCoelhoCru()
+            => new RPGItem(3, "Carne de coelho cru", TipoItemEnum.Recurso)
             {
-                Descricao = "Muito gosmento, onde gruda não sai com facilidade."
+                Descricao = "Deve ter um gosto melhor cozido."
             };
 
-        public static RPGItem CarneDeCoelhoAssadaItem()
-            => new RPGItem(4, "Carne de Coelho assada", TipoItemEnum.Comida, 4)
+        public static RPGItem ItemCouroDeVaca()
+            => new RPGItem(4, "Couro de vaca", TipoItemEnum.Recurso)
             {
-                Descricao = "Uma carne bem cheirosa!",
-                FomeRestaura = 2,
-                VidaRestaura = 5,
+                Descricao = "Eu deveria levar isso para um curtume."
             };
 
-        public static RPGItem CarneDeCoelhoItem()
-            => new RPGItem(5, "Carne de Coelho cru", TipoItemEnum.Recurso, 2)
+        public static RPGItem ItemCarneDeVacaCru()
+             => new RPGItem(5, "Carne de vaca cru", TipoItemEnum.Recurso)
+             {
+                 Descricao = "Deve ter um gosto melhor cozido."
+             };
+
+        public static RPGItem ItemCarneDeGalinhaCru()
+             => new RPGItem(6, "Carne de galinha cru", TipoItemEnum.Recurso)
+             {
+                 Descricao = "Deve ter um gosto melhor cozido."
+             };
+
+        public static RPGItem ItemPenas()
+            => new RPGItem(8, "Penas", TipoItemEnum.Recurso)
             {
-                Descricao = "Ainda fresco."
+                Descricao = "Usado para pesca com mosca."
             };
 
-        public static RPGItem OssoAfiadoItem()
-            => new RPGItem(6, "Osso afiado", TipoItemEnum.Arma, 50, 0, TipoExpEnum.Perfurante)
+        public static RPGItem ItemFrascoVermelho()
+            => new RPGItem(7, "Frasco vermelho", TipoItemEnum.Pocao)
             {
-                Descricao = "Meio nojento, mas é bem afiado para uma arma.",
-                AtaqueFisico = 10,
-            };
-
-        public static RPGItem FrascoVermelhoItem()
-            => new RPGItem(7, "Frasco vermelho", TipoItemEnum.Pocao, 2)
-            {
-                Descricao = "Um frasco com um liquido vermelho..",
-                VidaRestaura = 25
+                Descricao = "Um frasco com um liquido vermelho.",
+                VidaRestaura = 25,
             };
     }
 }

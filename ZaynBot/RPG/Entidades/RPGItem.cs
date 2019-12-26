@@ -23,17 +23,16 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaRestaura { get; set; }
         public double FomeRestaura { get; set; }
 
-        public RPGItem(int id, string nome, TipoItemEnum tipo, int precoCompra = 1)
+        public RPGItem(int id, string nome, TipoItemEnum tipo)
         {
             Id = id;
             Nome = nome;
             TipoItem = tipo;
-            PrecoCompra = precoCompra;
             DurabilidadeMax = 0;
             TipoExp = TipoExpEnum.Nenhum;
         }
 
-        public RPGItem(int id, string nome, TipoItemEnum tipo, int durabilidade, int preco, TipoExpEnum tipoExp) : this(id, nome, tipo, preco)
+        public RPGItem(int id, string nome, TipoItemEnum tipo, int durabilidade, TipoExpEnum tipoExp) : this(id, nome, tipo)
         {
             TipoExp = tipoExp;
             DurabilidadeMax = durabilidade;
