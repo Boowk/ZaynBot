@@ -17,23 +17,23 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoLocalAb(CommandContext ctx)
         {
-            //await ctx.TriggerTypingAsync();
-            //RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            //RPGRegiao localAtual = usuario.RegiaoGet();
+            await ctx.TriggerTypingAsync();
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            RPGRegiao localAtual = usuario.RegiaoGet();
 
-            //DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
-            //embed.WithTitle($"**{localAtual.Nome.Titulo()}**");
-            //embed.WithDescription(localAtual.Descrição);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
+            embed.WithTitle($"**{localAtual.Nome.Titulo()}**");
+            embed.WithDescription(localAtual.Descrição);
 
-            //StringBuilder conexoesDisponiveis = new StringBuilder();
-            //foreach (var reg in localAtual.SaidasRegioes)
-            //    conexoesDisponiveis.Append($"**{reg.Direcao.ToString()}** - {RPGRegiao.GetRPGRegiao(reg.RegiaoId).Nome}\n");
+            StringBuilder conexoesDisponiveis = new StringBuilder();
+            foreach (var reg in localAtual.SaidasRegioes)
+                conexoesDisponiveis.Append($"**{reg.Direcao.ToString()}** - {RPGRegiao.GetRPGRegiao(reg.RegiaoId).Nome}\n");
 
-            //if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
-            //    embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());
-            //embed.WithColor(DiscordColor.Azure);
+            if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
+                embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());
+            embed.WithColor(DiscordColor.Azure);
 
-            //await ctx.RespondAsync(embed: embed.Build());
+            await ctx.RespondAsync(embed: embed.Build());
         }
     }
 }
