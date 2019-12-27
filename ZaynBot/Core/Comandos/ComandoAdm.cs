@@ -98,5 +98,18 @@ namespace ZaynBot.Core.Comandos
 
             await ctx.RespondAsync("Atualiazado");
         }
+
+        [Command("adicionar-xp")]
+        [Aliases("ax")]
+        public async Task AdicionarXP(CommandContext ctx, int quantidade = 1, DiscordUser discordUser = null)
+        {
+            if (discordUser == null)
+                discordUser = ctx.User;
+            await ctx.TriggerTypingAsync();
+            RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
+            usuario.Personagem.AdicionarExp(quantidade);
+            usuario.Salvar();
+            await ctx.RespondAsync($"Adicionado {quantidade}XP para {discordUser.Mention}!");
+        }
     }
 }

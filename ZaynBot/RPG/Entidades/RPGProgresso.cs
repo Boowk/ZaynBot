@@ -23,25 +23,27 @@ namespace ZaynBot.RPG.Entidades
             ExpMax = expMax;
         }
 
-        public bool AdicionarExp(double exp)
+        public int AdicionarExp(double exp)
         {
             double expResultante = ExpAtual + exp;
+            int quantEvo = 0;
             if (expResultante >= ExpMax)
             {
                 do
                 {
                     double quantosPrecisaProxNivel = expResultante - ExpMax;
                     Evoluir();
+                    quantEvo++;
                     expResultante = quantosPrecisaProxNivel;
                 } while (expResultante >= ExpMax);
                 ExpAtual += expResultante;
-                return true;
+                return quantEvo;
             }
             ExpAtual += exp;
-            return false;
+            return quantEvo;
         }
 
-        private void Evoluir()
+        public void Evoluir()
         {
             NivelAtual++;
             ExpMax *= 1.02;
