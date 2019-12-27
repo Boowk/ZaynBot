@@ -43,16 +43,13 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoCriarPersonagem>();
             Comandos.RegisterCommands<ComandoStatus>();
             Comandos.RegisterCommands<ComandoProficiencia>();
-            Comandos.RegisterCommands<RegiaoComando>();
+            Comandos.RegisterCommands<ComandoLocal>();
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoTutorial>();
             Comandos.RegisterCommands<ComandoAtacar>();
             Comandos.RegisterCommands<ComandoMochila>();
             Comandos.RegisterCommands<ComandoExaminar>();
-            //Comandos.RegisterCommands<LesteComando>();
-            //Comandos.RegisterCommands<NorteComando>();
-            //Comandos.RegisterCommands<OesteComando>();
-            //Comandos.RegisterCommands<SulComando>();
+            Comandos.RegisterCommands<ComandoViajar>();
             //Comandos.RegisterCommands<ExaminarComando>();
             //Comandos.RegisterCommands<EquiparComando>();
             //Comandos.RegisterCommands<DesequiparComando>();
