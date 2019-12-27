@@ -22,7 +22,7 @@ namespace ZaynBot.RPG.Comandos
             usuario.Personagem.Batalha.Mob = ModuloBanco.GetMob(regiaoAtual);
             usuario.Personagem.Batalha.Turno = 0;
             RPGUsuario.Salvar(usuario);
-            await ctx.RespondAsync($"{ctx.User.Mention} você explorou `{regiaoAtual.Nome}`!".Bold());
+            await ctx.RespondAsync($"{ctx.User.Mention} você explorou `{regiaoAtual.Nome}`! Encontrou: < {usuario.Personagem.Batalha.Mob.Nome.Underline()} >!".Bold());
         }
     }
 }
