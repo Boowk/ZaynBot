@@ -11,7 +11,7 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoLocal : BaseCommandModule
     {
         [Command("local")]
-        [Aliases("regiao", "l")]
+        [Aliases("regiao")]
         [Description("Permite visualizar a região atual.")]
         [ComoUsar("local")]
         [Cooldown(1, 15, CooldownBucketType.User)]
