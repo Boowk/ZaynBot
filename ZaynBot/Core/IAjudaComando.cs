@@ -88,13 +88,13 @@ namespace ZaynBot.Core
 
         public string MensagemAjuda()
         {
-            return "```css\nLista de comandos``` \n" +
+            return "```css\nLista de comandos```\n" +
             "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda` \n\n" +
             "**1. Core -** `ajuda` , `convite` , `info` , `votar` , `tutorial`\n" +
-            "**2. RPG -** `status` , `criar-personagem` , `proficiencia` , `mochila`\n" +
+            "**2. RPG -** `status` , `criar-personagem` , `proficiencia`\n" +
             "**3. Combate -** `atacar` , `explorar`\n" +
-            "**4. Compras -** `loja` , `comprar` , `vender`\n" +
-            "**5. Itens -** `usar` , `examinar`\n" +
+            "**4. Compras -** `loja` , `comprar`\n" +
+            "**5. Itens -** `mochila` , `usar` , `examinar`\n" +
             "**6. Região -** `local` , `norte` , `sul` , `leste` , `oeste`\n" +
             "**7. Administrativos -** `prefixo` `mod`\n" +
             "**8. Outros -** `top` , `usuario`\n" +
