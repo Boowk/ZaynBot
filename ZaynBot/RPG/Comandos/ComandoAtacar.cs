@@ -1,13 +1,11 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using System;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
-using ZaynBot.RPG.Habilidades;
 
 
 namespace ZaynBot.RPG.Comandos
@@ -120,37 +118,23 @@ namespace ZaynBot.RPG.Comandos
             if (usuario.Personagem.Mochila == null)
                 usuario.Personagem.Mochila = new RPGMochila();
             //Pega a arma que ele esta usando e já fz o calculo de proficiencia
-            usuario.Personagem.Mochila.Equipamentos.TryGetValue(TipoItemEnum.Arma, out RPGItem arma);
+            usuario.Personagem.Mochila.Equipamentos.TryGetValue(EnumItem.Arma, out RPGItem arma);
             double danoJogador = 0;
             if (arma != null)
             {
-                switch (arma.TipoExp)
+                switch (arma.Proficiencia)
                 {
-                    case TipoExpEnum.Perfurante:
-                        ProficienciaPerfurante perfuranteHab = (ProficienciaPerfurante)usuario.Personagem.Proficiencias[ProficienciaEnum.Perfurante];
-                        bool evoluiu = perfuranteHab.AdicionarExp();
-                        danoJogador = CalcDano(mob.Armadura, perfuranteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.GetItem(arma.Id).DurabilidadeMax));
+                    case EnumProficiencia.Perfurante:
+                        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
                         break;
-                    case TipoExpEnum.Esmagante:
-                        ProficienciaEsmagante esmaganteHab = (ProficienciaEsmagante)usuario.Personagem.Proficiencias[ProficienciaEnum.Esmagante];
-                        bool evoluiu2 = esmaganteHab.AdicionarExp();
-                        //if (evoluiu2)
-                        //    await ctx.RespondAsync($"Habilidade **({esmaganteHab.Nome})** evoluiu! {ctx.User.Mention}.");
-                        danoJogador = CalcDano(mob.Armadura, esmaganteHab.CalcularDano(arma.AtaqueFisico, arma.DurabilidadeMax, ModuloBanco.GetItem(arma.Id).DurabilidadeMax));
+                    case EnumProficiencia.Esmagante:
+                        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
                         break;
-                }
-                arma.DurabilidadeMax -= Convert.ToInt32(0.06 * arma.AtaqueFisico);
-                if (arma.DurabilidadeMax <= 0)
-                {
-                    usuario.Personagem.Mochila.DesequiparItem(arma, usuario.Personagem);
-                    await ctx.RespondAsync($"**({arma.Nome})** quebrou! {ctx.User.Mention}!");
                 }
             }
             else
             {
-                ProficienciaDesarmado desarmadoHab = (ProficienciaDesarmado)usuario.Personagem.Proficiencias[ProficienciaEnum.Desarmado];
-                bool evoluiu3 = desarmadoHab.AdicionarExp();
-                danoJogador = CalcDano(mob.Armadura, desarmadoHab.CalcularDano(usuario.Personagem.AtaqueFisico));
+                danoJogador = CalcDano(mob.Armadura, usuario.Personagem.AtaqueFisico);
             }
 
             if (mob.VidaAtual < danoJogador)

@@ -1,16 +1,16 @@
 ﻿namespace ZaynBot.RPG.Entidades.Enuns
 {
-    public enum TipoItemEnum
+    public enum EnumItem
     {
-        Recurso,
         Arma,
         Escudo,
-        Botas,
-        Couraca,
-        Luvas,
         Helmo,
+        Peitoral,
+        Luvas,
+        Botas,
         Moeda,
         Comida,
         Pocao,
+        Recurso,
     }
 }

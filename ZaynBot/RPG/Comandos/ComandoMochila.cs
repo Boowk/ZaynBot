@@ -38,11 +38,8 @@ namespace ZaynBot.RPG.Comandos
                 {
                     RPGItem itemData = ModuloBanco.GetItem(usuario.Personagem.Mochila.Itens.Values[index].Id);
                     RPGMochilaItemData item = usuario.Personagem.Mochila.Itens.Values[index];
-                    if (item.DurabilidadeAtual == 0)
-                        str.Append($"**{item.Quantidade}** - ");
+                    str.Append($"**{item.Quantidade}** - ");
                     str.Append($"{usuario.Personagem.Mochila.Itens.Keys[index].FirstUpper()}".Bold());
-                    if (item.DurabilidadeAtual > 0)
-                        str.Append($" - *Durab. {item.DurabilidadeAtual}/{itemData.DurabilidadeMax}*");
                     str.Append("\n");
                     index++;
                     quantidades++;

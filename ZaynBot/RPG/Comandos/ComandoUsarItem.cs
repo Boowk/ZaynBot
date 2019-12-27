@@ -41,9 +41,9 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
                 RPGItem item = ModuloBanco.GetItem(itemData.Id);
-                switch (item.TipoItem)
+                switch (item.Tipo)
                 {
-                    case Entidades.Enuns.TipoItemEnum.Pocao:
+                    case Entidades.Enuns.EnumItem.Pocao:
                         usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
                         string vidaRestaura = usuario.RecuperarVida(item.VidaRestaura * quantidade).Text();
                         string magiaRestaurada = usuario.RecuperarMagia(item.MagiaRestaura * quantidade).Text();

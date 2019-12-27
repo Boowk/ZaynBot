@@ -1,7 +1,7 @@
 ﻿
 namespace ZaynBot.RPG.Entidades.Enuns
 {
-    public enum TipoExpEnum
+    public enum EnumProficiencia
     {
         Nenhum,
         Perfurante,

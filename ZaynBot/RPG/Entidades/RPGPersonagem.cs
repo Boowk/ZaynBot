@@ -1,10 +1,9 @@
-﻿using DSharpPlus.Entities;
-using MongoDB.Bson.Serialization.Attributes;
+﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 using System;
 using System.Collections.Generic;
 using ZaynBot.RPG.Entidades.Enuns;
-using ZaynBot.RPG.Habilidades;
+using ZaynBot.RPG.Proficiencias;
 
 namespace ZaynBot.RPG.Entidades
 {
@@ -31,8 +30,8 @@ namespace ZaynBot.RPG.Entidades
         public RPGMochila Mochila { get; set; }
         public RPGBatalha Batalha { get; set; }
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<ProficienciaEnum, RPGProficiencia> Proficiencias { get; set; }
-
+        public Dictionary<EnumProficiencia, RPGProficiencia> Proficiencias { get; set; }
+        public int ProficienciaPontos { get; set; }
         public RPGPersonagem(double expMax = 120) : base(expMax)
         {
             VidaAtual = SortearMetadeValor(50);
@@ -54,13 +53,13 @@ namespace ZaynBot.RPG.Entidades
             RegiaoAtualId = 0;
             Mochila = new RPGMochila();
             Batalha = new RPGBatalha();
-            //Populate lhas habilitdades
-            Proficiencias = new Dictionary<ProficienciaEnum, RPGProficiencia>
+            //Adiciona as proficiencias
+            Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
             {
-                { ProficienciaEnum.Perfurante, new ProficienciaPerfurante() },
-                { ProficienciaEnum.Esmagante, new ProficienciaEsmagante() },
-                { ProficienciaEnum.Desarmado, new ProficienciaDesarmado() }
+                { EnumProficiencia.Perfurante, new ProficienciaPerfurante()},
+                { EnumProficiencia.Esmagante, new ProficienciaEsmagante()}
             };
+            ProficienciaPontos = 0;
         }
         public new bool AdicionarExp(double exp)
         {
@@ -75,21 +74,22 @@ namespace ZaynBot.RPG.Entidades
                 Velocidade *= 1.0002;
                 FomeMaxima = Evoluir(FomeMaxima);
                 SedeMaxima = Evoluir(SedeMaxima);
+                ProficienciaPontos++;
                 return true;
             }
             return false;
         }
 
-        public bool TryGetHabilidade(string hab, out RPGProficiencia habilidade)
+        public bool TryGetProficiencia(string hab, out RPGProficiencia proficiencia)
         {
             var h = hab.ToLower();
             h = h.FirstUpper();
-            if (Enum.IsDefined(typeof(ProficienciaEnum), h))
+            if (Enum.IsDefined(typeof(EnumProficiencia), h))
             {
-                habilidade = Proficiencias[Enum.Parse<ProficienciaEnum>(h)];
+                proficiencia = Proficiencias[Enum.Parse<EnumProficiencia>(h)];
                 return true;
             }
-            habilidade = null;
+            proficiencia = null;
             return false;
         }
 

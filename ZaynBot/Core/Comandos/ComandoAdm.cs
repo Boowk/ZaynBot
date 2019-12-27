@@ -2,8 +2,11 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using MongoDB.Driver;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
+using ZaynBot.RPG.Proficiencias;
 
 namespace ZaynBot.Core.Comandos
 {
@@ -63,6 +66,37 @@ namespace ZaynBot.Core.Comandos
             usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
             usuario.Salvar();
             await ctx.RespondAsync($"Adicionado {quantidade} [{item.Nome}] para {discordUser.Mention}!");
+        }
+
+        [Command("atualizar")]
+        public async Task Atualizar(CommandContext ctx)
+        {
+            FilterDefinition<RPGUsuario> filter = FilterDefinition<RPGUsuario>.Empty;
+            FindOptions<RPGUsuario> options = new FindOptions<RPGUsuario>
+            {
+                BatchSize = 8,
+                NoCursorTimeout = false
+            };
+
+            using (IAsyncCursor<RPGUsuario> cursor = await ModuloBanco.UsuarioColecao.FindAsync(filter, options))
+            {
+                while (await cursor.MoveNextAsync())
+                {
+                    IEnumerable<RPGUsuario> usuarios = cursor.Current;
+
+                    foreach (RPGUsuario user in usuarios)
+                    {
+                        user.Personagem.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
+                          {
+                            { EnumProficiencia.Perfurante, new ProficienciaPerfurante()},
+                            { EnumProficiencia.Esmagante, new ProficienciaEsmagante()}
+                          };
+                        user.Salvar();
+                    }
+                }
+            }
+
+            await ctx.RespondAsync("Atualiazado");
         }
     }
 }

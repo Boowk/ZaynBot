@@ -10,9 +10,8 @@ namespace ZaynBot.RPG.Entidades
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public TipoItemEnum TipoItem { get; set; }
-        public TipoExpEnum TipoExp { get; set; }
-        public int DurabilidadeMax { get; set; }
+        public EnumItem Tipo { get; set; }
+        public EnumProficiencia Proficiencia { get; set; }
         public int PrecoCompra { get; set; }
         public double PrecoVenda { get; set; }
 
@@ -23,19 +22,17 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaRestaura { get; set; }
         public double FomeRestaura { get; set; }
 
-        public RPGItem(int id, string nome, TipoItemEnum tipo)
+        public RPGItem(int id, string nome, EnumItem tipo)
         {
             Id = id;
             Nome = nome;
-            TipoItem = tipo;
-            DurabilidadeMax = 0;
-            TipoExp = TipoExpEnum.Nenhum;
+            Tipo = tipo;
+            Proficiencia = EnumProficiencia.Nenhum;
         }
 
-        public RPGItem(int id, string nome, TipoItemEnum tipo, int durabilidade, TipoExpEnum tipoExp) : this(id, nome, tipo)
+        public RPGItem(int id, string nome, EnumItem tipo, EnumProficiencia proficiencia) : this(id, nome, tipo)
         {
-            TipoExp = tipoExp;
-            DurabilidadeMax = durabilidade;
+            Proficiencia = proficiencia;
         }
     }
 }

@@ -29,7 +29,7 @@ namespace ZaynBot.RPG.Comandos
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Item", ctx);
                 embed.WithTitle($"**{item.Nome.FirstUpper()}**");
                 embed.WithDescription((item.Descricao) != "" ? item.Descricao : "Sem descrição");
-                embed.AddField("Tipo".Titulo(), item.TipoItem.ToString(), true);
+                embed.AddField("Tipo".Titulo(), item.Tipo.ToString(), true);
                 //if (item.TipoItem == TipoItemEnum.Arma  || item.TipoItem == TipoItemEnum.Armadura
                 //{
                 //    embed.AddField("Durabilidade".Titulo(), $"{itemData.Durabilidade}/{item.Durabilidade}", true);
