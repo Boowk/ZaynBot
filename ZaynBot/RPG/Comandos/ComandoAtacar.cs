@@ -95,22 +95,22 @@ namespace ZaynBot.RPG.Comandos
                 if (usuario.Personagem.EstaminaAtual >= usuario.Personagem.EstaminaMaxima)
                 {
                     vezJogador = true;
+                    usuario.Personagem.EstaminaAtual = 0;
                     usuario.Personagem.Batalha.Turno++;
                     strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
-                    if (usuario.Personagem.FomeAtual < 0)
+
+                    if (usuario.Personagem.FomeAtual <= 0)
                     {
                         double fome = usuario.Personagem.VidaMaxima / 0.02;
                         usuario.RemoverVida(fome);
                         strRelatorio.AppendLine($"Faminto! -{fome} vida.".Bold());
                     }
-                    if (usuario.Personagem.SedeAtual < 0)
+                    if (usuario.Personagem.SedeAtual <= 0)
                     {
                         double sede = usuario.Personagem.VidaMaxima / 0.08;
                         usuario.RemoverVida(sede);
                         strRelatorio.AppendLine($"Desidratado! -{sede} vida.".Bold());
                     }
-
-                    usuario.Personagem.EstaminaAtual = 0;
                 }
             } while (vezJogador == false);
 
@@ -122,15 +122,15 @@ namespace ZaynBot.RPG.Comandos
             double danoJogador = 0;
             if (arma != null)
             {
-                switch (arma.Proficiencia)
-                {
-                    case EnumProficiencia.Perfurante:
-                        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
-                        break;
-                    case EnumProficiencia.Esmagante:
-                        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
-                        break;
-                }
+                //switch (arma.Proficiencia)
+                //{
+                //    case EnumProficiencia.Perfurante:
+                //        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
+                //        break;
+                //    case EnumProficiencia.Esmagante:
+                //        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
+                //        break;
+                //}
             }
             else
             {
@@ -162,7 +162,10 @@ namespace ZaynBot.RPG.Comandos
                 // Enviamos uma mensagem
                 strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome.FirstUpper()}]!".Bold());
                 if (usuario.Personagem.AdicionarExp(mob.Essencia))
+                {
                     strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")}!".Bold());
+                    strRelatorio.Append($"+1 Ponto de proficiencia!".Bold());
+                }
             }
             else
             {

@@ -13,6 +13,5 @@ namespace ZaynBot.Core.Entidades
 
         public void Salvar()
             => ModuloBanco.EditServidor(this);
-
     }
 }
