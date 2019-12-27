@@ -38,8 +38,8 @@ namespace ZaynBot
             Comandos.RegisterCommands<TopComando>();
 
             Comandos.RegisterCommands<ComandoLoja>();
-            Comandos.RegisterCommands<ComandoUsarItem>();
-            Comandos.RegisterCommands<ComandoComprar>();
+            Comandos.RegisterCommands<ComandoItemUsar>();
+            Comandos.RegisterCommands<ComandoItemComprar>();
             Comandos.RegisterCommands<ComandoCriarPersonagem>();
             Comandos.RegisterCommands<ComandoStatus>();
             Comandos.RegisterCommands<ComandoProficiencia>();

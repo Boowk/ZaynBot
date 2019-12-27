@@ -6,7 +6,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class ComandoComprar : BaseCommandModule
+    public class ComandoItemComprar : BaseCommandModule
     {
         [Command("comprar")]
         [Description("Permite comprar os itens que estão sendo vendido na região atual.")]

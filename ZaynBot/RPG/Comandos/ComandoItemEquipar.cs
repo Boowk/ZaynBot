@@ -7,7 +7,7 @@ using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class EquiparComando : BaseCommandModule
+    public class ComandoItemEquipar : BaseCommandModule
     {
         //[Command("equipar")]
         //[Aliases("eq")]

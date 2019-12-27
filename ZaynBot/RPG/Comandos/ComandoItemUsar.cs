@@ -6,14 +6,14 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    class ComandoUsarItem : BaseCommandModule
+    class ComandoItemUsar : BaseCommandModule
     {
 
-        [Command("usar-item")]
-        [Aliases("ui")]
+        [Command("usar")]
+        [Aliases("u")]
         [Description("Permite usar itens que estão na sua mochila.")]
-        [ComoUsar("usar-item [+quantidade|] [item]")]
-        [Exemplo("usar-item 2 frasco vermelho")]
+        [ComoUsar("usar [+quantidade|] [item]")]
+        [Exemplo("usar 2 frasco vermelho")]
         public async Task ComandoStatusAb(CommandContext ctx, int quantidade, [RemainingText] string itemNome = "")
         {
             await ctx.TriggerTypingAsync();
