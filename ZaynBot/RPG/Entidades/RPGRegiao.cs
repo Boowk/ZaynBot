@@ -40,7 +40,7 @@ namespace ZaynBot.RPG.Entidades
         public List<int> LojaItensId { get; set; } = new List<int>();
 
 
-        public static RPGRegiao GetRPGRegiao(int id)
+        public static RPGRegiao GetRegiao(int id)
             => ModuloBanco.GetRegiaoData(id);
 
     }

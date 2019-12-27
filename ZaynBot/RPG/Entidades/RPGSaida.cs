@@ -3,7 +3,7 @@ using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades
 {
-    public enum DirecaoEnum
+    public enum EnumDirecao
     {
         Norte,
         Sul,
@@ -13,13 +13,13 @@ namespace ZaynBot.RPG.Entidades
 
     public class RPGSaida
     {
-        public RPGSaida(DirecaoEnum direcao, int regiaoId)
-        {
-            this.Direcao = direcao;
-            this.RegiaoId = regiaoId;
-        }
-
-        public DirecaoEnum Direcao { get; set; }
+        public EnumDirecao Direcao { get; set; }
         public int RegiaoId { get; set; }
+
+        public RPGSaida(EnumDirecao direcao, int regiaoId)
+        {
+            Direcao = direcao;
+            RegiaoId = regiaoId;
+        }
     }
 }
