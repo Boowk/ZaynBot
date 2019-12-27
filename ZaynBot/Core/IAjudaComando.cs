@@ -98,9 +98,10 @@ namespace ZaynBot.Core
             "**1. Core -** `ajuda` , `convite` , `info` , `votar` , `tutorial`\n" +
             "**2. RPG -** `status` , `criar-personagem` , `proficiencia` , `mochila` , `examinar` , `usar-item`\n" +
             "**3. Combate -** `atacar` , `explorar`\n" +
-            "**4. Compras -** `loja` , `comprar`\n" +
-            "**5. Administrativos -** `prefixo` `mod`\n" +
-            "**6. Outros -** `top` , `usuario`\n" +
+            "**4. Compras -** `loja` , `comprar` , `vender`\n" +
+            "**6. Região -** `local` , `norte` , `sul` , `leste` , `oeste`\n" +
+            "**7. Administrativos -** `prefixo` `mod`\n" +
+            "**8. Outros -** `top` , `usuario`\n" +
             "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }
     }
