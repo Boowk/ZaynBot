@@ -32,7 +32,7 @@ namespace ZaynBot.RPG.Entidades
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<EnumProficiencia, RPGProficiencia> Proficiencias { get; set; }
         public int ProficienciaPontos { get; set; }
-        public RPGPersonagem(double expMax = 120) : base(expMax)
+        public RPGPersonagem(double expMax = 200) : base(expMax)
         {
             VidaAtual = SortearMetadeValor(50);
             VidaMaxima = VidaAtual;

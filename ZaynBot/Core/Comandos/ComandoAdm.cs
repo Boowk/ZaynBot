@@ -91,6 +91,8 @@ namespace ZaynBot.Core.Comandos
                             { EnumProficiencia.Perfurante, new ProficienciaPerfurante()},
                             { EnumProficiencia.Esmagante, new ProficienciaEsmagante()}
                           };
+                        if (user.Personagem.ExpMax < 200)
+                            user.Personagem.ExpMax = 200;
                         user.Salvar();
                     }
                 }

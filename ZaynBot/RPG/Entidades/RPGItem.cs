@@ -27,6 +27,7 @@ namespace ZaynBot.RPG.Entidades
             Id = id;
             Nome = nome;
             Tipo = tipo;
+            PrecoCompra = 1;
             Proficiencia = EnumProficiencia.Nenhum;
         }
 

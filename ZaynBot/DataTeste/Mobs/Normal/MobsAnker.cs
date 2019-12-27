@@ -6,7 +6,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
     {
         public static RPGMob MobLadrao()
         {
-            RPGMob mob = new RPGMob(25)
+            RPGMob mob = new RPGMob(100)
             {
                 Nome = "Ladrão",
                 AtaqueFisico = 4,
@@ -22,7 +22,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobLadrao1()
         {
-            RPGMob mob = new RPGMob(25)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Ladrão",
                 AtaqueFisico = 4,
@@ -38,10 +38,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobRato()
         {
-            RPGMob mob = new RPGMob(15)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Rato",
-                AtaqueFisico = 2,
+                AtaqueFisico = 4,
                 Armadura = 1,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -54,10 +54,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobCoelho()
         {
-            RPGMob mob = new RPGMob(15)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Coelho",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 1,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -70,10 +70,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobCoelho1()
         {
-            RPGMob mob = new RPGMob(15)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Coelho",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 1,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -86,10 +86,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobPato()
         {
-            RPGMob mob = new RPGMob(10)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Pato",
-                AtaqueFisico = 6,
+                AtaqueFisico = 4,
                 Armadura = 0,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -102,10 +102,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobVaca()
         {
-            RPGMob mob = new RPGMob(25)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Vaca",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 3,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -118,10 +118,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobVaca1()
         {
-            RPGMob mob = new RPGMob(25)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Vaca",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 3,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -134,10 +134,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobVaca2()
         {
-            RPGMob mob = new RPGMob(25)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Vaca",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 3,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -150,10 +150,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobGalinha()
         {
-            RPGMob mob = new RPGMob(15)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Galinha",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 0,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -166,10 +166,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobGalinha1()
         {
-            RPGMob mob = new RPGMob(15)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Galinha",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 0,
                 Velocidade = 4,
                 Dificuldade = 1,
@@ -182,10 +182,10 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobGalinha2()
         {
-            RPGMob mob = new RPGMob(15)
+            RPGMob mob = new RPGMob(50)
             {
                 Nome = "Galinha",
-                AtaqueFisico = 3,
+                AtaqueFisico = 4,
                 Armadura = 0,
                 Velocidade = 4,
                 Dificuldade = 1,

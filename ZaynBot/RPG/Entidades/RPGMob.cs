@@ -37,7 +37,13 @@ namespace ZaynBot.RPG.Entidades
             this.QuantMax = quantidadeMaxima;
         }
 
+        public MobItemDropRPG(int itemId)
+        {
+            this.ItemId = itemId;
+            this.QuantMax = 1;
+        }
+
         public int ItemId { get; set; }
-        public int QuantMax { get; set; } = 1;
+        public int QuantMax { get; set; }
     }
 }

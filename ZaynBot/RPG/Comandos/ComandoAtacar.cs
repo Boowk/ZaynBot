@@ -47,7 +47,7 @@ namespace ZaynBot.RPG.Comandos
             do
             {
                 //Vez mob
-                mob.EstaminaAtual += Sortear.Valor(1, 10);
+                mob.EstaminaAtual += Sortear.Valor(1, mob.Velocidade);
 
                 //Ataque
                 if (mob.EstaminaAtual >= mob.EstaminaMaxima)
@@ -89,7 +89,7 @@ namespace ZaynBot.RPG.Comandos
                 //}
 
                 //Vez jogador
-                usuario.Personagem.EstaminaAtual += Sortear.Valor(1, 10);
+                usuario.Personagem.EstaminaAtual += Sortear.Valor(1, usuario.Personagem.Velocidade / 5);
 
                 //Ataque
                 if (usuario.Personagem.EstaminaAtual >= usuario.Personagem.EstaminaMaxima)
@@ -133,10 +133,7 @@ namespace ZaynBot.RPG.Comandos
                 //}
             }
             else
-            {
                 danoJogador = CalcDano(mob.Armadura, usuario.Personagem.AtaqueFisico);
-            }
-
             if (mob.VidaAtual < danoJogador)
                 danoJogador = mob.VidaAtual;
             mob.VidaAtual -= danoJogador;

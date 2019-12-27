@@ -59,6 +59,8 @@ namespace ZaynBot.Data.Itens
             => new RPGItem(7, "Frasco vermelho", EnumItem.Pocao)
             {
                 Descricao = "Um frasco com um liquido vermelho.",
+                PrecoCompra = 10,
+                PrecoVenda = 4,
                 VidaRestaura = 25,
             };
     }
