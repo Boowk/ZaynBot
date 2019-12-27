@@ -8,13 +8,14 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class RegiaoComando : BaseCommandModule
+    public class ComandoLocal : BaseCommandModule
     {
-        [Command("regiao")]
-        [Description("Permite visualizar a região atual melhor.")]
-        [ComoUsar("regiao")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
-        public async Task RegiaoComandoAb(CommandContext ctx)
+        [Command("local")]
+        [Aliases("regiao", "l")]
+        [Description("Permite visualizar a região atual.")]
+        [ComoUsar("local")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
+        public async Task ComandoLocalAb(CommandContext ctx)
         {
             //await ctx.TriggerTypingAsync();
             //RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);

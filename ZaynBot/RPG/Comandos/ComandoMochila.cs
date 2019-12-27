@@ -36,11 +36,8 @@ namespace ZaynBot.RPG.Comandos
 
                 for (int i = pagina * 10; i < usuario.Personagem.Mochila.Itens.Count; i++)
                 {
-                    RPGItem itemData = ModuloBanco.GetItem(usuario.Personagem.Mochila.Itens.Values[index].Id);
                     RPGMochilaItemData item = usuario.Personagem.Mochila.Itens.Values[index];
-                    str.Append($"**{item.Quantidade}** - ");
-                    str.Append($"{usuario.Personagem.Mochila.Itens.Keys[index].FirstUpper()}".Bold());
-                    str.Append("\n");
+                    str.Append($"**{item.Quantidade}** - {usuario.Personagem.Mochila.Itens.Keys[index].FirstUpper()}\n".Bold());
                     index++;
                     quantidades++;
                     if (quantidades == 10)

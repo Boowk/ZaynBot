@@ -6,7 +6,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class DesequiparComando : BaseCommandModule
+    public class ComandoDesequiparItem : BaseCommandModule
     {
     //    [Command("desequipar")]
     //    [Description("Permite desequipar algum item.")]
