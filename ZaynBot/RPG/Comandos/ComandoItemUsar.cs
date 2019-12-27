@@ -8,29 +8,27 @@ namespace ZaynBot.RPG.Comandos
 {
     class ComandoItemUsar : BaseCommandModule
     {
-
         [Command("usar")]
         [Aliases("u")]
         [Description("Permite usar itens que estão na sua mochila.")]
         [ComoUsar("usar [+quantidade|] [item]")]
         [Exemplo("usar 2 frasco vermelho")]
-        public async Task ComandoStatusAb(CommandContext ctx, int quantidade, [RemainingText] string itemNome = "")
+        public async Task ComandoUsarAb(CommandContext ctx, int quantidade, [RemainingText] string itemNome = "")
         {
             await ctx.TriggerTypingAsync();
             if (quantidade <= 0)
             {
-                await ctx.ExecutarComandoAsync("ajuda usar-item");
+                await ctx.ExecutarComandoAsync("ajuda usar");
                 return;
             }
 
             if (string.IsNullOrEmpty(itemNome))
             {
-                await ctx.ExecutarComandoAsync("ajuda usar-item");
+                await ctx.ExecutarComandoAsync("ajuda usar");
                 return;
             }
 
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            RPGRegiao regiaoAtual = ModuloBanco.GetRegiaoData(usuario.Personagem.RegiaoAtualId);
             itemNome = itemNome.ToLower();
 
             if (usuario.Personagem.Mochila.Itens.TryGetValue(itemNome, out RPGMochilaItemData itemData))
@@ -61,12 +59,12 @@ namespace ZaynBot.RPG.Comandos
             }
         }
 
-        [Command("usar-item")]
-        [ComoUsar("usar-item [item]")]
-        [Exemplo("usar-item frasco vermelho")]
-        public async Task ComandoStatusAb(CommandContext ctx, [RemainingText] string itemNome = "")
+        [Command("usar")]
+        [ComoUsar("usar [item]")]
+        [Exemplo("usar frasco vermelho")]
+        public async Task ComandoUsarAb(CommandContext ctx, [RemainingText] string itemNome = "")
         {
-            await ComandoStatusAb(ctx, 1, itemNome);
+            await ComandoUsarAb(ctx, 1, itemNome);
         }
     }
 }

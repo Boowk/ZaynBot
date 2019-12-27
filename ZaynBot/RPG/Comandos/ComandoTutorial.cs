@@ -32,7 +32,7 @@ namespace ZaynBot.RPG.Comandos
             embed.WithDescription("O seu objetivo é evoluir e ser o mais forte de todos! Acumule itens, evolua seus atributos, " +
                 "evolua o seu personagem até o apice! A ZaynRPG é um RPG baseado em texto para o Discord separado por regiões, " +
                 "onde cada região pode ter inimigos, loja, missões e objetivos. Mate inimigos para conseguir itens, venda itens " +
-                "para conseguir moedas, gaste moedas para conseguir itens. Desafie outras pessoas em batalha até a morte por moedas.".Bold());
+                "para conseguir moedas, gaste moedas para conseguir itens. Desafie outras pessoas em batalha até a morte por moedas.");
             await ctx.RespondAsync(embed: embed.Build());
         }
 

@@ -20,7 +20,7 @@ namespace ZaynBot.RPG.Comandos
                 }
                 else
                 {
-                    await ctx.RespondAsync($"< {usuario.Personagem.Batalha.Mob.Nome.Bold().Underline()} > não deixou você fugir! {ctx.User.Mention} Batalhando...");
+                    await ctx.RespondAsync($"< {usuario.Personagem.Batalha.Mob.Nome.Bold().Underline()} > não deixou você fugir! {ctx.User.Mention} Batalhando...".Bold());
                     ComandoAtacar f = new ComandoAtacar();
                     await f.ComandoAtacarAb(ctx);
                     await Task.CompletedTask;
@@ -46,7 +46,7 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
             }
-            await ctx.RespondAsync($"{ctx.User.Mention} você não pode ir para esta direção!");
+            await ctx.RespondAsync($"{ctx.User.Mention} esta direção não está disponível na região atual!".Bold());
         }
 
         [Command("oeste")]

@@ -20,7 +20,7 @@ namespace ZaynBot.RPG.Comandos
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
             if (string.IsNullOrWhiteSpace(nomeItem))
             {
-                await ctx.RespondAsync($"{ctx.User.Mention}, você precisa informar um [item] para examinar!".Bold());
+                await ctx.ExecutarComandoAsync("ajuda examinar");
                 return;
             }
             if (usuario.Personagem.Mochila.Itens.TryGetValue(nomeItem.ToLower(), out RPGMochilaItemData itemData))
