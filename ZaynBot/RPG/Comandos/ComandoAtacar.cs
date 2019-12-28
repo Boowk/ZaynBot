@@ -29,15 +29,9 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
-            if (usuario.Personagem.Batalha.Mob == null)
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention} você não tem nenhum mob para atacar! use `z!explorar` para encontrar algum mob!".Bold());
-                return;
-            }
-
             if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
             {
-                await ctx.RespondAsync($"{usuario.Personagem.Batalha.Mob.Nome} já está morto! {ctx.User.Mention} use `z!explorar` para encontrar novos mobs!".Bold());
+                await ctx.RespondAsync($"{ctx.User.Mention} use `z!explorar` para encontrar novos mobs!".Bold());
                 return;
             }
 
@@ -159,10 +153,7 @@ namespace ZaynBot.RPG.Comandos
                 // Enviamos uma mensagem
                 strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome.FirstUpper()}]!".Bold());
                 if (usuario.Personagem.AdicionarExp(mob.Essencia))
-                {
-                    strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")}!".Bold());
-                    strRelatorio.Append($"+1 Ponto de proficiencia!".Bold());
-                }
+                    strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")} +1 PP!".Bold());
             }
             else
             {

@@ -22,37 +22,43 @@ namespace ZaynBot.Data.Itens
         public static RPGItem ItemOssos()
             => new RPGItem(2, "Ossos", EnumItem.Recurso)
             {
-                Descricao = "Ossos são para enterrar."
+                Descricao = "Ossos são para enterrar.",
+                PrecoVenda = 2,
             };
 
         public static RPGItem ItemCarneDeCoelhoCru()
             => new RPGItem(3, "Carne de coelho cru", EnumItem.Recurso)
             {
-                Descricao = "Deve ter um gosto melhor cozido."
+                Descricao = "Deve ter um gosto melhor cozido.",
+                PrecoVenda = 4,
             };
 
         public static RPGItem ItemCouroDeVaca()
             => new RPGItem(4, "Couro de vaca", EnumItem.Recurso)
             {
-                Descricao = "Eu deveria levar isso para um curtume."
+                Descricao = "Eu deveria levar isso para um curtume.",
+                PrecoVenda = 6,
             };
 
         public static RPGItem ItemCarneDeVacaCru()
              => new RPGItem(5, "Carne de vaca cru", EnumItem.Recurso)
              {
-                 Descricao = "Deve ter um gosto melhor cozido."
+                 Descricao = "Deve ter um gosto melhor cozido.",
+                 PrecoVenda = 4,
              };
 
         public static RPGItem ItemCarneDeGalinhaCru()
              => new RPGItem(6, "Carne de galinha cru", EnumItem.Recurso)
              {
-                 Descricao = "Deve ter um gosto melhor cozido."
+                 Descricao = "Deve ter um gosto melhor cozido.",
+                 PrecoVenda = 5,
              };
 
         public static RPGItem ItemPenas()
             => new RPGItem(8, "Penas", EnumItem.Recurso)
             {
-                Descricao = "Usado para pesca com mosca."
+                Descricao = "Usado para pesca com mosca.",
+                PrecoVenda = 1,
             };
 
         public static RPGItem ItemFrascoVermelho()

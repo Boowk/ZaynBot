@@ -22,7 +22,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
 
         public static RPGMob MobLadrao1()
         {
-            RPGMob mob = new RPGMob(50)
+            RPGMob mob = new RPGMob(100)
             {
                 Nome = "Ladrão",
                 AtaqueFisico = 4,
@@ -176,7 +176,7 @@ namespace ZaynBot.DataTeste.Mobs.Normal
                 Essencia = 3,
             };
 
-            mob.Drop = new MobItemDropRPG(8, 1);
+            mob.Drop = new MobItemDropRPG(8, 15);
             return mob;
         }
 

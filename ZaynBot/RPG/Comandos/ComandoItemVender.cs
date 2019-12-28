@@ -9,7 +9,7 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class ComandoItemVender
+    public class ComandoItemVender : BaseCommandModule
     {
         [Command("vender")]
         [Aliases("v")]
@@ -20,8 +20,6 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
 
-            await ctx.RespondAsync("Comando em desenvolvimento!");
-            return;
             if (quantidade <= 0)
             {
                 await ctx.ExecutarComandoAsync("ajuda vender");
@@ -45,24 +43,23 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
                 RPGItem item = ModuloBanco.GetItem(itemData.Id);
-                switch (item.Tipo)
+                if (item.PrecoVenda != 0)
                 {
-                    case Entidades.Enuns.EnumItem.Pocao:
-                        usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
-                        string vidaRestaura = usuario.RecuperarVida(item.VidaRestaura * quantidade).Text();
-                        string magiaRestaurada = usuario.RecuperarMagia(item.MagiaRestaura * quantidade).Text();
-                        usuario.Salvar();
-                        await ctx.RespondAsync($"{ctx.User.Mention} você usou {quantidade} [{item.Nome}]! Restaurado {Emojis.PontosVida()} {vidaRestaura} e {Emojis.PontosPoder()} {magiaRestaurada}!".Bold());
-                        break;
-                    default:
-                        await ctx.RespondAsync($"{ctx.User.Mention} [{item.Nome}] não é usável!");
-                        break;
+                    usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
+                    usuario.Personagem.Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
+                    {
+                        Id = 0,
+                        Quantidade = item.PrecoVenda * quantidade
+                    });
+                    usuario.Salvar();
+                    await ctx.RespondAsync($"{ctx.User.Mention} você vendeu {quantidade} [{itemNome.FirstUpper()}] por {item.PrecoVenda * quantidade} Zeoin!".Bold());
+
                 }
+                else
+                    await ctx.RespondAsync($"{ctx.User.Mention} não é possivel vender {itemNome.FirstUpper()}!".Bold());
             }
             else
-            {
-                await ctx.RespondAsync($"{ctx.User.Mention} {itemNome.FirstUpper()} não foi encontrado na mochila!".Bold());
-            }
+                await ctx.RespondAsync($"{ctx.User.Mention} [{itemNome.FirstUpper()}] não foi encontrado na mochila!".Bold());
         }
 
         [Command("vender")]

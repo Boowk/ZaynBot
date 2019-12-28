@@ -27,7 +27,7 @@ namespace ZaynBot.RPG.Comandos
             foreach (var item in f)
             {
                 var g = await ctx.Client.GetUserAsync(item.Id);
-                str.AppendLine($"**{pos}.** {g.Username}#{g.Discriminator} - *Nível {item.Personagem.NivelAtual}*".Bold());
+                str.AppendLine($"{pos}. {g.Username}#{g.Discriminator} - *Nível {item.Personagem.NivelAtual}*".Bold());
                 pos++;
             }
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

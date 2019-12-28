@@ -28,13 +28,11 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoAjuda>();
             Comandos.RegisterCommands<ComandoConvite>();
             Comandos.RegisterCommands<ComandoInfo>();
-            Comandos.RegisterCommands<ComandoPrefixo>();
             Comandos.RegisterCommands<ComandoVotar>();
             Comandos.RegisterCommands<ComandoUsuario>();
             Comandos.RegisterCommands<ComandoAdm>();
             Comandos.RegisterCommands<ComandoMod>();
 
-            //Comandos.RegisterCommands<DencansarComando>();
             Comandos.RegisterCommands<TopComando>();
 
             Comandos.RegisterCommands<ComandoLoja>();
@@ -50,10 +48,9 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoMochila>();
             Comandos.RegisterCommands<ComandoExaminar>();
             Comandos.RegisterCommands<ComandoViajar>();
+            Comandos.RegisterCommands<ComandoItemVender>();
             //Comandos.RegisterCommands<ExaminarComando>();
-            //Comandos.RegisterCommands<EquiparComando>();
             //Comandos.RegisterCommands<DesequiparComando>();
-            //Comandos.RegisterCommands<PersonagemComando>();
             //Comandos.RegisterCommands<ReceitaComando>();
         }
 
@@ -107,6 +104,8 @@ namespace ZaynBot
                     await ctx.RespondAsync(mx.Message);
                     break;
                 case UnauthorizedException ux:
+                    break;
+                case InvalidOperationException iox:
                     break;
                 default:
                     e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);

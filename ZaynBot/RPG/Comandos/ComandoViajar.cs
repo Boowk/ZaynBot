@@ -20,7 +20,7 @@ namespace ZaynBot.RPG.Comandos
                 }
                 else
                 {
-                    await ctx.RespondAsync($"< {usuario.Personagem.Batalha.Mob.Nome.Bold().Underline()} > não deixou você fugir! {ctx.User.Mention} Batalhando...".Bold());
+                    await ctx.RespondAsync($"< {usuario.Personagem.Batalha.Mob.Nome.Underline().Bold()} > não deixou você fugir! {ctx.User.Mention} Batalhando...".Bold());
                     ComandoAtacar f = new ComandoAtacar();
                     await f.ComandoAtacarAb(ctx);
                     await Task.CompletedTask;

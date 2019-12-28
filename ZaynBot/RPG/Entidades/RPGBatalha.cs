@@ -14,6 +14,7 @@ namespace ZaynBot.RPG.Entidades
         public RPGBatalha()
         {
             Turno = 0;
+            Mob = new RPGMob(0);
         }
     }
 }

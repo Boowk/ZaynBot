@@ -1,4 +1,5 @@
-﻿using DSharpPlus.CommandsNext;
+﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using ZaynBot.Core.Entidades;
 namespace ZaynBot.Core.Comandos
 {
     [Group("mod")]
-    [Description("Comandos administrativos do servidor.")]
+    [Description("Comandos administrativos do servidor. Para ter acesso é necessario ser administrador ou ter outras permissões no servidor.")]
     [ComoUsar("mod [comando]")]
     class ComandoMod : BaseCommandModule
     {
@@ -26,7 +27,7 @@ namespace ZaynBot.Core.Comandos
             "#Quantidade => Mostra a quantidade de pessoas do servidor")]
         [ComoUsar("mod bem-vindo [mensagem]")]
         [Exemplo("mod bem-vindo Bem-vindo #Menção agora temos #Quantidade no servidor.")]
-        [RequireUserPermissions(DSharpPlus.Permissions.ManageMessages)]
+        [RequireUserPermissions(Permissions.ManageMessages)]
         public async Task Mp(CommandContext ctx, [RemainingText] string texto = "")
         {
             await ctx.TriggerTypingAsync();
@@ -35,7 +36,7 @@ namespace ZaynBot.Core.Comandos
                 await ctx.ExecutarComandoAsync("ajuda mod bem-vindo");
                 return;
             }
-            if (texto.Length > 1350)
+            if (texto.Length > 1500)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention} eu sei que você gostaria de fazer uma recepção calorosa, mas não " +
                     $"consigo processar um bem-vindo tão grande assim! Diminua um pouco o seu bem-vindo!");
@@ -49,6 +50,33 @@ namespace ZaynBot.Core.Comandos
             str.Replace("#Menção", $"{ctx.User.Mention}");
             str.Replace("#Quantidade", $"{ctx.Guild.MemberCount}");
             await ctx.RespondAsync($"{ctx.User.Mention} mensagem de boas vindas será exibida da seguinte forma: {str.ToString()}");
+        }
+
+        [Command("prefixo")]
+        [Description("Permite modificar o prefixo do bot no servidor atual.  Note que o Prefix antigo ainda continuará funcionando")]
+        [ComoUsar("prefixo [p|]")]
+        [Exemplo("prefixo !")]
+        [RequireUserPermissions(Permissions.Administrator)]
+        public async Task ComandoPrefixoAb(CommandContext ctx, string prefix = null)
+        {
+            ServidorCore server = ModuloBanco.GetServidor(ctx.Guild.Id);
+            if (string.IsNullOrWhiteSpace(prefix))
+            {
+                server.Prefix = "";
+                server.Salvar();
+                await ctx.RespondAsync("Prefix removido!").ConfigureAwait(false);
+            }
+            else
+            {
+                if (prefix.Length > 3)
+                {
+                    await ctx.RespondAsync("O prefixo não pode passar de 3 caracteres!").ConfigureAwait(false);
+                    return;
+                }
+                server.Prefix = prefix;
+                server.Salvar();
+                await ctx.RespondAsync("Prefixo alterado!").ConfigureAwait(false);
+            }
         }
     }
 }

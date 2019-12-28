@@ -14,24 +14,27 @@ namespace ZaynBot.RPG.Entidades
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<EnumItem, RPGItem> Equipamentos { get; set; } = new Dictionary<EnumItem, RPGItem>();
 
-        public bool AdicionarItem(RPGItem item, int quantidade = 1)
+        public void AdicionarItem(RPGItem item, int quantidade = 1)
         {
-            item.Nome = item.Nome.ToLower();
-            // Verificar se já está na mochila
-            // Se o encontrar, incrementa-se a quantidade
-            if (Itens.TryGetValue(item.Nome, out RPGMochilaItemData itemEncontrado))
-            {
-                itemEncontrado.Quantidade += quantidade;
-                return true;
-            }
-
-            // Se não está na mochila, o adiciona
-            Itens.Add(item.Nome, new RPGMochilaItemData()
+            AdicionarItem(item.Nome, new RPGMochilaItemData()
             {
                 Id = item.Id,
-                Quantidade = quantidade,
+                Quantidade = quantidade
             });
-            return true;
+        }
+
+        public void AdicionarItem(string nome, RPGMochilaItemData item)
+        {
+            nome = nome.ToLower();
+            // Verificar se já está na mochila
+            // Se o encontrar, incrementa-se a quantidade
+            if (Itens.TryGetValue(nome, out RPGMochilaItemData itemEncontrado))
+            {
+                itemEncontrado.Quantidade += item.Quantidade;
+                return;
+            }
+            // Se não está na mochila, o adiciona
+            Itens.Add(nome, item);
         }
 
         public void RemoverItem(string itemNome, int quantidade = 1)
