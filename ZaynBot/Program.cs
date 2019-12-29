@@ -1,6 +1,7 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Text;
@@ -10,6 +11,7 @@ using ZaynBot.Data.Itens;
 using ZaynBot.DataTeste.Mobs;
 using ZaynBot.DataTeste.Receitas;
 using ZaynBot.RPG.Data.Mundos.Anker;
+using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot
 {
@@ -81,15 +83,10 @@ namespace ZaynBot
                 PrefixResolver = PrefixResolverCustomizado,
             }, ModuloCliente.Client);
             new ModuloBanco();
-            Console.WriteLine("Banco concluido.");
+            await CarregarItensAsync();
             new TodasAsAreas();
-            Console.WriteLine("Áreas concluido.");
-            new TodosOsItens();
-            Console.WriteLine("Itens concluido.");
             new TodasAsReceitas();
-            Console.WriteLine("Receitas concluido.");
             new TodosOsMobs();
-            Console.WriteLine("Mobs concluido.");
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }
@@ -108,6 +105,23 @@ namespace ZaynBot
             if (pfixLocation != -1)
                 return Task.FromResult(pfixLocation);
             return Task.FromResult(-1);
+        }
+
+        public async Task CarregarItensAsync()
+        {
+            ModuloBanco.Database.DropCollection("itens");
+            var Files = Directory.EnumerateFiles(EntrarPasta(@"Data/Itens"), "*.json", SearchOption.AllDirectories);
+            int quant = 0;
+            foreach (var file in Files)
+            {
+                using (var sr = new StreamReader(file))
+                {
+                    var f = JsonConvert.DeserializeObject<RPGItem>(sr.ReadToEnd());
+                    await ModuloBanco.ItemColecao.InsertOneAsync(f);
+                    quant++;
+                }
+            }
+            Console.WriteLine($"{quant} Itens carregados!");
         }
     }
 }

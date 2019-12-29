@@ -2,7 +2,7 @@
 
 namespace ZaynBot.RPG.Entidades
 {
-    public enum EnumItem
+    public enum EnumTipo
     {
         Arma,
         Escudo,
@@ -23,7 +23,7 @@ namespace ZaynBot.RPG.Entidades
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public EnumItem Tipo { get; set; }
+        public EnumTipo Tipo { get; set; }
         public EnumProficiencia Proficiencia { get; set; }
         public int PrecoCompra { get; set; }
         public int PrecoVenda { get; set; }
@@ -35,7 +35,9 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaRestaura { get; set; }
         public double FomeRestaura { get; set; }
 
-        public RPGItem(int id, string nome, EnumItem tipo)
+        public RPGItem() { }
+
+        public RPGItem(int id, string nome, EnumTipo tipo)
         {
             Id = id;
             Nome = nome;
@@ -44,7 +46,7 @@ namespace ZaynBot.RPG.Entidades
             Proficiencia = EnumProficiencia.Nenhum;
         }
 
-        public RPGItem(int id, string nome, EnumItem tipo, EnumProficiencia proficiencia) : this(id, nome, tipo)
+        public RPGItem(int id, string nome, EnumTipo tipo, EnumProficiencia proficiencia) : this(id, nome, tipo)
         {
             Proficiencia = proficiencia;
         }

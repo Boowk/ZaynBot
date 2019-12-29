@@ -111,7 +111,7 @@ namespace ZaynBot.RPG.Comandos
             if (usuario.Personagem.Mochila == null)
                 usuario.Personagem.Mochila = new RPGMochila();
             //Pega a arma que ele esta usando e já fz o calculo de proficiencia
-            usuario.Personagem.Mochila.Equipamentos.TryGetValue(EnumItem.Arma, out RPGItem arma);
+            usuario.Personagem.Mochila.Equipamentos.TryGetValue(EnumTipo.Arma, out RPGItem arma);
             double danoJogador = 0;
             if (arma != null)
             {

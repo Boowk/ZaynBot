@@ -11,7 +11,7 @@ namespace ZaynBot.RPG.Entidades
         public SortedList<string, RPGMochilaItemData> Itens { get; set; } = new SortedList<string, RPGMochilaItemData>();
 
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<EnumItem, RPGItem> Equipamentos { get; set; } = new Dictionary<EnumItem, RPGItem>();
+        public Dictionary<EnumTipo, RPGItem> Equipamentos { get; set; } = new Dictionary<EnumTipo, RPGItem>();
 
         public void AdicionarItem(RPGItem item, int quantidade = 1)
         {
