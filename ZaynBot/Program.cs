@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
 using ZaynBot.Data.Itens;
@@ -17,15 +18,35 @@ namespace ZaynBot
         public static ConfigCore _config;
         static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
+        public static string EntrarPasta(string nome)
+        {
+            StringBuilder raizProjeto = new StringBuilder();
+#if DEBUG
+            raizProjeto.Append(Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")));
+            raizProjeto.Replace(@"/", @"\");
+            return raizProjeto + nome + @"\";
+#else
+            raizProjeto.Append(Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../")));
+            raizProjeto.Replace(@"\", @"/");
+            return raizProjeto + nome + @"/";
+#endif
+        }
+
         public async Task RodarOBotAsync()
         {
             // Infelizmente no linux muda as barrinha
-#if DEBUG
-            string projetoRaiz = Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")) + "config.json";
-#else
-            string projetoRaiz = Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../")) + "config.json";
-#endif
-            _config = ConfigCore.LoadFromFile(projetoRaiz);
+
+
+            string f = EntrarPasta("ZaynBot");
+
+            DirectoryInfo d = new DirectoryInfo(EntrarPasta(@"ZaynBot/bin"));//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles(); //Getting Text files
+            foreach (FileInfo file in Files)
+            {
+                Console.WriteLine(file.FullName);
+            }
+
+            _config = ConfigCore.LoadFromFile(EntrarPasta("") + "config.json");
             if (_config == null)
             {
                 Console.WriteLine("O arquivo config.json não existe!");
@@ -51,7 +72,7 @@ namespace ZaynBot
                 LogLevel = LogLevel.Info,
 #endif
                 UseInternalLogHandler = true,
-                
+
             };
             ModuloCliente cliente = new ModuloCliente(cfg);
 
