@@ -34,18 +34,6 @@ namespace ZaynBot
 
         public async Task RodarOBotAsync()
         {
-            // Infelizmente no linux muda as barrinha
-
-
-            string f = EntrarPasta("ZaynBot");
-
-            DirectoryInfo d = new DirectoryInfo(EntrarPasta(@"ZaynBot/bin"));//Assuming Test is your Folder
-            FileInfo[] Files = d.GetFiles(); //Getting Text files
-            foreach (FileInfo file in Files)
-            {
-                Console.WriteLine(file.FullName);
-            }
-
             _config = ConfigCore.LoadFromFile(EntrarPasta("") + "config.json");
             if (_config == null)
             {
