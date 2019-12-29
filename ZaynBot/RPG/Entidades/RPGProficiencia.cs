@@ -3,6 +3,15 @@ using ZaynBot.RPG.Proficiencias;
 
 namespace ZaynBot.RPG.Entidades
 {
+    public enum EnumProficiencia
+    {
+        Nenhum,
+        Perfurante,
+        Esmagante,
+        ArmaduraLeve,
+        ArmaduraPesada,
+    }
+
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("Proficiencia")]
     [BsonKnownTypes(typeof(ProficienciaPerfurante), typeof(ProficienciaDesarmado), typeof(ProficienciaEsmagante))]

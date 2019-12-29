@@ -1,7 +1,6 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.Options;
 using System.Collections.Generic;
-using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades
 {

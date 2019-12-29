@@ -1,5 +1,4 @@
 ﻿using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.Data.Itens
 {

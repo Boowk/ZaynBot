@@ -5,8 +5,6 @@ using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
-using ZaynBot.RPG.Entidades.Enuns;
-using ZaynBot.RPG.Proficiencias;
 
 namespace ZaynBot.Core.Comandos
 {

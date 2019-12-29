@@ -1,7 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using ZaynBot.RPG.Entidades.Enuns;
-
-namespace ZaynBot.RPG.Entidades
+﻿namespace ZaynBot.RPG.Entidades
 {
     public enum EnumDirecao
     {
