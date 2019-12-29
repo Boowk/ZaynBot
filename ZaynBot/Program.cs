@@ -51,6 +51,7 @@ namespace ZaynBot
                 LogLevel = LogLevel.Info,
 #endif
                 UseInternalLogHandler = true,
+                
             };
             ModuloCliente cliente = new ModuloCliente(cfg);
 

@@ -49,7 +49,6 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoExaminar>();
             Comandos.RegisterCommands<ComandoViajar>();
             Comandos.RegisterCommands<ComandoItemVender>();
-            //Comandos.RegisterCommands<ExaminarComando>();
             //Comandos.RegisterCommands<DesequiparComando>();
             //Comandos.RegisterCommands<ReceitaComando>();
         }
@@ -118,7 +117,7 @@ namespace ZaynBot
 
         private Task ComandoExecutado(CommandExecutionEventArgs e)
         {
-            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} executou '{e.Command.QualifiedName}'", DateTime.Now);
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, $"({e.Context.Guild.Id}) {e.Context.Guild.Name}", $"({e.Context.User.Id}) {e.Context.User.Username} executou '{e.Command.QualifiedName}'", DateTime.Now);
             return Task.CompletedTask;
         }
     }
