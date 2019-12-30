@@ -8,6 +8,7 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class RPGMob
     {
+        public RPGMob() { }
         public RPGMob(double vida)
         {
             VidaAtual = vida;
@@ -21,7 +22,7 @@ namespace ZaynBot.RPG.Entidades
         public double VidaMax { get; set; }
         public double AtaqueFisico { get; set; }
         public double Armadura { get; set; }
-        public int Velocidade { get; set; }
+        public double Velocidade { get; set; }
         public double Essencia { get; set; }
         public int Dificuldade { get; set; }
 
@@ -31,6 +32,7 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class MobItemDropRPG
     {
+        public MobItemDropRPG() { }
         public MobItemDropRPG(int itemId, int quantidadeMaxima)
         {
             this.ItemId = itemId;

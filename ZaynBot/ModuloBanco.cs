@@ -7,6 +7,9 @@ using System.Linq;
 using ZaynBot.Core.Entidades;
 using ZaynBot.RPG.Entidades;
 using MongoDB.Driver.Linq;
+using System.Threading.Tasks;
+using System.IO;
+using System;
 
 namespace ZaynBot
 {
@@ -43,6 +46,40 @@ namespace ZaynBot
             var notificationLogBuilder = Builders<RPGUsuario>.IndexKeys;
             var indexModel = new CreateIndexModel<RPGUsuario>(notificationLogBuilder.Ascending(x => x.Personagem.NivelAtual));
             UsuarioColecao.Indexes.CreateOne(indexModel);
+        }
+
+        public static async Task CarregarItensAsync()
+        {
+            Database.DropCollection("itens");
+            var Files = Directory.EnumerateFiles(Program.EntrarPasta(@"Data/Itens"), "*.json", SearchOption.AllDirectories);
+            int quant = 0;
+            foreach (var file in Files)
+            {
+                using (var sr = new StreamReader(file))
+                {
+                    var f = Newtonsoft.Json.JsonConvert.DeserializeObject<RPGItem>(sr.ReadToEnd());
+                    await ItemColecao.InsertOneAsync(f);
+                    quant++;
+                }
+            }
+            Console.WriteLine($"{quant} Itens carregados!");
+        }
+
+        public static async Task CarregarMobsAsync()
+        {
+            Database.DropCollection("mobs");
+            var Files = Directory.EnumerateFiles(Program.EntrarPasta(@"Data/Mobs"), "*.json", SearchOption.AllDirectories);
+            int quant = 0;
+            foreach (var file in Files)
+            {
+                using (var sr = new StreamReader(file))
+                {
+                    var f = Newtonsoft.Json.JsonConvert.DeserializeObject<RPGMob>(sr.ReadToEnd());
+                    await MobColecao.InsertOneAsync(f);
+                    quant++;
+                }
+            }
+            Console.WriteLine($"{quant} Mobs carregados!");
         }
 
         public static RPGUsuario GetUsuario(ulong id)
