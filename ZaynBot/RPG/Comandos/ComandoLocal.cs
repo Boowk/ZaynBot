@@ -27,7 +27,7 @@ namespace ZaynBot.RPG.Comandos
 
             StringBuilder conexoesDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
-                conexoesDisponiveis.AppendLine($"{reg.Direcao.ToString()} - { RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId).Nome}".Bold());
+                conexoesDisponiveis.AppendLine($"{reg.Direcao.ToString()} - { RPGRegiao.GetRegiao(reg.RegiaoId).Nome}".Bold());
 
             if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
                 embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());
