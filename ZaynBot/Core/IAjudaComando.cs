@@ -96,7 +96,7 @@ namespace ZaynBot.Core
             "**4. Compras -** `loja` , `comprar` , `vender`\n" +
             "**5. Itens -** `mochila` , `usar` , `examinar`\n" +
             "**6. Região -** `local` , `norte` , `sul` , `leste` , `oeste`\n" +
-            "**7. Administrativos -** `prefixo` `mod`\n" +
+            "**7. Administrativo -** `mod`\n" +
             "**8. Outros -** `top` , `usuario`\n" +
             "```csharp\n# Não inclua os colchetes do exemplo quando utilizar o comando!```";
         }

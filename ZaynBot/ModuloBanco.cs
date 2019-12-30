@@ -82,6 +82,23 @@ namespace ZaynBot
             Console.WriteLine($"{quant} Mobs carregados!");
         }
 
+        public static async Task CarregarRegioesAsync()
+        {
+            Database.DropCollection("regioes");
+            var Files = Directory.EnumerateFiles(Program.EntrarPasta(@"Data/Regioes"), "*.json", SearchOption.AllDirectories);
+            int quant = 0;
+            foreach (var file in Files)
+            {
+                using (var sr = new StreamReader(file))
+                {
+                    var f = Newtonsoft.Json.JsonConvert.DeserializeObject<RPGRegiao>(sr.ReadToEnd());
+                    await RegiaoColecao.InsertOneAsync(f);
+                    quant++;
+                }
+            }
+            Console.WriteLine($"{quant} Regiões carregadas!");
+        }
+
         public static RPGUsuario GetUsuario(ulong id)
             => UsuarioColecao.Find(x => x.Id == id).FirstOrDefault();
 

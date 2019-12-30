@@ -65,7 +65,7 @@ namespace ZaynBot
 
         private Task Client_GuildAvailable(GuildCreateEventArgs e)
         {
-            e.Client.DebugLogger.LogMessage(LogLevel.Info, "Zayn", $"Guilda {e.Guild.Name}", DateTime.Now);
+            e.Client.DebugLogger.LogMessage(LogLevel.Info, "Zayn", $"Guilda {e.Guild.Name.RemoverAcentos()}", DateTime.Now);
             Bot.QuantidadeServidores++;
             Bot.QuantidadeMembros += e.Guild.MemberCount;
             Bot.QuantidadeCanais += e.Guild.Channels.Count;

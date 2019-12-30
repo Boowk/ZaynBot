@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
 using ZaynBot.DataTeste.Receitas;
-using ZaynBot.RPG.Data.Mundos.Anker;
 
 namespace ZaynBot
 {
@@ -81,7 +80,7 @@ namespace ZaynBot
             new ModuloBanco();
             await ModuloBanco.CarregarItensAsync();
             await ModuloBanco.CarregarMobsAsync();
-            new TodasAsAreas();
+            await ModuloBanco.CarregarRegioesAsync();
             new TodasAsReceitas();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);

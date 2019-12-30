@@ -22,7 +22,8 @@ namespace ZaynBot.RPG.Comandos
             str.AppendLine("1. Descrição".Bold());
             str.AppendLine("2. Combate".Bold());
             str.AppendLine("3. Itens".Bold());
-            str.AppendLine("4. Mensagem automática de boas vindas".Bold());
+            str.AppendLine("4. Regiões".Bold());
+            str.AppendLine("5. Mensagem automática de boas vindas".Bold());
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithDescription(str.ToString());
             await ctx.RespondAsync(embed: embed.Build());
@@ -48,7 +49,7 @@ namespace ZaynBot.RPG.Comandos
             embed.WithDescription("O combate é separado por turnos, cada turno você pode atacar ou defender. Tudo isso é feito " +
                 "automaticamente, você só precisa usar o seu turno com sabedoria. Use `explorar` para encontrar o seu primeiro " +
                 "inimigo, como será o seu turno, você pode usar `atacar` logo em seguida. Após atacar sera mostrado uma breve " +
-                "descrição do que ocorreu na batalha, preste atenção a sua vida, você não ira acabar morrendo..");
+                "descrição do que ocorreu na batalha, preste atenção a sua vida, você não ira querer acabar morrendo..");
             await ctx.RespondAsync(embed: embed.Build());
         }
 
@@ -61,12 +62,12 @@ namespace ZaynBot.RPG.Comandos
                 "acessada usando `mochila`. Use `examinar` para receber mais detalhes sobre o item. Com o passar das batalhas " +
                 "você vai ficando sem vida, para recuperar sua vida, a unica forma é tomando poções recuperadoras. Você precisa " +
                 "viajar usando `leste`, `oeste`, `norte` ou `sul` até encontrar uma loja de poções. Compre algumas poções com " +
-                "`comprar`, e use-as com `usar-item`. Caso não saiba qual itens é vendido, use `loja`.");
+                "`comprar`, e use-as com `usar`. Caso não saiba qual itens é vendido, use `loja`.");
             await ctx.RespondAsync(embed: embed.Build());
         }
 
-        [Command("4")]
-        public async Task Pagina4(CommandContext ctx)
+        [Command("5")]
+        public async Task Pagina5(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
@@ -76,6 +77,17 @@ namespace ZaynBot.RPG.Comandos
                 "todos possam ver! Também temos outras funções para ajudar na criação da sua mensagem. Use #Menção para mencionar " +
                 "a pessoa e #Quantidade para saber quantos membros tem no servidor após aquela pessoa ter entrado! Mais dúvidas? Use " +
                 "`ajuda mod bem-vindo`.");
+            await ctx.RespondAsync(embed: embed.Build());
+        }
+        [Command("4")]
+        public async Task Pagina4(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            embed.WithDescription("A ZaynRPG é separado por regiões, cada região pode ter 4 direções para se locomover que são: " +
+                "`norte` , `oeste` , `leste` e `sul`. Use `local` para se encontrar na região, recebendo descrições detalhas " +
+                "e possíveis direções para ir. Sempre que você explora locais novos, você pode encontrar lojas, e mobs mais fortes " +
+                "por isso tome cuidado, e sempre leia as descrições de cada região antes de ir avançando.");
             await ctx.RespondAsync(embed: embed.Build());
         }
     }

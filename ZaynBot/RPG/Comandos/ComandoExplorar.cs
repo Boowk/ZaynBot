@@ -17,8 +17,12 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-
             RPGRegiao regiaoAtual = ModuloBanco.GetRegiaoData(usuario.Personagem.RegiaoAtualId);
+            if (regiaoAtual.Dificuldade == 0)
+            {
+                await ctx.RespondAsync($"Está região não tem mobs para procurar {ctx.User.Mention}!");
+                return;
+            }
             usuario.Personagem.Batalha.Mob = ModuloBanco.GetMob(regiaoAtual);
             usuario.Personagem.Batalha.Turno = 0;
             RPGUsuario.Salvar(usuario);

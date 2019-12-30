@@ -28,7 +28,7 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
-            if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
+            if (usuario.Personagem.Batalha.Mob == null || usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention} use `z!explorar` para encontrar novos mobs!".Bold());
                 return;

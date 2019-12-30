@@ -91,10 +91,11 @@ namespace ZaynBot.Core.Comandos
                         //  };
                         //if (user.Personagem.ExpMax < 200)
                         //    user.Personagem.ExpMax = 200;
-                        if (user.Personagem.Batalha.Mob == null)
-                            user.Personagem.Batalha = new RPGBatalha();
-                        user.Personagem.ProficienciaPontos = user.Personagem.NivelAtual - 1;
-
+                        user.Personagem.ExpMax = 200;
+                        for (int i = 0; i < user.Personagem.NivelAtual - 1; i++)
+                        {
+                            user.Personagem.ExpMax *= 1.02;
+                        }
                         user.Salvar();
                     }
                 }

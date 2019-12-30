@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ZaynBot
@@ -33,6 +34,8 @@ namespace ZaynBot
         public static string Bold(this string texto)
             => $"**{texto}**";
 
+        public static string RemoverAcentos(this string texto)
+            => Regex.Replace(texto, @"[^\u0000-\u007F]+", string.Empty);
         public static async Task ExecutarComandoAsync(this CommandContext ctx, string comando)
         {
             var cmd = ctx.CommandsNext.FindCommand(comando, out var args);

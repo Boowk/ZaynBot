@@ -31,6 +31,9 @@ namespace ZaynBot.RPG.Comandos
 
             if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
                 embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());
+            else
+                embed.AddField($"**{"Direções disponíveis".Titulo()}**", "Nenhuma.");
+
             embed.WithColor(DiscordColor.Azure);
 
             await ctx.RespondAsync(embed: embed.Build());

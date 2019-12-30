@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            if (usuario.Personagem.Batalha.Mob.VidaAtual > 0)
+            if (usuario.Personagem.Batalha.Mob != null && usuario.Personagem.Batalha.Mob.VidaAtual > 0)
                 if (Sortear.Sucesso(0.3))
                 {
                     usuario.Personagem.Batalha = new RPGBatalha();
