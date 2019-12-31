@@ -22,12 +22,12 @@ namespace ZaynBot.RPG.Comandos
             RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
-            embed.WithTitle($"**{localAtual.Nome.Titulo()}**");
+            embed.WithTitle($"{localAtual.Nome.Titulo().Bold()} - {localAtual.Id}");
             embed.WithDescription(localAtual.Descrição);
 
             StringBuilder conexoesDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
-                conexoesDisponiveis.AppendLine($"{reg.Direcao.ToString()} - { RPGRegiao.GetRegiao(reg.RegiaoId).Nome}".Bold());
+                conexoesDisponiveis.AppendLine($"{reg.Direcao.ToString()} - {RPGRegiao.GetRegiao(reg.RegiaoId).Nome} - {reg.RegiaoId}".Bold());
 
             if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
                 embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());
