@@ -54,7 +54,7 @@ namespace ZaynBot
             //Comandos.RegisterCommands<ReceitaComando>();
         }
 
-        //Envia mensagem ao receber um erro no bot.
+        //Envia mensagem ao receber um erro.
         private async Task ComandoAconteceuErro(CommandErrorEventArgs e)
         {
             CommandContext ctx = e.Context;
@@ -76,9 +76,6 @@ namespace ZaynBot
                             await ctx.RespondAsync($"Aguarde {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
                     }
                     return;
-                case ArgumentException ax:
-                    await ctx.RespondAsync($"**Aconteceu um erro:** {ax.ToString()}");
-                    return;
                 case CommandNotFoundException cf:
                     if (e.Command != null)
                         if (e.Command.Name == "ajuda")
@@ -87,12 +84,6 @@ namespace ZaynBot
                             await ctx.RespondAsync($"{x} | {ctx.User.Mention} o comando {e.Context.RawArgumentString} não existe.*");
                         }
                     return;
-                case PersonagemNullException px:
-                    await ctx.RespondAsync(px.ToString());
-                    return;
-                case NotFoundException nx:
-                    await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
-                    return;
                 case PersonagemNoLifeException pnx:
                     DiscordEmbedBuilder emb = new DiscordEmbedBuilder();
                     emb.WithDescription($"{ctx.User.Mention} acabou de morrer!\n" +
@@ -100,18 +91,18 @@ namespace ZaynBot
                     emb.WithImageUrl("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n");
                     await ctx.RespondAsync(ctx.User.Mention, embed: emb.Build());
                     return;
-                case MensagemException mx:
-                    await ctx.RespondAsync(mx.Message);
-                    break;
+                case PersonagemNullException px:
+                    await ctx.RespondAsync(px.ToString());
+                    return;
+                case NotFoundException nx:
+                    await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
+                    return;
                 case UnauthorizedException ux:
                     break;
-                case InvalidOperationException iox:
-                    break;
                 default:
-                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Error, e.Context.Guild.Id.ToString(), $"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}", DateTime.Now);
-                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-                    DiscordChannel CanalRPG = MundoZayn.GetChannel(600736364484493424);
-                    await CanalRPG.SendMessageAsync($"{e.Context.User.Id} tentou executar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.GetType()}: {e.Exception.Message ?? "<sem mensagem>"}\n{e.Context.Message.JumpLink}");
+                    var MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
+                    var CanalRPG = MundoZayn.GetChannel(600736364484493424);
+                    await CanalRPG.SendMessageAsync($"[{e.Context.User.Username.RemoverAcentos()}({e.Context.User.Id})] tentou usar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.ToString()}\nstack:{e.Exception.StackTrace}\ninner:{e.Exception?.InnerException}.\n{e.Context.Message.JumpLink}");
                     break;
             }
         }
