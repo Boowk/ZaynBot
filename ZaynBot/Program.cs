@@ -80,7 +80,7 @@ namespace ZaynBot
             new ModuloBanco();
             await ModuloBanco.CarregarItensAsync();
             await ModuloBanco.CarregarMobsAsync();
-            await ModuloBanco.CarregarRegioesAsync();
+            await ModuloBanco.CarregarRegioesTrizbortAsync();
             new TodasAsReceitas();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);

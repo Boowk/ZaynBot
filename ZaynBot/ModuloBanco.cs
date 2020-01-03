@@ -10,6 +10,7 @@ using MongoDB.Driver.Linq;
 using System.Threading.Tasks;
 using System.IO;
 using System;
+using Newtonsoft.Json;
 
 namespace ZaynBot
 {
@@ -94,6 +95,29 @@ namespace ZaynBot
                     var f = Newtonsoft.Json.JsonConvert.DeserializeObject<RPGRegiao>(sr.ReadToEnd());
                     await RegiaoColecao.InsertOneAsync(f);
                     quant++;
+                }
+            }
+            Console.WriteLine($"{quant} Regiões carregadas!");
+        }
+
+        public static async Task CarregarRegioesTrizbortAsync()
+        {
+            Database.DropCollection("regioes");
+
+            int quant = 0;
+            JsonSerializer serializer = new JsonSerializer();
+            using (FileStream s = File.Open(Program.EntrarPasta(@"Data/Regioes") + "/Regioes.json", FileMode.Open))
+            using (StreamReader sr = new StreamReader(s))
+            using (JsonReader reader = new JsonTextReader(sr))
+            {
+                while (reader.Read())
+                {
+                    if (reader.TokenType == JsonToken.StartObject)
+                    {
+                        var o = serializer.Deserialize<RPGRegiao>(reader);
+                        await RegiaoColecao.InsertOneAsync(o);
+                        quant++;
+                    }
                 }
             }
             Console.WriteLine($"{quant} Regiões carregadas!");

@@ -91,11 +91,7 @@ namespace ZaynBot.Core.Comandos
                         //  };
                         //if (user.Personagem.ExpMax < 200)
                         //    user.Personagem.ExpMax = 200;
-                        user.Personagem.ExpMax = 200;
-                        for (int i = 0; i < user.Personagem.NivelAtual - 1; i++)
-                        {
-                            user.Personagem.ExpMax *= 1.02;
-                        }
+                        user.Personagem.RegiaoAtualId = 0;
                         user.Salvar();
                     }
                 }

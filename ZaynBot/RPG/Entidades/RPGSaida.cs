@@ -2,10 +2,10 @@
 {
     public enum EnumDirecao
     {
-        Norte,
-        Sul,
-        Oeste,
-        Leste,
+        Norte = 0,
+        Sul = 1,
+        Oeste = 2,
+        Leste = 3,
     }
 
     public class RPGSaida
