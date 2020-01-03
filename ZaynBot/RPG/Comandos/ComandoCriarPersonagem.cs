@@ -24,7 +24,7 @@ namespace ZaynBot.RPG.Comandos
                 ModuloBanco.UsuarioColecao.InsertOne(usuario);
                 DiscordEmbedBuilder de = new DiscordEmbedBuilder();
                 de.WithDescription($"Parabéns {ctx.User.Mention}, você concluiu a criação do personagem.\n" +
-                    $"Escreva `z!tutorial` para mais detalhes sobre como me usar.\n" +
+                    $"Escreva `z!olhar` para mais detalhes sobre como me usar.\n" +
                     $"Seja bem-vindo ao Zayn.");
                 await ctx.RespondAsync(embed: de);
                 try

@@ -8,13 +8,12 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class ComandoLocal : BaseCommandModule
+    public class ComandoOlhar : BaseCommandModule
     {
-        [Command("local")]
-        [Aliases("regiao")]
+        [Command("olhar")]
         [Description("Permite visualizar a região atual.")]
-        [ComoUsar("local")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
+        [ComoUsar("olhar")]
+        [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task ComandoLocalAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
@@ -22,17 +21,15 @@ namespace ZaynBot.RPG.Comandos
             RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
-            embed.WithTitle($"{localAtual.Nome.Titulo().Bold()} - {localAtual.Id}");
+            embed.WithTitle($"{localAtual.Nome.Titulo()} - {localAtual.Id}");
             embed.WithDescription(localAtual.Descrição);
 
             StringBuilder conexoesDisponiveis = new StringBuilder();
             foreach (var reg in localAtual.SaidasRegioes)
-                conexoesDisponiveis.AppendLine($"{reg.Direcao.ToString()} - {RPGRegiao.GetRegiao(reg.RegiaoId).Nome} - {reg.RegiaoId}".Bold());
+                conexoesDisponiveis.Append($"{reg.Direcao.ToString().Bold()}, ");
 
             if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
-                embed.AddField($"**{"Direções disponíveis".Titulo()}**", conexoesDisponiveis.ToString());
-            else
-                embed.AddField($"**{"Direções disponíveis".Titulo()}**", "Nenhuma.");
+                embed.AddField("Direções obvias".Titulo(), conexoesDisponiveis.ToString());
 
             embed.WithColor(DiscordColor.Azure);
 

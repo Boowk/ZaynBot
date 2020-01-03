@@ -37,22 +37,23 @@ namespace ZaynBot.RPG.Comandos
                 if (regiao.Direcao == enumDirecao)
                 {
                     usuario.Personagem.RegiaoAtualId = regiao.RegiaoId;
-                    localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
                     usuario.Salvar();
+                    localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
                     DiscordEmbedBuilder embedViajeNormal = new DiscordEmbedBuilder().Padrao("Viajem", ctx);
-                    embedViajeNormal.WithDescription($"Você foi para o {enumDirecao.ToString()}.");
-                    embedViajeNormal.AddField("----", localAtual.Descrição);
+                    embedViajeNormal.WithDescription($"Você foi para o {enumDirecao.ToString()}.\n".Bold() +
+                        $"----\n" +
+                        $"{localAtual.Descrição}");
                     await ctx.RespondAsync(embed: embedViajeNormal.Build());
                     return;
                 }
             }
-            await ctx.RespondAsync($"{ctx.User.Mention} esta direção não está disponível na região atual!".Bold());
+            await ctx.RespondAsync($"{ctx.User.Mention} esta direção não está disponível!".Bold());
         }
 
         [Command("oeste")]
         [Aliases("o")]
         [Description("Explora a área Oeste.")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Oeste(CommandContext ctx)
         {
             await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Oeste);
@@ -62,7 +63,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("norte")]
         [Aliases("n")]
         [Description("Explora a área Norte.")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Norte(CommandContext ctx)
         {
             await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Norte);
@@ -72,7 +73,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("leste")]
         [Aliases("l")]
         [Description("Explora a área leste.")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Leste(CommandContext ctx)
         {
             await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Leste);
@@ -82,7 +83,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("sul")]
         [Aliases("s")]
         [Description("Explora a área Sul.")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Sul(CommandContext ctx)
         {
             await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Sul);

@@ -19,7 +19,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 60, CooldownBucketType.User)]
         public async Task TopComandoAb(CommandContext ctx)
         {
-            var f = await ModuloBanco.UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty).Limit(5)
+            var f = await ModuloBanco.UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty).Limit(10)
                 .SortByDescending(x => x.Personagem.NivelAtual).ToListAsync();
             StringBuilder str = new StringBuilder();
 
