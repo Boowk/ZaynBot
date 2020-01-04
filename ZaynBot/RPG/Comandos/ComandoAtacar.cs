@@ -146,8 +146,10 @@ namespace ZaynBot.RPG.Comandos
                 strRelatorio.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
                 usuario.RipMobs++;
                 //Pega a data do item no Banco de dados
-                RPGItem itemData = ModuloBanco.GetItem(mob.Drop.ItemId);
-                int quantidade = Sortear.Valor(1, mob.Drop.QuantMax);
+                MobItemDropRPG dropSorteado = mob.SortearDrop();
+                var itemData = ModuloBanco.GetItem(dropSorteado.ItemId);
+
+                int quantidade = Sortear.Valor(1, dropSorteado.QuantMax);
                 usuario.Personagem.Mochila.AdicionarItem(itemData, quantidade);
                 // Enviamos uma mensagem
                 strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +{quantidade} [{itemData.Nome.FirstUpper()}]!".Bold());

@@ -75,7 +75,7 @@ namespace ZaynBot
             {
                 using (var sr = new StreamReader(file))
                 {
-                    var f = Newtonsoft.Json.JsonConvert.DeserializeObject<RPGMob>(sr.ReadToEnd());
+                    var f = JsonConvert.DeserializeObject<RPGMob>(sr.ReadToEnd());
                     await MobColecao.InsertOneAsync(f);
                     quant++;
                 }

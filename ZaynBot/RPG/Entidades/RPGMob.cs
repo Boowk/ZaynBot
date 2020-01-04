@@ -26,26 +26,28 @@ namespace ZaynBot.RPG.Entidades
         public double Essencia { get; set; }
         public int Dificuldade { get; set; }
 
-        public MobItemDropRPG Drop { get; set; }
+        public int ChanceDropTotal { get; set; }
+        public List<MobItemDropRPG> Drops { get; set; }
+
+        public MobItemDropRPG SortearDrop()
+        {
+            var rand = Sortear.Valor(0, ChanceDropTotal);
+            var top = 0;
+            for (int i = 0; i < Drops.Count; i++)
+            {
+                top += Drops[i].ChanceDrop;
+                if (rand <= top)
+                    return Drops[i];
+            }
+            return null;
+        }
     }
 
     [BsonIgnoreExtraElements]
     public class MobItemDropRPG
     {
-        public MobItemDropRPG() { }
-        public MobItemDropRPG(int itemId, int quantidadeMaxima)
-        {
-            this.ItemId = itemId;
-            this.QuantMax = quantidadeMaxima;
-        }
-
-        public MobItemDropRPG(int itemId)
-        {
-            this.ItemId = itemId;
-            this.QuantMax = 1;
-        }
-
         public int ItemId { get; set; }
         public int QuantMax { get; set; }
+        public int ChanceDrop { get; set; }
     }
 }
