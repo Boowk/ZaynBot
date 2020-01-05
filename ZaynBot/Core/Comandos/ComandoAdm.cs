@@ -91,12 +91,8 @@ namespace ZaynBot.Core.Comandos
                         //  };
                         //if (user.Personagem.ExpMax < 200)
                         //    user.Personagem.ExpMax = 200;
-                        user.Personagem.RegiaoAtualId = 0;
-                        user.Personagem.Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
-                        {
-                            Id = 0,
-                            Quantidade = 10
-                        });
+                        user.Personagem.Batalha = new RPGBatalha();
+                        
                         user.Salvar();
                     }
                 }
