@@ -20,17 +20,17 @@ namespace ZaynBot.RPG.Comandos
 
         [Command("atacar")]
         [Aliases("at")]
-        [Description("Ataca o mob que você encontrou explorando")]
+        [Description("Ataca o npc que você encontrou explorando.")]
         [ComoUsar("atacar")]
-        [Cooldown(1, 4, CooldownBucketType.User)]
+        [Cooldown(1, 6, CooldownBucketType.User)]
         public async Task ComandoAtacarAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
-            if (usuario.Personagem.Batalha.Mob == null || usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
+            if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention} use `z!explorar` para encontrar novos mobs!".Bold());
+                await ctx.RespondAsync($"{ctx.User.Mention} use `z!explorar` para encontrar novos npcs!".Bold());
                 return;
             }
 
@@ -39,58 +39,40 @@ namespace ZaynBot.RPG.Comandos
             bool vezJogador = false;
             do
             {
-                //Vez mob
-                mob.EstaminaAtual += Sortear.Valor(1, mob.Velocidade);
+                mob.EstaminaAtual += mob.Velocidade;
+                usuario.Personagem.EstaminaAtual += 4;
 
-                //Ataque
+                //Vez mob
                 if (mob.EstaminaAtual >= mob.EstaminaMaxima)
                 {
-
                     mob.EstaminaAtual = 0;
-                    double danoInimigo = CalcDano(usuario.Personagem.DefesaFisica, mob.AtaqueFisico);
-                    usuario.RemoverVida(danoInimigo);
-                    usuario.Personagem.Batalha.Turno++;
-                    strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
-                    strRelatorio.AppendLine($"**{ctx.User.Mention} perdeu -{danoInimigo.Text()} vida.**");
 
-                    //switch (sorteioAtaque)
-                    //{
-                    //    case 1:
-                    //        personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Botas, out armadura);
-                    //        break;
-                    //    case 2:
-                    //        personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Couraca, out armadura);
-                    //        break;
-                    //    case 3:
-                    //        personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Helmo, out armadura);
-                    //        break;
-                    //    case 4:
-                    //        personagem.Inventario.Equipamentos.TryGetValue(TipoItemEnum.Luvas, out armadura);
-                    //        break;
-                    //}
+                    usuario.Personagem.Batalha.Turno++;
+                    strRelatorio.AppendLine($"Turno {usuario.Personagem.Batalha.Turno}.".Bold());
+
+                    double chanceMobAtaque = mob.Precisao / usuario.Personagem.DefesaFisica;
+                    if (Sortear.Sucesso(chanceMobAtaque))
+                    {
+                        usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Defesa, out RPGProficiencia defesa);
+                        ProficienciaDefesa profDefesa = defesa as ProficienciaDefesa;
+                        double dano = Sortear.Valor((mob.AtaqueFisico / 2), mob.AtaqueFisico) * profDefesa.CalcDefesa();
+                        usuario.RemoverVida(dano);
+                        strRelatorio.AppendLine($"{ctx.User.Mention} perdeu -{dano.Text()} vida.".Bold());
+                    }
+                    else
+                        strRelatorio.AppendLine($"Você desviou do ataque.".Bold());
                 }
-                ////Se tiver
-                //                if (armadura != null)
-                //{
-                //    danoInimigo = CalcDano(armadura.DefesaFisica, inimigo.AtaqueFisico);
-                //    armadura.DurabilidadeMax--;
-                //    if (armadura.DurabilidadeMax == 0)
-                //    {
-                //        personagem.Inventario.DesequiparItem(armadura, personagem);
-                //        await ctx.RespondAsync($"**({armadura.Nome})** quebrou! {ctx.User.Mention}!");
-                //    }
-                //}
 
                 //Vez jogador
-                usuario.Personagem.EstaminaAtual += Sortear.Valor(1, usuario.Personagem.Velocidade / 5);
-
-                //Ataque
                 if (usuario.Personagem.EstaminaAtual >= usuario.Personagem.EstaminaMaxima)
                 {
                     vezJogador = true;
                     usuario.Personagem.EstaminaAtual = 0;
                     usuario.Personagem.Batalha.Turno++;
                     strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
+
+                    //Perde fome e sede
+
 
                     if (usuario.Personagem.FomeAtual <= 0)
                     {
@@ -107,36 +89,31 @@ namespace ZaynBot.RPG.Comandos
                 }
             } while (vezJogador == false);
 
+            usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Ataque, out RPGProficiencia ataque);
+            ProficienciaAtaque profAtaque = ataque as ProficienciaAtaque;
 
-            if (usuario.Personagem.Mochila == null)
-                usuario.Personagem.Mochila = new RPGMochila();
-            //Pega a arma que ele esta usando e já fz o calculo de proficiencia
-            usuario.Personagem.Mochila.Equipamentos.TryGetValue(EnumTipo.Arma, out RPGItem arma);
-            double danoJogador = 0;
-            if (arma != null)
+            double chance = profAtaque.CalcChance(usuario.Personagem.Sorte, mob.DefesaFisica);
+            if (Sortear.Sucesso(chance))
             {
-                //switch (arma.Proficiencia)
-                //{
-                //    case EnumProficiencia.Perfurante:
-                //        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
-                //        break;
-                //    case EnumProficiencia.Esmagante:
-                //        danoJogador = CalcDano(mob.Armadura, arma.AtaqueFisico);
-                //        break;
-                //}
+                usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Forca, out RPGProficiencia forca);
+                ProficienciaForca profForca = forca as ProficienciaForca;
+
+
+                double dano = Sortear.Valor((usuario.Personagem.AtaqueFisico / 2), usuario.Personagem.AtaqueFisico + profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisico));
+                if (mob.VidaAtual < dano)
+                    dano = mob.VidaAtual;
+                else
+                    mob.VidaAtual -= dano;
+                strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{dano.Text()} vida.**");
             }
             else
-                danoJogador = CalcDano(mob.Armadura, usuario.Personagem.AtaqueFisico);
-            if (mob.VidaAtual < danoJogador)
-                danoJogador = mob.VidaAtual;
-            mob.VidaAtual -= danoJogador;
-
+                strRelatorio.AppendLine($"Você errou o ataque.".Bold());
 
             #region Relatorio
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Ataque", ctx);
             embed.WithColor(DiscordColor.IndianRed);
-            strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{danoJogador.Text()} vida.**");
+
 
 
             embed.AddField(ctx.User.Username.Titulo(), $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {usuario.Personagem.VidaAtual.Text()}/{usuario.Personagem.VidaMaxima.Text()}", true);

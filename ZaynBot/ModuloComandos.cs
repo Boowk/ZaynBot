@@ -100,10 +100,15 @@ namespace ZaynBot
                 case UnauthorizedException ux:
                     break;
                 default:
+#if DEBUG
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Debug, "Erro", $"[{e.Context.User.Username.RemoverAcentos()}({e.Context.User.Id})] tentou usar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.ToString()}\nstack:{e.Exception.StackTrace}\ninner:{e.Exception?.InnerException}.", DateTime.Now);
+                    break;
+#else
                     var MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
                     var CanalRPG = MundoZayn.GetChannel(600736364484493424);
                     await CanalRPG.SendMessageAsync($"[{e.Context.User.Username.RemoverAcentos()}({e.Context.User.Id})] tentou usar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.ToString()}\nstack:{e.Exception.StackTrace}\ninner:{e.Exception?.InnerException}.\n{e.Context.Message.JumpLink}");
                     break;
+#endif
             }
         }
 

@@ -2,7 +2,6 @@
 using MongoDB.Bson.Serialization.Options;
 using System;
 using System.Collections.Generic;
-using ZaynBot.RPG.Proficiencias;
 
 namespace ZaynBot.RPG.Entidades
 {
@@ -55,8 +54,9 @@ namespace ZaynBot.RPG.Entidades
             //Adiciona as proficiencias
             Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
             {
-                { EnumProficiencia.Perfurante, new ProficienciaPerfurante()},
-                { EnumProficiencia.Esmagante, new ProficienciaEsmagante()}
+                { EnumProficiencia.Ataque, new ProficienciaAtaque()},
+                { EnumProficiencia.Defesa, new ProficienciaDefesa()},
+                { EnumProficiencia.Forca, new ProficienciaForca()}
             };
             ProficienciaPontos = 0;
         }

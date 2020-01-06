@@ -84,15 +84,28 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGUsuario user in usuarios)
                     {
-                        //user.Personagem.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
-                        //  {
-                        //    { EnumProficiencia.Perfurante, new ProficienciaPerfurante()},
-                        //    { EnumProficiencia.Esmagante, new ProficienciaEsmagante()}
-                        //  };
-                        //if (user.Personagem.ExpMax < 200)
-                        //    user.Personagem.ExpMax = 200;
+                        user.Personagem.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
+                          {
+                             { EnumProficiencia.Ataque, new ProficienciaAtaque()},
+                             { EnumProficiencia.Defesa, new ProficienciaDefesa()},
+                             { EnumProficiencia.Forca, new ProficienciaForca()}
+                          };
                         user.Personagem.Batalha = new RPGBatalha();
-                        
+                        user.Personagem.Batalha.Mob = new RPGMob()
+                        {
+                            AtaqueFisico = 1,
+                            DefesaFisica = 100,
+                            Dificuldade = 1,
+                            Essencia = 5,
+                            EstaminaAtual = 0,
+                            EstaminaMaxima = 100,
+                            Nome = "Mob de teste!",
+                            Precisao = 25,
+                            Velocidade = 4,
+                            VidaAtual = 1000,
+                            VidaMax = 1000,
+                        };
+
                         user.Salvar();
                     }
                 }

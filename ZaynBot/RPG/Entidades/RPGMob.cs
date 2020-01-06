@@ -14,18 +14,23 @@ namespace ZaynBot.RPG.Entidades
             VidaAtual = vida;
             VidaMax = vida;
         }
-        public double EstaminaAtual { get; set; } = 100;
+        public double EstaminaAtual { get; set; } = 0;
         public double EstaminaMaxima { get; set; } = 100;
 
         public string Nome { get; set; }
         public double VidaAtual { get; set; }
         public double VidaMax { get; set; }
+
         public double AtaqueFisico { get; set; }
-        public double Armadura { get; set; }
+        public double DefesaFisica { get; set; }
+
+        public double Precisao { get; set; }
+
         public double Velocidade { get; set; }
         public double Essencia { get; set; }
         public int Dificuldade { get; set; }
 
+        //Drops
         public int ChanceDropTotal { get; set; }
         public List<MobItemDropRPG> Drops { get; set; }
 
