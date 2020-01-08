@@ -10,20 +10,28 @@ namespace ZaynBot.RPG.Entidades
     {
         public double VidaAtual { get; set; }
         public double VidaMaxima { get; set; }
+
         public double MagiaAtual { get; set; }
         public double MagiaMaxima { get; set; }
+
         public double AtaqueFisico { get; set; }
         public double AtaqueMagico { get; set; }
+
         public double DefesaFisica { get; set; }
         public double DefesaMagica { get; set; }
+
         public double Velocidade { get; set; }
         public double Sorte { get; set; }
+
         public double FomeAtual { get; set; }
         public double FomeMaxima { get; set; }
+
         public double SedeAtual { get; set; }
         public double SedeMaxima { get; set; }
+
         public double EstaminaAtual { get; set; }
         public double EstaminaMaxima { get; set; }
+
         public int RegiaoAtualId { get; set; }
         public RPGMochila Mochila { get; set; }
         public RPGBatalha Batalha { get; set; }
@@ -40,7 +48,6 @@ namespace ZaynBot.RPG.Entidades
             AtaqueMagico = SortearMetadeValor(50);
             DefesaFisica = SortearMetadeValor(50);
             DefesaMagica = SortearMetadeValor(50);
-            Velocidade = SortearMetadeValor(25);
             Sorte = 0;
             FomeAtual = 100;
             FomeMaxima = 100;
