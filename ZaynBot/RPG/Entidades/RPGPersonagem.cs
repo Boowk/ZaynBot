@@ -62,6 +62,11 @@ namespace ZaynBot.RPG.Entidades
                 { EnumProficiencia.Defesa, new ProficienciaDefesa()},
                 { EnumProficiencia.Forca, new ProficienciaForca()}
             };
+            Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
+            {
+                Id = 0,
+                Quantidade = 10
+            });
         }
         public new bool AdicionarExp(double exp)
         {
