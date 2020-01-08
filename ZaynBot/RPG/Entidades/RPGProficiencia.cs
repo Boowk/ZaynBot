@@ -28,18 +28,6 @@ namespace ZaynBot.RPG.Entidades
     public class ProficienciaAtaque : RPGProficiencia
     {
         public ProficienciaAtaque(string nome = "Ataque") : base(nome) { }
-
-        public double CalcChance(double sorte, double armaduraInimigo)
-        {
-            //Hit Chance = (F(Ataque Nivel) + Sorte / Pontos de Armadura)
-            return (FormulaAtaque() + sorte) / armaduraInimigo;
-        }
-
-        private double FormulaAtaque()
-        {
-            //F(1) = 0.0008.a³ +4.a + 40
-            return (0.0008 * Math.Pow(Pontos, 3)) + (4 * (double)Pontos) + 40;
-        }
     }
 
     public class ProficienciaForca : RPGProficiencia
@@ -57,13 +45,6 @@ namespace ZaynBot.RPG.Entidades
     public class ProficienciaDefesa : RPGProficiencia
     {
         public ProficienciaDefesa(string nome = "Defesa") : base(nome) { }
-
-        public double CalcDefesa()
-        {
-            // Cada nível de defesa reduz o dano em 0.1%. (usar defesa do LoL)
-            double porcentagem = Pontos * 0.1;
-            return 100 / (100 + porcentagem);
-        }
     }
 
     public class ProficienciaPerfurante : RPGProficiencia

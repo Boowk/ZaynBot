@@ -11,11 +11,14 @@ namespace ZaynBot.RPG.Comandos
 {
     public class ComandoAtacar : BaseCommandModule
     {
-        public double CalcDano(double resistencia, double dano)
+        public double ReduzirDano(double armadura, double dano, double danoExtra = 0)
         {
-            double porcentagemFinal = 100 / (100 + resistencia);
-            //Dano minimo sempre será o valor total dividido por 2.
-            return (Sortear.Valor((dano / 2), dano)) * porcentagemFinal;
+            double danoSorteado = Sortear.Valor((dano / 2), dano + danoExtra);
+            double reducao = (armadura * danoSorteado) / (armadura + 10 * danoSorteado);
+            danoSorteado -= reducao;
+            if (danoSorteado < 0)
+                return 0;
+            return danoSorteado;
         }
 
         [Command("atacar")]
@@ -49,18 +52,9 @@ namespace ZaynBot.RPG.Comandos
 
                     usuario.Personagem.Batalha.Turno++;
                     strRelatorio.AppendLine($"Turno {usuario.Personagem.Batalha.Turno}.".Bold());
-
-                    double chanceMobAtaque = mob.Precisao / usuario.Personagem.DefesaFisica;
-                    if (Sortear.Sucesso(chanceMobAtaque))
-                    {
-                        usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Defesa, out RPGProficiencia defesa);
-                        ProficienciaDefesa profDefesa = defesa as ProficienciaDefesa;
-                        double dano = Sortear.Valor((mob.AtaqueFisico / 2), mob.AtaqueFisico) * profDefesa.CalcDefesa();
-                        usuario.RemoverVida(dano);
-                        strRelatorio.AppendLine($"{ctx.User.Mention} perdeu -{dano.Text()} vida.".Bold());
-                    }
-                    else
-                        strRelatorio.AppendLine($"Você desviou do ataque.".Bold());
+                    double dano = ReduzirDano(usuario.Personagem.DefesaFisica, mob.AtaqueFisico);
+                    usuario.RemoverVida(dano);
+                    strRelatorio.AppendLine($"{ctx.User.Mention} perdeu -{dano.Text()} vida!".Bold());
                 }
 
                 //Vez jogador
@@ -89,25 +83,15 @@ namespace ZaynBot.RPG.Comandos
                 }
             } while (vezJogador == false);
 
-            usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Ataque, out RPGProficiencia ataque);
-            ProficienciaAtaque profAtaque = ataque as ProficienciaAtaque;
+            usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Forca, out RPGProficiencia forca);
+            ProficienciaForca profForca = forca as ProficienciaForca;
 
-            double chance = profAtaque.CalcChance(usuario.Personagem.Sorte, mob.DefesaFisica);
-            if (Sortear.Sucesso(chance))
-            {
-                usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Forca, out RPGProficiencia forca);
-                ProficienciaForca profForca = forca as ProficienciaForca;
-
-
-                double dano = Sortear.Valor((usuario.Personagem.AtaqueFisico / 2), usuario.Personagem.AtaqueFisico + profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisico));
-                if (mob.VidaAtual < dano)
-                    dano = mob.VidaAtual;
-                else
-                    mob.VidaAtual -= dano;
-                strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{dano.Text()} vida.**");
-            }
+            double danoNoMob = ReduzirDano(mob.DefesaFisica, usuario.Personagem.AtaqueFisico, profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisico));
+            if (mob.VidaAtual < danoNoMob)
+                danoNoMob = mob.VidaAtual;
             else
-                strRelatorio.AppendLine($"Você errou o ataque.".Bold());
+                mob.VidaAtual -= danoNoMob;
+            strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{danoNoMob.Text()} vida.**");
 
             #region Relatorio
 
