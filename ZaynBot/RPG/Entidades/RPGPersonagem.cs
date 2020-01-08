@@ -30,11 +30,11 @@ namespace ZaynBot.RPG.Entidades
         public double EstaminaMaxima { get; set; }
 
         public int RegiaoAtualId { get; set; }
-        public RPGMochila Mochila { get; set; }
+        public int ProficienciaPontos { get; set; }
         public RPGBatalha Batalha { get; set; }
+        public RPGMochila Mochila { get; set; }
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<EnumProficiencia, RPGProficiencia> Proficiencias { get; set; }
-        public int ProficienciaPontos { get; set; }
         public RPGPersonagem(double expMax = 200) : base(expMax)
         {
             VidaAtual = SortearMetadeValor(50);
@@ -52,8 +52,9 @@ namespace ZaynBot.RPG.Entidades
             EstaminaAtual = 100;
             EstaminaMaxima = 100;
             RegiaoAtualId = 0;
-            Mochila = new RPGMochila();
+            ProficienciaPontos = 0;
             Batalha = new RPGBatalha();
+            Mochila = new RPGMochila();
             //Adiciona as proficiencias
             Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
             {
@@ -61,7 +62,6 @@ namespace ZaynBot.RPG.Entidades
                 { EnumProficiencia.Defesa, new ProficienciaDefesa()},
                 { EnumProficiencia.Forca, new ProficienciaForca()}
             };
-            ProficienciaPontos = 0;
         }
         public new bool AdicionarExp(double exp)
         {
