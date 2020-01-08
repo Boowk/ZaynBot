@@ -101,8 +101,8 @@ namespace ZaynBot.Core.Comandos
                             EstaminaMaxima = 100,
                             Nome = "Mob de teste!",
                             Velocidade = 4,
-                            VidaAtual = 1000,
-                            VidaMax = 1000,
+                            VidaAtual = 5,
+                            VidaMax = 5,
                         };
 
                         user.Salvar();

@@ -88,7 +88,10 @@ namespace ZaynBot.RPG.Comandos
 
             double danoNoMob = ReduzirDano(mob.DefesaFisica, usuario.Personagem.AtaqueFisico, profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisico));
             if (mob.VidaAtual < danoNoMob)
+            {
                 danoNoMob = mob.VidaAtual;
+                mob.VidaAtual = 0;
+            }
             else
                 mob.VidaAtual -= danoNoMob;
             strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{danoNoMob.Text()} vida.**");
