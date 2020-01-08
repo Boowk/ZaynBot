@@ -29,8 +29,6 @@ namespace ZaynBot.RPG.Comandos
             embed.AddField("Ataque mágico".Titulo(), $"{personagem.AtaqueMagico.Text()}", true);
             embed.AddField("Defesa física".Titulo(), $"{personagem.DefesaFisica.Text()}", true);
             embed.AddField("Defesa mágica".Titulo(), $"{personagem.DefesaMagica.Text()}", true);
-            embed.AddField("Velocidade".Titulo(), $"{personagem.Velocidade.Text()}", true);
-            embed.AddField("Sorte".Titulo(), $"{personagem.Sorte.Text()}", true);
             embed.AddField("Fome".Titulo(), $"{((personagem.FomeAtual / personagem.FomeMaxima) * 100).Text()}%", true);
             embed.AddField("Sede".Titulo(), $"{((personagem.SedeAtual / personagem.SedeMaxima) * 100).Text()}%", true);
             embed.AddField("Rip".Titulo(), $"{usuario.Rip}", true);

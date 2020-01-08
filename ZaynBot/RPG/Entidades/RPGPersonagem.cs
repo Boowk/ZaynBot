@@ -20,9 +20,6 @@ namespace ZaynBot.RPG.Entidades
         public double DefesaFisica { get; set; }
         public double DefesaMagica { get; set; }
 
-        public double Velocidade { get; set; }
-        public double Sorte { get; set; }
-
         public double FomeAtual { get; set; }
         public double FomeMaxima { get; set; }
 
@@ -48,7 +45,6 @@ namespace ZaynBot.RPG.Entidades
             AtaqueMagico = SortearMetadeValor(50);
             DefesaFisica = SortearMetadeValor(50);
             DefesaMagica = SortearMetadeValor(50);
-            Sorte = 0;
             FomeAtual = 100;
             FomeMaxima = 100;
             SedeAtual = 100;
@@ -81,7 +77,6 @@ namespace ZaynBot.RPG.Entidades
                     AtaqueMagico = Evoluir(AtaqueMagico);
                     DefesaFisica = Evoluir(DefesaFisica);
                     DefesaMagica = Evoluir(DefesaMagica);
-                    Velocidade *= 1.0002;
                     FomeMaxima = Evoluir(FomeMaxima);
                     SedeMaxima = Evoluir(SedeMaxima);
                     ProficienciaPontos++;
