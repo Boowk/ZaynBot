@@ -100,7 +100,6 @@ namespace ZaynBot.Core.Comandos
                             EstaminaAtual = 0,
                             EstaminaMaxima = 100,
                             Nome = "Mob de teste!",
-                            Precisao = 25,
                             Velocidade = 4,
                             VidaAtual = 1000,
                             VidaMax = 1000,

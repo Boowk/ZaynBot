@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
-
-
     [BsonIgnoreExtraElements]
     public class RPGMob
     {
@@ -24,7 +22,6 @@ namespace ZaynBot.RPG.Entidades
         public double AtaqueFisico { get; set; }
         public double DefesaFisica { get; set; }
 
-        public double Precisao { get; set; }
 
         public double Velocidade { get; set; }
         public double Essencia { get; set; }
