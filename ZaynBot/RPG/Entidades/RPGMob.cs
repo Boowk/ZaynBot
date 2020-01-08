@@ -16,6 +16,8 @@ namespace ZaynBot.RPG.Entidades
         public double EstaminaMaxima { get; set; } = 100;
 
         public string Nome { get; set; }
+        public string Descricao { get; set; }
+
         public double VidaAtual { get; set; }
         public double VidaMax { get; set; }
 

@@ -11,29 +11,41 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoOlhar : BaseCommandModule
     {
         [Command("olhar")]
-        [Description("Permite visualizar a região atual.")]
-        [ComoUsar("olhar")]
+        [Description("Permite olhar para muitas coisas.")]
+        [ComoUsar("olhar [|nome]")]
+        [Exemplo("olhar rato")]
+        [Exemplo("olhar")]
         [Cooldown(1, 8, CooldownBucketType.User)]
-        public async Task ComandoLocalAb(CommandContext ctx)
+        public async Task ComandoLocalAb(CommandContext ctx, [RemainingText] string alvo = "")
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
-            embed.WithTitle($"{localAtual.Nome.Titulo()} - {localAtual.Id}");
-            embed.WithDescription(localAtual.Descrição);
+            if (string.IsNullOrEmpty(alvo))
+            {
+                RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
-            StringBuilder conexoesDisponiveis = new StringBuilder();
-            foreach (var reg in localAtual.SaidasRegioes)
-                conexoesDisponiveis.Append($"{reg.Direcao.ToString().Bold()}, ");
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
+                embed.WithTitle($"{localAtual.Nome.Titulo()} - {localAtual.Id}");
+                embed.WithDescription(localAtual.Descrição);
 
-            if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
-                embed.AddField("Direções obvias".Titulo(), conexoesDisponiveis.ToString());
+                StringBuilder conexoesDisponiveis = new StringBuilder();
+                foreach (var reg in localAtual.SaidasRegioes)
+                    conexoesDisponiveis.Append($"{reg.Direcao.ToString().Bold()}, ");
 
-            embed.WithColor(DiscordColor.Azure);
+                if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
+                    embed.AddField("Direções obvias".Titulo(), conexoesDisponiveis.ToString());
 
-            await ctx.RespondAsync(embed: embed.Build());
+                embed.WithColor(DiscordColor.Azure);
+
+                await ctx.RespondAsync(embed: embed.Build());
+                return;
+            }
+
+            if (usuario.Personagem.Batalha.Mob.Nome.ToLower().Equals(alvo.ToLower()))
+                await ctx.RespondAsync(usuario.Personagem.Batalha.Mob.Descricao.Bold().Italic());
+            else
+                await ctx.RespondAsync($"Você procura, mas não encontra nada parecido com '{alvo}' {ctx.User.Mention}!");
         }
     }
 }
