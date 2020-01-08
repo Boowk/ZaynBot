@@ -30,6 +30,7 @@ namespace ZaynBot.RPG.Comandos
             MobItemDropRPG dropSorteado = usuario.Personagem.Batalha.Mob.SortearDrop();
             int quantidade = Sortear.Valor(1, dropSorteado.QuantMax);
             //Salvamos o item sorteado
+            usuario.Personagem.Batalha.Mob.Item = new MobItemSorteadoRPG();
             usuario.Personagem.Batalha.Mob.Item.ItemID = dropSorteado.ItemId;
             usuario.Personagem.Batalha.Mob.Item.QuantidadeRestante = quantidade;
 
