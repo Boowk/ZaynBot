@@ -20,11 +20,19 @@ namespace ZaynBot.RPG.Comandos
             RPGRegiao regiaoAtual = ModuloBanco.GetRegiaoData(usuario.Personagem.RegiaoAtualId);
             if (regiaoAtual.Dificuldade == 0)
             {
-                await ctx.RespondAsync($"Está região não tem mobs para procurar {ctx.User.Mention}!");
+                await ctx.RespondAsync($"Esta região não tem mobs inimigos {ctx.User.Mention}!");
                 return;
             }
+            //Pegamos um mob aleatorio baseado no nível da região
             usuario.Personagem.Batalha.Mob = ModuloBanco.GetMob(regiaoAtual);
             usuario.Personagem.Batalha.Turno = 0;
+            //Sorteamos o item que o mob deixaria cair, caso fosse morto.
+            MobItemDropRPG dropSorteado = usuario.Personagem.Batalha.Mob.SortearDrop();
+            int quantidade = Sortear.Valor(1, dropSorteado.QuantMax);
+            //Salvamos o item sorteado
+            usuario.Personagem.Batalha.Mob.Item.ItemID = dropSorteado.ItemId;
+            usuario.Personagem.Batalha.Mob.Item.QuantidadeRestante = quantidade;
+
             RPGUsuario.Salvar(usuario);
             await ctx.RespondAsync($"{ctx.User.Mention} você explorou `{regiaoAtual.Nome}`! Encontrou: < {usuario.Personagem.Batalha.Mob.Nome.Underline()} >!".Bold());
         }

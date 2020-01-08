@@ -31,6 +31,8 @@ namespace ZaynBot.RPG.Entidades
         public int ChanceDropTotal { get; set; }
         public List<MobItemDropRPG> Drops { get; set; }
 
+        public MobItemSorteadoRPG Item { get; set; }
+
         public MobItemDropRPG SortearDrop()
         {
             var rand = Sortear.Valor(0, ChanceDropTotal);
@@ -51,5 +53,12 @@ namespace ZaynBot.RPG.Entidades
         public int ItemId { get; set; }
         public int QuantMax { get; set; }
         public int ChanceDrop { get; set; }
+    }
+
+    [BsonIgnoreExtraElements]
+    public class MobItemSorteadoRPG
+    {
+        public int QuantidadeRestante { get; set; }
+        public int ItemID { get; set; }
     }
 }

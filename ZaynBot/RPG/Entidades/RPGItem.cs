@@ -36,19 +36,5 @@ namespace ZaynBot.RPG.Entidades
         public double FomeRestaura { get; set; }
 
         public RPGItem() { }
-
-        public RPGItem(int id, string nome, EnumTipo tipo)
-        {
-            Id = id;
-            Nome = nome;
-            Tipo = tipo;
-            PrecoCompra = 1;
-            Proficiencia = EnumProficiencia.Nenhum;
-        }
-
-        public RPGItem(int id, string nome, EnumTipo tipo, EnumProficiencia proficiencia) : this(id, nome, tipo)
-        {
-            Proficiencia = proficiencia;
-        }
     }
 }
