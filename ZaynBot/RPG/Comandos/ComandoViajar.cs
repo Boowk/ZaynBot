@@ -12,21 +12,8 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            if (usuario.Personagem.Batalha.Mob != null && usuario.Personagem.Batalha.Mob.VidaAtual > 0)
-                if (Sortear.Sucesso(0.3))
-                {
-                    usuario.Personagem.Batalha = new RPGBatalha();
-                    await ViajandoAbAsync(usuario, enumDirecao, ctx);
-                }
-                else
-                {
-                    await ctx.RespondAsync($"< {usuario.Personagem.Batalha.Mob.Nome.Underline().Bold()} > não deixou você fugir! {ctx.User.Mention} Batalhando...".Bold());
-                    ComandoAtacar f = new ComandoAtacar();
-                    await f.ComandoAtacarAb(ctx);
-                    await Task.CompletedTask;
-                }
-            else
-                await ViajandoAbAsync(usuario, enumDirecao, ctx);
+            usuario.Personagem.Batalha = new RPGBatalha();
+            await ViajandoAbAsync(usuario, enumDirecao, ctx);
         }
 
         public async Task ViajandoAbAsync(RPGUsuario usuario, EnumDirecao enumDirecao, CommandContext ctx)
@@ -47,7 +34,7 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
             }
-            await ctx.RespondAsync($"{ctx.User.Mention} esta direção não está disponível!".Bold());
+            await ctx.RespondAsync($"{ctx.User.Mention} este caminho não está disponível!".Bold());
         }
 
         [Command("oeste")]
@@ -56,7 +43,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Oeste(CommandContext ctx)
         {
-            await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Oeste);
+            await ViajarAbAsync(ctx, EnumDirecao.Oeste);
             await Task.CompletedTask;
         }
 
@@ -66,7 +53,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Norte(CommandContext ctx)
         {
-            await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Norte);
+            await ViajarAbAsync(ctx, EnumDirecao.Norte);
             await Task.CompletedTask;
         }
 
@@ -76,7 +63,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Leste(CommandContext ctx)
         {
-            await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Leste);
+            await ViajarAbAsync(ctx, EnumDirecao.Leste);
             await Task.CompletedTask;
         }
 
@@ -86,7 +73,7 @@ namespace ZaynBot.RPG.Comandos
         [Cooldown(1, 8, CooldownBucketType.User)]
         public async Task Sul(CommandContext ctx)
         {
-            await new ComandoViajar().ViajarAbAsync(ctx, EnumDirecao.Sul);
+            await ViajarAbAsync(ctx, EnumDirecao.Sul);
             await Task.CompletedTask;
         }
     }
