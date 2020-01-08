@@ -91,20 +91,6 @@ namespace ZaynBot.Core.Comandos
                              { EnumProficiencia.Forca, new ProficienciaForca()}
                           };
                         user.Personagem.Batalha = new RPGBatalha();
-                        user.Personagem.Batalha.Mob = new RPGMob()
-                        {
-                            AtaqueFisico = 1,
-                            DefesaFisica = 100,
-                            Dificuldade = 1,
-                            Essencia = 5,
-                            EstaminaAtual = 0,
-                            EstaminaMaxima = 100,
-                            Nome = "Mob de teste!",
-                            Velocidade = 4,
-                            VidaAtual = 5,
-                            VidaMax = 5,
-                        };
-
                         user.Salvar();
                     }
                 }
