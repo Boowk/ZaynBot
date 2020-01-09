@@ -25,10 +25,10 @@ namespace ZaynBot.RPG.Comandos
             embed.WithColor(DiscordColor.PhthaloGreen);
             embed.AddField(pv + "Vida".Titulo(), $"{personagem.VidaAtual.Text()}/{personagem.VidaMaxima.Text()}", true);
             embed.AddField(pp + "Magia".Titulo(), $"{personagem.MagiaAtual.Text()}/{personagem.MagiaMaxima.Text()}", true);
-            embed.AddField("Ataque físico".Titulo(), $"{personagem.AtaqueFisico.Text()}", true);
-            embed.AddField("Ataque mágico".Titulo(), $"{personagem.AtaqueMagico.Text()}", true);
-            embed.AddField("Defesa física".Titulo(), $"{personagem.DefesaFisica.Text()}", true);
-            embed.AddField("Defesa mágica".Titulo(), $"{personagem.DefesaMagica.Text()}", true);
+            embed.AddField("Ataque físico".Titulo(), $"{personagem.AtaqueFisicoBase .Text()}", true);
+            embed.AddField("Ataque mágico".Titulo(), $"{personagem.AtaqueMagicoBase.Text()}", true);
+            embed.AddField("Defesa física".Titulo(), $"{personagem.DefesaFisicaBase.Text()}", true);
+            embed.AddField("Defesa mágica".Titulo(), $"{personagem.DefesaMagicaBase.Text()}", true);
             embed.AddField("Fome".Titulo(), $"{((personagem.FomeAtual / personagem.FomeMaxima) * 100).Text()}%", true);
             embed.AddField("Sede".Titulo(), $"{((personagem.SedeAtual / personagem.SedeMaxima) * 100).Text()}%", true);
             embed.AddField("Rip".Titulo(), $"{usuario.Rip}", true);

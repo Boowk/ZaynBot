@@ -84,10 +84,7 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGUsuario user in usuarios)
                     {
-                        user.Personagem.DefesaFisicaBase = user.Personagem.DefesaFisica;
-                        user.Personagem.DefesaMagicaBase = user.Personagem.DefesaMagica;
-                        user.Personagem.AtaqueFisicoBase = user.Personagem.AtaqueFisico;
-                        user.Personagem.AtaqueMagicoBase = user.Personagem.AtaqueMagico;
+                        
                         user.Salvar();
                     }
                 }

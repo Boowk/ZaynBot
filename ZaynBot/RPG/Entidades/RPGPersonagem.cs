@@ -14,19 +14,15 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaAtual { get; set; }
         public double MagiaMaxima { get; set; }
 
-        public double AtaqueFisico { get; set; }
-        public double AtaqueFisicoBase { get; set; }
+        public double AtaqueFisicoBase  { get; set; }
         public double AtaqueFisicoExtra { get; set; }
 
-        public double AtaqueMagico { get; set; }
         public double AtaqueMagicoBase { get; set; }
         public double AtaqueMagicoExtra { get; set; }
 
-        public double DefesaFisica { get; set; }
         public double DefesaFisicaBase { get; set; }
         public double DefesaFisicaExtra { get; set; }
 
-        public double DefesaMagica { get; set; }
         public double DefesaMagicaBase { get; set; }
         public double DefesaMagicaExtra { get; set; }
 
@@ -51,10 +47,10 @@ namespace ZaynBot.RPG.Entidades
             VidaMaxima = VidaAtual;
             MagiaAtual = SortearMetadeValor(50);
             MagiaMaxima = MagiaAtual;
-            AtaqueFisico = SortearMetadeValor(50);
-            AtaqueMagico = SortearMetadeValor(50);
-            DefesaFisica = SortearMetadeValor(50);
-            DefesaMagica = SortearMetadeValor(50);
+            AtaqueFisicoBase  = SortearMetadeValor(50);
+            AtaqueMagicoBase = SortearMetadeValor(50);
+            DefesaFisicaBase = SortearMetadeValor(50);
+            DefesaMagicaBase = SortearMetadeValor(50);
             FomeAtual = 100;
             FomeMaxima = 100;
             SedeAtual = 100;
@@ -88,10 +84,10 @@ namespace ZaynBot.RPG.Entidades
                     quant--;
                     VidaMaxima = Evoluir(VidaMaxima);
                     MagiaMaxima = Evoluir(MagiaMaxima);
-                    AtaqueFisico = Evoluir(AtaqueFisico);
-                    AtaqueMagico = Evoluir(AtaqueMagico);
-                    DefesaFisica = Evoluir(DefesaFisica);
-                    DefesaMagica = Evoluir(DefesaMagica);
+                    AtaqueFisicoBase  = Evoluir(AtaqueFisicoBase );
+                    AtaqueMagicoBase = Evoluir(AtaqueMagicoBase);
+                    DefesaFisicaBase = Evoluir(DefesaFisicaBase);
+                    DefesaMagicaBase = Evoluir(DefesaMagicaBase);
                     FomeMaxima = Evoluir(FomeMaxima);
                     SedeMaxima = Evoluir(SedeMaxima);
                     ProficienciaPontos++;
