@@ -18,50 +18,6 @@ Enquanto é possível fazer "self hosting" (hospedar você mesmo) ela, eu não i
 
 Você pode obter suporte sobre a Zaynrina [clicando aqui](https://discord.gg/GGRnMQu)!
 
-## 🙋 Como ajudar?
-
-Basta fazer um clone nesse repositorio.
-Ter instalado MongoDB e o Visual Studio 2018 acima com .Net Core 2.0 instalado.
-Crie um comando, melhore algo ou corrija algo. E faça um pull request.
-Você também pode abrir issues.
-
-### 💵 Como Doar?
-
-Você pode ajudar [clicandoa aqui](https://www.padrim.com.br/ZaynBot)
-
-### 🙌 Como Usar?
-#### 👨‍💻 Como Compilar?
-
-* Nós deixamos o código-fonte de nossos projetos para que outras pessoas possam se inspirar e aprender com nossos projetos, o objetivo é que pessoas que são fãs da Zaynrina aprendam como ela funciona e, caso queiram, podem ajudar ela com bug fixes e novas funcionalidades.
-* Eu não irei dar suporte caso você queria fazer self hosting apenas para você fazer "fama" falando que você criou um bot, mesmo que na verdade você apenas pegou o código-fonte dela e hospedou, lembre-se, a licença do projeto é [AGPL v3](https://github.com/ZaynBot/ZaynBot/blob/master/LICENSE), você é **obrigado a deixar todas as suas alterações no projeto público**!
-* Eu não irei ficar explicando como arrumar problemas na sua versão self hosted dela, **você está por sua conta e risco**.
-* Eu irei dar suporte caso você queria hospedar ela para contribuir e ajudar ela.
-* Lembrando que ela precisa de várias API Keys para várias funcionalidades dela, caso você não coloque uma delas, talvez ela poderá ter funcionalidade reduzida ou talvez não irá funcionar corretamente!
-* Lembrando que eu não distribuo os "assets" dela (imagens, fontes, etc), ou seja, comandos que utilizam tais assets não irão funcionar corretamente.
-* Existem várias coisas "hard coded" nela, ou seja, você terá que editar o código-fonte dela e recompilar, afinal, eu nunca pensei que alguém ia usar/hospedar a Zayn  então você terá que fazer algumas modificações no código-fonte dela para funcionar. 😉
-* Eu hospedo ela em uma máquina rodando Ubuntu 18.04, talvez ela não irá rodar corretamente em outros sistemas operacionais.
-* Você não pode utilizar o nome "Zayn" na sua versão self hosted.
-
-Mas se você quiser mesmo hospedar a Zaynrina, siga os seguintes passos:
-1. Tenha o MongoDB instalado na sua máquina.
-2. Tenha o Visual Studio 2018 (ou superior) na sua máquina com .Net Core 2.0.
-3. Tenha o Git Bash instalado na sua máquina.
-4. Faça ```git clone https://github.com/ZaynBot/ZaynBot.git``` em alguma pasta no seu computador.
-5. Agora, usando o PowerShell (ou o próprio Git Bash), entre na pasta criada e utilize `dotnet publish -c Release -r win10-x64`
-6. Após terminar de compilar, vá na pasta `release` e execute o .EXE
-7. Após iniciar, um arquivo chamado `config.json` será criado, abra ele com um editor de texto decente (como o Notepad++) e preencha todas as opções, a configuração já vem com alguns valores padrões e alguns destes valores padrões vem com explicações sobre para que ele serve e da onde ele surgiu.
-8. Após terminar de configurar, inicie o .EXE novamente e, se tudo der certo, ela irá iniciar e você poderá usar os comandos dela! 🎉
-
-#### 🔀 Pull Requests
-
-No seu Pull Request, você deverá seguir o meu estilo de código bonitinho que eu faço, é recomendado que você coloque comentários nas partes do seu código para que seja mais fácil na hora da leitura.
-
-O seu código não pode ser algo "gambiarra", meu código pode ter algumas gambiarras mas isto não significa que você também deve encher a Zayn com mais gambiarras no seu Pull Request.
-
-Você precisa pensar "será que alguém iria utilizar isto?", se você criar um comando que só seja útil no seu servidor, provavelmente eu irei negar o seu Pull Request.
-
-Funcionalidades (como comandos) relacionados a coisas NSFW **não serão** adicionadas na Zayn e seu Pull Request será negado, eu prefiro que as pessoas, ao olharem o avatar dela, pensem que ela é um bot de rpg toscos do que um bot que fica mandando coisas NSFW no chat.
-
 ## 📦 Dependências
 
 A Zaynrina utiliza várias [dependências no código-fonte dela](https://github.com/ZaynBot/ZaynBot/blob/master/ZaynBot/ZaynBot.csproj), obrigado a todos os mantenedores das dependências! Sem vocês, talvez a Zaynrina não iria existir (ou teria várias funcionalidades reduzidas ou talvez até inexistentes!)
