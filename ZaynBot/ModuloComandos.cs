@@ -52,6 +52,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoSaquear>();
             Comandos.RegisterCommands<ComandoAtribuir>();
             Comandos.RegisterCommands<ComandoTutorial>();
+            Comandos.RegisterCommands<ComandoItemEquipar>();
             //Comandos.RegisterCommands<DesequiparComando>();
             //Comandos.RegisterCommands<ReceitaComando>();
         }

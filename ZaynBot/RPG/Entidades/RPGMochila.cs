@@ -21,7 +21,6 @@ namespace ZaynBot.RPG.Entidades
                 Quantidade = quantidade
             });
         }
-
         public void AdicionarItem(string nome, RPGMochilaItemData item)
         {
             nome = nome.ToLower();
@@ -42,12 +41,6 @@ namespace ZaynBot.RPG.Entidades
             item.Quantidade -= quantidade;
             if (item.Quantidade == 0)
                 Itens.Remove(itemNome);
-        }
-
-        public void DesequiparItem(RPGItem item, RPGPersonagem personagem)
-        {
-            personagem.Mochila.Equipamentos.Remove(item.Tipo);
-            AdicionarItem(item);
         }
     }
 

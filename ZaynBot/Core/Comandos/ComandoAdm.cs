@@ -84,7 +84,6 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGUsuario user in usuarios)
                     {
-                        
                         user.Salvar();
                     }
                 }

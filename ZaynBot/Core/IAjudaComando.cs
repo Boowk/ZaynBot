@@ -94,7 +94,7 @@ namespace ZaynBot.Core
             "**2. RPG -** `status` , `criar-personagem` , `proficiencia` , `atribuir` , `olhar`\n" +
             "**3. Combate -** `atacar` , `explorar` , `saquear`\n" +
             "**4. Compras -** `loja` , `comprar` , `vender`\n" +
-            "**5. Itens -** `mochila` , `usar` , `examinar`\n" +
+            "**5. Itens -** `mochila` , `usar` , `examinar` , `equipar`\n" +
             "**6. Região -** `norte` , `sul` , `leste` , `oeste`\n" +
             "**7. Administrativo -** `mod`\n" +
             "**8. Outros -** `top` , `usuario`\n" +

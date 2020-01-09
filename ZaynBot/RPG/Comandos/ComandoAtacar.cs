@@ -52,7 +52,7 @@ namespace ZaynBot.RPG.Comandos
 
                     usuario.Personagem.Batalha.Turno++;
                     strRelatorio.AppendLine($"Turno {usuario.Personagem.Batalha.Turno}.".Bold());
-                    double dano = ReduzirDano(usuario.Personagem.DefesaFisicaBase, mob.AtaqueFisico);
+                    double dano = ReduzirDano(usuario.Personagem.DefesaFisicaBase + usuario.Personagem.DefesaFisicaExtra, mob.AtaqueFisico);
                     usuario.RemoverVida(dano);
                     strRelatorio.AppendLine($"{ctx.User.Mention} perdeu -{dano.Text()} vida!".Bold());
                 }
@@ -86,7 +86,7 @@ namespace ZaynBot.RPG.Comandos
             usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Forca, out RPGProficiencia forca);
             ProficienciaForca profForca = forca as ProficienciaForca;
 
-            double danoNoMob = ReduzirDano(mob.DefesaFisica, usuario.Personagem.AtaqueFisicoBase , profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisicoBase ));
+            double danoNoMob = ReduzirDano(mob.DefesaFisica, usuario.Personagem.AtaqueFisicoBase + usuario.Personagem.AtaqueFisicoExtra, profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisicoBase));
             if (mob.VidaAtual < danoNoMob)
             {
                 danoNoMob = mob.VidaAtual;

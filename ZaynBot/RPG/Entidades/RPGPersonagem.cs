@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaAtual { get; set; }
         public double MagiaMaxima { get; set; }
 
-        public double AtaqueFisicoBase  { get; set; }
+        public double AtaqueFisicoBase { get; set; }
         public double AtaqueFisicoExtra { get; set; }
 
         public double AtaqueMagicoBase { get; set; }
@@ -47,7 +47,7 @@ namespace ZaynBot.RPG.Entidades
             VidaMaxima = VidaAtual;
             MagiaAtual = SortearMetadeValor(50);
             MagiaMaxima = MagiaAtual;
-            AtaqueFisicoBase  = SortearMetadeValor(50);
+            AtaqueFisicoBase = SortearMetadeValor(50);
             AtaqueMagicoBase = SortearMetadeValor(50);
             DefesaFisicaBase = SortearMetadeValor(50);
             DefesaMagicaBase = SortearMetadeValor(50);
@@ -84,7 +84,7 @@ namespace ZaynBot.RPG.Entidades
                     quant--;
                     VidaMaxima = Evoluir(VidaMaxima);
                     MagiaMaxima = Evoluir(MagiaMaxima);
-                    AtaqueFisicoBase  = Evoluir(AtaqueFisicoBase );
+                    AtaqueFisicoBase = Evoluir(AtaqueFisicoBase);
                     AtaqueMagicoBase = Evoluir(AtaqueMagicoBase);
                     DefesaFisicaBase = Evoluir(DefesaFisicaBase);
                     DefesaMagicaBase = Evoluir(DefesaMagicaBase);
@@ -108,6 +108,34 @@ namespace ZaynBot.RPG.Entidades
             }
             proficiencia = null;
             return false;
+        }
+
+        public void EquiparItem(RPGItem item)
+        {
+            Mochila.RemoverItem(item.Nome.ToLower());
+            DesequiparItem(item.Tipo);
+            Mochila.Equipamentos.Add(item.Tipo, item);
+
+            AtaqueFisicoExtra += item.AtaqueFisico;
+            AtaqueMagicoExtra += item.AtaqueMagico;
+
+            DefesaFisicaExtra += item.DefesaFisica;
+            DefesaMagicaExtra += item.DefesaMagica;
+        }
+
+        public void DesequiparItem(EnumTipo itemTipo)
+        {
+            if (Mochila.Equipamentos.TryGetValue(itemTipo, out RPGItem item))
+            {
+                Mochila.AdicionarItem(item);
+                Mochila.Equipamentos.Remove(itemTipo);
+
+                AtaqueFisicoExtra -= item.AtaqueFisico;
+                AtaqueMagicoExtra -= item.AtaqueMagico;
+
+                DefesaFisicaExtra -= item.DefesaFisica;
+                DefesaMagicaExtra -= item.DefesaMagica;
+            }
         }
 
         private double SortearMetadeValor(double valor)
