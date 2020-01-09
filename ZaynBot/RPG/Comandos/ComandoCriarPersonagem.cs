@@ -29,7 +29,8 @@ namespace ZaynBot.RPG.Comandos
             }
             else
             {
-                await ctx.RespondAsync($"Você já tem um personagem {ctx.User.Mention}! Use `z!ajuda` para ver os comandos disponíveis.");
+                await ctx.RespondAsync($"Você já tem um personagem {ctx.User.Mention}! Use `z!ajuda` para ver os comandos disponíveis. " +
+                    $"Se você está perdido, pode acessar nosso site: https://zaynrpg.gitbook.io/zaynrpg/comecando/como-funciona");
                 return;
             }
         }

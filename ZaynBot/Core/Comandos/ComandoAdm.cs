@@ -84,14 +84,7 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGUsuario user in usuarios)
                     {
-                        user.Personagem.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
-                          {
-                             { EnumProficiencia.Ataque, new ProficienciaAtaque()},
-                             { EnumProficiencia.Defesa, new ProficienciaDefesa()},
-                             { EnumProficiencia.Forca, new ProficienciaForca()}
-                          };
-                        user.Personagem.Batalha = new RPGBatalha();
-                        user.Personagem.ProficienciaPontos = user.Personagem.NivelAtual - 1;
+                        user.Personagem.RegiaoAtualId = 0;
                         user.Salvar();
                     }
                 }
