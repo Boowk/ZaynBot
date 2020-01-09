@@ -84,11 +84,27 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGUsuario user in usuarios)
                     {
-                        user.Personagem.RegiaoAtualId = 0;
+                        user.Personagem.DefesaFisicaBase = user.Personagem.DefesaFisica;
+                        user.Personagem.DefesaMagicaBase = user.Personagem.DefesaMagica;
+                        user.Personagem.AtaqueFisicoBase = user.Personagem.AtaqueFisico;
+                        user.Personagem.AtaqueMagicoBase = user.Personagem.AtaqueMagico;
                         user.Salvar();
                     }
                 }
             }
+
+            ModuloBanco.ItemColecao.InsertOne(new RPGItem()
+            {
+                AtaqueFisico = 50,
+                Descricao = "Espada de treinamento",
+                Id = 50,
+                Nome = "Espada de treinamento",
+                PrecoCompra = 10,
+                PrecoVenda = 2,
+                Proficiencia = EnumProficiencia.Ataque,
+                ProficienciaNivelRequisito = 5,
+                Tipo = EnumTipo.ArmaPrimaria,
+            });
 
             await ctx.RespondAsync("Atualiazado");
         }

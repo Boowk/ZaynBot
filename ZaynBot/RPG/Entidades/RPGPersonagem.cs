@@ -15,10 +15,20 @@ namespace ZaynBot.RPG.Entidades
         public double MagiaMaxima { get; set; }
 
         public double AtaqueFisico { get; set; }
+        public double AtaqueFisicoBase { get; set; }
+        public double AtaqueFisicoExtra { get; set; }
+
         public double AtaqueMagico { get; set; }
+        public double AtaqueMagicoBase { get; set; }
+        public double AtaqueMagicoExtra { get; set; }
 
         public double DefesaFisica { get; set; }
+        public double DefesaFisicaBase { get; set; }
+        public double DefesaFisicaExtra { get; set; }
+
         public double DefesaMagica { get; set; }
+        public double DefesaMagicaBase { get; set; }
+        public double DefesaMagicaExtra { get; set; }
 
         public double FomeAtual { get; set; }
         public double FomeMaxima { get; set; }
