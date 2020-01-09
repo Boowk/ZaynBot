@@ -29,7 +29,6 @@ namespace ZaynBot.Core.Comandos
         {
             await ctx.TriggerTypingAsync();
             DiscordUser imain = await ModuloCliente.Client.GetUserAsync(383711472221421589);
-            DiscordUser yuki = await ModuloCliente.Client.GetUserAsync(459410223480832010);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             StringBuilder srb = new StringBuilder();
             srb.AppendLine($"ZaynBot V.{ModuloCliente.Bot.VersaoMaior}.{ModuloCliente.Bot.VersaoMinor}.{ModuloCliente.Bot.VersaoRevisao}\n".Bold())
@@ -49,7 +48,7 @@ namespace ZaynBot.Core.Comandos
             srf.AppendLine($"Canais: {ModuloCliente.Bot.QuantidadeCanais}");
             srf.AppendLine($"Usuarios: {ModuloCliente.Bot.QuantidadeMembros}");
             embed.AddField("Discord".Titulo(), srf.ToString(), true);
-            embed.AddField("Testadores".Titulo(), $"{imain.Username}#{imain.Discriminator}\n{yuki.Username}#{yuki.Discriminator}", true);
+            embed.AddField("Testadores".Titulo(), $"{imain.Username}#{imain.Discriminator}", true);
             embed.WithColor(DiscordColor.Blue);
             embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg");
             await ctx.RespondAsync(embed: embed.Build());

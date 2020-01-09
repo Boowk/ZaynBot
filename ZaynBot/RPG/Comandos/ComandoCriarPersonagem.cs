@@ -11,7 +11,7 @@ namespace ZaynBot.RPG.Comandos
     {
         [Command("criar-personagem")]
         [Aliases("cp")]
-        [Description("Cria um personagem.")]
+        [Description("Permite criar um personagem. Somente é possível usar este comando uma vez.")]
         [ComoUsar("criar-personagem")]
         [Cooldown(1, 10, CooldownBucketType.User)]
         public async Task ComandoCriarPersonagemAb(CommandContext ctx)
@@ -23,17 +23,9 @@ namespace ZaynBot.RPG.Comandos
                 usuario = new RPGUsuario(ctx.User.Id);
                 ModuloBanco.UsuarioColecao.InsertOne(usuario);
                 DiscordEmbedBuilder de = new DiscordEmbedBuilder();
-                de.WithDescription($"Parabéns {ctx.User.Mention}, você concluiu a criação do personagem.\n" +
-                    $"Escreva `z!olhar` para mais detalhes sobre como me usar.\n" +
-                    $"Seja bem-vindo ao Zayn.");
+                de.WithDescription($"{ctx.User.Mention} você acabou de criar o seu personagem! [Clique aqui](https://zaynrpg.gitbook.io/zaynrpg/comecando/como-funciona)" +
+                    $" para saber como usar o bot! Você também pode usar o comando `z!olhar`.");
                 await ctx.RespondAsync(embed: de);
-                try
-                {
-                    DiscordGuild MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);
-                    DiscordChannel CanalRPG = MundoZayn.GetChannel(519176927265947689);
-                    await CanalRPG.SendMessageAsync($"*{ctx.User.Username}#{ctx.User.Discriminator} criou um personagem!*");
-                }
-                catch { }
             }
             else
             {

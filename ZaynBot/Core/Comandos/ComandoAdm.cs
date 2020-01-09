@@ -91,11 +91,7 @@ namespace ZaynBot.Core.Comandos
                              { EnumProficiencia.Forca, new ProficienciaForca()}
                           };
                         user.Personagem.Batalha = new RPGBatalha();
-                        user.Personagem.Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
-                        {
-                            Id = 0,
-                            Quantidade = 10
-                        });
+                        user.Personagem.ProficienciaPontos = user.Personagem.NivelAtual - 1;
                         user.Salvar();
                     }
                 }
