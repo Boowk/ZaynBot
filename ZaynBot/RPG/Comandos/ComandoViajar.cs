@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.RPG.Entidades;
 
@@ -26,11 +27,17 @@ namespace ZaynBot.RPG.Comandos
                     usuario.Personagem.RegiaoAtualId = regiao.RegiaoId;
                     usuario.Salvar();
                     localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
-                    DiscordEmbedBuilder embedViajeNormal = new DiscordEmbedBuilder().Padrao("Viajem", ctx);
-                    embedViajeNormal.WithDescription($"Você foi para o {enumDirecao.ToString()}.\n".Bold() +
-                        $"----\n" +
-                        $"{localAtual.Descrição}");
-                    await ctx.RespondAsync(embed: embedViajeNormal.Build());
+
+                    StringBuilder conexoesDisponiveis = new StringBuilder();
+                    foreach (var reg in localAtual.SaidasRegioes)
+                        conexoesDisponiveis.Append($"{reg.Direcao.ToString()}, ");
+
+                    DiscordEmbedBuilder embedViajem = new DiscordEmbedBuilder().Padrao("Viajem", ctx);
+                    embedViajem.WithDescription("Direções obvias".Titulo() +
+                        $"\n{conexoesDisponiveis.ToString()}" +
+                        $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
+                        $"\n{localAtual.Descrição}");
+                    await ctx.RespondAsync(embed: embedViajem.Build());
                     return;
                 }
             }

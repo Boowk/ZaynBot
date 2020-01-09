@@ -26,17 +26,15 @@ namespace ZaynBot.RPG.Comandos
                 RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
-                embed.WithTitle($"{localAtual.Nome.Titulo()} - {localAtual.Id}");
-                embed.WithDescription(localAtual.Descrição);
 
                 StringBuilder conexoesDisponiveis = new StringBuilder();
                 foreach (var reg in localAtual.SaidasRegioes)
-                    conexoesDisponiveis.Append($"{reg.Direcao.ToString().Bold()}, ");
+                    conexoesDisponiveis.Append($"{reg.Direcao.ToString()}, ");
 
-                if (!string.IsNullOrWhiteSpace(conexoesDisponiveis.ToString()))
-                    embed.AddField("Direções obvias".Titulo(), conexoesDisponiveis.ToString());
-
-                embed.WithColor(DiscordColor.Azure);
+                embed.WithDescription("Direções obvias".Titulo() +
+                        $"\n{conexoesDisponiveis.ToString()}" +
+                        $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
+                        $"\n{localAtual.Descrição}");
 
                 await ctx.RespondAsync(embed: embed.Build());
                 return;
