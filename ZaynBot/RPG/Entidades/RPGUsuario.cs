@@ -68,6 +68,7 @@ namespace ZaynBot.RPG.Entidades
             {
                 Personagem.VidaAtual = Personagem.VidaMaxima / 3;
                 Rip++;
+                Personagem.ExpAtual = 0;
                 Salvar(this);
                 throw new PersonagemNoLifeException();
             }

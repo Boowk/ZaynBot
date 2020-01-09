@@ -4,16 +4,16 @@ namespace ZaynBot.RPG.Entidades
 {
     public enum EnumTipo
     {
-        Arma,
-        Escudo,
-        Helmo,
-        Peitoral,
-        Luvas,
-        Botas,
-        Moeda,
-        Comida,
-        Pocao,
-        Recurso,
+        ArmaPrimaria = 1,
+        ArmaSegundaria = 2,
+        Helmo = 3,
+        Peitoral = 4,
+        Luvas = 5,
+        Botas = 6,
+        Moeda = 7,
+        Comida = 8,
+        Pocao = 9,
+        Recurso = 10,
     }
 
     [BsonIgnoreExtraElements]
@@ -23,8 +23,11 @@ namespace ZaynBot.RPG.Entidades
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
+
         public EnumTipo Tipo { get; set; }
         public EnumProficiencia Proficiencia { get; set; }
+        public int ProficienciaNivelRequisito { get; set; }
+
         public int PrecoCompra { get; set; }
         public int PrecoVenda { get; set; }
 
