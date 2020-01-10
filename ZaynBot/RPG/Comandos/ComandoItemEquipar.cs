@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite equipar itens.")]
         [ComoUsar("equipar [nome do item]")]
         [Exemplo("equipar espada de bronze")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoEquiparAb(CommandContext ctx, [RemainingText] string nome = "")
         {
             await ctx.TriggerTypingAsync();
@@ -35,7 +35,7 @@ namespace ZaynBot.RPG.Comandos
                         usuario.Personagem.EquiparItem(item);
                         await ctx.RespondAsync($"A arma primária [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
                         break;
-                    case EnumTipo.ArmaSegundaria:
+                    case EnumTipo.ArmaSecundaria:
                         usuario.Personagem.EquiparItem(item);
                         await ctx.RespondAsync($"A arma segundaria [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
                         break;

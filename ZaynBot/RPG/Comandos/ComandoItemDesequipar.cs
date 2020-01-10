@@ -8,38 +8,66 @@ namespace ZaynBot.RPG.Comandos
 {
     public class ComandoItemDesequipar : BaseCommandModule
     {
-    //    [Command("desequipar")]
-    //    [Description("Permite desequipar algum item.")]
-    //    [UsoAtributo("desequipar [id]")]
-    //    [ExemploAtributo("desequipar 23")]
-    //    [Cooldown(1, 10, CooldownBucketType.User)]
-    //    public async Task ComandoDesequiparAb(CommandContext ctx, [RemainingText] string nome)
-    //    {
-    //        await ctx.TriggerTypingAsync();
-    //        UsuarioRPG.GetPersonagem(ctx, out UsuarioRPG usuario);
-    //        PersonagemRPG personagem = usuario.Personagem;
-    //        if (string.IsNullOrWhiteSpace(nome))
-    //        {
-    //            await ctx.RespondAsync($"Informe o id do item equipado! {ctx.User.Mention}.");
-    //            return;
-    //        }
-    //        ItemRPG item = null;
-    //        foreach (var i in personagem.Inventario.Equipamentos)
-    //        {
-    //            if (i.Value.Id.ToString() == nome)
-    //            {
-    //                item = i.Value;
-    //                break;
-    //            }
-    //        }
-    //        if (item != null)
-    //        {
-    //            personagem.Inventario.DesequiparItem(item, personagem);
-    //            UsuarioRPG.Salvar(usuario);
-    //            await ctx.RespondAsync($"**({item.Nome})** foi desequipado! {ctx.User.Mention}.");
-    //        }
-    //        else
-    //            await ctx.RespondAsync($"Este item não está equipado! {ctx.User.Mention}.");
-    //    }
+        [Command("desequipar")]
+        [Aliases("deq")]
+        [Description("Permite desequipar itens.")]
+        [ComoUsar("desequipar [região]")]
+        [Exemplo("desequipar peitoral")]
+        [Exemplo("desequipar helmo")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
+        public async Task ComandoDesequiparAb(CommandContext ctx, [RemainingText] string nome = "")
+        {
+            await ctx.TriggerTypingAsync();
+            if (string.IsNullOrWhiteSpace(nome))
+            {
+                await ctx.ExecutarComandoAsync("ajuda desequipar");
+                return;
+            }
+
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            nome = nome.ToLower();
+            string equipamento = "";
+            switch (nome)
+            {
+                case "arma primaria":
+                case "arma primária":
+                case "arma":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
+                    break;
+                case "arma secundaria":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
+                    break;
+                case "helmo":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Helmo);
+                    break;
+                case "peitoral":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Peitoral);
+                    break;
+                case "luvas":
+                case "luva":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Luvas);
+                    break;
+                case "botas":
+                case "bota":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Botas);
+                    break;
+                case "pernas":
+                case "perna":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Pernas);
+                    break;
+                default:
+                    await ctx.ExecutarComandoAsync("ajuda desequipar");
+                    return;
+            }
+
+            if (!string.IsNullOrEmpty(equipamento))
+            {
+                usuario.Salvar();
+                await ctx.RespondAsync($"[{equipamento}] desequipado {ctx.User.Mention}!".Bold());
+            }
+            else
+                await ctx.RespondAsync($"Você não tem este item equipado {ctx.User.Mention}!".Bold());
+
+        }
     }
 }

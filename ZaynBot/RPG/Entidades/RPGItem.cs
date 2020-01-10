@@ -5,7 +5,7 @@ namespace ZaynBot.RPG.Entidades
     public enum EnumTipo
     {
         ArmaPrimaria,
-        ArmaSegundaria,
+        ArmaSecundaria,
         Helmo,
         Peitoral,
         Luvas,

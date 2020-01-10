@@ -85,7 +85,7 @@ namespace ZaynBot.RPG.Comandos
                 embed.AddField("Arma primária".Titulo(), "Nenhuma", true);
 
 
-            if (mochila.Equipamentos.TryGetValue(EnumTipo.ArmaSegundaria, out var armaS))
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.ArmaSecundaria, out var armaS))
                 embed.AddField("Arma segundaria".Titulo(), armaS.Nome, true);
             else
                 embed.AddField("Arma segundaria".Titulo(), "Nenhuma", true);

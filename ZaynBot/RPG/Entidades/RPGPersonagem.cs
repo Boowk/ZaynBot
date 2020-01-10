@@ -123,7 +123,7 @@ namespace ZaynBot.RPG.Entidades
             DefesaMagicaExtra += item.DefesaMagica;
         }
 
-        public void DesequiparItem(EnumTipo itemTipo)
+        public string DesequiparItem(EnumTipo itemTipo)
         {
             if (Mochila.Equipamentos.TryGetValue(itemTipo, out RPGItem item))
             {
@@ -135,7 +135,9 @@ namespace ZaynBot.RPG.Entidades
 
                 DefesaFisicaExtra -= item.DefesaFisica;
                 DefesaMagicaExtra -= item.DefesaMagica;
+                return item.Nome;
             }
+            return "";
         }
 
         private double SortearMetadeValor(double valor)
