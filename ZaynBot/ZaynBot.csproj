@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="RPG\Comandos\ComandoEquipamentos.cs" />
     <Compile Remove="RPG\Entidades\Interface1.cs" />
   </ItemGroup>
 

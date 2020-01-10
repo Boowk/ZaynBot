@@ -14,6 +14,7 @@ namespace ZaynBot.RPG.Entidades
         Comida,
         Pocao,
         Recurso,
+        Pernas,
     }
 
     [BsonIgnoreExtraElements]

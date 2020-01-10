@@ -77,6 +77,49 @@ namespace ZaynBot.RPG.Comandos
                 $"**Defesa mágica:** {personagem.DefesaMagicaBase.Text()}", true);
 
             embed.AddField("Proficiências distribuídas(PD)".Titulo(), $"**Combate:** {(combate / total) * 100}%");
+
+            RPGMochila mochila = personagem.Mochila;
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.ArmaPrimaria, out var armaP))
+                embed.AddField("Arma primária".Titulo(), armaP.Nome, true);
+            else
+                embed.AddField("Arma primária".Titulo(), "Nenhuma", true);
+
+
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.ArmaSegundaria, out var armaS))
+                embed.AddField("Arma segundaria".Titulo(), armaS.Nome, true);
+            else
+                embed.AddField("Arma segundaria".Titulo(), "Nenhuma", true);
+
+
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.Helmo, out var helmo))
+                embed.AddField("Helmo".Titulo(), helmo.Nome, true);
+            else
+                embed.AddField("Helmo".Titulo(), "Nenhuma", true);
+
+
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.Peitoral, out var peitoral))
+                embed.AddField("Peitoral".Titulo(), peitoral.Nome, true);
+            else
+                embed.AddField("Peitoral".Titulo(), "Nenhuma", true);
+
+
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.Pernas, out var pernas))
+                embed.AddField("Pernas".Titulo(), pernas.Nome, true);
+            else
+                embed.AddField("Pernas".Titulo(), "Nenhuma", true);
+
+
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.Luvas, out var luvas))
+                embed.AddField("Luvas".Titulo(), luvas.Nome, true);
+            else
+                embed.AddField("Luvas".Titulo(), "Nenhuma", true);
+
+
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.Botas, out var botas))
+                embed.AddField("Botas".Titulo(), botas.Nome, true);
+            else
+                embed.AddField("Botas".Titulo(), "Nenhuma", true);
+
             return embed;
         }
     }
