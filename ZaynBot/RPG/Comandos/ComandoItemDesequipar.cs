@@ -32,9 +32,12 @@ namespace ZaynBot.RPG.Comandos
                 case "arma primaria":
                 case "arma primária":
                 case "arma":
+                case "arma 1":
+                case "arma principal":
                     equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
                     break;
                 case "arma secundaria":
+                case "arma 2":
                     equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
                     break;
                 case "helmo":
