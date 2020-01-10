@@ -88,20 +88,6 @@ namespace ZaynBot.Core.Comandos
                     }
                 }
             }
-
-            ModuloBanco.ItemColecao.InsertOne(new RPGItem()
-            {
-                AtaqueFisico = 50,
-                Descricao = "Espada de treinamento",
-                Id = 50,
-                Nome = "Espada de treinamento",
-                PrecoCompra = 10,
-                PrecoVenda = 2,
-                Proficiencia = EnumProficiencia.Ataque,
-                ProficienciaNivelRequisito = 5,
-                Tipo = EnumTipo.ArmaPrimaria,
-            });
-
             await ctx.RespondAsync("Atualiazado");
         }
 

@@ -56,7 +56,7 @@ namespace ZaynBot.RPG.Comandos
 
             if (usuario.Personagem.Mochila.Itens.TryGetValue("moeda de zeoin", out RPGMochilaItemData moedasUsuario))
             {
-                int precoTotal = quantidade * item.PrecoCompra;
+                int precoTotal = quantidade * (item.Preco * 10);
                 if (precoTotal > moedasUsuario.Quantidade)
                     await ctx.RespondAsync($"{ctx.User.Mention} você não tem Zeoin o suficiente para comprar essa quantidade!".Bold());
                 else

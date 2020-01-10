@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using System;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
@@ -40,16 +41,17 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
                 RPGItem item = ModuloBanco.GetItem(itemData.Id);
-                if (item.PrecoVenda != 0)
+                if (item.Preco != 0)
                 {
+                    int valorReal = Convert.ToInt32(item.Preco * 0.3) * quantidade;
                     usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
                     usuario.Personagem.Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
                     {
                         Id = 0,
-                        Quantidade = item.PrecoVenda * quantidade
+                        Quantidade = valorReal
                     });
                     usuario.Salvar();
-                    await ctx.RespondAsync($"{ctx.User.Mention} você vendeu {quantidade} [{itemNome.FirstUpper()}] por {item.PrecoVenda * quantidade} Zeoin!".Bold());
+                    await ctx.RespondAsync($"{ctx.User.Mention} você vendeu {quantidade} [{itemNome.FirstUpper()}] por {valorReal} Zeoin!".Bold());
 
                 }
                 else

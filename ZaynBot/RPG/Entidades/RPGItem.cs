@@ -29,8 +29,7 @@ namespace ZaynBot.RPG.Entidades
         public EnumProficiencia Proficiencia { get; set; }
         public int ProficienciaNivelRequisito { get; set; }
 
-        public int PrecoCompra { get; set; }
-        public int PrecoVenda { get; set; }
+        public int Preco { get; set; }
 
         public double AtaqueFisico { get; set; }
         public double AtaqueMagico { get; set; }

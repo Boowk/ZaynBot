@@ -30,7 +30,7 @@ namespace ZaynBot.RPG.Comandos
             foreach (var i in regiaoAtual.LojaItensId)
             {
                 RPGItem item = ModuloBanco.GetItem(i);
-                str.AppendLine($"[{item.Nome}] - {item.PrecoCompra} Zeoin".Bold());
+                str.AppendLine($"[{item.Nome}] - {item.Preco * 10} Zeoin".Bold());
             }
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Loja", ctx);
