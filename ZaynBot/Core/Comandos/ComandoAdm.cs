@@ -47,8 +47,7 @@ namespace ZaynBot.Core.Comandos
             await ctx.RespondAsync("Deletado!");
         }
 
-        [Command("adicionar-item")]
-        [Aliases("ai")]
+        [Command("dar-item")]
         public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)
         {
             if (discordUser == null)
@@ -91,8 +90,7 @@ namespace ZaynBot.Core.Comandos
             await ctx.RespondAsync("Atualiazado");
         }
 
-        [Command("adicionar-xp")]
-        [Aliases("ax")]
+        [Command("dar-xp")]
         public async Task AdicionarXP(CommandContext ctx, int quantidade = 1, DiscordUser discordUser = null)
         {
             if (discordUser == null)
@@ -102,6 +100,30 @@ namespace ZaynBot.Core.Comandos
             usuario.Personagem.AdicionarExp(quantidade);
             usuario.Salvar();
             await ctx.RespondAsync($"Adicionado {quantidade}XP para {discordUser.Mention}!");
+        }
+
+        [Command("money")]
+        public async Task money(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            usuario.Personagem.Mochila.AdicionarItem("moeda de zeoin", new RPGMochilaItemData()
+            {
+                Id = 0,
+                Quantidade = 9999999,
+            });
+            usuario.Salvar();
+            await ctx.RespondAsync("Adicionado!");
+        }
+
+        [Command("tp")]
+        public async Task Teleportar(CommandContext ctx, int id = 1)
+        {
+            await ctx.TriggerTypingAsync();
+            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            usuario.Personagem.RegiaoAtualId = id;
+            usuario.Salvar();
+            await ctx.RespondAsync($"Teleportado para id {id}!");
         }
     }
 }

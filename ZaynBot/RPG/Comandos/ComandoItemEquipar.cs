@@ -82,6 +82,7 @@ namespace ZaynBot.RPG.Comandos
                     return false;
                 }
             }
+            usuario.Personagem.EquiparItem(item);
             return true;
         }
     }
