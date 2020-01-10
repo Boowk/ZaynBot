@@ -71,10 +71,10 @@ namespace ZaynBot.RPG.Comandos
                 $"{pf}**Fome:** {((personagem.FomeAtual / personagem.FomeMaxima) * 100).Text()}%\n" +
                 $"{pg}**Sede:** {((personagem.SedeAtual / personagem.SedeMaxima) * 100).Text()}%\n", true);
 
-            embed.AddField("Info".Titulo(), $"**Ataque físico:** {personagem.AtaqueFisicoBase.Text()}\n" +
-                $"**Ataque mágico:** {personagem.AtaqueMagicoBase.Text()}\n" +
-                $"**Defesa física:** {personagem.DefesaFisicaBase.Text()}\n" +
-                $"**Defesa mágica:** {personagem.DefesaMagicaBase.Text()}", true);
+            embed.AddField("Info".Titulo(), $"**Ataque físico:** {(personagem.AtaqueFisicoBase + personagem.AtaqueFisicoExtra).Text()}\n" +
+                $"**Ataque mágico:** {(personagem.AtaqueMagicoBase + personagem.AtaqueMagicoExtra).Text()}\n" +
+                $"**Defesa física:** {(personagem.DefesaFisicaBase + personagem.DefesaFisicaExtra).Text()}\n" +
+                $"**Defesa mágica:** {(personagem.DefesaMagicaBase + personagem.DefesaMagicaExtra).Text()}", true);
 
             embed.AddField("Proficiências distribuídas(PD)".Titulo(), $"**Combate:** {(combate / total) * 100}%");
 
