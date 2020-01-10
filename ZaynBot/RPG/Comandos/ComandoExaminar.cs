@@ -1,6 +1,8 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using System;
+using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
@@ -27,26 +29,32 @@ namespace ZaynBot.RPG.Comandos
             {
                 RPGItem item = ModuloBanco.GetItem(itemData.Id);
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Item", ctx);
-                embed.WithTitle($"**{item.Nome.FirstUpper()}**");
-                embed.WithDescription((item.Descricao) != "" ? item.Descricao : "Sem descrição");
+                embed.WithTitle($"**{item.Nome}**");
+                embed.WithDescription(item.Descricao == "" ? "Sem descrição" : item.Descricao);
                 embed.AddField("Tipo".Titulo(), item.Tipo.ToString(), true);
-                //if (item.TipoItem == TipoItemEnum.Arma  || item.TipoItem == TipoItemEnum.Armadura
-                //{
-                //    embed.AddField("Durabilidade".Titulo(), $"{itemData.Durabilidade}/{item.Durabilidade}", true);
-                //    if (item.AtaqueFisico != 0)
-                //        embed.AddField("Ataque físico".Titulo(), item.AtaqueFisico.Texto2Casas(), true);
-                //    if (item.AtaqueMagico != 0)
-                //        embed.AddField("Ataque mágico".Titulo(), item.AtaqueMagico.Texto2Casas(), true);
-                //    if (item.DefesaFisica != 0)
-                //        embed.AddField("Defesa física".Titulo(), item.DefesaFisica.Texto2Casas(), true);
-                //    if (item.DefesaMagica != 0)
-                //        embed.AddField("Defesa mágica".Titulo(), item.DefesaMagica.Texto2Casas(), true);
-                //}
+                embed.AddField("Venda por".Titulo(), Convert.ToInt32(item.Preco * 0.3).ToString(), true);
+                embed.AddField("Compre por".Titulo(), (item.Preco * 10).ToString(), true);
+                StringBuilder str = new StringBuilder();
+                if (item.AtaqueFisico != 0)
+                    str.AppendLine($"Ataque físico: {item.AtaqueFisico}".Bold());
+                if (item.AtaqueMagico != 0)
+                    str.AppendLine($"Ataque mágico: {item.AtaqueMagico}".Bold());
+                if (item.DefesaFisica != 0)
+                    str.AppendLine($"Defesa física: {item.DefesaFisica}".Bold());
+                if (item.DefesaMagica != 0)
+                    str.AppendLine($"Defesa mágica: {item.DefesaMagica}".Bold());
+                if (item.FomeRestaura != 0)
+                    str.AppendLine($"Restaura {item.FomeRestaura} de fome.");
+                if (item.MagiaRestaura != 0)
+                    str.AppendLine($"Retaura {item.MagiaRestaura} de magia.");
+                if (item.VidaRestaura != 0)
+                    str.AppendLine($"Restaura {item.VidaRestaura} de vida.");
+                embed.AddField("Outros".Titulo(), str.ToString());
                 embed.WithColor(DiscordColor.Green);
                 await ctx.RespondAsync(embed: embed.Build());
                 return;
             }
-            await ctx.RespondAsync($"{ctx.User.Mention}, você não tem o [{nomeItem}] para poder estar examinando!".Bold());
+            await ctx.RespondAsync($"Você não tem o item [{nomeItem}] para poder estar examinando {ctx.User.Mention}!".Bold());
         }
     }
 }
