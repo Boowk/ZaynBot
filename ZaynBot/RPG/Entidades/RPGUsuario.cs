@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Entidades
         public ulong Id { get; set; }
         public DateTime CriacaoUsuarioData { get; set; }
         public RPGPersonagem Personagem { get; set; }
-        public int Rip { get; set; }
+        public int RipPorMobs { get; set; }
         public int RipMobs { get; set; }
         public int RipJogadores { get; set; }
 
@@ -67,7 +67,7 @@ namespace ZaynBot.RPG.Entidades
             if (Personagem.VidaAtual <= 0)
             {
                 Personagem.VidaAtual = Personagem.VidaMaxima / 3;
-                Rip++;
+                RipPorMobs++;
                 Personagem.ExpAtual = 0;
                 Salvar(this);
                 throw new PersonagemNoLifeException();
