@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.Core.Comandos
@@ -48,6 +49,7 @@ namespace ZaynBot.Core.Comandos
         }
 
         [Command("dar-item")]
+        [Exemplo("dar-item [quantidade] [id] [|usuario]")]
         public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)
         {
             if (discordUser == null)
@@ -63,6 +65,28 @@ namespace ZaynBot.Core.Comandos
             usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
             usuario.Salvar();
             await ctx.RespondAsync($"Adicionado {quantidade} [{item.Nome}] para {discordUser.Mention}!");
+        }
+
+        [Command("remover-item")]
+        [Exemplo("remover-item [quantidade] [usuario] [item]")]
+        public async Task Remover(CommandContext ctx, int quantidade = 1, DiscordUser discordUser = null, [RemainingText] string itemNome = "")
+        {
+            if (discordUser == null)
+                discordUser = ctx.User;
+            await ctx.TriggerTypingAsync();
+            RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
+            try
+            {
+                usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
+                usuario.Salvar();
+                await ctx.RespondAsync("Item removido!");
+                return;
+            }
+            catch
+            {
+                await ctx.RespondAsync("Item não encontrado!");
+                return;
+            }
         }
 
         [Command("atualizar")]
