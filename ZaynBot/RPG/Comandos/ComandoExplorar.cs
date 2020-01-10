@@ -20,7 +20,7 @@ namespace ZaynBot.RPG.Comandos
             RPGRegiao regiaoAtual = ModuloBanco.GetRegiaoData(usuario.Personagem.RegiaoAtualId);
             if (regiaoAtual.Dificuldade == 0)
             {
-                await ctx.RespondAsync($"Esta região não tem mobs inimigos {ctx.User.Mention}!");
+                await ctx.RespondAsync($"Esta região não tem creaturas {ctx.User.Mention}!");
                 return;
             }
             //Pegamos um mob aleatorio baseado no nível da região
