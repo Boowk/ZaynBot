@@ -46,7 +46,7 @@ namespace ZaynBot.RPG.Comandos
                         string vidaRestaura = usuario.RecuperarVida(item.VidaRestaura * quantidade).Text();
                         string magiaRestaurada = usuario.RecuperarMagia(item.MagiaRestaura * quantidade).Text();
                         usuario.Salvar();
-                        await ctx.RespondAsync($"{ctx.User.Mention} você usou {quantidade} [{item.Nome}]! Restaurado {Emojis.PontosVida()} {vidaRestaura} e {Emojis.PontosPoder()} {magiaRestaurada}!".Bold());
+                        await ctx.RespondAsync($"{ctx.User.Mention} você usou {quantidade} [{item.Nome}]! Restaurado {Emojis.PontosVida} {vidaRestaura} e {Emojis.PontosPoder} {magiaRestaurada}!".Bold());
                         break;
                     default:
                         await ctx.RespondAsync($"{ctx.User.Mention} [{item.Nome}] não é usável!");

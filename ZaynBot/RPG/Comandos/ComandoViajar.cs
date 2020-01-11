@@ -28,13 +28,16 @@ namespace ZaynBot.RPG.Comandos
                     usuario.Salvar();
                     localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
+                    RPGMapa mapa = new RPGMapa();
                     StringBuilder conexoesDisponiveis = new StringBuilder();
                     foreach (var reg in localAtual.SaidasRegioes)
+                    {
                         conexoesDisponiveis.Append($"{reg.Direcao.ToString()}, ");
+                        mapa.AdicionarRegiao(reg);
+                    }
 
                     DiscordEmbedBuilder embedViajem = new DiscordEmbedBuilder().Padrao("Viajem", ctx);
-                    embedViajem.WithDescription("Direções obvias".Titulo() +
-                        $"\n{conexoesDisponiveis.ToString()}" +
+                    embedViajem.WithDescription($"{mapa.Criar()}" +
                         $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
                         $"\n{localAtual.Descrição}");
                     await ctx.RespondAsync(embed: embedViajem.Build());

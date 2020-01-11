@@ -27,14 +27,13 @@ namespace ZaynBot.RPG.Comandos
 
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
 
-                StringBuilder conexoesDisponiveis = new StringBuilder();
+                RPGMapa mapa = new RPGMapa();
                 foreach (var reg in localAtual.SaidasRegioes)
-                    conexoesDisponiveis.Append($"{reg.Direcao.ToString()}, ");
+                    mapa.AdicionarRegiao(reg);
 
-                embed.WithDescription("Direções obvias".Titulo() +
-                        $"\n{conexoesDisponiveis.ToString()}" +
-                        $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
-                        $"\n{localAtual.Descrição}");
+                embed.WithDescription($"{mapa.Criar()}" +
+                      $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
+                      $"\n{localAtual.Descrição}");
 
                 await ctx.RespondAsync(embed: embed.Build());
                 return;

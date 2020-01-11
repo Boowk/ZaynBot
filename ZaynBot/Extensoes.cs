@@ -49,21 +49,13 @@ namespace ZaynBot
 
     public static class Emojis
     {
-        public static DiscordEmoji PontosVida()
-            => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
-        public static DiscordEmoji PontosPoder()
-            => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
-        public static DiscordEmoji QuadradoAzul()
-            => DiscordEmoji.FromName(ModuloCliente.Client, ":blue_square:");
-        public static DiscordEmoji QuadradoNorte()
-            => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_n:");
-        public static DiscordEmoji QuadradoSul()
-          => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_s:");
-        public static DiscordEmoji QuadradoLeste()
-          => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_l:");
-        public static DiscordEmoji QuadradoOeste()
-          => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_o:");
-        public static DiscordEmoji Mago()
-      => DiscordEmoji.FromName(ModuloCliente.Client, ":man_mage:");
+        public static DiscordEmoji PontosVida { get => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736); }
+        public static DiscordEmoji PontosPoder { get => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674); }
+        public const string QuadradoAzul = ":blue_square:";
+        public const string QuadradoNorte = ":regional_indicator_n:";
+        public const string QuadradoSul = ":regional_indicator_s:";
+        public const string QuadradoLeste = ":regional_indicator_l:";
+        public const string QuadradoOeste = ":regional_indicator_o:";
+        public const string Mago = ":mage:";
     }
 }
