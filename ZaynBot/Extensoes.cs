@@ -53,5 +53,17 @@ namespace ZaynBot
             => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691467636736);
         public static DiscordEmoji PontosPoder()
             => DiscordEmoji.FromGuildEmote(ModuloCliente.Client, 631907691425562674);
+        public static DiscordEmoji QuadradoAzul()
+            => DiscordEmoji.FromName(ModuloCliente.Client, ":blue_square:");
+        public static DiscordEmoji QuadradoNorte()
+            => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_n:");
+        public static DiscordEmoji QuadradoSul()
+          => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_s:");
+        public static DiscordEmoji QuadradoLeste()
+          => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_l:");
+        public static DiscordEmoji QuadradoOeste()
+          => DiscordEmoji.FromName(ModuloCliente.Client, ":regional_indicator_o:");
+        public static DiscordEmoji Mago()
+      => DiscordEmoji.FromName(ModuloCliente.Client, ":man_mage:");
     }
 }
