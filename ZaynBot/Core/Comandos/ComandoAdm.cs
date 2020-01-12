@@ -107,6 +107,7 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGUsuario user in usuarios)
                     {
+                        user.Personagem.RegiaoAtualId = 0;
                         user.Salvar();
                     }
                 }

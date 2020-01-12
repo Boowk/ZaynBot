@@ -16,13 +16,12 @@ namespace ZaynBot.RPG.Comandos
         [Exemplo("olhar rato")]
         [Exemplo("olhar")]
         [Cooldown(1, 8, CooldownBucketType.User)]
-        public async Task ComandoLocalAb(CommandContext ctx, [RemainingText] string alvo = "")
+        public async Task ComandoLocalAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
-            if (string.IsNullOrEmpty(alvo))
-            {
+           
                 RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
                 DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
@@ -36,13 +35,6 @@ namespace ZaynBot.RPG.Comandos
                       $"\n{localAtual.Descrição}");
 
                 await ctx.RespondAsync(embed: embed.Build());
-                return;
-            }
-
-            if (usuario.Personagem.Batalha.Mob.Nome.ToLower().Equals(alvo.ToLower()))
-                await ctx.RespondAsync(usuario.Personagem.Batalha.Mob.Descricao.Bold().Italic());
-            else
-                await ctx.RespondAsync($"Você procura, mas não encontra nada parecido com '{alvo}' {ctx.User.Mention}!");
         }
     }
 }
