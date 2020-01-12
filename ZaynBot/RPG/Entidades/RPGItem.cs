@@ -6,7 +6,7 @@ namespace ZaynBot.RPG.Entidades
     {
         ArmaPrimaria,
         ArmaSecundaria,
-        Helmo,
+        Elmo,
         Peitoral,
         Luvas,
         Botas,

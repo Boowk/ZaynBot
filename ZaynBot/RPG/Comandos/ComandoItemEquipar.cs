@@ -48,9 +48,9 @@ namespace ZaynBot.RPG.Comandos
                         if (await EquiparItemAsync(ctx, usuario, item))
                             await ctx.RespondAsync($"O peitoral [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
                         break;
-                    case EnumTipo.Helmo:
+                    case EnumTipo.Elmo:
                         if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"O helmo [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
+                            await ctx.RespondAsync($"O elmo [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
                         break;
                     case EnumTipo.Luvas:
                         if (await EquiparItemAsync(ctx, usuario, item))

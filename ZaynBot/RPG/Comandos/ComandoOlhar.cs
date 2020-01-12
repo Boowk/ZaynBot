@@ -21,20 +21,19 @@ namespace ZaynBot.RPG.Comandos
             await ctx.TriggerTypingAsync();
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
 
-           
-                RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
+            RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
 
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Região", ctx);
 
-                RPGMapa mapa = new RPGMapa();
-                foreach (var reg in localAtual.SaidasRegioes)
-                    mapa.AdicionarRegiao(reg);
+            RPGMapa mapa = new RPGMapa();
+            foreach (var reg in localAtual.SaidasRegioes)
+                mapa.AdicionarRegiao(reg);
 
-                embed.WithDescription($"{mapa.Criar()}" +
-                      $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
-                      $"\n{localAtual.Descrição}");
+            embed.WithDescription($"{mapa.Criar()}" +
+                  $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
+                  $"\n{localAtual.Descrição}");
 
-                await ctx.RespondAsync(embed: embed.Build());
+            await ctx.RespondAsync(embed: embed.Build());
         }
     }
 }

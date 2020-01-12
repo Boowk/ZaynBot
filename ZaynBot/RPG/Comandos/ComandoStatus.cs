@@ -91,10 +91,10 @@ namespace ZaynBot.RPG.Comandos
                 embed.AddField("Arma segundaria".Titulo(), "Nenhuma", true);
 
 
-            if (mochila.Equipamentos.TryGetValue(EnumTipo.Helmo, out var helmo))
-                embed.AddField("Helmo".Titulo(), helmo.Nome, true);
+            if (mochila.Equipamentos.TryGetValue(EnumTipo.Elmo, out var elmo))
+                embed.AddField("Elmo".Titulo(), elmo.Nome, true);
             else
-                embed.AddField("Helmo".Titulo(), "Nenhuma", true);
+                embed.AddField("Elmo".Titulo(), "Nenhuma", true);
 
 
             if (mochila.Equipamentos.TryGetValue(EnumTipo.Peitoral, out var peitoral))

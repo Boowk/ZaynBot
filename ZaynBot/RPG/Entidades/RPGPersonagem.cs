@@ -71,7 +71,7 @@ namespace ZaynBot.RPG.Entidades
             Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
             {
                 Id = 0,
-                Quantidade = 10
+                Quantidade = 20
             });
         }
         public new bool AdicionarExp(double exp)

@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite desequipar itens.")]
         [ComoUsar("desequipar [região]")]
         [Exemplo("desequipar peitoral")]
-        [Exemplo("desequipar helmo")]
+        [Exemplo("desequipar elmo")]
         [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoDesequiparAb(CommandContext ctx, [RemainingText] string nome = "")
         {
@@ -40,8 +40,8 @@ namespace ZaynBot.RPG.Comandos
                 case "arma 2":
                     equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
                     break;
-                case "helmo":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Helmo);
+                case "elmo":
+                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Elmo);
                     break;
                 case "peitoral":
                     equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Peitoral);

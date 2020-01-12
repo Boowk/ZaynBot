@@ -31,6 +31,13 @@ namespace ZaynBot.RPG.Comandos
             }
 
             RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
+            if (localAtual.LojaItensId.Count == 0)
+            {
+                await ctx.RespondAsync($"Ninguém está comprando itens aqui {ctx.User.Mention}!");
+                return;
+            }
+
             itemNome = itemNome.ToLower();
 
             if (usuario.Personagem.Mochila.Itens.TryGetValue(itemNome, out RPGMochilaItemData itemData))
