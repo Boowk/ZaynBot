@@ -1,6 +1,9 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
@@ -13,24 +16,39 @@ namespace ZaynBot.RPG.Comandos
         [Command("loja")]
         [Description("Permite ver os itens que estão sendo vendido na região atual.")]
         [ComoUsar("loja")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
-        public async Task ComandoLojaAb(CommandContext ctx)
+        [Cooldown(1, 1, CooldownBucketType.User)]
+        public async Task ComandoLojaAb(CommandContext ctx, int pagina = 1)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            RPGRegiao regiaoAtual = ModuloBanco.GetRegiaoData(usuario.Personagem.RegiaoAtualId);
 
-            if (regiaoAtual.LojaItensId.Count == 0)
+            if(pagina < 1)
             {
-                await ctx.RespondAsync($"Não tem [itens] a venda nesta região {ctx.User.Mention}!".Bold());
+                await ctx.RespondAsync($"{ctx.User.Mention} o número da página não pode ser menor que 1!".Bold());
                 return;
             }
+            int pagianTamanho = 10;
+            int paginaAtual = pagina - 1;
+            var fd = Builders<RPGItem>.Filter;
+            var filter = fd.Eq(x => x.PodeComprar, false);
+
+            FindOptions<RPGItem> options = new FindOptions<RPGItem>
+            {
+                Skip = paginaAtual * pagianTamanho,
+                Limit = pagianTamanho,
+                NoCursorTimeout = false
+            };
 
             StringBuilder str = new StringBuilder();
-            foreach (var i in regiaoAtual.LojaItensId)
+            using (IAsyncCursor<RPGItem> cursor = await ModuloBanco.ItemColecao.FindAsync(filter, options))
             {
-                RPGItem item = ModuloBanco.GetItem(i);
-                str.AppendLine($"[{item.Nome.Bold()}] - {item.Preco * 10} Zeoin");
+                while (await cursor.MoveNextAsync())
+                {
+                    IEnumerable<RPGItem> itens = cursor.Current;
+                    foreach (RPGItem item in itens)
+                    {
+                        str.AppendLine($"[{item.Nome.Bold()}] - {item.PrecoCompra} Zeoin");
+                    }
+                }
             }
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Loja", ctx);

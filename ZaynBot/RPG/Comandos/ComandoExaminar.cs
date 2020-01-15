@@ -32,8 +32,8 @@ namespace ZaynBot.RPG.Comandos
                 embed.WithTitle($"**{item.Nome}**");
                 embed.WithDescription(item.Descricao == "" ? "Sem descrição" : item.Descricao);
                 embed.AddField("Tipo".Titulo(), item.Tipo.ToString(), true);
-                embed.AddField("Venda por".Titulo(), Convert.ToInt32(item.Preco * 0.3).ToString(), true);
-                embed.AddField("Compre por".Titulo(), (item.Preco * 10).ToString(), true);
+                embed.AddField("Venda por".Titulo(), Convert.ToInt32(item.PrecoCompra * 0.3).ToString(), true);
+                embed.AddField("Compre por".Titulo(), (item.PrecoCompra * 10).ToString(), true);
                 StringBuilder str = new StringBuilder();
                 if (item.AtaqueFisico != 0)
                     str.AppendLine($"Ataque físico: {item.AtaqueFisico}".Bold());

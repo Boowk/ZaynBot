@@ -29,7 +29,8 @@ namespace ZaynBot.RPG.Entidades
         public EnumProficiencia Proficiencia { get; set; }
         public int ProficienciaNivelRequisito { get; set; }
 
-        public int Preco { get; set; }
+        public int PrecoCompra { get; set; }
+        public bool PodeComprar { get; set; }
 
         public double AtaqueFisico { get; set; }
         public double AtaqueMagico { get; set; }
@@ -40,7 +41,5 @@ namespace ZaynBot.RPG.Entidades
         public double VidaRestaura { get; set; }
         public double MagiaRestaura { get; set; }
         public double FomeRestaura { get; set; }
-
-        public RPGItem() { }
     }
 }

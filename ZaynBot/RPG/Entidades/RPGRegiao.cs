@@ -37,7 +37,6 @@ namespace ZaynBot.RPG.Entidades
         public int Dificuldade { get; set; }
 
         public List<RPGSaida> SaidasRegioes { get; set; } = new List<RPGSaida>();
-        public List<int> LojaItensId { get; set; } = new List<int>();
 
 
         public static RPGRegiao GetRegiao(int id)
