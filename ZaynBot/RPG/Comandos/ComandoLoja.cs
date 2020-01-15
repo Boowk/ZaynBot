@@ -21,7 +21,7 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
 
-            if(pagina < 1)
+            if (pagina < 1)
             {
                 await ctx.RespondAsync($"{ctx.User.Mention} o número da página não pode ser menor que 1!".Bold());
                 return;
@@ -29,7 +29,7 @@ namespace ZaynBot.RPG.Comandos
             int pagianTamanho = 10;
             int paginaAtual = pagina - 1;
             var fd = Builders<RPGItem>.Filter;
-            var filter = fd.Eq(x => x.PodeComprar, false);
+            var filter = fd.Eq(x => x.PodeComprar, true);
 
             FindOptions<RPGItem> options = new FindOptions<RPGItem>
             {
