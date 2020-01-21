@@ -80,8 +80,8 @@ namespace ZaynBot.RPG.Comandos
                 $"**Defesa física:** {(personagem.DefesaFisicaBase + personagem.DefesaFisicaExtra).Text()}\n" +
                 $"**Defesa mágica:** {(personagem.DefesaMagicaBase + personagem.DefesaMagicaExtra).Text()}", true);
 
-            embed.AddField("Proficiências distribuídas(PD)".Titulo(), $"**Combate:** {((double)combate / (double)total) * 100.00}% |" +
-                $" **Coleta:** {((double)coleta / (double)total) * 100.00}%");
+            embed.AddField("Proficiências distribuídas(PD)".Titulo(), $"**Combate:** {(((double)combate / (double)total) * 100.00).Text()}% |" +
+                $" **Coleta:** {(((double)coleta / (double)total) * 100.00).Text()}%");
 
             string armaP = "Nehuma";
             if (usuario.Equipamentos.TryGetValue(EnumTipo.ArmaPrimaria, out var item))
