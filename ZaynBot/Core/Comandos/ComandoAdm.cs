@@ -58,7 +58,7 @@ namespace ZaynBot.Core.Comandos
             if (user == null)
                 return;
             await ctx.TriggerTypingAsync();
-            var jogador = ModuloBanco.GetJogador(ctx);
+            var jogador = ModuloBanco.GetJogador(user);
             jogador.Bloqueado = true;
             jogador.Salvar();
             await ctx.RespondAsync("Bloqueado!");
@@ -70,7 +70,7 @@ namespace ZaynBot.Core.Comandos
             if (user == null)
                 return;
             await ctx.TriggerTypingAsync();
-            var jogador = ModuloBanco.GetJogador(ctx);
+            var jogador = ModuloBanco.GetJogador(user);
             jogador.Bloqueado = false;
             jogador.Salvar();
             await ctx.RespondAsync("Desbloqueado!");
