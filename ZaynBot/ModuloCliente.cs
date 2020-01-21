@@ -20,28 +20,6 @@ namespace ZaynBot
             Client.Ready += Client_Ready;
             Client.GuildAvailable += Client_GuildAvailable;
             Client.ClientErrored += Client_ClientError;
-            Client.GuildMemberAdded += Client_GuildMemberAdded;
-        }
-
-        private Task Client_GuildMemberAdded(GuildMemberAddEventArgs e)
-        {
-            ServidorCore server = ModuloBanco.GetServidor(e.Guild.Id);
-            if (server.BemVindoCanalId != 0)
-            {
-                DiscordChannel bemVindoCanal = e.Guild.GetChannel(server.BemVindoCanalId);
-                if (bemVindoCanal == null)
-                {
-                    server.BemVindoCanalId = 0;
-                    server.BemVindoMensagem = "";
-                    server.Salvar();
-                    return Task.CompletedTask;
-                }
-                StringBuilder str = new StringBuilder(server.BemVindoMensagem);
-                str.Replace("#Menção", $"{e.Member.Mention}");
-                str.Replace("#Quantidade", $"{e.Guild.MemberCount}");
-                bemVindoCanal.SendMessageAsync(str.ToString());
-            }
-            return Task.CompletedTask;
         }
 
         private Task Client_Ready(ReadyEventArgs e)

@@ -14,18 +14,19 @@ namespace ZaynBot.RPG.Comandos
         [Command("top")]
         [Description("Exibe os 10 personagens mais evoluidos")]
         [ComoUsar("top")]
-        [Cooldown(1, 60, CooldownBucketType.User)]
+        [Cooldown(1, 1, CooldownBucketType.User)]
         public async Task TopComandoAb(CommandContext ctx)
         {
-            var f = await ModuloBanco.UsuarioColecao.Find(FilterDefinition<RPGUsuario>.Empty).Limit(10)
-                .SortByDescending(x => x.Personagem.NivelAtual).ToListAsync();
+            await ctx.TriggerTypingAsync();
+            var f = await ModuloBanco.ColecaoJogador.Find(FilterDefinition<RPGJogador>.Empty).Limit(10)
+                .SortByDescending(x => x.NivelAtual).ToListAsync();
             StringBuilder str = new StringBuilder();
 
             int pos = 1;
             foreach (var item in f)
             {
                 var g = await ctx.Client.GetUserAsync(item.Id);
-                str.AppendLine($"{pos}. {g.Username}#{g.Discriminator} - *Nível {item.Personagem.NivelAtual}*".Bold());
+                str.AppendLine($"{pos}. {g.Username}#{g.Discriminator} - *Nível {item.NivelAtual}*".Bold());
                 pos++;
             }
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();

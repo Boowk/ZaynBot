@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
-
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Comandos
 {
@@ -23,96 +23,75 @@ namespace ZaynBot.RPG.Comandos
 
         [Command("atacar")]
         [Aliases("at")]
-        [Description("Ataca o npc que você encontrou explorando.")]
+        [Description("Permite atacar a criatura que você encontrou explorando.")]
         [ComoUsar("atacar")]
-        [Cooldown(1, 6, CooldownBucketType.User)]
+        [Cooldown(1, 1, CooldownBucketType.User)]
         public async Task ComandoAtacarAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            var jogador = ModuloBanco.GetJogador(ctx);
 
-            if (usuario.Personagem.Batalha.Mob.VidaAtual <= 0)
+            if (jogador.Batalha.Mob.VidaAtual <= 0)
             {
-                await ctx.RespondAsync($"{ctx.User.Mention} use `z!explorar` para encontrar novos npcs!".Bold());
+                await ctx.RespondAsync($"Use `z!explorar` para encontrar novas criaturas {ctx.User.Mention}!".Bold());
                 return;
             }
 
-            RPGMob mob = usuario.Personagem.Batalha.Mob;
+            var criatura = jogador.Batalha.Mob;
             StringBuilder strRelatorio = new StringBuilder();
-            bool vezJogador = false;
-            do
+
+
+            // Vez criatura
+
+            double dano = ReduzirDano(jogador.DefesaFisicaBase + jogador.DefesaFisicaExtra, criatura.AtaqueFisico);
+            jogador.RemoverVida(dano);
+            strRelatorio.AppendLine($"< {criatura.Nome.Underline()} > atacou causando {dano.Text()} de dano!".Bold());
+
+
+            // Vez jogador
+
+            if (jogador.FomeAtual <= 0)
             {
-                mob.EstaminaAtual += mob.Velocidade;
-                usuario.Personagem.EstaminaAtual += 4;
+                double fome = jogador.VidaMaxima / 0.02;
+                jogador.RemoverVida(fome);
+                strRelatorio.AppendLine($"Faminto! -{fome} vida.".Bold());
+            }
 
-                //Vez mob
-                if (mob.EstaminaAtual >= mob.EstaminaMaxima)
-                {
-                    mob.EstaminaAtual = 0;
-
-                    usuario.Personagem.Batalha.Turno++;
-                    strRelatorio.AppendLine($"Turno {usuario.Personagem.Batalha.Turno}.".Bold());
-                    double dano = ReduzirDano(usuario.Personagem.DefesaFisicaBase + usuario.Personagem.DefesaFisicaExtra, mob.AtaqueFisico);
-                    usuario.RemoverVida(dano);
-                    strRelatorio.AppendLine($"{ctx.User.Mention} perdeu -{dano.Text()} vida!".Bold());
-                }
-
-                //Vez jogador
-                if (usuario.Personagem.EstaminaAtual >= usuario.Personagem.EstaminaMaxima)
-                {
-                    vezJogador = true;
-                    usuario.Personagem.EstaminaAtual = 0;
-                    usuario.Personagem.Batalha.Turno++;
-                    strRelatorio.AppendLine($"**Turno {usuario.Personagem.Batalha.Turno}.**");
-
-                    //Perde fome e sede
-
-
-                    if (usuario.Personagem.FomeAtual <= 0)
-                    {
-                        double fome = usuario.Personagem.VidaMaxima / 0.02;
-                        usuario.RemoverVida(fome);
-                        strRelatorio.AppendLine($"Faminto! -{fome} vida.".Bold());
-                    }
-                    if (usuario.Personagem.SedeAtual <= 0)
-                    {
-                        double sede = usuario.Personagem.VidaMaxima / 0.08;
-                        usuario.RemoverVida(sede);
-                        strRelatorio.AppendLine($"Desidratado! -{sede} vida.".Bold());
-                    }
-                }
-            } while (vezJogador == false);
-
-            usuario.Personagem.Proficiencias.TryGetValue(EnumProficiencia.Forca, out RPGProficiencia forca);
+            jogador.Proficiencias.TryGetValue(EnumProficiencia.Forca, out RPGProficiencia forca);
             ProficienciaForca profForca = forca as ProficienciaForca;
 
-            double danoNoMob = ReduzirDano(mob.DefesaFisica, usuario.Personagem.AtaqueFisicoBase + usuario.Personagem.AtaqueFisicoExtra, profForca.CalcDanoExtra(usuario.Personagem.AtaqueFisicoBase));
-            if (mob.VidaAtual < danoNoMob)
+            double danoNoMob = ReduzirDano(0, jogador.AtaqueFisicoBase + jogador.AtaqueFisicoExtra, profForca.CalcDanoExtra(jogador.AtaqueFisicoBase));
+            if (criatura.VidaAtual < danoNoMob)
             {
-                danoNoMob = mob.VidaAtual;
-                mob.VidaAtual = 0;
+                danoNoMob = criatura.VidaAtual;
+                criatura.VidaAtual = 0;
             }
             else
-                mob.VidaAtual -= danoNoMob;
-            strRelatorio.AppendLine($"**< {mob.Nome.Underline()} > perdeu -{danoNoMob.Text()} vida.**");
-
-            #region Relatorio
+                criatura.VidaAtual -= danoNoMob;
+            strRelatorio.AppendLine($"{ctx.User.Mention} atacou causando {danoNoMob.Text()} de dano!".Bold());
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Ataque", ctx);
             embed.WithColor(DiscordColor.IndianRed);
 
-            embed.AddField(ctx.User.Username.Titulo(), $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {usuario.Personagem.VidaAtual.Text()}/{usuario.Personagem.VidaMaxima.Text()}", true);
+            embed.AddField(ctx.User.Username.Titulo(), $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {jogador.VidaAtual.Text()}/{jogador.VidaMaxima.Text()}", true);
 
-            if (mob.VidaAtual <= 0)
+            if (criatura.VidaAtual <= 0)
             {
-                strRelatorio.AppendLine($"**{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {mob.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}**");
-                usuario.RipMobs++;
-                if (usuario.Personagem.AdicionarExp(mob.Essencia))
-                    strRelatorio.Append($"Subiu para o nível {usuario.Personagem.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")} +1 PP!".Bold());
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")} {criatura.Nome} {DiscordEmoji.FromName(ctx.Client, ":skull_crossbones:")}".Bold());
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +12 [Zayn]!".Bold());
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +1 [Ossos]!".Bold());
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +1 [Frasco vermelho]!".Bold());
+                strRelatorio.AppendLine($"{DiscordEmoji.FromName(ctx.Client, ":inbox_tray:")} +8 XP!".Bold());
+                jogador.Mochila.AdicionarItem("zayn", 12);
+                jogador.Mochila.AdicionarItem("frasco vermelho", 1);
+                jogador.Mochila.AdicionarItem("ossos", 1);
+                jogador.MobsMortos++;
+                if (jogador.AdicionarExp(8))
+                    strRelatorio.Append($"Subiu para o nível {jogador.NivelAtual}! +2% {DiscordEmoji.FromName(ctx.Client, ":muscle:")} +1 PP!".Bold());
             }
             else
             {
-                double porcentagem = mob.VidaAtual / mob.VidaMax;
+                double porcentagem = criatura.VidaAtual / criatura.VidaMax;
                 string porcentagemText = (porcentagem * 100).Text() + "%";
                 string vidaMob = "";
                 if (porcentagem > 0.7)
@@ -121,12 +100,11 @@ namespace ZaynBot.RPG.Comandos
                     vidaMob = $"{DiscordEmoji.FromName(ctx.Client, ":yellow_heart:")} {porcentagemText}";
                 else if (porcentagem > 0)
                     vidaMob = $"{DiscordEmoji.FromName(ctx.Client, ":heart:")} {porcentagemText}";
-                embed.AddField("< " + mob.Nome.Underline().Bold() + " >", vidaMob, true);
+                embed.AddField("< " + criatura.Nome.Underline().Bold() + " >", vidaMob, true);
             }
             embed.WithDescription(strRelatorio.ToString());
-            #endregion
 
-            RPGUsuario.Salvar(usuario);
+            jogador.Salvar();
             await ctx.RespondAsync(embed: embed.Build());
         }
     }

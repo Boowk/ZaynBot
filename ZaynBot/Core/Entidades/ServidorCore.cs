@@ -8,10 +8,7 @@ namespace ZaynBot.Core.Entidades
         [BsonId]
         public ulong Id { get; set; }
         public string Prefix { get; set; }
-        public string BemVindoMensagem { get; set; }
-        public ulong BemVindoCanalId { get; set; }
 
-        public void Salvar()
-            => ModuloBanco.EditServidor(this);
+        public void Salvar() => ModuloBanco.EditServidor(this);
     }
 }

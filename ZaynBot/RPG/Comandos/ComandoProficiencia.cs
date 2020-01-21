@@ -11,15 +11,15 @@ namespace ZaynBot.RPG.Comandos
     {
         [Command("proficiencia")]
         [Cooldown(1, 15, CooldownBucketType.User)]
-        [Description("Exibe todas as proficiencia de um personagem.")]
+        [Description("Permite exibir todas as proficiencia do seu personagem.")]
         [ComoUsar("proficiencia")]
         public async Task HabilidadeComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            var jogador = ModuloBanco.GetJogador(ctx);
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Proficiencia", ctx);
-            embed.WithDescription($"Pontos disponíveis: {usuario.Personagem.ProficienciaPontos}".Bold());
-            foreach (var item in usuario.Personagem.Proficiencias)
+            embed.WithDescription($"Pontos disponíveis: {jogador.ProficienciaPontos}".Bold());
+            foreach (var item in jogador.Proficiencias)
                 embed.AddField(item.Value.Nome.ToString().Titulo().Bold(), $"{item.Value.Pontos}".Bold(), true);
             await ctx.RespondAsync(embed: embed.Build());
         }

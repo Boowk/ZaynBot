@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Comandos
 {
@@ -24,7 +25,7 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            var usuario = ModuloBanco.GetJogador(ctx);
             nome = nome.ToLower();
             string equipamento = "";
             switch (nome)
@@ -34,29 +35,29 @@ namespace ZaynBot.RPG.Comandos
                 case "arma":
                 case "arma 1":
                 case "arma principal":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
+                    equipamento = usuario.DesequiparItem(EnumTipo.ArmaPrimaria);
                     break;
                 case "arma secundaria":
                 case "arma 2":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.ArmaPrimaria);
+                    equipamento = usuario.DesequiparItem(EnumTipo.ArmaPrimaria);
                     break;
                 case "elmo":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Elmo);
+                    equipamento = usuario.DesequiparItem(EnumTipo.Elmo);
                     break;
                 case "peitoral":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Peitoral);
+                    equipamento = usuario.DesequiparItem(EnumTipo.Peitoral);
                     break;
                 case "luvas":
                 case "luva":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Luvas);
+                    equipamento = usuario.DesequiparItem(EnumTipo.Luvas);
                     break;
                 case "botas":
                 case "bota":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Botas);
+                    equipamento = usuario.DesequiparItem(EnumTipo.Botas);
                     break;
                 case "pernas":
                 case "perna":
-                    equipamento = usuario.Personagem.DesequiparItem(EnumTipo.Pernas);
+                    equipamento = usuario.DesequiparItem(EnumTipo.Pernas);
                     break;
                 default:
                     await ctx.ExecutarComandoAsync("ajuda desequipar");

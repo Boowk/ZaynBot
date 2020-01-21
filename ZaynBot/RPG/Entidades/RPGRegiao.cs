@@ -6,41 +6,12 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class RPGRegiao
     {
-        //CIDADE               |   1  | 
-        //CAMPO                |   2  | 
-        //FLORESTA             |   3  | 
-        //COLINAS              |   4  | 
-        //MONTANHAS            |   5  |
-        //MAR OU RIO           |   6  |    
-        //AR                   |   7  |
-        //DESERTO              |   8  |
-        //DESCONHECIDO         |   9  |    
-        //PROIBIDO
-        //public enum Tipo
-        //{
-        //    Cidade,
-        //    Campo,
-        //    Floresta,
-        //    Colina,
-        //    Montanha,
-        //    Agua,
-        //    Ar,
-        //    Deserto,
-        //    Desconhecido,
-        //    Proibido
-        //}
-
         [BsonId]
-        public int Id { get; set; }
         public string Nome { get; set; }
-        public string Descrição { get; set; }
-        public int Dificuldade { get; set; }
+        public string Reino { get; set; }
+        public string Descricao { get; set; }
+        public HashSet<string> Saidas { get; set; }
 
-        public List<RPGSaida> SaidasRegioes { get; set; } = new List<RPGSaida>();
-
-
-        public static RPGRegiao GetRegiao(int id)
-            => ModuloBanco.GetRegiaoData(id);
-
+        public RPGRegiao() { }
     }
 }

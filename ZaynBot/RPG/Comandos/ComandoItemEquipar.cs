@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Comandos
 {
@@ -23,12 +24,12 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            var usuario = ModuloBanco.GetJogador(ctx);
             nome = nome.ToLower();
 
-            if (usuario.Personagem.Mochila.Itens.TryGetValue(nome, out RPGMochilaItemData itemData))
+            if (usuario.Mochila.TryGetValue(nome, out var itemData))
             {
-                RPGItem item = ModuloBanco.GetItem(itemData.Id);
+                ModuloBanco.TryGetItem(nome, out var item);
 
                 switch (item.Tipo)
                 {
@@ -66,14 +67,14 @@ namespace ZaynBot.RPG.Comandos
                 await ctx.RespondAsync($"Você não tem este [item] {ctx.User.Mention}!".Bold());
         }
 
-        private async Task<bool> EquiparItemAsync(CommandContext ctx, RPGUsuario usuario, RPGItem item)
+        private async Task<bool> EquiparItemAsync(CommandContext ctx, RPGJogador usuario, RPGItem item)
         {
             if (item.ProficienciaNivelRequisito != 1)
             {
-                usuario.Personagem.Proficiencias.TryGetValue(item.Proficiencia, out RPGProficiencia proff);
+                usuario.Proficiencias.TryGetValue(item.Proficiencia, out RPGProficiencia proff);
                 if (proff.Pontos >= item.ProficienciaNivelRequisito)
                 {
-                    usuario.Personagem.EquiparItem(item);
+                    usuario.EquiparItem(item);
                     return true;
                 }
                 else
@@ -82,7 +83,7 @@ namespace ZaynBot.RPG.Comandos
                     return false;
                 }
             }
-            usuario.Personagem.EquiparItem(item);
+            usuario.EquiparItem(item);
             return true;
         }
     }

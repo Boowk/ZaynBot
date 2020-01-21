@@ -9,39 +9,39 @@ namespace ZaynBot.RPG.Comandos
 {
     public class ComandoItemVender : BaseCommandModule
     {
-        [Command("vender")]
-        [Aliases("v")]
-        [Description("Permite vender itens que estão na sua mochila.")]
-        [ComoUsar("vender [+quantidade|] [item]")]
-        [Exemplo("vender 2 frasco vermelho")]
-        public async Task ComandoVenderAb(CommandContext ctx, int quantidade, [RemainingText] string itemNome = "")
-        {
-            await ctx.TriggerTypingAsync();
+        //[Command("vender")]
+        //[Aliases("v")]
+        //[Description("Permite vender itens que estão na sua mochila.")]
+        //[ComoUsar("vender [+quantidade|] [item]")]
+        //[Exemplo("vender 2 frasco vermelho")]
+        //public async Task ComandoVenderAb(CommandContext ctx, int quantidade, [RemainingText] string itemNome = "")
+        //{
+        //    await ctx.TriggerTypingAsync();
 
-            if (quantidade <= 0)
-            {
-                await ctx.ExecutarComandoAsync("ajuda vender");
-                return;
-            }
+        //    if (quantidade <= 0)
+        //    {
+        //        await ctx.ExecutarComandoAsync("ajuda vender");
+        //        return;
+        //    }
 
-            if (string.IsNullOrEmpty(itemNome))
-            {
-                await ctx.ExecutarComandoAsync("ajuda vender");
-                return;
-            }
+        //    if (string.IsNullOrEmpty(itemNome))
+        //    {
+        //        await ctx.ExecutarComandoAsync("ajuda vender");
+        //        return;
+        //    }
 
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
-            //if (localAtual.LojaItensId.Count == 0)
-            //{
-            //    await ctx.RespondAsync($"Ninguém está comprando itens aqui {ctx.User.Mention}!");
-            //    return;
-            //}
+        //    RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+        //    RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
+        //    //if (localAtual.LojaItensId.Count == 0)
+        //    //{
+        //    //    await ctx.RespondAsync($"Ninguém está comprando itens aqui {ctx.User.Mention}!");
+        //    //    return;
+        //    //}
 
-            //itemNome = itemNome.ToLower();
+        //    //itemNome = itemNome.ToLower();
 
-            //if (usuario.Personagem.Mochila.Itens.TryGetValue(itemNome, out RPGMochilaItemData itemData))
-            //{
+        //    //if (usuario.Personagem.Mochila.Itens.TryGetValue(itemNome, out RPGMochilaItemData itemData))
+        //    //{
             //    if (quantidade > itemData.Quantidade)
             //    {
             //        await ctx.RespondAsync($"{ctx.User.Mention} você somente tem {itemData.Quantidade} [{itemNome.FirstUpper()}] na mochila!".Bold());
@@ -66,14 +66,14 @@ namespace ZaynBot.RPG.Comandos
             //}
             //else
             //    await ctx.RespondAsync($"{ctx.User.Mention} [{itemNome.FirstUpper()}] não foi encontrado na mochila!".Bold());
-        }
+        //}
 
-        [Command("vender")]
-        [ComoUsar("vender [item]")]
-        [Exemplo("vender frasco vermelho")]
-        public async Task ComandoVenderAb(CommandContext ctx, [RemainingText] string itemNome = "")
-        {
-            await ComandoVenderAb(ctx, 1, itemNome);
-        }
+        //[Command("vender")]
+        //[ComoUsar("vender [item]")]
+        //[Exemplo("vender frasco vermelho")]
+        //public async Task ComandoVenderAb(CommandContext ctx, [RemainingText] string itemNome = "")
+        //{
+        //    await ComandoVenderAb(ctx, 1, itemNome);
+        //}
     }
 }

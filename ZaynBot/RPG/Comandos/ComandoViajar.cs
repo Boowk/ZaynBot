@@ -3,88 +3,43 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Text;
 using System.Threading.Tasks;
+using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
     public class ComandoViajar : BaseCommandModule
     {
-        public async Task ViajarAbAsync(CommandContext ctx, EnumDirecao enumDirecao)
+        [Command("viajar")]
+        [Description("Permite viajar para outra área.")]
+        [ComoUsar("viajar [nome]")]
+        [Exemplo("viajar para o espaço")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
+        public async Task ViajarAbAsync(CommandContext ctx, [RemainingText] string area = "")
         {
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            usuario.Personagem.Batalha = new RPGBatalha();
-            await ViajandoAbAsync(usuario, enumDirecao, ctx);
-        }
-
-        public async Task ViajandoAbAsync(RPGUsuario usuario, EnumDirecao enumDirecao, CommandContext ctx)
-        {
-            RPGRegiao localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
-            foreach (var regiao in localAtual.SaidasRegioes)
+            if (string.IsNullOrWhiteSpace(area))
             {
-                if (regiao.Direcao == enumDirecao)
-                {
-                    usuario.Personagem.RegiaoAtualId = regiao.RegiaoId;
-                    usuario.Salvar();
-                    localAtual = RPGRegiao.GetRegiao(usuario.Personagem.RegiaoAtualId);
-
-                    RPGMapa mapa = new RPGMapa();
-                    StringBuilder conexoesDisponiveis = new StringBuilder();
-                    foreach (var reg in localAtual.SaidasRegioes)
-                    {
-                        conexoesDisponiveis.Append($"{reg.Direcao.ToString()}, ");
-                        mapa.AdicionarRegiao(reg);
-                    }
-
-                    DiscordEmbedBuilder embedViajem = new DiscordEmbedBuilder().Padrao("Viajem", ctx);
-                    embedViajem.WithDescription($"{mapa.Criar()}" +
-                        $"\n\n{localAtual.Nome.Titulo()} - {localAtual.Id}" +
-                        $"\n{localAtual.Descrição}");
-                    await ctx.RespondAsync(embed: embedViajem.Build());
-                    return;
-                }
+                await ctx.ExecutarComandoAsync("ajuda viajar");
+                return;
             }
-            await ctx.RespondAsync($"{ctx.User.Mention} este caminho não está disponível!".Bold());
-        }
+            area = area.ToLower();
+            var jogador = ModuloBanco.GetJogador(ctx);
 
-        [Command("oeste")]
-        [Aliases("o")]
-        [Description("Explora a área Oeste.")]
-        [Cooldown(1, 8, CooldownBucketType.User)]
-        public async Task Oeste(CommandContext ctx)
-        {
-            await ViajarAbAsync(ctx, EnumDirecao.Oeste);
-            await Task.CompletedTask;
-        }
-
-        [Command("norte")]
-        [Aliases("n")]
-        [Description("Explora a área Norte.")]
-        [Cooldown(1, 8, CooldownBucketType.User)]
-        public async Task Norte(CommandContext ctx)
-        {
-            await ViajarAbAsync(ctx, EnumDirecao.Norte);
-            await Task.CompletedTask;
-        }
-
-        [Command("leste")]
-        [Aliases("l")]
-        [Description("Explora a área leste.")]
-        [Cooldown(1, 8, CooldownBucketType.User)]
-        public async Task Leste(CommandContext ctx)
-        {
-            await ViajarAbAsync(ctx, EnumDirecao.Leste);
-            await Task.CompletedTask;
-        }
-
-        [Command("sul")]
-        [Aliases("s")]
-        [Description("Explora a área Sul.")]
-        [Cooldown(1, 8, CooldownBucketType.User)]
-        public async Task Sul(CommandContext ctx)
-        {
-            await ViajarAbAsync(ctx, EnumDirecao.Sul);
-            await Task.CompletedTask;
+            if (ModuloBanco.TryGetRegiao(jogador, out var regiao))
+            {
+                if (regiao.Saidas.Contains(area))
+                {
+                    jogador.Batalha = new RPGBatalha();
+                    jogador.RegiaoAtual = area;
+                    jogador.Salvar();
+                    await ctx.RespondAsync($"Você foi para [{area.FirstUpper()}] {ctx.User.Mention}!".Bold());
+                }
+                else
+                    await ctx.RespondAsync($"Área {area.FirstUpper()} não encontrada {ctx.User.Mention}!");
+            }
+            else
+                await ctx.RespondAsync($"Área ainda não adicionado no banco de dados, será adicionado em breve {ctx.User.Mention}!");
         }
     }
 }

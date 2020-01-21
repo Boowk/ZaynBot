@@ -29,16 +29,16 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario usuario = ModuloBanco.GetUsuario(ctx.User.Id);
-            if (usuario.Personagem.ProficienciaPontos == 0 || usuario.Personagem.ProficienciaPontos < quantidade)
+            var jogador = ModuloBanco.GetJogador(ctx.User.Id);
+            if (jogador.ProficienciaPontos == 0 || jogador.ProficienciaPontos < quantidade)
                 await ctx.RespondAsync($"Você não tem {quantidade} ponto(s) para estar atribuindo {ctx.User.Mention}!".Bold());
             else
             {
-                if (usuario.Personagem.TryGetProficiencia(proficienciaText, out RPGProficiencia proff))
+                if (jogador.TryGetProficiencia(proficienciaText, out RPGProficiencia proff))
                 {
                     proff.Pontos += quantidade;
-                    usuario.Personagem.ProficienciaPontos -= quantidade;
-                    usuario.Salvar();
+                    jogador.ProficienciaPontos -= quantidade;
+                    jogador.Salvar();
                     await ctx.RespondAsync($"{quantidade} ponto(s) atribuido em {proff.Nome} {ctx.User.Mention}!".Bold());
                 }
                 else

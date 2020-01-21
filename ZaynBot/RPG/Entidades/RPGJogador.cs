@@ -2,12 +2,24 @@
 using MongoDB.Bson.Serialization.Options;
 using System;
 using System.Collections.Generic;
+using ZaynBot.RPG.Entidades.Enuns;
+using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class RPGPersonagem : RPGProgresso
+    public class RPGJogador : RPGProgresso
     {
+        [BsonId]
+        public ulong Id { get; set; }
+        public DateTime DataCriacao { get; set; }
+
+        public int MobsMortos { get; set; }
+        public int MortoPorMobs { get; set; }
+
+        public int JogadoresMortos { get; set; }
+        public int MortoPorJogadores { get; set; }
+
         public double VidaAtual { get; set; }
         public double VidaMaxima { get; set; }
 
@@ -16,9 +28,6 @@ namespace ZaynBot.RPG.Entidades
 
         public double AtaqueFisicoBase { get; set; }
         public double AtaqueFisicoExtra { get; set; }
-
-        public double AtaqueMagicoBase { get; set; }
-        public double AtaqueMagicoExtra { get; set; }
 
         public double DefesaFisicaBase { get; set; }
         public double DefesaFisicaExtra { get; set; }
@@ -29,50 +38,46 @@ namespace ZaynBot.RPG.Entidades
         public double FomeAtual { get; set; }
         public double FomeMaxima { get; set; }
 
-        public double SedeAtual { get; set; }
-        public double SedeMaxima { get; set; }
+        public string RegiaoAtual { get; set; }
 
-        public double EstaminaAtual { get; set; }
-        public double EstaminaMaxima { get; set; }
-
-        public int RegiaoAtualId { get; set; }
         public int ProficienciaPontos { get; set; }
+
         public RPGBatalha Batalha { get; set; }
+
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public RPGMochila Mochila { get; set; }
+
+        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
+        public Dictionary<EnumTipo, RPGItem> Equipamentos { get; set; }
+
         [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
         public Dictionary<EnumProficiencia, RPGProficiencia> Proficiencias { get; set; }
-        public RPGPersonagem(double expMax = 200) : base(expMax)
+
+        public RPGJogador(ulong id, double expMax = 200) : base(expMax)
         {
+            Id = id;
+            DataCriacao = DateTime.Now;
             VidaAtual = SortearMetadeValor(50);
             VidaMaxima = VidaAtual;
             MagiaAtual = SortearMetadeValor(50);
             MagiaMaxima = MagiaAtual;
             AtaqueFisicoBase = SortearMetadeValor(50);
-            AtaqueMagicoBase = SortearMetadeValor(50);
             DefesaFisicaBase = SortearMetadeValor(50);
             DefesaMagicaBase = SortearMetadeValor(50);
             FomeAtual = 100;
             FomeMaxima = 100;
-            SedeAtual = 100;
-            SedeMaxima = 100;
-            EstaminaAtual = 100;
-            EstaminaMaxima = 100;
-            RegiaoAtualId = 0;
+            RegiaoAtual = "esgotos";
             ProficienciaPontos = 0;
             Batalha = new RPGBatalha();
             Mochila = new RPGMochila();
-            //Adiciona as proficiencias
+            Equipamentos = new Dictionary<EnumTipo, RPGItem>();
+
             Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
             {
                 { EnumProficiencia.Ataque, new ProficienciaAtaque()},
                 { EnumProficiencia.Defesa, new ProficienciaDefesa()},
                 { EnumProficiencia.Forca, new ProficienciaForca()}
             };
-            Mochila.AdicionarItem("moeda de Zeoin", new RPGMochilaItemData()
-            {
-                Id = 0,
-                Quantidade = 20
-            });
         }
         public new bool AdicionarExp(double exp)
         {
@@ -85,11 +90,9 @@ namespace ZaynBot.RPG.Entidades
                     VidaMaxima = Evoluir(VidaMaxima);
                     MagiaMaxima = Evoluir(MagiaMaxima);
                     AtaqueFisicoBase = Evoluir(AtaqueFisicoBase);
-                    AtaqueMagicoBase = Evoluir(AtaqueMagicoBase);
                     DefesaFisicaBase = Evoluir(DefesaFisicaBase);
                     DefesaMagicaBase = Evoluir(DefesaMagicaBase);
                     FomeMaxima = Evoluir(FomeMaxima);
-                    SedeMaxima = Evoluir(SedeMaxima);
                     ProficienciaPontos++;
                 }
                 return true;
@@ -112,12 +115,11 @@ namespace ZaynBot.RPG.Entidades
 
         public void EquiparItem(RPGItem item)
         {
-            Mochila.RemoverItem(item.Nome.ToLower());
+            Mochila.RemoverItem(item.Nome);
             DesequiparItem(item.Tipo);
-            Mochila.Equipamentos.Add(item.Tipo, item);
+            Equipamentos.Add(item.Tipo, item);
 
             AtaqueFisicoExtra += item.AtaqueFisico;
-            AtaqueMagicoExtra += item.AtaqueMagico;
 
             DefesaFisicaExtra += item.DefesaFisica;
             DefesaMagicaExtra += item.DefesaMagica;
@@ -125,22 +127,59 @@ namespace ZaynBot.RPG.Entidades
 
         public string DesequiparItem(EnumTipo itemTipo)
         {
-            if (Mochila.Equipamentos.TryGetValue(itemTipo, out RPGItem item))
+            if (Equipamentos.TryGetValue(itemTipo, out RPGItem item))
             {
                 Mochila.AdicionarItem(item);
-                Mochila.Equipamentos.Remove(itemTipo);
+                Equipamentos.Remove(itemTipo);
 
                 AtaqueFisicoExtra -= item.AtaqueFisico;
-                AtaqueMagicoExtra -= item.AtaqueMagico;
 
                 DefesaFisicaExtra -= item.DefesaFisica;
                 DefesaMagicaExtra -= item.DefesaMagica;
                 return item.Nome;
             }
-            return "";
+            return null;
         }
 
-        private double SortearMetadeValor(double valor)
-            => Sortear.Valor(valor / 2, valor);
+        private double SortearMetadeValor(double valor) => Sortear.Valor(valor / 2, valor);
+
+        public double RecuperarVida(double quantidade)
+        {
+            if (quantidade + VidaAtual > VidaMaxima)
+            {
+                double v = VidaMaxima - VidaAtual;
+                VidaAtual = VidaMaxima;
+                return v;
+            }
+            VidaAtual += quantidade;
+            return quantidade;
+        }
+        public void RemoverVida(double quantidade)
+        {
+            VidaAtual -= quantidade;
+            if (VidaAtual <= 0)
+            {
+                VidaAtual = VidaMaxima / 3;
+                MortoPorMobs++;
+                ExpAtual = 0;
+                Salvar(this);
+                throw new PersonagemNoLifeException();
+            }
+        }
+
+        public double RecuperarMagia(double quantidade)
+        {
+            if (quantidade + MagiaAtual > MagiaMaxima)
+            {
+                double v = MagiaMaxima - MagiaAtual;
+                MagiaAtual = MagiaMaxima;
+                return v;
+            }
+            MagiaAtual += quantidade;
+            return quantidade;
+        }
+
+        public static void Salvar(RPGJogador jogador) => ModuloBanco.EditJogador(jogador);
+        public void Salvar() => ModuloBanco.EditJogador(this);
     }
 }

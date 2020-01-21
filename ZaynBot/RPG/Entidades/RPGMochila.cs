@@ -1,53 +1,45 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 using System.Collections.Generic;
 
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
-    public class RPGMochila
+    public class RPGMochila : SortedList<string, int>
     {
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public SortedList<string, RPGMochilaItemData> Itens { get; set; } = new SortedList<string, RPGMochilaItemData>();
+        public void AdicionarItem(RPGItem item, int quantidade = 1) => AdicionarItem(item.Nome, quantidade);
 
-        [BsonDictionaryOptions(DictionaryRepresentation.ArrayOfArrays)]
-        public Dictionary<EnumTipo, RPGItem> Equipamentos { get; set; } = new Dictionary<EnumTipo, RPGItem>();
-
-        public void AdicionarItem(RPGItem item, int quantidade = 1)
-        {
-            AdicionarItem(item.Nome, new RPGMochilaItemData()
-            {
-                Id = item.Id,
-                Quantidade = quantidade
-            });
-        }
-        public void AdicionarItem(string nome, RPGMochilaItemData item)
+        public void AdicionarItem(string nome, int quantidade)
         {
             nome = nome.ToLower();
-            // Verificar se já está na mochila
-            // Se o encontrar, incrementa-se a quantidade
-            if (Itens.TryGetValue(nome, out RPGMochilaItemData itemEncontrado))
+            if (this.TryGetValue(nome, out int quantidadeItem))
             {
-                itemEncontrado.Quantidade += item.Quantidade;
+
+                //quantidadeItem += quantidade;
+                Remove(nome);
+                Add(nome, quantidadeItem + quantidade);
                 return;
             }
-            // Se não está na mochila, o adiciona
-            Itens.Add(nome, item);
+            Add(nome, quantidade);
         }
 
-        public void RemoverItem(string itemNome, int quantidade = 1)
+        public bool RemoverItem(string nome, int quantidade = 1)
         {
-            RPGMochilaItemData item = Itens[itemNome];
-            item.Quantidade -= quantidade;
-            if (item.Quantidade == 0)
-                Itens.Remove(itemNome);
+            nome = nome.ToLower();
+            if (TryGetValue(nome, out int quantidadeItem))
+            {
+                if (quantidade > quantidadeItem)
+                    return false;
+                quantidadeItem -= quantidade;
+                if (quantidadeItem == 0)
+                    Remove(nome);
+                else // Correcao de bug
+                {
+                    Remove(nome);
+                    Add(nome, quantidadeItem);
+                }
+                return true;
+            }
+            return false;
         }
-    }
-
-    [BsonIgnoreExtraElements]
-    public class RPGMochilaItemData
-    {
-        public int Id { get; set; }
-        public int Quantidade { get; set; }
     }
 }

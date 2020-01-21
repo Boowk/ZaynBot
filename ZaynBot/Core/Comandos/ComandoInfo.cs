@@ -38,7 +38,7 @@ namespace ZaynBot.Core.Comandos
             embed.WithDescription(srb.ToString());
             StringBuilder srd = new StringBuilder();
             srd.AppendLine($"Online por: **{(DateTime.Now - ModuloCliente.Bot.TempoAtivo).Days} dias, {(DateTime.Now - ModuloCliente.Bot.TempoAtivo).Hours} horas e {(DateTime.Now - ModuloCliente.Bot.TempoAtivo).Minutes} minutos.**")
-                .AppendLine($"Contas criadas: {ModuloBanco.UsuarioColecao.CountDocuments(FilterDefinition<RPGUsuario>.Empty)}")
+                .AppendLine($"Contas criadas: {ModuloBanco.ColecaoJogador.CountDocuments(FilterDefinition<RPGJogador>.Empty)}")
                 .AppendLine($"Ping: {ctx.Client.Ping} pong")
                 .AppendLine($"Memoria: {(GC.GetTotalMemory(false) / 1024) / 1024} Mb")
                 .AppendLine($"Banco: {Extensoes.Text(((ModuloBanco.Database.RunCommand<TamanhoResultado>("{dbstats: 1}").Tamanho / 1024) / 1024))} Mb");

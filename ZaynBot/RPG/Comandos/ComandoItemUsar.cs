@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Comandos
 {
@@ -28,21 +29,21 @@ namespace ZaynBot.RPG.Comandos
                 return;
             }
 
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+            var usuario = ModuloBanco.GetJogador(ctx);
             itemNome = itemNome.ToLower();
 
-            if (usuario.Personagem.Mochila.Itens.TryGetValue(itemNome, out RPGMochilaItemData itemData))
+            if (usuario.Mochila.TryGetValue(itemNome, out var itemData))
             {
-                if (quantidade > itemData.Quantidade)
+                if (quantidade > itemData)
                 {
-                    await ctx.RespondAsync($"{ctx.User.Mention} você somente tem {itemData.Quantidade} [{itemNome.FirstUpper()}] na mochila!".Bold());
+                    await ctx.RespondAsync($"{ctx.User.Mention} você somente tem {itemData} [{itemNome.FirstUpper()}] na mochila!".Bold());
                     return;
                 }
-                RPGItem item = ModuloBanco.GetItem(itemData.Id);
+                ModuloBanco.TryGetItem(itemNome, out var item);
                 switch (item.Tipo)
                 {
                     case EnumTipo.Pocao:
-                        usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
+                        usuario.Mochila.RemoverItem(itemNome, quantidade);
                         string vidaRestaura = usuario.RecuperarVida(item.VidaRestaura * quantidade).Text();
                         string magiaRestaurada = usuario.RecuperarMagia(item.MagiaRestaura * quantidade).Text();
                         usuario.Salvar();

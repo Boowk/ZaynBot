@@ -6,13 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DataTeste\Itens\**" />
     <Compile Remove="Data\Mobs\Boss\**" />
     <Compile Remove="RPG\Entidades\Mapa\**" />
-    <EmbeddedResource Remove="DataTeste\Itens\**" />
     <EmbeddedResource Remove="Data\Mobs\Boss\**" />
     <EmbeddedResource Remove="RPG\Entidades\Mapa\**" />
-    <None Remove="DataTeste\Itens\**" />
     <None Remove="Data\Mobs\Boss\**" />
     <None Remove="RPG\Entidades\Mapa\**" />
   </ItemGroup>

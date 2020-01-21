@@ -1,27 +1,12 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Entidades
 {
-    public enum EnumTipo
-    {
-        ArmaPrimaria,
-        ArmaSecundaria,
-        Elmo,
-        Peitoral,
-        Luvas,
-        Botas,
-        Moeda,
-        Comida,
-        Pocao,
-        Recurso,
-        Pernas,
-    }
-
     [BsonIgnoreExtraElements]
     public class RPGItem
     {
         [BsonId]
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
 

@@ -6,7 +6,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
-using ZaynBot.DataTeste.Receitas;
 
 namespace ZaynBot
 {
@@ -79,9 +78,7 @@ namespace ZaynBot
             }, ModuloCliente.Client);
             new ModuloBanco();
             await ModuloBanco.CarregarItensAsync();
-            await ModuloBanco.CarregarMobsAsync();
-            await ModuloBanco.CarregarRegioesTrizbortAsync();
-            new TodasAsReceitas();
+           // await ModuloBanco.CarregarRegioesTrizbortAsync();
             await ModuloCliente.Client.ConnectAsync();
             await Task.Delay(-1);
         }

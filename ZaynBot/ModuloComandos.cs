@@ -32,28 +32,25 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoVotar>();
             Comandos.RegisterCommands<ComandoUsuario>();
             Comandos.RegisterCommands<ComandoAdm>();
-            Comandos.RegisterCommands<ComandoMod>();
+            Comandos.RegisterCommands<ComandoPrefixo>();
 
             Comandos.RegisterCommands<TopComando>();
 
-            Comandos.RegisterCommands<ComandoLoja>();
-            Comandos.RegisterCommands<ComandoItemUsar>();
-            Comandos.RegisterCommands<ComandoItemComprar>();
-            Comandos.RegisterCommands<ComandoCriarPersonagem>();
             Comandos.RegisterCommands<ComandoStatus>();
             Comandos.RegisterCommands<ComandoProficiencia>();
-            Comandos.RegisterCommands<ComandoOlhar>();
+            Comandos.RegisterCommands<ComandoAtribuir>();
+            Comandos.RegisterCommands<ComandoLocal>();
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoAtacar>();
             Comandos.RegisterCommands<ComandoMochila>();
             Comandos.RegisterCommands<ComandoExaminar>();
             Comandos.RegisterCommands<ComandoViajar>();
-            Comandos.RegisterCommands<ComandoItemVender>();
-            Comandos.RegisterCommands<ComandoSaquear>();
-            Comandos.RegisterCommands<ComandoAtribuir>();
-            Comandos.RegisterCommands<ComandoTutorial>();
-            Comandos.RegisterCommands<ComandoItemEquipar>();
-            Comandos.RegisterCommands<ComandoItemDesequipar>();
+            //Comandos.RegisterCommands<ComandoLoja>();
+            Comandos.RegisterCommands<ComandoItemUsar>();
+            //Comandos.RegisterCommands<ComandoItemComprar>();
+            //Comandos.RegisterCommands<ComandoItemVender>();
+            //Comandos.RegisterCommands<ComandoItemEquipar>();
+            //Comandos.RegisterCommands<ComandoItemDesequipar>();
             //Comandos.RegisterCommands<DesequiparComando>();
             //Comandos.RegisterCommands<ReceitaComando>();
         }
@@ -91,12 +88,9 @@ namespace ZaynBot
                 case PersonagemNoLifeException pnx:
                     DiscordEmbedBuilder emb = new DiscordEmbedBuilder();
                     emb.WithDescription($"{ctx.User.Mention} acabou de morrer!\n" +
-                        $"Você perdeu um pouco de experiencia e moedas.");
+                        $"Você perdeu um pouco de experiencia!");
                     emb.WithImageUrl("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n");
                     await ctx.RespondAsync(ctx.User.Mention, embed: emb.Build());
-                    return;
-                case PersonagemNullException px:
-                    await ctx.RespondAsync(px.ToString());
                     return;
                 case NotFoundException nx:
                     await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");

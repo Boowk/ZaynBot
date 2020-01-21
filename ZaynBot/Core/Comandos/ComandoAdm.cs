@@ -2,7 +2,10 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
@@ -44,75 +47,93 @@ namespace ZaynBot.Core.Comandos
             if (user == null)
                 user = ctx.User;
             await ctx.TriggerTypingAsync();
-            ModuloBanco.UsuarioColecao.DeleteOne(x => x.Id == user.Id);
+            ModuloBanco.ColecaoJogador.DeleteOne(x => x.Id == user.Id);
             await ctx.RespondAsync("Deletado!");
         }
 
-        [Command("dar-item")]
-        [Exemplo("dar-item [quantidade] [id] [|usuario]")]
-        public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)
-        {
-            if (discordUser == null)
-                discordUser = ctx.User;
-            await ctx.TriggerTypingAsync();
-            RPGItem item = ModuloBanco.GetItem(id);
-            if (item == null)
-            {
-                await ctx.RespondAsync("Item não encontrado!");
-                return;
-            }
-            RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
-            usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
-            usuario.Salvar();
-            await ctx.RespondAsync($"Adicionado {quantidade} [{item.Nome}] para {discordUser.Mention}!");
-        }
+        //[Command("dar-item")]
+        //[Exemplo("dar-item [quantidade] [id] [|usuario]")]
+        //public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)
+        //{
+        //    if (discordUser == null)
+        //        discordUser = ctx.User;
+        //    await ctx.TriggerTypingAsync();
+        //    RPGItem item = ModuloBanco.GetItem(id);
+        //    if (item == null)
+        //    {
+        //        await ctx.RespondAsync("Item não encontrado!");
+        //        return;
+        //    }
+        //    var usario .GetUsuario(discordUser, out RPGUsuario usuario);
+        //    usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
+        //    usuario.Salvar();
+        //    await ctx.RespondAsync($"Adicionado {quantidade} [{item.Nome}] para {discordUser.Mention}!");
+        //}
 
-        [Command("remover-item")]
-        [Exemplo("remover-item [quantidade] [usuario] [item]")]
-        public async Task Remover(CommandContext ctx, int quantidade = 1, DiscordUser discordUser = null, [RemainingText] string itemNome = "")
-        {
-            if (discordUser == null)
-                discordUser = ctx.User;
-            await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
-            try
-            {
-                usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
-                usuario.Salvar();
-                await ctx.RespondAsync("Item removido!");
-                return;
-            }
-            catch
-            {
-                await ctx.RespondAsync("Item não encontrado!");
-                return;
-            }
-        }
+        //[Command("remover-item")]
+        //[Exemplo("remover-item [quantidade] [usuario] [item]")]
+        //public async Task Remover(CommandContext ctx, int quantidade = 1, DiscordUser discordUser = null, [RemainingText] string itemNome = "")
+        //{
+        //    if (discordUser == null)
+        //        discordUser = ctx.User;
+        //    await ctx.TriggerTypingAsync();
+        //    RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
+        //    try
+        //    {
+        //        usuario.Personagem.Mochila.RemoverItem(itemNome, quantidade);
+        //        usuario.Salvar();
+        //        await ctx.RespondAsync("Item removido!");
+        //        return;
+        //    }
+        //    catch
+        //    {
+        //        await ctx.RespondAsync("Item não encontrado!");
+        //        return;
+        //    }
+        //}
 
         [Command("atualizar")]
         public async Task Atualizar(CommandContext ctx)
         {
-            FilterDefinition<RPGUsuario> filter = FilterDefinition<RPGUsuario>.Empty;
-            FindOptions<RPGUsuario> options = new FindOptions<RPGUsuario>
+
+            using (var fileStream = File.OpenRead(Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../" + "usuario.json"))))
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true))
+            {
+                String line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+                    if (ulong.TryParse(line, out ulong id))
+                    {
+                        var jogador = ModuloBanco.GetJogador(id);
+                        jogador.AdicionarExp(4569);
+                        jogador.Salvar();
+                    }
+                }
+            }
+            await ctx.RespondAsync("Atualiazado");
+            return;
+            FilterDefinition<RPGJogador> filter = FilterDefinition<RPGJogador>.Empty;
+            FindOptions<RPGJogador> options = new FindOptions<RPGJogador>
             {
                 BatchSize = 8,
                 NoCursorTimeout = false
             };
 
-            using (IAsyncCursor<RPGUsuario> cursor = await ModuloBanco.UsuarioColecao.FindAsync(filter, options))
+            using (IAsyncCursor<RPGJogador> cursor = await ModuloBanco.ColecaoJogador.FindAsync(filter, options))
             {
                 while (await cursor.MoveNextAsync())
                 {
-                    IEnumerable<RPGUsuario> usuarios = cursor.Current;
+                    IEnumerable<RPGJogador> usuarios = cursor.Current;
 
-                    foreach (RPGUsuario user in usuarios)
+                    foreach (RPGJogador user in usuarios)
                     {
-                        user.Personagem.RegiaoAtualId = 0;
+                        //user.RegiaoAtualId = "Regiao de teste";
                         user.Salvar();
                     }
                 }
             }
             await ctx.RespondAsync("Atualiazado");
+
         }
 
         [Command("dar-xp")]
@@ -121,34 +142,34 @@ namespace ZaynBot.Core.Comandos
             if (discordUser == null)
                 discordUser = ctx.User;
             await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(discordUser, out RPGUsuario usuario);
-            usuario.Personagem.AdicionarExp(quantidade);
-            usuario.Salvar();
+            var jogador = ModuloBanco.GetJogador(discordUser);
+            jogador.AdicionarExp(quantidade);
+            jogador.Salvar();
             await ctx.RespondAsync($"Adicionado {quantidade}XP para {discordUser.Mention}!");
         }
 
-        [Command("money")]
-        public async Task money(CommandContext ctx)
-        {
-            await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            usuario.Personagem.Mochila.AdicionarItem("moeda de zeoin", new RPGMochilaItemData()
-            {
-                Id = 0,
-                Quantidade = 9999999,
-            });
-            usuario.Salvar();
-            await ctx.RespondAsync("Adicionado!");
-        }
+        //[Command("money")]
+        //public async Task money(CommandContext ctx)
+        //{
+        //    await ctx.TriggerTypingAsync();
+        //    RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+        //    usuario.Personagem.Mochila.AdicionarItem("moeda de zeoin", new RPGMochilaItemData()
+        //    {
+        //        Id = 0,
+        //        Quantidade = 9999999,
+        //    });
+        //    usuario.Salvar();
+        //    await ctx.RespondAsync("Adicionado!");
+        //}
 
-        [Command("tp")]
-        public async Task Teleportar(CommandContext ctx, int id = 1)
-        {
-            await ctx.TriggerTypingAsync();
-            RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
-            usuario.Personagem.RegiaoAtualId = id;
-            usuario.Salvar();
-            await ctx.RespondAsync($"Teleportado para id {id}!");
-        }
+        //[Command("tp")]
+        //public async Task Teleportar(CommandContext ctx, int id = 1)
+        //{
+        //    await ctx.TriggerTypingAsync();
+        //    RPGUsuario.GetUsuario(ctx, out RPGUsuario usuario);
+        //    //usuario.Personagem.RegiaoAtualId = id;
+        //    usuario.Salvar();
+        //    await ctx.RespondAsync($"Teleportado para id {id}!");
+        //}
     }
 }
