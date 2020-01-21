@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("minerar")]
         [Description("Permite minerar rochas por recursos.")]
         [ComoUsar("minerar")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 300, CooldownBucketType.User)]
         public async Task MinerarAbAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
