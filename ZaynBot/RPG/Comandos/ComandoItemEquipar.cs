@@ -61,6 +61,10 @@ namespace ZaynBot.RPG.Comandos
                             if (await EquiparItemAsync(ctx, usuario, item))
                                 await ctx.RespondAsync($"A picareta [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
                             break;
+                        case EnumTipo.Machado:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"O machado [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
+                            break;
                         default:
                             await ctx.RespondAsync($"Este [item] não é equipavel {ctx.User.Mention}!".Bold());
                             return;

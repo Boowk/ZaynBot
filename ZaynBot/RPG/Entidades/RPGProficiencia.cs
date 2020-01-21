@@ -5,7 +5,7 @@ namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("Proficiencia")]
-    [BsonKnownTypes(typeof(ProficienciaAtaque), typeof(ProficienciaForca), typeof(ProficienciaDefesa), typeof(ProficienciaMinerar))]
+    [BsonKnownTypes(typeof(ProficienciaAtaque), typeof(ProficienciaForca), typeof(ProficienciaDefesa), typeof(ProficienciaMinerar), typeof(ProficienciaCortar))]
     public class RPGProficiencia
     {
         public string Nome { get; set; }
@@ -41,6 +41,15 @@ namespace ZaynBot.RPG.Entidades
         {
             double minerioExtra = (Pontos * 0.25) + 1;
             return Convert.ToInt32(minerioExtra);
+        }
+    }
+    public class ProficienciaCortar : RPGProficiencia
+    {
+        public ProficienciaCortar(string nome = "Cortar") : base(nome) { }
+        public int CalcMadeiraExtra()
+        {
+            double madeira = (Pontos * 0.25) + 1;
+            return Convert.ToInt32(madeira);
         }
     }
 }

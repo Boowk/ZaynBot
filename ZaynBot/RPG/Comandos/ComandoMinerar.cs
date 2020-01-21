@@ -30,7 +30,7 @@ namespace ZaynBot.RPG.Comandos
                     break;
             }
             jogador.Salvar();
-            await ctx.RespondAsync($"Você minerou {quantidade} [{minerio.FirstUpper()}] {ctx.User.Mention}!");
+            await ctx.RespondAsync($"Você minerou {quantidade} [{minerio.FirstUpper()}] {ctx.User.Mention}!".Bold());
         }
     }
 }

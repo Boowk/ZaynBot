@@ -110,13 +110,12 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGJogador user in usuarios)
                     {
-                        user.Proficiencias.Add(RPG.Entidades.Enuns.EnumProficiencia.Minerar, new ProficienciaMinerar());
+                        user.Proficiencias.Add(RPG.Entidades.Enuns.EnumProficiencia.Cortar, new ProficienciaCortar());
                         user.Salvar();
                     }
                 }
             }
-            await ctx.RespondAsync("Atualiazado");
-
+            await ctx.RespondAsync("Atualizado");
         }
 
         [Command("dar-xp")]
