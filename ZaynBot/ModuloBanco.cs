@@ -12,6 +12,8 @@ using System;
 using Newtonsoft.Json;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.Exceptions;
+using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
 {
@@ -104,6 +106,19 @@ namespace ZaynBot
         }
 
         #region Jogador
+        /// <summary>
+        /// Tenta retornar o jogador, caso o encontre no banco de dados.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="jogador"></param>
+        /// <returns></returns>
+        public static bool TryGetJogador(ulong id, out RPGJogador jogador)
+        {
+            jogador = ColecaoJogador.Find(x => x.Id == id).FirstOrDefault();
+            if (jogador != null)
+                return true;
+            return false;
+        }
         /// <summary>
         /// Recupera o jogador no banco de dados. Caso não tenha, o cria.
         /// </summary>

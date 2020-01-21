@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using System;
 using System.Threading.Tasks;
+using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot.Core.Atributos
 {
@@ -16,6 +17,9 @@ namespace ZaynBot.Core.Atributos
 
         public override async Task<bool> ExecuteCheckAsync(CommandContext ctx, bool help)
         {
+            if (ModuloBanco.TryGetJogador(ctx.User.Id, out var jogador))
+                if (jogador.Bloqueado)
+                    throw new PersonagemBloqueadoException();
             if (help)
                 return true;
 

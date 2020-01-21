@@ -99,6 +99,8 @@ namespace ZaynBot
                     return;
                 case UnauthorizedException ux:
                     break;
+                case PersonagemBloqueadoException pbx:
+                    break;
                 default:
                     e.Context.Client.DebugLogger.LogMessage(LogLevel.Debug, "Erro", $"[{e.Context.User.Username.RemoverAcentos()}({e.Context.User.Id})] tentou usar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.ToString()}\nstack:{e.Exception.StackTrace}\ninner:{e.Exception?.InnerException}.", DateTime.Now);
                     var MundoZayn = await ModuloCliente.Client.GetGuildAsync(420044060720627712);

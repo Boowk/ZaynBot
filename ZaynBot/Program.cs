@@ -88,7 +88,6 @@ namespace ZaynBot
             var gld = msg.Channel.Guild;
             if (gld == null)
                 return Task.FromResult(-1);
-
             ServidorCore slv = ModuloBanco.GetServidor(gld.Id);
             if (string.IsNullOrEmpty(slv.Prefix))
                 return Task.FromResult(-1);

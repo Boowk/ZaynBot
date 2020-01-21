@@ -13,6 +13,7 @@ namespace ZaynBot.RPG.Entidades
         [BsonId]
         public ulong Id { get; set; }
         public DateTime DataCriacao { get; set; }
+        public bool Bloqueado { get; set; }
 
         public int MobsMortos { get; set; }
         public int MortoPorMobs { get; set; }
@@ -57,6 +58,7 @@ namespace ZaynBot.RPG.Entidades
         {
             Id = id;
             DataCriacao = DateTime.Now;
+            Bloqueado = false;
             VidaAtual = SortearMetadeValor(50);
             VidaMaxima = VidaAtual;
             MagiaAtual = SortearMetadeValor(50);

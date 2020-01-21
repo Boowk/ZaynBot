@@ -51,6 +51,30 @@ namespace ZaynBot.Core.Comandos
             await ctx.RespondAsync("Deletado!");
         }
 
+        [Command("bloquear")]
+        public async Task Bloquear(CommandContext ctx, DiscordUser user = null)
+        {
+            if (user == null)
+                return;
+            await ctx.TriggerTypingAsync();
+            var jogador = ModuloBanco.GetJogador(ctx);
+            jogador.Bloqueado = true;
+            jogador.Salvar();
+            await ctx.RespondAsync("Bloqueado!");
+        }
+
+        [Command("desbloquear")]
+        public async Task Desbloquear(CommandContext ctx, DiscordUser user = null)
+        {
+            if (user == null)
+                return;
+            await ctx.TriggerTypingAsync();
+            var jogador = ModuloBanco.GetJogador(ctx);
+            jogador.Bloqueado = false;
+            jogador.Salvar();
+            await ctx.RespondAsync("Desbloqueado!");
+        }
+
         //[Command("dar-item")]
         //[Exemplo("dar-item [quantidade] [id] [|usuario]")]
         //public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)

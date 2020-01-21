@@ -1,4 +1,5 @@
 ﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
@@ -7,6 +8,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Entidades;
+using ZaynBot.RPG.Exceptions;
 
 namespace ZaynBot
 {
