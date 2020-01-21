@@ -14,6 +14,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Exceptions;
 using ZaynBot.RPG.Exceptions;
+using System.Collections.Generic;
 
 namespace ZaynBot
 {
@@ -24,7 +25,7 @@ namespace ZaynBot
         public static IMongoCollection<RPGJogador> ColecaoJogador { get; private set; }
         public static IMongoCollection<ServidorCore> ColecaoServidor { get; private set; }
         public static IMongoCollection<RPGItem> ColecaoItem { get; private set; }
-        // public static IMongoCollection<RPGReceita> ColecaoReceita { get; private set; }
+        public static IMongoCollection<RPGVenda> ColecaoVenda { get; private set; }
 
         public ModuloBanco()
         {
@@ -41,7 +42,7 @@ namespace ZaynBot
             ColecaoJogador = Database.GetCollection<RPGJogador>("jogadores");
             ColecaoServidor = Database.GetCollection<ServidorCore>("servidores");
             ColecaoItem = Database.GetCollection<RPGItem>("itens");
-            //  ColecaoReceita = Database.GetCollection<RPGReceita>("receitas");
+            ColecaoVenda = Database.GetCollection<RPGVenda>("vendas");
 
             var notificationLogBuilder = Builders<RPGJogador>.IndexKeys;
             var indexModel = new CreateIndexModel<RPGJogador>(notificationLogBuilder.Ascending(x => x.NivelAtual));
@@ -185,6 +186,28 @@ namespace ZaynBot
             return server;
         }
         public static void EditServidor(ServidorCore server) => ColecaoServidor.ReplaceOne(x => x.Id == server.Id, server);
+        #endregion
+
+        #region Vendas
+
+        public static bool TryGetVenda(ulong id, int slot, out RPGVenda venda)
+        {
+            venda = ColecaoVenda.Find(x => x.JogadorId == id && x.Slot == slot).FirstOrDefault();
+            if (venda != null)
+                return true;
+            return false;
+        }
+
+        public static bool TryGetVenda(ulong id, out List<RPGVenda> venda)
+        {
+            venda = ColecaoVenda.Find(x => x.JogadorId == id).ToList();
+            if (venda != null)
+                return true;
+            return false;
+        }
+
+        public static void EditVenda(RPGVenda venda) => ColecaoVenda.ReplaceOne(x => x.JogadorId == venda.JogadorId, venda);
+
         #endregion
 
         public static bool TryGetItem(string nome, out RPGItem item)
