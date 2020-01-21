@@ -5,7 +5,6 @@ using System;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
-using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {

@@ -2,7 +2,6 @@
 using DSharpPlus.CommandsNext.Attributes;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
-using ZaynBot.RPG.Entidades;
 using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.RPG.Comandos

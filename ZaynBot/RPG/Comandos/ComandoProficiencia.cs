@@ -3,7 +3,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
-using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
