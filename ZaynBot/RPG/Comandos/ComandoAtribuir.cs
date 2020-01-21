@@ -12,7 +12,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite atribuir pontos na proficiência desejada.")]
         [ComoUsar("atribuir [+quantidade] [proficiência]")]
         [Exemplo("atribuir 1 força")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoAtribuirAb(CommandContext ctx, int quantidade, [RemainingText] string proficienciaText = "")
         {
             await ctx.TriggerTypingAsync();
@@ -51,7 +51,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("atribuir")]
         [ComoUsar("atribuir [proficiência]")]
         [Exemplo("atribuir força")]
-        [Cooldown(1, 10, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoAtribuirAb(CommandContext ctx, [RemainingText] string proficienciaText = "")
             => await ComandoAtribuirAb(ctx, 1, proficienciaText);
     }

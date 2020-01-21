@@ -14,6 +14,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite usar itens que estão na sua mochila.")]
         [ComoUsar("usar [+quantidade|] [item]")]
         [Exemplo("usar 2 frasco vermelho")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoUsarAb(CommandContext ctx, int quantidade, [RemainingText] string itemNome = "")
         {
             await ctx.TriggerTypingAsync();
@@ -63,6 +64,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("usar")]
         [ComoUsar("usar [item]")]
         [Exemplo("usar frasco vermelho")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoUsarAb(CommandContext ctx, [RemainingText] string itemNome = "")
         {
             await ComandoUsarAb(ctx, 1, itemNome);

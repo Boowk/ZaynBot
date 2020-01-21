@@ -13,7 +13,7 @@ namespace ZaynBot.RPG.Comandos
         [Aliases("local")]
         [Description("Permite exibir a localização atual.")]
         [ComoUsar("local")]
-        [Cooldown(1, 5, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoLocalAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

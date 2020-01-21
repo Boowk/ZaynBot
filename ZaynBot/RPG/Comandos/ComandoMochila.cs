@@ -17,7 +17,6 @@ namespace ZaynBot.RPG.Comandos
         [Exemplo("mochila 2")]
         [Exemplo("mochila")]
         [Cooldown(1, 15, CooldownBucketType.User)]
-
         public async Task ComandoMochilaAb(CommandContext ctx, int pagina = 0)
         {
             await ctx.TriggerTypingAsync();

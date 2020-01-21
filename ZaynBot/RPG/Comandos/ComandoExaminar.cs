@@ -15,7 +15,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite exibir a descrição de um item.")]
         [ComoUsar("examinar [nome]")]
         [Exemplo("examinar moeda")]
-        [Cooldown(1, 5, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoExaminarAb(CommandContext ctx, [RemainingText] string nome = "")
         {
             await ctx.TriggerTypingAsync();

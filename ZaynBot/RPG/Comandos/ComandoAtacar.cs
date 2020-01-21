@@ -25,7 +25,7 @@ namespace ZaynBot.RPG.Comandos
         [Aliases("at")]
         [Description("Permite atacar a criatura que você encontrou explorando.")]
         [ComoUsar("atacar")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoAtacarAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

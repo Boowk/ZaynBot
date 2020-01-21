@@ -10,9 +10,9 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoProficiencia : BaseCommandModule
     {
         [Command("proficiencia")]
-        [Cooldown(1, 15, CooldownBucketType.User)]
         [Description("Permite exibir todas as proficiencia do seu personagem.")]
         [ComoUsar("proficiencia")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task HabilidadeComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();

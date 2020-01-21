@@ -14,7 +14,7 @@ namespace ZaynBot.RPG.Comandos
         [Command("top")]
         [Description("Exibe os 10 personagens mais evoluidos")]
         [ComoUsar("top")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 60, CooldownBucketType.User)]
         public async Task TopComandoAb(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
