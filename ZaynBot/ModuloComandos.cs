@@ -49,8 +49,8 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoViajar>();
             Comandos.RegisterCommands<ComandoLoja>();
             Comandos.RegisterCommands<ComandoItemUsar>();
-            //Comandos.RegisterCommands<ComandoItemComprar>();
-           Comandos.RegisterCommands<ComandoItemVender>();
+            Comandos.RegisterCommands<ComandoItemComprar>();
+            Comandos.RegisterCommands<ComandoItemVender>();
             //Comandos.RegisterCommands<ComandoItemEquipar>();
             //Comandos.RegisterCommands<ComandoItemDesequipar>();
             //Comandos.RegisterCommands<DesequiparComando>();

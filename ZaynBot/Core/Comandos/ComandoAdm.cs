@@ -76,24 +76,15 @@ namespace ZaynBot.Core.Comandos
             await ctx.RespondAsync("Desbloqueado!");
         }
 
-        //[Command("dar-item")]
-        //[Exemplo("dar-item [quantidade] [id] [|usuario]")]
-        //public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, int id = 0, DiscordUser discordUser = null)
-        //{
-        //    if (discordUser == null)
-        //        discordUser = ctx.User;
-        //    await ctx.TriggerTypingAsync();
-        //    RPGItem item = ModuloBanco.GetItem(id);
-        //    if (item == null)
-        //    {
-        //        await ctx.RespondAsync("Item não encontrado!");
-        //        return;
-        //    }
-        //    var usario .GetUsuario(discordUser, out RPGUsuario usuario);
-        //    usuario.Personagem.Mochila.AdicionarItem(item, quantidade);
-        //    usuario.Salvar();
-        //    await ctx.RespondAsync($"Adicionado {quantidade} [{item.Nome}] para {discordUser.Mention}!");
-        //}
+        [Command("dar-item")]
+        public async Task AdicionarItem(CommandContext ctx, int quantidade = 1, [RemainingText] string itemNome = "")
+        {
+            await ctx.TriggerTypingAsync();
+            var usuario = ModuloBanco.GetJogador(ctx);
+            usuario.Mochila.AdicionarItem(itemNome, quantidade);
+            usuario.Salvar();
+            await ctx.RespondAsync($"Adicionado {quantidade} [{itemNome.ToLower().FirstUpper()}]!");
+        }
 
         //[Command("remover-item")]
         //[Exemplo("remover-item [quantidade] [usuario] [item]")]
