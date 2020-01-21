@@ -29,7 +29,7 @@ namespace ZaynBot
 
         public ModuloBanco()
         {
-            IMongoClient _client = new MongoClient("mongodb://localhost");
+            IMongoClient _client = new MongoClient("mongodb://admin:.Sts8562@localhost");
             Database = _client.GetDatabase("zaynbot");
 
             BsonSerializer.RegisterSerializer(typeof(float),
