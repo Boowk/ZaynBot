@@ -81,7 +81,7 @@ namespace ZaynBot.Core.Comandos
         {
             await ctx.TriggerTypingAsync();
             var usuario = ModuloBanco.GetJogador(ctx);
-            usuario.Mochila.AdicionarItem(itemNome, quantidade);
+            usuario.Mochila.AdicionarItem(itemNome.ToLower(), quantidade);
             usuario.Salvar();
             await ctx.RespondAsync($"Adicionado {quantidade} [{itemNome.ToLower().FirstUpper()}]!");
         }
