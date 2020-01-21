@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Core.Atributos;
 using ZaynBot.RPG.Entidades;
+using ZaynBot.RPG.Entidades.Enuns;
 
 namespace ZaynBot.Core.Comandos
 {
@@ -134,7 +135,15 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGJogador user in usuarios)
                     {
-                        user.Proficiencias.Add(RPG.Entidades.Enuns.EnumProficiencia.Cortar, new ProficienciaCortar());
+                        user.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
+            {
+                { EnumProficiencia.Ataque, new ProficienciaAtaque()},
+                { EnumProficiencia.Defesa, new ProficienciaDefesa()},
+                { EnumProficiencia.Forca, new ProficienciaForca()},
+                { EnumProficiencia.Cortar, new ProficienciaCortar()},
+                { EnumProficiencia.Minerar, new ProficienciaMinerar()},
+            };
+                        user.ProficienciaPontos = user.NivelAtual - 1;
                         user.Salvar();
                     }
                 }

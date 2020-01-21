@@ -78,7 +78,9 @@ namespace ZaynBot.RPG.Entidades
             {
                 { EnumProficiencia.Ataque, new ProficienciaAtaque()},
                 { EnumProficiencia.Defesa, new ProficienciaDefesa()},
-                { EnumProficiencia.Forca, new ProficienciaForca()}
+                { EnumProficiencia.Forca, new ProficienciaForca()},
+                { EnumProficiencia.Cortar, new ProficienciaCortar()},
+                { EnumProficiencia.Minerar, new ProficienciaMinerar()},
             };
         }
         public new bool AdicionarExp(double exp)
