@@ -91,7 +91,7 @@ namespace ZaynBot.Core
             return "```css\nLista de comandos```\n" +
             "Use `z!ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `z!ajuda ajuda` \n\n" +
             "**1. Core -** `ajuda` , `convite` , `info` , `votar`\n" +
-            "**2. RPG -** `status` , `proficiencia` , `atribuir` , `local`\n" +
+            "**2. RPG -** `status` , `proficiencia` , `atribuir` , `local` , `minerar`\n" +
             "**3. Combate -** `atacar` , `explorar`\n" +
             "**4. Compras -**\n" +
             "**5. Itens -** `mochila` , `usar` , `examinar`\n" +
