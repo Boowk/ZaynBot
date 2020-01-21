@@ -29,39 +29,49 @@ namespace ZaynBot.RPG.Comandos
 
             if (usuario.Mochila.TryGetValue(nome, out var itemData))
             {
-                ModuloBanco.TryGetItem(nome, out var item);
-
-                switch (item.Tipo)
+                if (ModuloBanco.TryGetItem(nome, out var item))
                 {
-                    case EnumTipo.ArmaPrimaria:
-                        if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"A arma primária [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
-                        break;
-                    case EnumTipo.ArmaSecundaria:
-                        if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"A arma segundaria [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
-                        break;
-                    case EnumTipo.Botas:
-                        if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"As botas [{item.Nome}] foram equipadas {ctx.User.Mention}!".Bold());
-                        break;
-                    case EnumTipo.Peitoral:
-                        if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"O peitoral [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
-                        break;
-                    case EnumTipo.Elmo:
-                        if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"O elmo [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
-                        break;
-                    case EnumTipo.Luvas:
-                        if (await EquiparItemAsync(ctx, usuario, item))
-                            await ctx.RespondAsync($"As luvas [{item.Nome}] foram esquipadas {ctx.User.Mention}!".Bold());
-                        break;
-                    default:
-                        await ctx.RespondAsync($"Este [item] não é equipavel {ctx.User.Mention}!".Bold());
-                        return;
+                    switch (item.Tipo)
+                    {
+                        case EnumTipo.ArmaPrimaria:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"A arma primária [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
+                            break;
+                        case EnumTipo.ArmaSecundaria:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"A arma segundaria [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
+                            break;
+                        case EnumTipo.Botas:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"As botas [{item.Nome}] foram equipadas {ctx.User.Mention}!".Bold());
+                            break;
+                        case EnumTipo.Peitoral:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"O peitoral [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
+                            break;
+                        case EnumTipo.Elmo:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"O elmo [{item.Nome}] foi equipado {ctx.User.Mention}!".Bold());
+                            break;
+                        case EnumTipo.Luvas:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"As luvas [{item.Nome}] foram esquipadas {ctx.User.Mention}!".Bold());
+                            break;
+                        case EnumTipo.Picareta:
+                            if (await EquiparItemAsync(ctx, usuario, item))
+                                await ctx.RespondAsync($"A picareta [{item.Nome}] foi equipada {ctx.User.Mention}!".Bold());
+                            break;
+                        default:
+                            await ctx.RespondAsync($"Este [item] não é equipavel {ctx.User.Mention}!".Bold());
+                            return;
+                    }
+                    usuario.Salvar();
                 }
-                usuario.Salvar();
+                else
+                {
+                    await ctx.RespondAsync($"Item ainda não adicionado no banco de dados, será adicionado em breve {ctx.User.Mention}!".Bold());
+                    return;
+                }
             }
             else
                 await ctx.RespondAsync($"Você não tem este [item] {ctx.User.Mention}!".Bold());

@@ -1,10 +1,11 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("Proficiencia")]
-    [BsonKnownTypes(typeof(ProficienciaAtaque), typeof(ProficienciaForca), typeof(ProficienciaDefesa))]
+    [BsonKnownTypes(typeof(ProficienciaAtaque), typeof(ProficienciaForca), typeof(ProficienciaDefesa), typeof(ProficienciaMinerar))]
     public class RPGProficiencia
     {
         public string Nome { get; set; }
@@ -14,6 +15,7 @@ namespace ZaynBot.RPG.Entidades
             Nome = nome;
         }
     }
+
     public class ProficienciaAtaque : RPGProficiencia
     {
         public ProficienciaAtaque(string nome = "Ataque") : base(nome) { }
@@ -31,5 +33,14 @@ namespace ZaynBot.RPG.Entidades
     public class ProficienciaDefesa : RPGProficiencia
     {
         public ProficienciaDefesa(string nome = "Defesa") : base(nome) { }
+    }
+    public class ProficienciaMinerar : RPGProficiencia
+    {
+        public ProficienciaMinerar(string nome = "Minerar") : base(nome) { }
+        public int CalcMinerioExtra()
+        {
+            double minerioExtra = (Pontos * 0.25) + 1;
+            return Convert.ToInt32(minerioExtra);
+        }
     }
 }

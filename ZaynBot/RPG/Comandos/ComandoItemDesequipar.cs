@@ -59,6 +59,9 @@ namespace ZaynBot.RPG.Comandos
                 case "perna":
                     equipamento = usuario.DesequiparItem(EnumTipo.Pernas);
                     break;
+                case "picareta":
+                    equipamento = usuario.DesequiparItem(EnumTipo.Picareta);
+                    break;
                 default:
                     await ctx.ExecutarComandoAsync("ajuda desequipar");
                     return;

@@ -43,6 +43,7 @@ namespace ZaynBot
             Comandos.RegisterCommands<ComandoExplorar>();
             Comandos.RegisterCommands<ComandoAtacar>();
             Comandos.RegisterCommands<ComandoMochila>();
+            Comandos.RegisterCommands<ComandoMinerar>();
             Comandos.RegisterCommands<ComandoExaminar>();
             Comandos.RegisterCommands<ComandoViajar>();
             //Comandos.RegisterCommands<ComandoLoja>();

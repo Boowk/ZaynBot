@@ -95,23 +95,6 @@ namespace ZaynBot.Core.Comandos
         [Command("atualizar")]
         public async Task Atualizar(CommandContext ctx)
         {
-
-            using (var fileStream = File.OpenRead(Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../" + "usuario.json"))))
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8, true))
-            {
-                String line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-                    if (ulong.TryParse(line, out ulong id))
-                    {
-                        var jogador = ModuloBanco.GetJogador(id);
-                        jogador.AdicionarExp(4569);
-                        jogador.Salvar();
-                    }
-                }
-            }
-            await ctx.RespondAsync("Atualiazado");
-            return;
             FilterDefinition<RPGJogador> filter = FilterDefinition<RPGJogador>.Empty;
             FindOptions<RPGJogador> options = new FindOptions<RPGJogador>
             {
@@ -127,7 +110,7 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGJogador user in usuarios)
                     {
-                        //user.RegiaoAtualId = "Regiao de teste";
+                        user.Proficiencias.Add(RPG.Entidades.Enuns.EnumProficiencia.Minerar, new ProficienciaMinerar());
                         user.Salvar();
                     }
                 }

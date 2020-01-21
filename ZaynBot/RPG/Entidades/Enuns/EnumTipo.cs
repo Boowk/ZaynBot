@@ -17,5 +17,7 @@ namespace ZaynBot.RPG.Entidades.Enuns
         Pocao,
         Recurso,
         Pernas,
+        Picareta,
+        Machado,
     }
 }

@@ -43,7 +43,7 @@ namespace ZaynBot.RPG.Comandos
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
             embed.WithAuthor($"{user.Username} - Nível {personagem.NivelAtual}", iconUrl: user.AvatarUrl);
-            int combate = 0, total = 0;
+            int combate = 0, coleta = 0, total = 0;
             foreach (var proff in usuario.Proficiencias)
             {
                 total += proff.Value.Pontos;
@@ -57,6 +57,12 @@ namespace ZaynBot.RPG.Comandos
                         break;
                     case EnumProficiencia.Forca:
                         combate += proff.Value.Pontos;
+                        break;
+                    case EnumProficiencia.Minerar:
+                        coleta += proff.Value.Pontos;
+                        break;
+                    case EnumProficiencia.Cortar:
+                        coleta += proff.Value.Pontos;
                         break;
                 }
             }
@@ -74,7 +80,8 @@ namespace ZaynBot.RPG.Comandos
                 $"**Defesa física:** {(personagem.DefesaFisicaBase + personagem.DefesaFisicaExtra).Text()}\n" +
                 $"**Defesa mágica:** {(personagem.DefesaMagicaBase + personagem.DefesaMagicaExtra).Text()}", true);
 
-            embed.AddField("Proficiências distribuídas(PD)".Titulo(), $"**Combate:** {(combate / total) * 100}%");
+            embed.AddField("Proficiências distribuídas(PD)".Titulo(), $"**Combate:** {((double)combate / (double)total) * 100.00}% |" +
+                $" **Coleta:** {((double)coleta / (double)total) * 100.00}%");
 
             string armaP = "Nehuma";
             if (usuario.Equipamentos.TryGetValue(EnumTipo.ArmaPrimaria, out var item))
@@ -110,6 +117,16 @@ namespace ZaynBot.RPG.Comandos
             if (usuario.Equipamentos.TryGetValue(EnumTipo.Botas, out item))
                 botas = item.Nome.FirstUpper();
             embed.AddField("Botas".Titulo(), botas, true);
+
+            string picareta = "Nenhum";
+            if (usuario.Equipamentos.TryGetValue(EnumTipo.Picareta, out item))
+                picareta = item.Nome.FirstUpper();
+            embed.AddField("Picareta".Titulo(), picareta, true);
+
+            string machado = "Nenhum";
+            if (usuario.Equipamentos.TryGetValue(EnumTipo.Machado, out item))
+                machado = item.Nome.FirstUpper();
+            embed.AddField("Machado".Titulo(), machado, true);
 
             return embed;
         }

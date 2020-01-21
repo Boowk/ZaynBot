@@ -6,5 +6,7 @@
         Ataque,
         Forca,
         Defesa,
+        Minerar,
+        Cortar
     }
 }

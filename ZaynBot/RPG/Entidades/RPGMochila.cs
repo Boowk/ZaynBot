@@ -6,9 +6,9 @@ namespace ZaynBot.RPG.Entidades
     [BsonIgnoreExtraElements]
     public class RPGMochila : SortedList<string, int>
     {
-        public void AdicionarItem(RPGItem item, int quantidade = 1) => AdicionarItem(item.Nome, quantidade);
+        public string AdicionarItem(RPGItem item, int quantidade = 1) => AdicionarItem(item.Nome, quantidade);
 
-        public void AdicionarItem(string nome, int quantidade)
+        public string AdicionarItem(string nome, int quantidade)
         {
             nome = nome.ToLower();
             if (this.TryGetValue(nome, out int quantidadeItem))
@@ -17,9 +17,10 @@ namespace ZaynBot.RPG.Entidades
                 //quantidadeItem += quantidade;
                 Remove(nome);
                 Add(nome, quantidadeItem + quantidade);
-                return;
+                return nome;
             }
             Add(nome, quantidade);
+            return nome;
         }
 
         public bool RemoverItem(string nome, int quantidade = 1)
