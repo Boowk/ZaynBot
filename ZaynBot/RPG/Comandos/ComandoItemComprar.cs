@@ -11,7 +11,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite comprar os itens que estão sendo vendido na loja.")]
         [ComoUsar("comprar [+quantidade|] [id]")]
         [Exemplo("comprar 1 8844#1")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoComprarAb(CommandContext ctx, int quantidade = -1, [RemainingText] string itemId = "")
         {
             await ctx.TriggerTypingAsync();

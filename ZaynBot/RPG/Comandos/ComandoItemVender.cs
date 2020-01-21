@@ -14,6 +14,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite vender itens que estão na sua mochila.")]
         [ComoUsar("vender [+quantidade] [+preço] [item nome]")]
         [Exemplo("vender 2 20 frasco vermelho")]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoVenderAb(CommandContext ctx, int quantidade = -1, int preco = -1, [RemainingText] string itemNome = "")
         {
             await ctx.TriggerTypingAsync();

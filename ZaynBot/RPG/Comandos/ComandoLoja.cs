@@ -17,7 +17,7 @@ namespace ZaynBot.RPG.Comandos
         [Description("Permite ver as ofertas de um determinado item.")]
         [ComoUsar("loja [item nome]")]
         [Exemplo("loja frasco vermelho")]
-        [Cooldown(1, 1, CooldownBucketType.User)]
+        [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoLojaAb(CommandContext ctx, [RemainingText] string nomeItem = "")
         {
             await ctx.TriggerTypingAsync();
