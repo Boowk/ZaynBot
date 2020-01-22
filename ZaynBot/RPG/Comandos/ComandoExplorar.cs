@@ -18,8 +18,8 @@ namespace ZaynBot.RPG.Comandos
         {
             await ctx.TriggerTypingAsync();
             var jogador = ModuloBanco.GetJogador(ctx);
-            var vidaSorteada = Sortear.Valor(2, 4);
-            var danoSoorteado = Sortear.Valor(5, 8);
+            var vidaSorteada = Sortear.Valor(3, 4);
+            var danoSoorteado = Sortear.Valor(7, 10);
             var personGenerator = new PersonNameGenerator();
             RPGMob mob = new RPGMob((jogador.AtaqueFisicoBase + jogador.AtaqueFisicoExtra) * vidaSorteada)
             {
