@@ -36,6 +36,7 @@
     <PackageReference Include="DSharpPlus.Rest" Version="4.0.0-nightly-00643" />
     <PackageReference Include="DSharpPlus.VoiceNext" Version="4.0.0-nightly-00643" />
     <PackageReference Include="MongoDB.Driver" Version="2.10.0" />
+    <PackageReference Include="RandomNameGeneratorLibrary" Version="1.2.2" />
   </ItemGroup>
 
   <ItemGroup>
