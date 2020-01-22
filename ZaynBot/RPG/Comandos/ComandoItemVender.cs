@@ -53,7 +53,7 @@ namespace ZaynBot.RPG.Comandos
                     return;
                 }
                 ModuloBanco.TryGetVenda(ctx.User.Id, out var vendas);
-                if (vendas.Count > 0)
+                if (vendas.Count >= jogador.SlotsVenda)
                 {
                     await ctx.RespondAsync($"Você já anúnciou, remova a venda anterior para anúnciar novamente {ctx.User.Mention}!");
                     return;

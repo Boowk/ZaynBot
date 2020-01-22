@@ -1,19 +1,11 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ZaynBot.RPG.Entidades
 {
     [BsonIgnoreExtraElements]
     public class RPGVenda
     {
-        // id 984984844
-        // numero 1
-        // mostra id + #slot
-        // separa com var array = valores.Split('#');
-        [BsonId]
         public ulong JogadorId { get; set; }
         public int Slot { get; set; }
         public int Preco { get; set; }

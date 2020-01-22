@@ -43,7 +43,7 @@ namespace ZaynBot.RPG.Comandos
                     IEnumerable<RPGVenda> itens = cursor.Current;
                     foreach (RPGVenda item in itens)
                     {
-                        str.AppendLine($"{item.Quantidade} - ID: `{item.JogadorId}#{item.Slot}` - {item.Preco} Zeoin");
+                        str.AppendLine($"Quant: {item.Quantidade} | ID: `{item.JogadorId}#{item.Slot}` | {item.Preco} Zeoin");
                     }
                 }
             }

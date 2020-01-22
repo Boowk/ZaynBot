@@ -126,15 +126,16 @@ namespace ZaynBot.Core.Comandos
 
                     foreach (RPGJogador user in usuarios)
                     {
-                        user.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
-            {
-                { EnumProficiencia.Ataque, new ProficienciaAtaque()},
-                { EnumProficiencia.Defesa, new ProficienciaDefesa()},
-                { EnumProficiencia.Forca, new ProficienciaForca()},
-                { EnumProficiencia.Cortar, new ProficienciaCortar()},
-                { EnumProficiencia.Minerar, new ProficienciaMinerar()},
-            };
-                        user.ProficienciaPontos = user.NivelAtual - 1;
+                        //user.Proficiencias = new Dictionary<EnumProficiencia, RPGProficiencia>
+                        //{
+                        //    { EnumProficiencia.Ataque, new ProficienciaAtaque()},
+                        //    { EnumProficiencia.Defesa, new ProficienciaDefesa()},
+                        //    { EnumProficiencia.Forca, new ProficienciaForca()},
+                        //    { EnumProficiencia.Cortar, new ProficienciaCortar()},
+                        //    { EnumProficiencia.Minerar, new ProficienciaMinerar()},
+                        //};
+                        //user.ProficienciaPontos = user.NivelAtual - 1;
+                        user.SlotsVenda = 1;
                         user.Salvar();
                     }
                 }
