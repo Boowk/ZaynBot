@@ -93,7 +93,7 @@ namespace ZaynBot.Core
             "**1. Core -** `ajuda` , `convite` , `info` , `votar`\n" +
             "**2. RPG -** `status` , `proficiencia` , `atribuir` , `local`\n" +
             "**3. Combate -** `atacar` , `explorar`\n" +
-            "**4. Compras -** `loja` , `comprar`, `vender`\n" +
+            "**4. Compras -** `mercado` , `comprar`, `vender`\n" +
             "**5. Itens -** `mochila` , `usar` , `examinar`\n" +
             "**6. Coleta -** `minerar` , `cortar`\n" +
             "**7. Administrativo -** `prefixo`\n" +

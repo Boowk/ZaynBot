@@ -10,20 +10,20 @@ using ZaynBot.RPG.Entidades;
 
 namespace ZaynBot.RPG.Comandos
 {
-    public class ComandoLoja : BaseCommandModule
+    public class ComandoMercado : BaseCommandModule
     {
-        [Command("loja")]
+        [Command("mercado")]
         [Description("Veja as ofertas de venda de um determinado item. Será exibido as ofertas mais baratas atualmente.")]
-        [ComoUsar("loja [nome do item]")]
-        [Exemplo("loja ossos")]
+        [ComoUsar("mercado [nome do item]")]
+        [Exemplo("mercado ossos")]
         [Cooldown(1, 15, CooldownBucketType.User)]
-        public async Task ComandoLojaAb(CommandContext ctx, [RemainingText] string nomeItem = "")
+        public async Task ComandoMercadoAb(CommandContext ctx, [RemainingText] string nomeItem = "")
         {
             await ctx.TriggerTypingAsync();
 
             if (string.IsNullOrEmpty(nomeItem))
             {
-                await ctx.ExecutarComandoAsync("ajuda loja");
+                await ctx.ExecutarComandoAsync("ajuda mercado");
                 return;
             }
 
@@ -48,7 +48,7 @@ namespace ZaynBot.RPG.Comandos
                 }
             }
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Loja", ctx);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Mercado", ctx);
             embed.WithTitle(nomeItem.FirstUpper().Titulo());
             if (string.IsNullOrEmpty(str.ToString()))
                 embed.WithDescription("Este item não tem nada anúnciado! Seja o primeiro a anúnciar com o comando `vender`");

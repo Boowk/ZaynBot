@@ -8,7 +8,7 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoItemComprar : BaseCommandModule
     {
         [Command("comprar")]
-        [Description("Compre itens que foram anúnciado no mercado. Use o ID da venda que é disponibilidado ao usar o comando `loja`.")]
+        [Description("Compre itens que foram anúnciado no mercado. Use o ID da venda que é disponibilidado ao usar o comando `mercado`.")]
         [ComoUsar("comprar [+quantidade|] [id da venda]")]
         [Exemplo("comprar 2 88445#0")]
         [Cooldown(1, 15, CooldownBucketType.User)]
