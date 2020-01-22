@@ -13,9 +13,9 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoLoja : BaseCommandModule
     {
         [Command("loja")]
-        [Description("Permite ver as ofertas de um determinado item.")]
-        [ComoUsar("loja [item nome]")]
-        [Exemplo("loja frasco vermelho")]
+        [Description("Veja as ofertas de venda de um determinado item. Será exibido as ofertas mais baratas atualmente.")]
+        [ComoUsar("loja [nome do item]")]
+        [Exemplo("loja ossos")]
         [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoLojaAb(CommandContext ctx, [RemainingText] string nomeItem = "")
         {
@@ -50,7 +50,10 @@ namespace ZaynBot.RPG.Comandos
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Loja", ctx);
             embed.WithTitle(nomeItem.FirstUpper().Titulo());
-            embed.WithDescription(str.ToString());
+            if (string.IsNullOrEmpty(str.ToString()))
+                embed.WithDescription("Este item não tem nada anúnciado! Seja o primeiro a anúnciar com o comando `vender`");
+            else
+                embed.WithDescription(str.ToString());
             await ctx.RespondAsync(embed: embed.Build());
         }
     }

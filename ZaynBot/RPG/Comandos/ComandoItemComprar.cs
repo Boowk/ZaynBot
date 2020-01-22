@@ -8,9 +8,9 @@ namespace ZaynBot.RPG.Comandos
     public class ComandoItemComprar : BaseCommandModule
     {
         [Command("comprar")]
-        [Description("Permite comprar os itens que estão sendo vendido na loja.")]
-        [ComoUsar("comprar [+quantidade|] [id]")]
-        [Exemplo("comprar 1 8844#1")]
+        [Description("Compre itens que foram anúnciado no mercado. Use o ID da venda que é disponibilidado ao usar o comando `loja`.")]
+        [ComoUsar("comprar [+quantidade|] [id da venda]")]
+        [Exemplo("comprar 2 88445#0")]
         [Cooldown(1, 15, CooldownBucketType.User)]
         public async Task ComandoComprarAb(CommandContext ctx, int quantidade = -1, [RemainingText] string itemId = "")
         {
@@ -31,6 +31,11 @@ namespace ZaynBot.RPG.Comandos
             if (userid == ctx.User.Id)
             {
                 await ctx.RespondAsync($"Não pode comprar do seu proprio anúncio {ctx.User.Mention}!".Bold());
+                return;
+            }
+            if(array.Length == 1)
+            {
+                await ctx.ExecutarComandoAsync("ajuda comprar");
                 return;
             }
             int.TryParse(array[1], out var userslot);
@@ -55,7 +60,7 @@ namespace ZaynBot.RPG.Comandos
                     await ctx.RespondAsync($"{ctx.User.Mention} você não tem [Zayn] o suficiente para comprar essa quantidade!".Bold());
             }
             else
-                await ctx.RespondAsync($"Venda não encontrada ou já expirou o prazo de compra {ctx.User.Mention}!".Bold());
+                await ctx.RespondAsync($"Venda não encontrada {ctx.User.Mention}!".Bold());
         }
 
         [Command("comprar")]

@@ -93,11 +93,14 @@ namespace ZaynBot
                         $"Você perdeu um pouco de experiencia!");
                     emb.WithImageUrl("https://cdn.discordapp.com/attachments/651848690033754113/657218098033721365/RIP.png\n");
                     await ctx.RespondAsync(ctx.User.Mention, embed: emb.Build());
-                    return;
+                    break;
                 case NotFoundException nx:
                     await ctx.RespondAsync($"{ctx.User.Mention}, usuario não encontrado.");
-                    return;
+                    break;
                 case UnauthorizedException ux:
+                    break;
+                case ArgumentException ax:
+                    await ctx.ExecutarComandoAsync("ajuda " + e.Command.Name);
                     break;
                 case PersonagemBloqueadoException pbx:
                     break;
