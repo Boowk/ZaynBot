@@ -4,9 +4,9 @@
   <a href="https://discordbots.org/bot/459873132975620134" >
   <img src="https://discordbots.org/api/widget/status/459873132975620134.svg" alt="ZaynRPG" />
 </a></p>
-Olá, eu me chamo Zayn e sou apenas um simples bot brasileiro para o Discord com várias funções de RPG e algumas administrativas!
+Olá, eu me chamo Talion Oak e sou o desenvolvedor da ZaynRPG. Um bot brasileiro para o Discord com a função de ser um RPG, juntando todas as pessoas.
 
-Um dos motivos que me fizeram me tornar o que eu sou hoje é a falta de bots brasileiros para o Discord, já que muitos servidores brasileiros no Discord usam bots "de baixa qualidade" em português ou usam bots que falam (na verdade escrevem) em inglês... e convenhamos, nenhuma dessas opções parece agradável para os usuários... e por isto que eu prometo mudar isto!
+Um dos motivos que me fizeram desenvolver este bot hoje, é a falta de bots brasileiros para o Discord, já que muitos servidores brasileiros no Discord usam bots "de baixa qualidade" em português ou usam bots que falam (na verdade escrevem) em inglês... e convenhamos, nenhuma dessas opções parece agradável para os usuários... e por isto que eu prometo mudar isto!
 
 ## 🤔 Como adiciono ela ao meu servidor?
 
@@ -16,11 +16,11 @@ Enquanto é possível fazer "self hosting" (hospedar você mesmo) ela, eu não i
 
 ## 💁 Suporte
 
-Você pode obter suporte sobre a Zaynrina [clicando aqui](https://discord.gg/GGRnMQu)!
+Você pode obter suporte sobre a Zaynrina [clicando aqui](https://discord.gg/ztWB5xC)!
 
 ## 📦 Dependências
 
-A Zaynrina utiliza várias [dependências no código-fonte dela](https://github.com/ZaynBot/ZaynBot/blob/master/ZaynBot/ZaynBot.csproj), obrigado a todos os mantenedores das dependências! Sem vocês, talvez a Zaynrina não iria existir (ou teria várias funcionalidades reduzidas ou talvez até inexistentes!)
+A Zayn utiliza várias [dependências no código-fonte dela](https://github.com/ZaynBot/ZaynBot/blob/master/ZaynBot/ZaynBot.csproj), obrigado a todos os mantenedores das dependências! Sem vocês, talvez a Zayn não iria existir (ou teria várias funcionalidades reduzidas ou talvez até inexistentes!)
 
 | Nome  | Mantenedor |
 | ------------- | ------------- |
@@ -31,20 +31,13 @@ A Zaynrina utiliza várias [dependências no código-fonte dela](https://github.
 | [DSharpPlus.VoiceNext](https://github.com/DV8FromTheWorld/JDA) | Emzi0767, NaamloosDT  |
 | [MongoDB.Driver](https://github.com/mongodb/mongo-csharp-driver) |  Vincent Kam, Dmitry Lukyanov, Robert Stam, Craig Wilson etc  |
 
-## 💫 Agradecimentos especiais para...
-
-Imain#5986 do Discord por ser o mais viciado, que acaba encontrando bugs.
-
-𝓚α𝓇η#6775 do Discord por ter ajudado nas ideias do RPG.
-
 ## 📄 Licença
 
 O código-fonte da Zaynrina está licenciado sob a [GNU Affero General Public License v3.0](https://github.com/ZaynBot/ZaynBot/blob/master/LICENSE)
 
 Ao utilizar a Zayn você aceita os termos de uso dela que são
-1. Não usaras outro bot para automatizar comandos.
-2. Não abusaras de bug para beneficio proprio.
-3. Reportara todos os bugs encontrado no canal oficial do discord
+1. Não abusaras de bug para beneficio proprio.
+2. Reportara todos os bugs encontrado no canal oficial do discord
 
 <hr>
 <br>
