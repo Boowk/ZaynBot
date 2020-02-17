@@ -52,5 +52,22 @@ namespace ZaynBot.Comandos
             await ctx.TriggerTypingAsync();
             await ctx.RespondAsync($"Ping: {ctx.Client.Ping} ms.".Bold());
         }
+
+        [Command("avatar")]
+        [Description("Mostra o seu avatar ou de um usuário.")]
+        [ComoUsar("avatar [ @user | user ]")]
+        [Exemplo("avatar")]
+        [Exemplo("avatar @user")]
+        [Exemplo("avatar user")]
+        [Cooldown(1, 5, CooldownBucketType.User)]
+        public async Task ComandoPingAsync(CommandContext ctx, [RemainingText] DiscordUser user = null)
+        {
+            await ctx.TriggerTypingAsync();
+            if (user == null) user = ctx.User;
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            embed.WithDescription($"[Clique aqui para baixar!]({user.AvatarUrl})");
+            embed.WithImageUrl(user.AvatarUrl);
+            await ctx.RespondAsync(embed: embed.Build());
+        }
     }
 }
