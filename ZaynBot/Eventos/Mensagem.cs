@@ -25,7 +25,15 @@ namespace ZaynBot.Eventos
 
         public static Task Editada(MessageUpdateEventArgs e)
         {
-            if (e.Author.IsBot) return Task.CompletedTask;
+            try
+            {
+                if (e.Author.IsBot) return Task.CompletedTask;
+            }
+            catch
+            {
+                Console.WriteLine(e.Author);
+                Console.WriteLine(e);
+            }
             if (e.Message.MessageType == MessageType.ChannelPinnedMessage) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Author.Id);
