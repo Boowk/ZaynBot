@@ -55,7 +55,7 @@ namespace ZaynBot.Eventos
         {
             try
             {
-                if (e.Author.IsBot) return Task.CompletedTask;
+                if (e.Message.Author.IsBot) return Task.CompletedTask;
             }
             catch
             {
@@ -63,8 +63,8 @@ namespace ZaynBot.Eventos
                 e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Channel}", DateTime.Now);
                 e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Client}", DateTime.Now);
                 e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Guild}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.MentionedUsers}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Author}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Message}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Message.Author}", DateTime.Now);
             }
 
             var usuario = ModuloBanco.GetUsuario(e.Message.Author.Id);
