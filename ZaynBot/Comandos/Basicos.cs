@@ -98,8 +98,10 @@ namespace ZaynBot.Comandos
         {
             await ctx.TriggerTypingAsync();
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
-            embed.AddField("Servidores".Titulo(), Eventos.Guilda.ServerCount.ToString(), true);
+            embed.AddField("Servidores".Titulo(), Eventos.Guilda.ServerCount.ToString() + " servers", true);
+            embed.AddField("Usuarios estimados".Titulo(), ModuloBanco.Usuarios.EstimatedDocumentCount().ToString() + " users", true);
             embed.WithColor(DiscordColor.Blue);
+            embed.WithDescription("[Clique aqui para entrar no nosso servidor](https://discord.gg/ztWB5xC)");
             embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg");
             await ctx.RespondAsync(embed: embed.Build());
         }
