@@ -12,9 +12,10 @@ namespace ZaynBot.Comandos
     {
         [Command("conquistas")]
         [Description("Exibe as suas conquistas ou a de um usuário.")]
-        [ComoUsar("conquistas")]
-        [ComoUsar("conquistas @user")]
-        [ComoUsar("conquistas user")]
+        [ComoUsar("conquistas [ @user | user ]")]
+        [Exemplo("conquistas")]
+        [Exemplo("conquistas @user")]
+        [Exemplo("conquistas user")]
         [Cooldown(1, 5, CooldownBucketType.User)]
         public async Task ComandoConquistaAsync(CommandContext ctx, [RemainingText] DiscordUser user = null)
         {
@@ -32,6 +33,7 @@ namespace ZaynBot.Comandos
         [Command("ajuda")]
         [Aliases("h", "?", "help")]
         [Description("Mostra todos os comandos disponíveis. Se usado em algum comando existente, explica como usar, suas abreviações e exemplos.")]
+        [ComoUsar("ajuda [ comando ]")]
         [Exemplo("ajuda")]
         [Exemplo("ajuda conquistas")]
         [Cooldown(1, 5, CooldownBucketType.User)]
@@ -39,6 +41,16 @@ namespace ZaynBot.Comandos
         {
             await ctx.TriggerTypingAsync();
             await new DefaultHelpModule().DefaultHelpAsync(ctx, comando);
+        }
+
+        [Command("ping")]
+        [Description("Mostra o tempo de resposta do bot com o discord.")]
+        [Exemplo("ping")]
+        [Cooldown(1, 5, CooldownBucketType.User)]
+        public async Task ComandoPingAsync(CommandContext ctx, params string[] comando)
+        {
+            await ctx.TriggerTypingAsync();
+            await ctx.RespondAsync($"Ping: {ctx.Client.Ping} ms.".Bold());
         }
     }
 }
