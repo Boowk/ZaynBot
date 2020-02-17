@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -104,6 +105,8 @@ namespace ZaynBot
                         else
                             await ctx.RespondAsync($"Aguarde {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
                     }
+                    break;
+                case UnauthorizedException ux:
                     break;
                 case CommandNotFoundException cf:
                     if (e.Command != null)
