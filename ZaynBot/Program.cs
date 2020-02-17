@@ -137,7 +137,7 @@ namespace ZaynBot
 
         private Task Client_ClientErrored(ClientErrorEventArgs e)
         {
-           // e.Client.DebugLogger.LogMessage(LogLevel.Error, "ZAYN", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
+            e.Client.DebugLogger.LogMessage(LogLevel.Error, "ZAYN", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
             return Task.CompletedTask;
         }
 

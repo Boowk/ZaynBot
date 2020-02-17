@@ -9,7 +9,7 @@ namespace ZaynBot.Eventos
     {
         public static Task Criada(MessageCreateEventArgs e)
         {
-            if (e.Author.IsBot) return Task.CompletedTask;
+            if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
             if (e.Message.MessageType == MessageType.GuildMemberJoin) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Author.Id);
@@ -25,19 +25,7 @@ namespace ZaynBot.Eventos
 
         public static Task Editada(MessageUpdateEventArgs e)
         {
-            try
-            {
-                if (e.Author.IsBot) return Task.CompletedTask;
-            }
-            catch
-            {
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Channel}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Client}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Guild}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.MentionedUsers}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Author}", DateTime.Now);
-            }
+            if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
             if (e.Message.MessageType == MessageType.ChannelPinnedMessage) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Author.Id);
@@ -53,19 +41,7 @@ namespace ZaynBot.Eventos
 
         public static Task Apagada(MessageDeleteEventArgs e)
         {
-            try
-            {
-                if (e.Message.Author.IsBot) return Task.CompletedTask;
-            }
-            catch
-            {
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Channel}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Client}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Guild}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Message}", DateTime.Now);
-                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Message.Author}", DateTime.Now);
-            }
+            if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Message.Author.Id);
             var msg = usuario.Conquistas[Enuns.EnumConquistas.MensagensDeletadas];
