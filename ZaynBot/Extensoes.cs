@@ -30,8 +30,9 @@ namespace ZaynBot
         public static string FirstUpper(this string texto)
             => texto.First().ToString().ToUpper() + texto.Substring(1);
 
-        public static string Text(this double numero)
-          => string.Format("{0:N2}", numero);
+        public static string Text(this double numero) => string.Format("{0:N2}", numero);
+
+        public static string Text(this decimal numero) => string.Format("{0:N2}", numero);
 
         public static string Underline(this string texto)
             => $"__{texto}__";

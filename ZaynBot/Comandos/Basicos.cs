@@ -89,5 +89,19 @@ namespace ZaynBot.Comandos
             await ctx.TriggerTypingAsync();
             await ctx.RespondAsync("https://top.gg/bot/459873132975620134/vote");
         }
+
+        [Command("info")]
+        [Description("Exibe uma breve descrição do bot.")]
+        [ComoUsar("info")]
+        [Cooldown(1, 5, CooldownBucketType.User)]
+        public async Task ComandoInfoAb(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder();
+            embed.AddField("Servidores".Titulo(), Eventos.Guilda.ServerCount.ToString(), true);
+            embed.WithColor(DiscordColor.Blue);
+            embed.WithThumbnailUrl("https://blog.jonygames.com.br/wp-content/uploads/2017/07/RPG-a-sigla-que-mudou-o-mundo-dos-jogos.jpg");
+            await ctx.RespondAsync(embed: embed.Build());
+        }
     }
 }
