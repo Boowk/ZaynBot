@@ -8,6 +8,7 @@ using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot.Eventos;
 
 namespace ZaynBot
 {
@@ -16,7 +17,6 @@ namespace ZaynBot
         public static ConfigBot Config { get; private set; }
 
         private DiscordClient _client;
-        public static int ServerCount { get; private set; }
 
         static void Main() => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
@@ -53,8 +53,12 @@ namespace ZaynBot
             };
             _client = new DiscordClient(cfg);
             _client.Ready += Client_Ready;
-            _client.GuildAvailable += Client_GuildAvailable;
+            _client.GuildAvailable += Guilda.Disponivel;
             _client.ClientErrored += Client_ClientErrored;
+            _client.MessageCreated += Mensagem.Criada;
+            _client.MessageUpdated += Mensagem.Editada;
+            _client.MessageDeleted += Mensagem.Apagada;
+            _client.VoiceStateUpdated += Voice.VoiceJoin;
 
             #region Prefixo
             string[] prefix = new string[1];
@@ -131,13 +135,6 @@ namespace ZaynBot
         private Task Client_ClientErrored(ClientErrorEventArgs e)
         {
             e.Client.DebugLogger.LogMessage(LogLevel.Error, "ZAYN", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
-            return Task.CompletedTask;
-        }
-
-        private Task Client_GuildAvailable(GuildCreateEventArgs e)
-        {
-            e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"Guilda {e.Guild.Name.RemoverAcentos()} on!", DateTime.Now);
-            ServerCount++;
             return Task.CompletedTask;
         }
 
