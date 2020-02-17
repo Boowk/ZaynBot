@@ -1,37 +1,28 @@
 ﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using System;
-using System.IO;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
-using ZaynBot.Core.Entidades;
 
 namespace ZaynBot
 {
     public class Program
     {
-        public static ConfigCore _config;
-        static void Main(string[] args) => new Program().RodarOBotAsync().GetAwaiter().GetResult();
+        public static ConfigBot Config { get; private set; }
 
-        public static string EntrarPasta(string nome)
-        {
-            StringBuilder raizProjeto = new StringBuilder();
-#if DEBUG
-            raizProjeto.Append(Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"..\..\..\..\")));
-            raizProjeto.Replace(@"/", @"\");
-            return raizProjeto + nome + @"\";
-#else
-            raizProjeto.Append(Path.GetFullPath(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, @"../../../../")));
-            raizProjeto.Replace(@"\", @"/");
-            return raizProjeto + nome + @"/";
-#endif
-        }
+        private DiscordClient _client;
+        public static int ServerCount { get; private set; }
+
+        static void Main() => new Program().RodarOBotAsync().GetAwaiter().GetResult();
 
         public async Task RodarOBotAsync()
         {
-            _config = ConfigCore.LoadFromFile(EntrarPasta("") + "config.json");
-            if (_config == null)
+            Config = ConfigBot.LoadFromFile(Extensoes.EntrarPasta("") + "config.json");
+            if (Config == null)
             {
                 Console.WriteLine("O arquivo config.json não existe!");
                 Console.WriteLine("Coloque as informações necessarias no arquivo gerado!");
@@ -39,12 +30,13 @@ namespace ZaynBot
                 Console.ReadKey();
                 Environment.Exit(0);
             }
+
             DiscordConfiguration cfg = new DiscordConfiguration
             {
 #if DEBUG
-                Token = _config.TokenTeste,
+                Token = Config.TokenTeste,
 #else
-                Token = _config.Token,
+                Token = Config.Token,
 #endif
                 TokenType = TokenType.Bot,
                 ReconnectIndefinitely = true,
@@ -58,15 +50,21 @@ namespace ZaynBot
                 UseInternalLogHandler = true,
 
             };
-            ModuloCliente cliente = new ModuloCliente(cfg);
+            _client = new DiscordClient(cfg);
+            _client.Ready += Client_Ready;
+            _client.GuildAvailable += Client_GuildAvailable;
+            _client.ClientErrored += Client_ClientErrored;
 
+            #region Prefixo
             string[] prefix = new string[1];
 #if DEBUG
-            prefix[0] = _config.PrefixTeste;
+            prefix[0] = Config.PrefixTeste;
 #else
-            prefix[0] = _config.Prefix;
+            prefix[0] = Config.Prefix;
 #endif
-            ModuloComandos todosOsComandos = new ModuloComandos(new CommandsNextConfiguration
+            #endregion
+
+            CommandsNextConfiguration cnc = new CommandsNextConfiguration
             {
                 StringPrefixes = prefix,
                 EnableDms = false,
@@ -74,28 +72,77 @@ namespace ZaynBot
                 EnableDefaultHelp = false,
                 EnableMentionPrefix = true,
                 IgnoreExtraArguments = true,
-                PrefixResolver = PrefixResolverCustomizado,
-            }, ModuloCliente.Client);
-            new ModuloBanco();
-            await ModuloBanco.CarregarItensAsync();
-           // await ModuloBanco.CarregarRegioesTrizbortAsync();
-            await ModuloCliente.Client.ConnectAsync();
+            };
+            CommandsNextExtension cnt = _client.UseCommandsNext(cnc);
+            cnt.CommandExecuted += Cnt_CommandExecuted;
+            cnt.CommandErrored += Cnt_CommandErrored;
+
+
+
+
+
+            //   new ModuloBanco();
+            await _client.ConnectAsync();
             await Task.Delay(-1);
         }
 
-        public static Task<int> PrefixResolverCustomizado(DiscordMessage msg)
+        private async Task Cnt_CommandErrored(CommandErrorEventArgs e)
         {
-            var gld = msg.Channel.Guild;
-            if (gld == null)
-                return Task.FromResult(-1);
-            ServidorCore slv = ModuloBanco.GetServidor(gld.Id);
-            if (string.IsNullOrEmpty(slv.Prefix))
-                return Task.FromResult(-1);
+            CommandContext ctx = e.Context;
+            switch (e.Exception)
+            {
+                case ChecksFailedException ex:
+                    if (!(ex.FailedChecks.FirstOrDefault(x => x is CooldownAttribute) is CooldownAttribute my))
+                        break;
+                    else
+                    {
+                        TimeSpan t = TimeSpan.FromSeconds(my.GetRemainingCooldown(ctx).TotalSeconds);
+                        if (t.Hours >= 1)
+                            await ctx.RespondAsync($"Aguarde {t.Hours} horas e {t.Minutes} minutos para usar este comando! {ctx.Member.Mention}.");
+                        else if (t.Minutes >= 1)
+                            await ctx.RespondAsync($"Aguarde {t.Minutes} minutos e {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
+                        else
+                            await ctx.RespondAsync($"Aguarde {t.Seconds} segundos para usar este comando! {ctx.Member.Mention}.");
+                    }
+                    break;
+                case CommandNotFoundException cf:
+                    if (e.Command != null)
+                        if (e.Command.Name == "ajuda")
+                        {
+                            DiscordEmoji x = DiscordEmoji.FromName(ctx.Client, ":no_entry_sign:");
+                            await ctx.RespondAsync($"{x} | {ctx.User.Mention} o comando {e.Context.RawArgumentString} não existe.*");
+                        }
+                    break;
+                default:
+                    e.Context.Client.DebugLogger.LogMessage(LogLevel.Debug, "Erro", $"[{e.Context.User.Username.RemoverAcentos()}({e.Context.User.Id})] tentou usar '{e.Command?.QualifiedName ?? "<comando desconhecido>"}' mas deu erro: {e.Exception.ToString()}\nstack:{e.Exception.StackTrace}\ninner:{e.Exception?.InnerException}.", DateTime.Now);
+                    break;
+            }
+        }
 
-            var pfixLocation = msg.GetStringPrefixLength(slv.Prefix);
-            if (pfixLocation != -1)
-                return Task.FromResult(pfixLocation);
-            return Task.FromResult(-1);
+        private Task Cnt_CommandExecuted(CommandExecutionEventArgs e)
+        {
+            e.Context.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"({e.Context.Guild.Id}) {e.Context.Guild.Name.RemoverAcentos()} ({e.Context.User.Id}) {e.Context.User.Username.RemoverAcentos()} executou '{e.Command.QualifiedName}'", DateTime.Now);
+            return Task.CompletedTask;
+        }
+
+        private Task Client_ClientErrored(ClientErrorEventArgs e)
+        {
+            e.Client.DebugLogger.LogMessage(LogLevel.Error, "ZAYN", $"Um erro aconteceu: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
+            return Task.CompletedTask;
+        }
+
+        private Task Client_GuildAvailable(GuildCreateEventArgs e)
+        {
+            e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", $"Guilda {e.Guild.Name.RemoverAcentos()} on!", DateTime.Now);
+            ServerCount++;
+            return Task.CompletedTask;
+        }
+
+        private Task Client_Ready(ReadyEventArgs e)
+        {
+            e.Client.DebugLogger.LogMessage(LogLevel.Info, "ZAYN", "Cliente está pronto!", DateTime.Now);
+            _client.UpdateStatusAsync(new DiscordActivity($"..ajuda", ActivityType.ListeningTo), UserStatus.DoNotDisturb);
+            return Task.CompletedTask;
         }
     }
 }
