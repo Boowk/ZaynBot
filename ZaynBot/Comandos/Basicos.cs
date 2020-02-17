@@ -77,7 +77,7 @@ namespace ZaynBot.Comandos
         public async Task ComandoConviteAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            await ctx.RespondAsync("https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=16384&scope=bot");
+            await ctx.RespondAsync("<https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=16384&scope=bot>");
         }
 
         [Command("votar")]
