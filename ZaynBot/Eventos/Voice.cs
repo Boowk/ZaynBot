@@ -9,6 +9,7 @@ namespace ZaynBot.Eventos
         public static Task VoiceJoin(VoiceStateUpdateEventArgs e)
         {
             if (e.User.IsBot) return Task.CompletedTask;
+            if (e.Before != null) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.User.Id);
             var msg = usuario.Conquistas[Enuns.EnumConquistas.CanalDeVoz];
