@@ -4,6 +4,7 @@ using DSharpPlus.Entities;
 using System.Text;
 using System.Threading.Tasks;
 using ZaynBot.Atributos;
+using static DSharpPlus.CommandsNext.CommandsNextExtension;
 
 namespace ZaynBot.Comandos
 {
@@ -15,7 +16,7 @@ namespace ZaynBot.Comandos
         [ComoUsar("conquistas @user")]
         [ComoUsar("conquistas user")]
         [Cooldown(1, 5, CooldownBucketType.User)]
-        public async Task ConquistaAsync(CommandContext ctx, [RemainingText] DiscordUser user = null)
+        public async Task ComandoConquistaAsync(CommandContext ctx, [RemainingText] DiscordUser user = null)
         {
             await ctx.TriggerTypingAsync();
             if (user == null) user = ctx.User;
@@ -26,6 +27,18 @@ namespace ZaynBot.Comandos
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao("Conquistas", user);
             embed.WithDescription(srb.ToString());
             await ctx.RespondAsync(embed: embed.Build());
+        }
+
+        [Command("ajuda")]
+        [Aliases("h", "?", "help")]
+        [Description("Mostra todos os comandos disponíveis. Se usado em algum comando existente, explica como usar, suas abreviações e exemplos.")]
+        [Exemplo("ajuda")]
+        [Exemplo("ajuda conquistas")]
+        [Cooldown(1, 5, CooldownBucketType.User)]
+        public async Task ComandoAjudaAsync(CommandContext ctx, params string[] comando)
+        {
+            await ctx.TriggerTypingAsync();
+            await new DefaultHelpModule().DefaultHelpAsync(ctx, comando);
         }
     }
 }
