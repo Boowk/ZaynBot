@@ -22,7 +22,7 @@ namespace ZaynBot.Comandos
             await ctx.TriggerTypingAsync();
             if (user == null) user = ctx.User;
             var usuario = ModuloBanco.GetUsuario(user.Id);
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao($"Dinheiros", user);
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder().Padrao($"Dinheiro", user);
             embed.AddField("Disponível".Titulo(), $"R$ {usuario.Real.Text()}", true);
             await ctx.RespondAsync(embed: embed.Build());
         }
