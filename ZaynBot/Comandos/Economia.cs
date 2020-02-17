@@ -38,8 +38,7 @@ namespace ZaynBot.Comandos
         public async Task ComandoTopAsync(CommandContext ctx)
         {
             await ctx.TriggerTypingAsync();
-            var f = await ModuloBanco.Usuarios.Find(FilterDefinition<EntidadeUsuario>.Empty).Limit(10)
-                .SortByDescending(x => x.Real).ToListAsync();
+            var f = await ModuloBanco.Usuarios.Find(FilterDefinition<EntidadeUsuario>.Empty).Limit(10).SortByDescending(x => x.Real).ToListAsync();
             StringBuilder str = new StringBuilder();
 
             int pos = 1;

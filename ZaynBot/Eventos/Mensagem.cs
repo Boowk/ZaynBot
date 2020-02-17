@@ -9,6 +9,7 @@ namespace ZaynBot.Eventos
     {
         public static Task Criada(MessageCreateEventArgs e)
         {
+            if (e.Guild.Id == 264445053596991498) return Task.CompletedTask;
             if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
             if (e.Message.MessageType == MessageType.GuildMemberJoin) return Task.CompletedTask;
 
@@ -28,6 +29,7 @@ namespace ZaynBot.Eventos
             if (e.Message == null) return Task.CompletedTask;
             if (e.Message?.Author == null) return Task.CompletedTask;
             if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
+            if (e.Guild.Id == 264445053596991498) return Task.CompletedTask;
             if (e.Message.MessageType == MessageType.ChannelPinnedMessage) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Message.Author.Id);
@@ -45,6 +47,7 @@ namespace ZaynBot.Eventos
         {
             if (e.Message == null) return Task.CompletedTask;
             if (e.Message?.Author == null) return Task.CompletedTask;
+            if (e.Guild.Id == 264445053596991498) return Task.CompletedTask;
             if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Message.Author.Id);
