@@ -90,7 +90,7 @@ namespace ZaynBot.Comandos
         {
             return "```css\nLista de comandos```\n" +
          "Use `..ajuda [comando]` para obter mais ajuda sobre o comando específico, por exemplo: `..ajuda ajuda` \n\n" +
-         "**Basicos -** `ajuda` , `convite` , `votar` , `info` , `conquista`\n" +
+         "**Basicos -** `ajuda` , `convite` , `votar` , `info` , `conquistas` , `avatar` , `ping` \n" +
          "**Economia -** `dinheiro`\n";
         }
     }

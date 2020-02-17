@@ -69,5 +69,25 @@ namespace ZaynBot.Comandos
             embed.WithImageUrl(user.AvatarUrl);
             await ctx.RespondAsync(embed: embed.Build());
         }
+
+        [Command("convite")]
+        [Description("Exibe o convite para adicionar o bot no seu servidor.")]
+        [Exemplo("convite")]
+        [Cooldown(1, 5, CooldownBucketType.User)]
+        public async Task ComandoConviteAsync(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            await ctx.RespondAsync("https://discordapp.com/api/oauth2/authorize?client_id=459873132975620134&permissions=16384&scope=bot");
+        }
+
+        [Command("votar")]
+        [Description("Exibe o convite para votar no bot pelo site do top.gg.")]
+        [Exemplo("votar")]
+        [Cooldown(1, 5, CooldownBucketType.User)]
+        public async Task ComandoVotarAsync(CommandContext ctx)
+        {
+            await ctx.TriggerTypingAsync();
+            await ctx.RespondAsync("https://top.gg/bot/459873132975620134/vote");
+        }
     }
 }
