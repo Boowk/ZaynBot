@@ -23,10 +23,12 @@ namespace ZaynBot.Eventos
             return Task.CompletedTask;
         }
 
-        public static async Task Editada(MessageUpdateEventArgs e)
+        public static Task Editada(MessageUpdateEventArgs e)
         {
-            if (e.Message?.Author?.IsBot == true) return;
-            if (e.Message.MessageType == MessageType.ChannelPinnedMessage) return;
+            if (e.Message == null) return Task.CompletedTask;
+            if (e.Message?.Author == null) return Task.CompletedTask;
+            if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
+            if (e.Message.MessageType == MessageType.ChannelPinnedMessage) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Message.Author.Id);
             var msg = usuario.Conquistas[Enuns.EnumConquistas.MensagensEditadas];
@@ -36,11 +38,13 @@ namespace ZaynBot.Eventos
                 usuario.AdicionarReal(0.52083m);
                 usuario.Salvar();
             }
-            await Task.Delay(0);
+            return Task.CompletedTask;
         }
 
         public static Task Apagada(MessageDeleteEventArgs e)
         {
+            if (e.Message == null) return Task.CompletedTask;
+            if (e.Message?.Author == null) return Task.CompletedTask;
             if (e.Message?.Author?.IsBot == true) return Task.CompletedTask;
 
             var usuario = ModuloBanco.GetUsuario(e.Message.Author.Id);
