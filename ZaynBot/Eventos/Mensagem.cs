@@ -27,12 +27,18 @@ namespace ZaynBot.Eventos
         {
             try
             {
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Channel}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Client}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Guild}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.MentionedUsers}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Author}", DateTime.Now);
                 if (e.Author.IsBot) return Task.CompletedTask;
             }
             catch
             {
-                Console.WriteLine(e.Author);
-                Console.WriteLine(e);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e.Author}", DateTime.Now);
+                e.Client.DebugLogger.LogMessage(DSharpPlus.LogLevel.Debug, "ZAYN", $"{e}", DateTime.Now);
             }
             if (e.Message.MessageType == MessageType.ChannelPinnedMessage) return Task.CompletedTask;
 
