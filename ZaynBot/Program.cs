@@ -86,7 +86,7 @@ namespace ZaynBot
 
 
 
-            //   new ModuloBanco();
+            new ModuloBanco();
             await _client.ConnectAsync();
             await Task.Delay(-1);
         }
