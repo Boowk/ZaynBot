@@ -8,7 +8,7 @@ using static DSharpPlus.CommandsNext.CommandsNextExtension;
 
 namespace ZaynBot.Comandos
 {
-    public class Basicos
+    public class Basicos : BaseCommandModule
     {
         [Command("conquistas")]
         [Description("Exibe as suas conquistas ou a de um usuário.")]

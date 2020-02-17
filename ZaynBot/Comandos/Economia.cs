@@ -6,7 +6,7 @@ using ZaynBot.Atributos;
 
 namespace ZaynBot.Comandos
 {
-    public class Economia
+    public class Economia : BaseCommandModule
     {
 
         [Command("dinheiro")]

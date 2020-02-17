@@ -8,6 +8,7 @@ using DSharpPlus.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using ZaynBot.Comandos;
 using ZaynBot.Eventos;
 
 namespace ZaynBot
@@ -81,7 +82,8 @@ namespace ZaynBot
             CommandsNextExtension cnt = _client.UseCommandsNext(cnc);
             cnt.CommandExecuted += Cnt_CommandExecuted;
             cnt.CommandErrored += Cnt_CommandErrored;
-
+            cnt.RegisterCommands<Basicos>();
+            cnt.RegisterCommands<Economia>();
 
 
 
