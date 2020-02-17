@@ -82,6 +82,7 @@ namespace ZaynBot
             CommandsNextExtension cnt = _client.UseCommandsNext(cnc);
             cnt.CommandExecuted += Cnt_CommandExecuted;
             cnt.CommandErrored += Cnt_CommandErrored;
+            cnt.SetHelpFormatter<IAjuda>();
             cnt.RegisterCommands<Basicos>();
             cnt.RegisterCommands<Economia>();
 
