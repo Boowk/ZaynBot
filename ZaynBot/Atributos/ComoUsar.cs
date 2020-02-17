@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiscordLife.Atributos
 {
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     class ComoUsar : CheckBaseAttribute
     {
         public string Uso { get; }
