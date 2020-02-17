@@ -24,6 +24,9 @@ namespace ZaynBot
         public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, CommandContext ctx)
             => embed.Padrao().WithAuthor($"{titulo} - {ctx.User.Username}", iconUrl: ctx.User.AvatarUrl);
 
+        public static DiscordEmbedBuilder Padrao(this DiscordEmbedBuilder embed, string titulo, DiscordUser user)
+            => embed.Padrao().WithAuthor($"{titulo} - {user.Username}", iconUrl: user.AvatarUrl);
+
         public static string FirstUpper(this string texto)
             => texto.First().ToString().ToUpper() + texto.Substring(1);
 

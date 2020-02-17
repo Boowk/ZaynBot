@@ -3,7 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using System;
 using System.Threading.Tasks;
 
-namespace DiscordLife.Atributos
+namespace ZaynBot.Atributos
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
     public class Exemplo : CheckBaseAttribute
