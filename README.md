@@ -16,7 +16,7 @@ Enquanto é possível fazer "self hosting" (hospedar você mesmo) ela, eu não i
 
 ## 💁 Suporte
 
-Você pode obter suporte sobre a Zaynrina [clicando aqui](https://discord.gg/ztWB5xC)!
+Você pode obter suporte sobre a Zaynrina [clicando aqui](https://discord.gg/8SjxKXd)!
 
 ## 📦 Dependências
 
